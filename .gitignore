@@ -1,0 +1,17 @@
+# Cached OpenAlex responses. Regenerable from the recorded source URLs, and large.
+pipeline/data/cache/
+
+# Intermediate pipeline state. Artifacts under artifacts/ are the committed output.
+pipeline/data/*.json
+pipeline/data/cooccurrence/
+
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.env
+
+node_modules/
+web/dist/
+.DS_Store
