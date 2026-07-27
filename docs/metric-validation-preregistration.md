@@ -122,6 +122,35 @@ coarser granularity with no filtering would be a good outcome, not a modest one.
 
 ---
 
+## Amendment log
+
+Amendments are appended, never edited into the text above, so the original commitments stay
+readable in the file rather than only in git history.
+
+**A1 — negative controls moved inside the analysis set (2026-07-27, before any gap score was
+computed).** As written, the negative control specified pairs crossing domain 2 × domain 3, but the
+analysis set is domains 1 and 4, so no such pair can ever be scored — the criterion was
+unsatisfiable as stated. Replaced with semantically distant pairs *within* the biomedical domains
+(aquaculture nutrition × systemic sclerosis; dermatological disorders × animal nutrition). The
+50th-percentile bar is unchanged. Timing matters: this was corrected while the co-occurrence sweep
+was still running, so no ranking existed to fit it to.
+
+**A2 — ranking is driven by similarity, with the deficit acting as a gate (2026-07-27, before any
+gap score was computed).** `Gap = S · (1 − p)` saturates: any pair with a significant deficit gets
+`(1 − p) ≈ 1`, so the ranking is effectively similarity among significantly-deficient pairs. This
+was noticed while implementing, not after seeing results. It is left unchanged because the obvious
+alternative — weighting by `−log10(p)` — reintroduces exactly the size bias the metric exists to
+avoid: topics with huge marginals produce astronomically significant deficits regardless of
+whether anything interesting is going on.
+
+**A3 — ranking uses conservative bounds, not exact counts (2026-07-27, before any gap score was
+computed).** `group_by` never reports zero-valued groups, so a pair that truly never co-occurs is
+absent from both rows and is scored using the tighter of the two ceilings rather than its true
+value of zero. For the target pair this attenuates the deficit from `p ≈ 7e-10` to `p ≈ 0.026`.
+Ranking therefore runs on conservative bounds throughout, which understates every gap equally.
+Exact counts are resolved by targeted two-filter queries for reported gaps only, and each published
+row states whether its count is exact or bounded.
+
 ## What a FAIL means
 
 It means the computed layer has no demonstrated validity and lacuna ships the curated layers only,

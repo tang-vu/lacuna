@@ -22,8 +22,9 @@ from typing import Any
 
 import requests
 
+from pipeline.paths import CACHE_DIR
+
 API_BASE = "https://api.openalex.org"
-CACHE_DIR = Path(__file__).resolve().parent.parent / "data" / "cache"
 
 # Identifies us to OpenAlex. Courtesy convention, and historically the "polite pool" key.
 MAILTO = os.environ.get("OPENALEX_MAILTO", "tangminhvu2212@gmail.com")

@@ -1,9 +1,6 @@
-# Cached OpenAlex responses. Regenerable from the recorded source URLs, and large.
-pipeline/data/cache/
-
-# Intermediate pipeline state. Artifacts under artifacts/ are the committed output.
-pipeline/data/*.json
-pipeline/data/cooccurrence/
+# Regenerable pipeline state: cached API responses and intermediate matrices.
+# Every cached file records the URL that produced it, so this tree can be rebuilt exactly.
+data/
 
 __pycache__/
 *.py[cod]

@@ -10,11 +10,9 @@ Run:  python -m pipeline.ingest.fetch_taxonomy
 from __future__ import annotations
 
 import json
-from pathlib import Path
 
 from pipeline.openalex_client import OpenAlexClient
-
-DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+from pipeline.paths import DATA_DIR, TAXONOMY_PATH
 
 # Measured live on 2026-07-27. These are assertions, not documentation: OpenAlex reshapes its
 # taxonomy occasionally, and a silent change would move every gap score without explanation.
@@ -85,13 +83,12 @@ def main() -> None:
         print(f"  {level:<10} {len(nodes):>5} nodes  (expected {EXPECTED_COUNTS[level]}) OK")
 
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    out_path = DATA_DIR / "taxonomy.json"
-    out_path.write_text(json.dumps(taxonomy, indent=1), encoding="utf-8")
+    TAXONOMY_PATH.write_text(json.dumps(taxonomy, indent=1), encoding="utf-8")
 
     topics = taxonomy["topics"]
     largest = max(topics, key=lambda t: t["works_count"])
     print(
-        f"\nwrote {out_path}"
+        f"\nwrote {TAXONOMY_PATH}"
         f"\n  api calls {client.calls_made}, cache hits {client.cache_hits}"
         f"\n  credits remaining {client.credits_remaining}"
         f"\n  largest topic: {largest['id']} {largest['display_name']} "
