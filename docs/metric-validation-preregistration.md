@@ -151,6 +151,50 @@ Ranking therefore runs on conservative bounds throughout, which understates ever
 Exact counts are resolved by targeted two-filter queries for reported gaps only, and each published
 row states whether its count is exact or bounded.
 
+---
+
+# Metric v2 — separate pre-registration
+
+**Written 2026-07-27, after v1 failed and before v2 was run.**
+
+v1 failed: the target pair ranked at top 38.0% against a top-5% bar. Full result in
+`plans/reports/validation-260727-1140-swanson-reproduction-negative-result-report.md`.
+
+**This is post-hoc and must always be reported as such.** The failure is what suggested the fix, so
+a v2 pass is weaker evidence than a v1 pass would have been. Both results ship together; the
+failure is not deleted, superseded, or described as a bug that was fixed.
+
+## What changes and why
+
+v1 measured closeness as cosine over the full association vector — "A and C keep the same company".
+Swanson's claim is narrower: *there exists a B with both A–B and B–C strong*. One path, not a
+profile. Only 16 of 4,031 columns carry the target pair's shared signal, and cosine divides it
+across 4,015 zeros.
+
+```
+bridge_k(A,C) = sum of the top-k values of min(pPMI(A,B), pPMI(B,C)) over all B
+Gap(A,C)      = bridge_k(A,C) · (1 − p_AC)
+```
+
+Association vectors stay unit-normalised, so bridge strengths remain comparable across topics of
+different sizes. The deficit term, guards, generalist exclusion and analysis set are all unchanged
+from v1.
+
+**k = 5, fixed now.** Rationale: k=1 rests the entire score on a single co-occurrence and one
+spurious count fabricates a bridge; large k reverts to the averaging that sank v1. Five is small
+enough to stay concentrated and large enough to survive one noisy bridge. Sensitivity across
+k ∈ {1, 3, 5, 10, 20} will be reported as a diagnostic, but the verdict is read off k=5 regardless
+of which k looks best.
+
+## Pass criteria — unchanged from v1
+
+Identical thresholds, identical negative controls, identical override rule: top 0.1% STRONG PASS,
+top 1% PASS, top 5% WEAK, below that FAIL, and a negative control above the 50th percentile
+overrides any passing verdict. Reusing v1's bar is the point — a revised metric judged against a
+revised bar would prove nothing.
+
+---
+
 ## What a FAIL means
 
 It means the computed layer has no demonstrated validity and lacuna ships the curated layers only,
