@@ -47,13 +47,17 @@ class Matrix:
 
 
 def load_matrix(slice_name: str, total_works: int) -> Matrix:
-    """Assemble fetched rows into a dense matrix.
+    """Assemble fetched rows into a matrix of *observed* co-occurrence only.
 
-    Absent partners in a truncated row are filled with that row's ceiling, not with zero. The
-    ceiling is the smallest co-occurrence the API actually reported, so every unreported partner
-    is bounded by it. Substituting the ceiling makes every resulting gap score a conservative
-    lower bound: a pair that looks like a gap despite being credited with the maximum possible
-    co-occurrence really is one.
+    Unreported partners are left at zero here. The row ceiling is kept separately and applied only
+    where it belongs — the deficit test, which needs a conservative upper bound on counts the API
+    never reported.
+
+    It must not leak into the association vectors. Filling every unreported cell with the ceiling
+    makes all 3,857 columns non-zero in every row, giving each topic an identical dense background
+    that dominates the cosine: measured that way, pairwise similarity collapsed into the band
+    0.92-0.97 and the ranking became noise. For "what company does this topic keep", an unobserved
+    partner carries no information and must contribute nothing.
     """
     slice_dir = COOCCURRENCE_DIR / slice_name
     rows = [json.loads(p.read_text(encoding="utf-8")) for p in sorted(slice_dir.glob("T*.json"))]
@@ -71,8 +75,6 @@ def load_matrix(slice_name: str, total_works: int) -> Matrix:
     for i, row in enumerate(rows):
         marginals[i] = row["marginal"]
         ceilings[i] = row["ceiling"]
-        if row["truncated"]:
-            counts[i, :] = row["ceiling"]
         for partner, count in row["partners"].items():
             counts[i, col_index[partner]] = count
         counts[i, col_index[row["topic"]]] = 0.0  # self-co-occurrence is meaningless
@@ -80,18 +82,26 @@ def load_matrix(slice_name: str, total_works: int) -> Matrix:
     return Matrix(topic_ids, columns, counts, marginals, ceilings, total_works)
 
 
+# Works in OpenAlex with no date filter, measured 2026-07-27. Used to project all-time topic
+# counts onto a time slice.
+ALL_TIME_TOTAL_WORKS = 322_129_452
+
+
 def column_marginals(matrix: Matrix, taxonomy_counts: dict[str, int]) -> np.ndarray:
     """Marginal for every column topic, needed for PMI over the full 4,516-topic space.
 
-    Rows only cover the analysis set, so column marginals for topics outside it come from the
-    taxonomy's all-time works_count, rescaled to the slice. The rescaling is crude but affects
-    only the association vectors' weighting, not the deficit test that decides significance.
+    Rows cover only the analysis set, so column marginals for topics outside it are estimated by
+    scaling the taxonomy's all-time works_count by the slice's share of the corpus. That assumes a
+    topic's publication volume is spread evenly over time, which is false — most topics grew
+    sharply after 2000 — so these estimates are systematically too high for the pre-1986 slice.
+
+    The estimate must not depend on how much of the sweep has completed, or association vectors
+    would shift as rows arrive and no result would be reproducible.
     """
-    scale = matrix.total_works / max(sum(taxonomy_counts.values()), 1)
+    scale = matrix.total_works / ALL_TIME_TOTAL_WORKS
     fetched = dict(zip(matrix.topic_ids, matrix.marginals))
     return np.array(
-        [fetched.get(c, taxonomy_counts.get(c, 0) * scale * len(matrix.topic_ids)) or 1.0
-         for c in matrix.column_ids],
+        [fetched.get(c) or max(taxonomy_counts.get(c, 0) * scale, 1.0) for c in matrix.column_ids],
         dtype=np.float64,
     )
 
@@ -224,10 +234,14 @@ def score_pairs(matrix: Matrix, taxonomy_counts: dict[str, int]) -> list[dict]:
 
     similarity = masked_similarity(vectors, vectors[:, analysis_cols])
 
-    # Observed co-occurrence, taking whichever direction is tighter: a value present in a row is
-    # exact, while an absent one is only bounded by that row's ceiling.
+    # Co-occurrence for the deficit test. A value reported in either direction is exact, since
+    # co-occurrence is symmetric and group_by omits only counts too small to make the top 200.
+    # A pair absent from both rows is bounded by the tighter of the two ceilings — and by a true
+    # zero when a row was short enough not to be truncated at all.
     counts_block = matrix.counts[:, analysis_cols]
-    observed = np.minimum(counts_block, counts_block.T)
+    reported = (counts_block > 0) | (counts_block.T > 0)
+    bound = np.minimum(matrix.ceilings[:, None], matrix.ceilings[None, :])
+    observed = np.where(reported, np.maximum(counts_block, counts_block.T), bound)
 
     expected = np.outer(matrix.marginals, matrix.marginals) / matrix.total_works
 
