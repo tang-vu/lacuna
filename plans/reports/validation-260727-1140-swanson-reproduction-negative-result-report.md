@@ -89,7 +89,59 @@ Both were found by inspecting behaviour, not by the metric failing:
 
 Neither fix altered the pre-registered thresholds.
 
-## Proposed metric v2 — not yet tested
+## Metric v2 result — also FAIL
+
+Pre-registered separately before running, with k=5 fixed in advance and v1's thresholds reused
+unchanged. Post-hoc, and reported as such.
+
+| | v1 cosine | v2 bridge |
+|---|---|---|
+| target similarity | 0.0355 | **0.2888** |
+| target rank | top 38.0% | **top 30.8%** |
+| negative control | top 72.2% (sim 0.0003) | top 71.3% (sim 0.0156) |
+| verdict | FAIL | **FAIL** |
+
+The fix works in the direction predicted — target closeness rose 8×, the control stayed flat, so
+the bridge measure does discriminate where cosine did not. It is nowhere near enough. The bar was
+top 5%.
+
+### Why v2 still fails: adjacent-specialty artifacts
+
+v2's top-ranked pairs are pairs of clinically adjacent topics:
+
+| rank | pair |
+|---|---|
+| 1 | Urinary Bladder and Prostate Research × Renal cell carcinoma treatment |
+| 2 | Uterine Myomas × Pediatric Urology and Nephrology |
+| 6 | Gastrointestinal Tumor Research × Anorectal Disease Treatments |
+| 8 | Dental Health and Care Utilization × Oral and Maxillofacial Pathology |
+| 14 | Appendicitis Diagnosis × Gastrointestinal Tumor Research |
+
+These share abundant bridges and co-occur less than chance — but not because a discovery is
+waiting. A paper about a bladder tumour is classified into one of these topics, not both, so
+co-occurrence is structurally suppressed while the shared literature keeps bridge strength high.
+The metric is detecting how OpenAlex partitions clinical subject matter.
+
+Same-subfield sibling pairs are 12% of the top 100 against a 2.9% base rate — 4× enriched, so the
+effect is real but not the whole story: 88% of top pairs cross subfield boundaries while staying
+inside one clinical neighbourhood. Excluding siblings would not fix it.
+
+The target pair sits across Nutrition and Dietetics × Pathology and Forensic Medicine — genuinely
+distant in the taxonomy, which is exactly why it does not compete with same-neighbourhood pairs on
+bridge strength.
+
+### Where this leaves the approach
+
+Both metrics fail the same way: **"structurally close but rarely co-occurring" is dominated by
+classification artifacts, not by knowledge gaps.** Anything that keeps a lot of company with a
+topic while sharing few papers with it is, most often, a topic the classifier treats as an
+alternative label for similar work.
+
+A third post-hoc iteration is not worth running. Two revisions already exhausted the evidential
+value of this test case; a metric tuned until one known pair ranks well would demonstrate nothing
+except that it was tuned.
+
+## Proposed metric v2 — superseded by the result above
 
 Replace cosine with a bridge measure that keeps the signal concentrated:
 

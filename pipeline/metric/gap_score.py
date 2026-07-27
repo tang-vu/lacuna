@@ -223,8 +223,46 @@ def masked_similarity(vectors: np.ndarray, self_block: np.ndarray) -> np.ndarray
     return masked_dot / np.maximum(norm_i * norm_i.T, 1e-12)
 
 
-def score_pairs(matrix: Matrix, taxonomy_counts: dict[str, int]) -> list[dict]:
-    """Score every eligible pair in the analysis set. Returns rows sorted by gap score."""
+BRIDGE_K = 5  # pre-registered; see docs/metric-validation-preregistration.md
+
+
+def bridge_similarity(vectors: np.ndarray, analysis_cols: np.ndarray, k: int = BRIDGE_K) -> np.ndarray:
+    """Strength of the k strongest ABC bridges between each pair of topics.
+
+        bridge_k(A,C) = sum of the top-k values of min(pPMI(A,B), pPMI(B,C)) over all B
+
+    A B counts as a bridge only when *both* ends are strong, hence the elementwise minimum. This
+    replaces cosine because Swanson's structure is the existence of a path, not overall profile
+    overlap: for the canonical pair only 16 of 4,031 columns carry shared signal, and cosine
+    divides that across the 4,015 zeros until nothing is left.
+
+    Computed one anchor row at a time. The full (n, n, columns) tensor would be hundreds of
+    gigabytes; a single anchor's slice is a few megabytes.
+    """
+    n = vectors.shape[0]
+    scores = np.zeros((n, n), dtype=np.float32)
+
+    for i in range(n):
+        shared = np.minimum(vectors[i][None, :], vectors)  # (n, columns)
+        # A bridge may not be one of the endpoints: exclude column i for every row, and column j
+        # from row j.
+        shared[:, analysis_cols[i]] = 0.0
+        shared[np.arange(n), analysis_cols] = 0.0
+        top_k = np.partition(shared, -k, axis=1)[:, -k:]
+        scores[i] = top_k.sum(axis=1)
+
+    # Floating-point asymmetry only; min() is symmetric by construction.
+    return np.maximum(scores, scores.T)
+
+
+def score_pairs(
+    matrix: Matrix, taxonomy_counts: dict[str, int], closeness: str = "bridge"
+) -> list[dict]:
+    """Score every eligible pair in the analysis set. Returns rows sorted by gap score.
+
+    `closeness` selects the structural half of the metric: "bridge" is v2, "cosine" is v1, kept
+    because it is the published negative result rather than a mistake to be erased.
+    """
     col_marginals = column_marginals(matrix, taxonomy_counts)
     vectors = association_vectors(matrix, col_marginals)
     excluded = generalist_topics(matrix)
@@ -232,7 +270,12 @@ def score_pairs(matrix: Matrix, taxonomy_counts: dict[str, int]) -> list[dict]:
     col_of_row = {c: i for i, c in enumerate(matrix.column_ids)}
     analysis_cols = np.array([col_of_row[t] for t in matrix.topic_ids])
 
-    similarity = masked_similarity(vectors, vectors[:, analysis_cols])
+    if closeness == "cosine":
+        similarity = masked_similarity(vectors, vectors[:, analysis_cols])
+    elif closeness == "bridge":
+        similarity = bridge_similarity(vectors, analysis_cols)
+    else:
+        raise ValueError(f"unknown closeness measure: {closeness!r}")
 
     # Co-occurrence for the deficit test. A value reported in either direction is exact, since
     # co-occurrence is symmetric and group_by omits only counts too small to make the top 200.
