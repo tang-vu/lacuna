@@ -96,8 +96,23 @@ export interface ComputedLayer {
     complete: boolean;
     note: string;
   };
+  provenance: {
+    inputs: InputFingerprints;
+    total_works_query: string;
+  };
   excluded_topics: { id: string; display_name: string; reason: string }[];
   gaps: Gap[];
+}
+
+export interface InputFingerprint {
+  sha256: string;
+  canonicalisation: string;
+  rows?: number;
+}
+
+export interface InputFingerprints {
+  taxonomy: InputFingerprint;
+  cooccurrence_rows: InputFingerprint;
 }
 
 export interface Manifest {
@@ -109,7 +124,12 @@ export interface Manifest {
     slice: string;
     to_publication_date: string;
     total_works: number;
-    row_source_digest_sha256: string;
+    inputs: InputFingerprints;
+  };
+  files: Record<string, InputFingerprint>;
+  source_queries: {
+    total_works: string;
+    taxonomy_counts: Record<string, string>;
   };
   metric: { version: string; closeness: string; bridge_k: number };
   counts: Record<string, number>;

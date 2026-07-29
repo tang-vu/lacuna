@@ -167,10 +167,9 @@ requires publishing both.
 
 ## Unresolved questions
 
-1. Does metric v2 reproduce the result, and does it hold the negative controls? Untested.
-2. Is `k` in `bridge_k` a free parameter that invites fitting? It needs fixing in advance, on a
-   stated rationale rather than on what works.
-3. The free API key's real credit ceiling is still unverified — the 100,000/day figure came from a
+1. The second pre-registered negative control remains unevaluated because its row is outside the
+   incomplete sweep.
+2. The free API key's real credit ceiling is still unverified — the 100,000/day figure came from a
    research report whose rate-limit claims were wrong by 10× elsewhere.
-4. Should a failing v1 remain in the codebase as a documented negative result, or be replaced?
-   Keeping it costs maintenance; deleting it loses the only evidence that cosine was tried.
+3. Which historical LBD cases and period-appropriate MeSH mappings can form a benchmark without
+   selecting cases based on how a candidate v3 formula ranks them?

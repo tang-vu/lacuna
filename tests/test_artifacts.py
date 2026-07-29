@@ -4,6 +4,10 @@ import json
 from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
+import pytest
+
+from pipeline.export.build_artifacts import _assert_snapshot_inputs_unchanged
+from pipeline.export.verify_artifacts import verify_latest
 from pipeline.paths import ARTIFACTS_DIR
 
 
@@ -34,6 +38,12 @@ def test_manifest_pins_snapshot_and_metric_version():
     assert computed["validation"]["negative_controls_evaluated"] == 1
     assert computed["validation"]["negative_controls_planned"] == 2
     assert computed["coverage"]["complete"] is False
+    assert manifest["schema_version"] == 3
+    inputs = manifest["snapshot"]["inputs"]
+    assert inputs == computed["provenance"]["inputs"]
+    assert inputs["cooccurrence_rows"]["rows"] == computed["coverage"]["topics_swept"]
+    for source in inputs.values():
+        assert len(source["sha256"]) == 64
 
 
 def test_every_exported_gap_labels_bounds_and_has_public_provenance():
@@ -45,3 +55,31 @@ def test_every_exported_gap_labels_bounds_and_has_public_provenance():
         assert len(gap["row_source_urls"]) == 2
         for url in [*gap["row_source_urls"], gap["verify_url"]]:
             assert_public_openalex_url(url)
+
+
+def test_latest_artifact_files_match_manifest_digests():
+    manifest = verify_latest()
+    assert set(manifest["files"]) == {
+        "taxonomy.json",
+        "curated.json",
+        "computed-gaps.json",
+    }
+    assert all(
+        metadata["canonicalisation"] == "canonical-json-v1"
+        for metadata in manifest["files"].values()
+    )
+
+
+def test_published_snapshot_label_cannot_be_reused_for_different_inputs(tmp_path):
+    existing = {"taxonomy": {"sha256": "a" * 64}}
+    (tmp_path / "manifest.json").write_text(
+        json.dumps({"snapshot": {"inputs": existing}}),
+        encoding="utf-8",
+    )
+
+    _assert_snapshot_inputs_unchanged(tmp_path, existing)
+    with pytest.raises(SystemExit, match="different input content"):
+        _assert_snapshot_inputs_unchanged(
+            tmp_path,
+            {"taxonomy": {"sha256": "b" * 64}},
+        )

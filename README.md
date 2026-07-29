@@ -70,8 +70,10 @@ the whole problem.
 - **Measured and written content stay visually and structurally distinct**, everywhere. Numbers
   render in monospace and tinted; human-written entries in body text with citations. Nothing that
   came out of a model inherits the authority of a measurement.
-- **Every computed number traces back to a runnable query.** Each exported pair carries the literal
-  OpenAlex URL that produced its counts. A number a reader cannot check is decoration.
+- **Every computed number traces back to runnable queries and pinned inputs.** Each exported pair
+  carries the two row queries behind its measured or bounded count plus a targeted query that can
+  resolve the exact count. The manifest pins canonical content digests for the taxonomy,
+  co-occurrence rows, and exported files. A number a reader cannot check is decoration.
 - **The validation tests are load-bearing.** They pin the measured outcome including the failure.
   If a change makes the target pair suddenly rank well, that is a reason to investigate, not to
   celebrate — see `tests/test_swanson_validation.py`.
@@ -90,6 +92,7 @@ python -m pipeline.ingest.fetch_taxonomy                      # ~31 calls, asser
 python -m pipeline.ingest.fetch_cooccurrence --slice pre1986  # resumable; re-run to continue
 python -m pipeline.validate.validate_swanson                  # the pre-registered test
 python -m pipeline.export.build_artifacts                     # writes artifacts/{date}/
+python -m pipeline.export.verify_artifacts                    # checks committed file digests
 
 cd web && npm install && npm run dev
 ```
@@ -125,7 +128,10 @@ pre-commit install
 ```
 
 It runs the fast Python suite and TypeScript typecheck before each commit. GitHub Actions runs the
-Python suite, curated-content validation and production web build on pushes and pull requests.
+tests available in a clean clone, curated-content validation, committed-artifact integrity, and
+the production web build on pushes and pull requests. The five slow regression tests require the
+gitignored fetched sweep and therefore run locally through `$validate`; CI does not represent them
+as having passed.
 
 ---
 

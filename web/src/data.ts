@@ -27,5 +27,13 @@ export async function loadDataset(): Promise<Dataset> {
     fetchJson<Curated>(`/${version}/curated.json`),
     fetchJson<ComputedLayer>(`/${version}/computed-gaps.json`),
   ]);
+  if (manifest.version !== version) {
+    throw new Error(`artifact version mismatch: latest=${version}, manifest=${manifest.version}`);
+  }
+  if (computed.method.version !== manifest.metric.version) {
+    throw new Error(
+      `metric version mismatch: manifest=${manifest.metric.version}, computed=${computed.method.version}`,
+    );
+  }
   return { manifest, taxonomy, curated, computed };
 }

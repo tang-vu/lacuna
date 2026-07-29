@@ -112,9 +112,13 @@ class OpenAlexClient:
         if self.use_cache and cache_file.exists():
             self.cache_hits += 1
             payload = json.loads(cache_file.read_text(encoding="utf-8"))
-            payload["_lacuna_source_url"] = sanitise_url(
-                payload.get("_lacuna_source_url", source_url)
-            )
+            stored_source = payload.get("_lacuna_source_url", source_url)
+            public_source = sanitise_url(stored_source)
+            payload["_lacuna_source_url"] = public_source
+            # Older caches predate the public/private URL split. Clean them as they are touched so
+            # a courtesy email or API key does not remain persisted after a cached run.
+            if public_source != stored_source:
+                cache_file.write_text(json.dumps(payload), encoding="utf-8")
             return payload
 
         if self.credits_remaining is not None and self.credits_remaining < CREDIT_FLOOR:

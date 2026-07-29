@@ -1,5 +1,5 @@
 {
- "schema_version": 2,
+ "schema_version": 3,
  "status": "unvalidated",
  "validation": {
   "verdict": "FAIL",
@@ -32,8 +32,17 @@
   "note": "Sweep incomplete: 549 planned topics have no fetched row."
  },
  "provenance": {
-  "row_sources_count": 909,
-  "row_source_digest_sha256": "aeccab488efe102c8e878e8ce12430a86fe300fc0a2e82f39836759bdc681cf8",
+  "inputs": {
+   "taxonomy": {
+    "sha256": "7699d52dbdfe5ac8011a1b739ac086ccdd74c932c8de82d811e6998ab8153d72",
+    "canonicalisation": "canonical-json-v1"
+   },
+   "cooccurrence_rows": {
+    "sha256": "b6fe4bcc86b4489f28c9f16c81918911586b34c43782b3d26e5b71477311fa03",
+    "rows": 909,
+    "canonicalisation": "counts+public-query-v1"
+   }
+  },
   "total_works_query": "https://api.openalex.org/works?filter=to_publication_date:1985-12-31&per-page=1"
  },
  "excluded_topics": [

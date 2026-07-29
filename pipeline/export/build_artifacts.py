@@ -14,7 +14,7 @@ Run:  python -m pipeline.export.build_artifacts
 from __future__ import annotations
 
 import json
-import hashlib
+from pathlib import Path
 
 from pipeline.export.validate_curated import load_all
 from pipeline.metric.gap_score import (
@@ -26,12 +26,13 @@ from pipeline.metric.gap_score import (
 )
 from pipeline.openalex_client import OpenAlexClient
 from pipeline.paths import ARTIFACTS_DIR, COOCCURRENCE_DIR, TAXONOMY_PATH, ensure_dirs
+from pipeline.provenance import input_fingerprints, sha256_payload
 
 PRE1986_TOTAL_WORKS = 38_458_832
 TOP_GAPS_EXPORTED = 500
 DATA_SNAPSHOT_DATE = "2026-07-27"
 METRIC_VERSION = "v2-bridge-k5"
-ARTIFACT_SCHEMA_VERSION = 2
+ARTIFACT_SCHEMA_VERSION = 3
 ANALYSIS_TOPICS_PLANNED = 1458
 
 # Measured outcome of the pre-registered validation. Travels with the artifact so a consumer
@@ -65,7 +66,7 @@ def build_taxonomy() -> dict:
     }
 
 
-def build_computed_layer(names: dict[str, str]) -> dict:
+def build_computed_layer(names: dict[str, str], inputs: dict) -> dict:
     """Score the pre-1986 sweep and export the top pairs with per-row provenance."""
     matrix = load_matrix("pre1986", PRE1986_TOTAL_WORKS)
     results = score_pairs(matrix, load_taxonomy_counts(), closeness="bridge")
@@ -96,7 +97,6 @@ def build_computed_layer(names: dict[str, str]) -> dict:
 
     excluded = sorted(generalist_topics(matrix))
     pending = ANALYSIS_TOPICS_PLANNED - len(matrix.topic_ids)
-    all_row_urls = sorted(url for url in source_urls if url)
     return {
         "schema_version": ARTIFACT_SCHEMA_VERSION,
         "status": "unvalidated",
@@ -123,10 +123,7 @@ def build_computed_layer(names: dict[str, str]) -> dict:
             ),
         },
         "provenance": {
-            "row_sources_count": len(all_row_urls),
-            "row_source_digest_sha256": hashlib.sha256(
-                "\n".join(all_row_urls).encode()
-            ).hexdigest(),
+            "inputs": inputs,
             "total_works_query": client.build_public_url(
                 "works",
                 {
@@ -147,6 +144,22 @@ def build_computed_layer(names: dict[str, str]) -> dict:
     }
 
 
+def _assert_snapshot_inputs_unchanged(out_dir: Path, inputs: dict) -> None:
+    """Refuse to silently reuse a snapshot label for different measured inputs."""
+    manifest_path = out_dir / "manifest.json"
+    if not manifest_path.exists():
+        return
+    previous = json.loads(manifest_path.read_text(encoding="utf-8"))
+    previous_inputs = previous.get("snapshot", {}).get("inputs")
+    # Schema v2 did not fingerprint content. Permit the one-way schema upgrade; every subsequent
+    # build of this snapshot label is immutable with respect to measured inputs.
+    if previous_inputs is not None and previous_inputs != inputs:
+        raise SystemExit(
+            f"{out_dir} already identifies different input content; choose a new "
+            "DATA_SNAPSHOT_DATE instead of overwriting a published snapshot"
+        )
+
+
 def main() -> None:
     ensure_dirs()
     if not (COOCCURRENCE_DIR / "pre1986").exists():
@@ -155,57 +168,65 @@ def main() -> None:
     version = f"{DATA_SNAPSHOT_DATE}/{METRIC_VERSION}"
     out_dir = ARTIFACTS_DIR / DATA_SNAPSHOT_DATE / METRIC_VERSION
     out_dir.mkdir(parents=True, exist_ok=True)
+    inputs = input_fingerprints("pre1986")
+    _assert_snapshot_inputs_unchanged(out_dir, inputs)
 
     taxonomy = build_taxonomy()
     names = {t["id"]: t["display_name"] for t in taxonomy["topics"]}
     curated = load_all()
-    computed = build_computed_layer(names)
+    computed = build_computed_layer(names, inputs)
     client = OpenAlexClient()
 
-    artifacts = {
+    payloads = {
         "taxonomy.json": taxonomy,
         "curated.json": curated,
         "computed-gaps.json": computed,
-        "manifest.json": {
-            "version": version,
-            "schema_version": ARTIFACT_SCHEMA_VERSION,
-            "source": "OpenAlex REST API",
-            "snapshot": {
-                "date": DATA_SNAPSHOT_DATE,
-                "slice": "pre1986",
-                "to_publication_date": "1985-12-31",
-                "total_works": PRE1986_TOTAL_WORKS,
-                "row_source_digest_sha256": computed["provenance"][
-                    "row_source_digest_sha256"
-                ],
-            },
-            "source_queries": {
-                "total_works": computed["provenance"]["total_works_query"],
-                "taxonomy_counts": {
-                    level: client.build_public_url(level, {"per-page": 1})
-                    for level in ("domains", "fields", "subfields", "topics")
-                },
-            },
-            "metric": {
-                "version": METRIC_VERSION,
-                "closeness": "bridge",
-                "bridge_k": BRIDGE_K,
-            },
-            "counts": {
-                "domains": len(taxonomy["domains"]),
-                "fields": len(taxonomy["fields"]),
-                "subfields": len(taxonomy["subfields"]),
-                "topics": len(taxonomy["topics"]),
-                **{layer: len(entries) for layer, entries in curated.items()},
-                "computed_gaps": len(computed["gaps"]),
-                "excluded_topics": len(computed["excluded_topics"]),
-            },
-            "computed_layer_status": computed["status"],
-            "computed_layer_verdict": VALIDATION["verdict"],
-        },
     }
+    manifest = {
+        "version": version,
+        "schema_version": ARTIFACT_SCHEMA_VERSION,
+        "source": "OpenAlex REST API",
+        "snapshot": {
+            "date": DATA_SNAPSHOT_DATE,
+            "slice": "pre1986",
+            "to_publication_date": "1985-12-31",
+            "total_works": PRE1986_TOTAL_WORKS,
+            "inputs": inputs,
+        },
+        "files": {
+            filename: {
+                "sha256": sha256_payload(payload),
+                "canonicalisation": "canonical-json-v1",
+            }
+            for filename, payload in payloads.items()
+        },
+        "source_queries": {
+            "total_works": computed["provenance"]["total_works_query"],
+            "taxonomy_counts": {
+                level: client.build_public_url(level, {"per-page": 1})
+                for level in ("domains", "fields", "subfields", "topics")
+            },
+        },
+        "metric": {
+            "version": METRIC_VERSION,
+            "closeness": "bridge",
+            "bridge_k": BRIDGE_K,
+        },
+        "counts": {
+            "domains": len(taxonomy["domains"]),
+            "fields": len(taxonomy["fields"]),
+            "subfields": len(taxonomy["subfields"]),
+            "topics": len(taxonomy["topics"]),
+            **{layer: len(entries) for layer, entries in curated.items()},
+            "computed_gaps": len(computed["gaps"]),
+            "excluded_topics": len(computed["excluded_topics"]),
+        },
+        "computed_layer_status": computed["status"],
+        "computed_layer_verdict": VALIDATION["verdict"],
+    }
+    payloads["manifest.json"] = manifest
 
-    for filename, payload in artifacts.items():
+    for filename, payload in payloads.items():
         path = out_dir / filename
         path.write_text(json.dumps(payload, indent=1), encoding="utf-8")
         print(f"  {filename:<20} {path.stat().st_size / 1024:>8.1f} KB")
