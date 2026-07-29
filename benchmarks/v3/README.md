@@ -31,6 +31,18 @@ It must fail until the benchmark is frozen and complete. Case files may not cont
 percentile, or other metric-output fields; the validator rejects them to make score-driven case
 selection visible.
 
+For citation and current MeSH metadata audits, a small EFetch client is available:
+
+```bash
+NCBI_EMAIL=you@example.org python -m pipeline.pubmed_client 3797213 3075738
+```
+
+NCBI asks software clients to send a registered tool/email identity. `NCBI_API_KEY` is optional.
+The client batches at most 200 PMIDs, strips both values from cache provenance and errors, and
+stores no abstract text. Its output is always labelled `maintained_current_pubmed`; it is not the
+archived-baseline pipeline. Users of NCBI data remain subject to the
+[NCBI disclaimer and copyright notice](https://www.ncbi.nlm.nih.gov/home/about/policies/).
+
 The two current mappings were verified against NLM's current MeSH service. They are labelled
 `maintained_current`, not `period_appropriate`. Current PubMed records and the annual baseline are
 maintained to newer vocabulary, while NLM's static baseline repository begins in 2002:

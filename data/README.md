@@ -1,8 +1,9 @@
 # Local pipeline state
 
 This directory holds regenerable API caches, the fetched OpenAlex taxonomy, and co-occurrence
-rows. Those files are intentionally ignored: the current pre-1986 pilot is tens of megabytes and
-the replacement MEDLINE experiment will be larger.
+rows. It also holds trimmed PubMed metadata fetched for benchmark mapping audits. Those files are
+intentionally ignored: the current pre-1986 pilot is tens of megabytes and the replacement MEDLINE
+experiment will be larger.
 
 The committed manifest pins canonical SHA-256 digests of the exact taxonomy and row content used
 to build each artifact. Canonicalisation excludes fetch timestamps and strips `mailto` and
@@ -29,3 +30,6 @@ To clean credential-bearing provenance left by versions before the public/privat
 ```bash
 python -m pipeline.provenance
 ```
+
+The PubMed cache retains citation and MeSH metadata only, never abstracts, request email addresses,
+or API keys. It is maintained-current metadata and is not evidence of historical vocabulary state.

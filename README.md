@@ -169,7 +169,8 @@ third formula on the canonical pair. Its
 [`benchmarks/v3/cases.json`](benchmarks/v3/cases.json) contract is deliberately still a draft:
 2/8 positives, 0/8 hard negatives, 0/8 distant negatives, and no eligible held-out cutoff. Run
 `python -m pipeline.benchmark.validate_v3` to see the blockers; only `--require-ready` is a
-shipping gate.
+shipping gate. `pipeline.pubmed_client` can batch citation/MeSH metadata for mapping audits, but its
+output is explicitly maintained-current and cannot satisfy the historical-indexing gate.
 
 ## Licence
 
