@@ -28,7 +28,9 @@ The first command validates the record and reports its blockers. The second is i
 the legacy MBR download host is unavailable. The public 2006, 2010, 2011, and 2012 production-year
 MeSH descriptor archives are now parsed and pinned by SHA-256, but `sources.json` keeps records and
 vocabulary as separate gates because vocabulary files alone cannot reconstruct period-appropriate
-indexing.
+indexing. A support request is prepared at
+`plans/requests/nlm-historical-medline-access.md`; it is explicitly not sent and contains no
+maintainer contact details.
 
 The archived-baseline reader is implemented and fixture-tested:
 

@@ -22,10 +22,18 @@
         {
           "label": "NLM MBR reference material, now served only through an Archive-It wrapper",
           "url": "https://lhncbc.nlm.nih.gov/ii/information/MBR/MEDLINE_Baseline_Repository_Detail_2017.pdf"
+        },
+        {
+          "label": "NLM archive of historical distribution documentation and file inventories",
+          "url": "https://www.nlm.nih.gov/bsd/licensee/archive_doc.html"
+        },
+        {
+          "label": "NLM 2012 inventory, still live with 684 filenames and measured sizes",
+          "url": "https://www.nlm.nih.gov/bsd/licensee/2012_stats/baseline_med_filecount.html"
         }
       ],
-      "observation": "The documented mbr.nlm.nih.gov host did not resolve. The surviving Lister Hill URL redirected to an Archive-It HTML capture rather than a raw baseline file.",
-      "next_action": "Ask NLM Support whether raw annual baseline XML for 2006, 2010, 2011, and 2012 remains obtainable, and record exact file URLs and checksums before changing this status."
+      "observation": "The documented mbr.nlm.nih.gov host and the HTTPS form of the former hidden FTP distribution path returned 404. NLM's archive index still names the annual distribution inventories, but the 2006, 2010, and 2011 inventory links returned 404; the live 2012 page inventories 684 files and 20,494,848 records but does not provide raw download URLs or checksums. NLM's launch notice says the raw FTP and query tool were originally controlled for registered licensees.",
+      "next_action": "Submit the prepared NLM Support request in plans/requests/nlm-historical-medline-access.md. If NLM identifies an access path, pin the complete file set by URL, byte count, SHA-256, and parsed record count before changing this status."
     },
     {
       "id": "historical-mesh-vocabularies",
