@@ -32,7 +32,7 @@
     "blocker": "timescale",
     "summary": "Whether humans can reproduce and develop normally across generations in partial gravity and elevated radiation. Answering it requires observations spanning generations in an environment that does not yet exist. Rodent analogues answer a related but different question.",
     "sources": [
-      { "label": "NASA Human Research Program — evidence reports", "url": "https://humanresearchroadmap.nasa.gov/evidence/" }
+      { "label": "NASA — SpinSat biological and physical sciences questions", "url": "https://www.nasa.gov/spinsat-driving-documents/" }
     ]
   },
   {
@@ -41,7 +41,7 @@
     "blocker": "timescale",
     "summary": "Grand unified theories predict proton decay; experiments have pushed the lower bound on the lifetime past 10^34 years. Testing further means instrumenting ever more protons for ever longer, since no single proton can be watched for its lifetime. Each order of magnitude costs a detector generation.",
     "sources": [
-      { "label": "Super-Kamiokande — proton decay searches", "url": "https://www-sk.icrr.u-tokyo.ac.jp/en/sk/physics/protondecay/" }
+      { "label": "Super-Kamiokande — proton decay searches", "url": "https://www-sk.icrr.u-tokyo.ac.jp/en/sk/about/research/" }
     ]
   }
 ]
