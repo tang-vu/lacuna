@@ -67,6 +67,8 @@ Split cases into development and held-out sets. The fish-oil/Raynaud case may re
 diagnostic, but it cannot be the sole or final acceptance test. At least two held-out cutoffs must
 be 2002 or later so their vocabulary state can be reconstructed from an official archived
 baseline. Any earlier case without a contemporaneous source is excluded from the shipping gate.
+Before any formula is run, freeze at least four held-out cases of each kind so the nominal
+eight-case minimum cannot be satisfied almost entirely with development examples.
 
 ## Candidate families
 

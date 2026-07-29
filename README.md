@@ -165,7 +165,11 @@ Persistent project rules live in `AGENTS.md`. Repeatable workflows are repositor
 The interpretation layer remains gated off. The proposed replacement experiment is documented in
 [`plans/metric-v3-validation-plan.md`](plans/metric-v3-validation-plan.md); it moves the biomedical
 pilot to period-appropriate MeSH terms and a multi-case held-out benchmark rather than tuning a
-third formula on the canonical pair.
+third formula on the canonical pair. Its
+[`benchmarks/v3/cases.json`](benchmarks/v3/cases.json) contract is deliberately still a draft:
+2/8 positives, 0/8 hard negatives, 0/8 distant negatives, and no eligible held-out cutoff. Run
+`python -m pipeline.benchmark.validate_v3` to see the blockers; only `--require-ready` is a
+shipping gate.
 
 ## Licence
 

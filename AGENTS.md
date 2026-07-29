@@ -16,6 +16,10 @@ the expense of gap detection, validation, or traceability.
   on. They are measurements from a failed method.
 - Do not add the LLM interpretation layer until a replacement metric passes its pre-registered
   benchmark.
+- Current PubMed/MeSH indexing is maintained to newer vocabularies. Never describe it as
+  period-appropriate historical indexing; the official static baseline archive begins in 2002.
+- The v3 benchmark is a draft until `python -m pipeline.benchmark.validate_v3 --require-ready`
+  passes. Structural validation of an incomplete draft is not scientific validation.
 
 ## Non-negotiables
 
@@ -33,6 +37,7 @@ the expense of gap detection, validation, or traceability.
 python -m pytest -m "not slow"
 python -m pytest
 python -m pipeline.export.validate_curated
+python -m pipeline.benchmark.validate_v3
 python -m pipeline.export.build_artifacts
 npm --prefix web run build
 ```

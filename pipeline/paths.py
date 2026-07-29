@@ -19,6 +19,9 @@ COOCCURRENCE_DIR = DATA_DIR / "cooccurrence"
 # Published, versioned output the frontend reads. Committed.
 ARTIFACTS_DIR = REPO_ROOT / "artifacts"
 
+# Pre-metric benchmark definitions. Committed and reviewed before a candidate formula sees them.
+BENCHMARKS_DIR = REPO_ROOT / "benchmarks"
+
 TAXONOMY_PATH = DATA_DIR / "taxonomy.json"
 
 
