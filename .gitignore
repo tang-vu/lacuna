@@ -7,6 +7,8 @@ __pycache__/
 .venv/
 venv/
 .pytest_cache/
+.pre-commit-cache/
+.uv-cache/
 .env
 
 node_modules/

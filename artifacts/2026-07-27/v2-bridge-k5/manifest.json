@@ -1,0 +1,39 @@
+{
+ "version": "2026-07-27/v2-bridge-k5",
+ "schema_version": 2,
+ "source": "OpenAlex REST API",
+ "snapshot": {
+  "date": "2026-07-27",
+  "slice": "pre1986",
+  "to_publication_date": "1985-12-31",
+  "total_works": 38458832,
+  "row_source_digest_sha256": "aeccab488efe102c8e878e8ce12430a86fe300fc0a2e82f39836759bdc681cf8"
+ },
+ "source_queries": {
+  "total_works": "https://api.openalex.org/works?filter=to_publication_date:1985-12-31&per-page=1",
+  "taxonomy_counts": {
+   "domains": "https://api.openalex.org/domains?per-page=1",
+   "fields": "https://api.openalex.org/fields?per-page=1",
+   "subfields": "https://api.openalex.org/subfields?per-page=1",
+   "topics": "https://api.openalex.org/topics?per-page=1"
+  }
+ },
+ "metric": {
+  "version": "v2-bridge-k5",
+  "closeness": "bridge",
+  "bridge_k": 5
+ },
+ "counts": {
+  "domains": 4,
+  "fields": 26,
+  "subfields": 252,
+  "topics": 4516,
+  "open": 5,
+  "blocked": 5,
+  "blind-spots": 6,
+  "computed_gaps": 500,
+  "excluded_topics": 1
+ },
+ "computed_layer_status": "unvalidated",
+ "computed_layer_verdict": "FAIL"
+}

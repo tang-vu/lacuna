@@ -1,0 +1,47 @@
+[
+  {
+    "id": "exoplanet-surface-imaging",
+    "title": "Direct imaging of an exoplanet's surface",
+    "blocker": "instrumentation",
+    "summary": "Resolving surface features on a planet around another star is well-posed and uncontroversially desirable. It is blocked by angular resolution: separating surface detail at interstellar distance needs apertures or interferometric baselines far beyond anything built or funded. No idea is missing; the instrument is.",
+    "sources": [
+      { "label": "NASA — Exoplanet Exploration, direct imaging", "url": "https://science.nasa.gov/exoplanets/how-we-find-and-characterize/" }
+    ]
+  },
+  {
+    "id": "direct-mantle-sampling",
+    "title": "A direct sample of the Earth's lower mantle",
+    "blocker": "instrumentation",
+    "summary": "Everything known about the lower mantle is inferred from seismology, xenoliths and high-pressure experiments. The deepest borehole ever drilled, the Kola Superdeep, reached about 12 km — still within the crust. Drilling technology, not theory, is the constraint.",
+    "sources": [
+      { "label": "International Ocean Discovery Program — Mohole to Mantle", "url": "https://www.iodp.org/" }
+    ]
+  },
+  {
+    "id": "randomised-lifetime-nutrition-trials",
+    "title": "Randomised trials of lifetime dietary exposure in humans",
+    "blocker": "ethics",
+    "summary": "Most claims about long-term diet rest on observational cohorts with well-known confounding. The trial that would settle them — randomising people to decades of controlled intake — cannot ethically be run, and compliance would not survive it. The uncertainty is structural, not a gap in anyone's ideas.",
+    "sources": [
+      { "label": "Ioannidis, The Challenge of Reforming Nutritional Epidemiology (JAMA 2018)", "url": "https://jamanetwork.com/journals/jama/article-abstract/2698337" }
+    ]
+  },
+  {
+    "id": "multigenerational-spaceflight-effects",
+    "title": "Biological effects of multi-generational spaceflight",
+    "blocker": "timescale",
+    "summary": "Whether humans can reproduce and develop normally across generations in partial gravity and elevated radiation. Answering it requires observations spanning generations in an environment that does not yet exist. Rodent analogues answer a related but different question.",
+    "sources": [
+      { "label": "NASA Human Research Program — evidence reports", "url": "https://humanresearchroadmap.nasa.gov/evidence/" }
+    ]
+  },
+  {
+    "id": "proton-decay",
+    "title": "Whether the proton decays",
+    "blocker": "timescale",
+    "summary": "Grand unified theories predict proton decay; experiments have pushed the lower bound on the lifetime past 10^34 years. Testing further means instrumenting ever more protons for ever longer, since no single proton can be watched for its lifetime. Each order of magnitude costs a detector generation.",
+    "sources": [
+      { "label": "Super-Kamiokande — proton decay searches", "url": "https://www-sk.icrr.u-tokyo.ac.jp/en/sk/physics/protondecay/" }
+    ]
+  }
+]

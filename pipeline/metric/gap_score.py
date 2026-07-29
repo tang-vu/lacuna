@@ -25,6 +25,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from pipeline.paths import COOCCURRENCE_DIR, TAXONOMY_PATH
+from pipeline.openalex_client import sanitise_url
 
 # Guards. A deficit below these is unmeasurable rather than meaningful.
 MIN_MARGINAL = 1000  # works carrying the topic within the slice
@@ -41,6 +42,7 @@ class Matrix:
     marginals: np.ndarray  # (rows,) works per row topic in this slice
     ceilings: np.ndarray  # (rows,) upper bound on any partner absent from a truncated row
     total_works: int
+    source_urls: list[str] | None = None
 
     def row_index(self, topic_id: str) -> int:
         return self.topic_ids.index(topic_id)
@@ -79,7 +81,8 @@ def load_matrix(slice_name: str, total_works: int) -> Matrix:
             counts[i, col_index[partner]] = count
         counts[i, col_index[row["topic"]]] = 0.0  # self-co-occurrence is meaningless
 
-    return Matrix(topic_ids, columns, counts, marginals, ceilings, total_works)
+    source_urls = [sanitise_url(r.get("source_url", "")) for r in rows]
+    return Matrix(topic_ids, columns, counts, marginals, ceilings, total_works, source_urls)
 
 
 # Works in OpenAlex with no date filter, measured 2026-07-27. Used to project all-time topic
@@ -285,6 +288,7 @@ def score_pairs(
     reported = (counts_block > 0) | (counts_block.T > 0)
     bound = np.minimum(matrix.ceilings[:, None], matrix.ceilings[None, :])
     observed = np.where(reported, np.maximum(counts_block, counts_block.T), bound)
+    observed_kinds = np.where(reported | (bound == 0), "exact", "upper_bound")
 
     expected = np.outer(matrix.marginals, matrix.marginals) / matrix.total_works
 
@@ -305,6 +309,7 @@ def score_pairs(
             "topic_a": matrix.topic_ids[rows[k]],
             "topic_b": matrix.topic_ids[cols[k]],
             "observed": float(observed[rows[k], cols[k]]),
+            "observed_kind": str(observed_kinds[rows[k], cols[k]]),
             "expected": round(float(expected[rows[k], cols[k]]), 2),
             "s_a": int(matrix.marginals[rows[k]]),
             "s_b": int(matrix.marginals[cols[k]]),
@@ -315,6 +320,78 @@ def score_pairs(
         }
         for k in order
     ]
+
+
+def pair_evidence(
+    matrix: Matrix,
+    taxonomy_counts: dict[str, int],
+    topic_a: str,
+    topic_b: str,
+    *,
+    k: int = BRIDGE_K,
+) -> dict:
+    """Score one pair without allocating the full pairwise similarity matrix."""
+    if topic_a == topic_b:
+        raise ValueError("a gap needs two distinct topics")
+
+    try:
+        row_a, row_b = matrix.row_index(topic_a), matrix.row_index(topic_b)
+    except ValueError as exc:
+        missing = [topic for topic in (topic_a, topic_b) if topic not in matrix.topic_ids]
+        raise ValueError(f"topic not present in fetched sweep: {', '.join(missing)}") from exc
+
+    col_index = {topic: index for index, topic in enumerate(matrix.column_ids)}
+    col_a, col_b = col_index[topic_a], col_index[topic_b]
+    vectors = association_vectors(matrix, column_marginals(matrix, taxonomy_counts))
+
+    shared = np.minimum(vectors[row_a], vectors[row_b]).copy()
+    shared[col_a] = 0.0
+    shared[col_b] = 0.0
+    top = np.argsort(-shared)[:k]
+    bridges = [
+        {"topic": matrix.column_ids[index], "strength": round(float(shared[index]), 5)}
+        for index in top
+        if shared[index] > 0
+    ]
+    similarity = float(shared[top].sum())
+
+    direct = max(matrix.counts[row_a, col_b], matrix.counts[row_b, col_a])
+    if direct > 0:
+        observed = float(direct)
+        observed_kind = "exact"
+    else:
+        observed = float(min(matrix.ceilings[row_a], matrix.ceilings[row_b]))
+        observed_kind = "exact" if observed == 0 else "upper_bound"
+
+    expected = float(matrix.marginals[row_a] * matrix.marginals[row_b] / matrix.total_works)
+    p_value = float(poisson_cdf(np.array([observed]), np.array([expected]))[0])
+    excluded = generalist_topics(matrix)
+    eligible = (
+        topic_a not in excluded
+        and topic_b not in excluded
+        and matrix.marginals[row_a] >= MIN_MARGINAL
+        and matrix.marginals[row_b] >= MIN_MARGINAL
+        and expected >= MIN_EXPECTED
+    )
+
+    source_urls = matrix.source_urls or [""] * len(matrix.topic_ids)
+    return {
+        "topic_a": topic_a,
+        "topic_b": topic_b,
+        "observed": observed,
+        "observed_kind": observed_kind,
+        "expected": round(expected, 2),
+        "s_a": int(matrix.marginals[row_a]),
+        "s_b": int(matrix.marginals[row_b]),
+        "similarity": round(similarity, 5),
+        "p_value": p_value,
+        "deficit_bits": round(-math.log10(max(p_value, 1e-300)), 2),
+        "gap_score": round(similarity * (1.0 - p_value), 5),
+        "eligible": eligible,
+        "excluded_as_generalist": [topic for topic in (topic_a, topic_b) if topic in excluded],
+        "bridges": bridges,
+        "row_source_urls": [source_urls[row_a], source_urls[row_b]],
+    }
 
 
 def load_taxonomy_counts() -> dict[str, int]:

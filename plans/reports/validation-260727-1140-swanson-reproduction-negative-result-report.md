@@ -22,9 +22,10 @@ score existed.
 Stable across sweep sizes — 39.8% at 575 topics, 39.8% at 833, 38.0% at 909. Not an artifact of
 incomplete data.
 
-**Negative controls pass.** Aquaculture Nutrition × Systemic Sclerosis ranks at top 72.2%, well
-below the 50th-percentile bar. The metric is not indiscriminate; it simply does not rank the
-target.
+**Negative-control evaluation is partial.** Aquaculture Nutrition × Systemic Sclerosis ranks at
+top 72.2%, well below the 50th-percentile bar. The second registered control was outside the
+incomplete 909-topic sweep and was not evaluated. The available result shows the metric is not
+indiscriminate, but it does not satisfy the full two-control gate.
 
 ## What the deficit half got right
 

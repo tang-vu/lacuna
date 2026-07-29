@@ -1,0 +1,228 @@
+{
+ "open": [
+  {
+   "id": "riemann-hypothesis",
+   "title": "The Riemann hypothesis",
+   "summary": "Whether every non-trivial zero of the Riemann zeta function has real part 1/2. Open since 1859. A proof would sharpen what is known about the distribution of prime numbers; a great deal of published number theory is currently stated conditionally on it holding.",
+   "topics": [
+    "T10061"
+   ],
+   "posed": 1859,
+   "sources": [
+    {
+     "label": "Clay Mathematics Institute \u2014 Millennium Problems",
+     "url": "https://www.claymath.org/millennium-problems/"
+    },
+    {
+     "label": "Bombieri, official problem description (PDF)",
+     "url": "https://www.claymath.org/wp-content/uploads/2022/05/riemann.pdf"
+    }
+   ]
+  },
+  {
+   "id": "p-versus-np",
+   "title": "P versus NP",
+   "summary": "Whether every problem whose solution can be verified quickly can also be solved quickly. Formalised in 1971. The answer determines whether large parts of cryptography rest on genuine hardness or on an unproven assumption.",
+   "posed": 1971,
+   "sources": [
+    {
+     "label": "Clay Mathematics Institute \u2014 Millennium Problems",
+     "url": "https://www.claymath.org/millennium-problems/"
+    },
+    {
+     "label": "Cook, official problem description (PDF)",
+     "url": "https://www.claymath.org/wp-content/uploads/2022/06/pvsnp.pdf"
+    }
+   ]
+  },
+  {
+   "id": "navier-stokes-smoothness",
+   "title": "Navier\u2013Stokes existence and smoothness",
+   "summary": "Whether smooth solutions to the Navier\u2013Stokes equations always exist in three dimensions, or whether they can blow up in finite time. The equations are used daily in engineering; nobody has shown they always behave.",
+   "posed": 2000,
+   "sources": [
+    {
+     "label": "Clay Mathematics Institute \u2014 Millennium Problems",
+     "url": "https://www.claymath.org/millennium-problems/"
+    },
+    {
+     "label": "Fefferman, official problem description (PDF)",
+     "url": "https://www.claymath.org/wp-content/uploads/2022/05/navierstokes.pdf"
+    }
+   ]
+  },
+  {
+   "id": "hard-problem-of-consciousness",
+   "title": "The hard problem of consciousness",
+   "summary": "Why physical processing in a brain is accompanied by subjective experience at all. Distinguished by Chalmers from the 'easy' problems of explaining discrimination, integration and report, which are hard but not of this kind. It is contested whether this is a scientific question, which is itself part of the problem.",
+   "posed": 1995,
+   "sources": [
+    {
+     "label": "Chalmers, Facing Up to the Problem of Consciousness (1995)",
+     "url": "https://consc.net/papers/facing.html"
+    },
+    {
+     "label": "Stanford Encyclopedia of Philosophy \u2014 Consciousness",
+     "url": "https://plato.stanford.edu/entries/consciousness/"
+    }
+   ]
+  },
+  {
+   "id": "nature-of-dark-matter",
+   "title": "What dark matter is made of",
+   "summary": "Roughly a quarter of the mass-energy of the universe is inferred from gravitational effects but has never been directly detected. Decades of increasingly sensitive direct-detection experiments have returned null results, ruling out much of the parameter space once considered most likely.",
+   "sources": [
+    {
+     "label": "Particle Data Group \u2014 Dark Matter review",
+     "url": "https://pdg.lbl.gov/2023/reviews/rpp2023-rev-dark-matter.pdf"
+    }
+   ]
+  }
+ ],
+ "blocked": [
+  {
+   "id": "exoplanet-surface-imaging",
+   "title": "Direct imaging of an exoplanet's surface",
+   "blocker": "instrumentation",
+   "summary": "Resolving surface features on a planet around another star is well-posed and uncontroversially desirable. It is blocked by angular resolution: separating surface detail at interstellar distance needs apertures or interferometric baselines far beyond anything built or funded. No idea is missing; the instrument is.",
+   "sources": [
+    {
+     "label": "NASA \u2014 Exoplanet Exploration, direct imaging",
+     "url": "https://science.nasa.gov/exoplanets/how-we-find-and-characterize/"
+    }
+   ]
+  },
+  {
+   "id": "direct-mantle-sampling",
+   "title": "A direct sample of the Earth's lower mantle",
+   "blocker": "instrumentation",
+   "summary": "Everything known about the lower mantle is inferred from seismology, xenoliths and high-pressure experiments. The deepest borehole ever drilled, the Kola Superdeep, reached about 12 km \u2014 still within the crust. Drilling technology, not theory, is the constraint.",
+   "sources": [
+    {
+     "label": "International Ocean Discovery Program \u2014 Mohole to Mantle",
+     "url": "https://www.iodp.org/"
+    }
+   ]
+  },
+  {
+   "id": "randomised-lifetime-nutrition-trials",
+   "title": "Randomised trials of lifetime dietary exposure in humans",
+   "blocker": "ethics",
+   "summary": "Most claims about long-term diet rest on observational cohorts with well-known confounding. The trial that would settle them \u2014 randomising people to decades of controlled intake \u2014 cannot ethically be run, and compliance would not survive it. The uncertainty is structural, not a gap in anyone's ideas.",
+   "sources": [
+    {
+     "label": "Ioannidis, The Challenge of Reforming Nutritional Epidemiology (JAMA 2018)",
+     "url": "https://jamanetwork.com/journals/jama/article-abstract/2698337"
+    }
+   ]
+  },
+  {
+   "id": "multigenerational-spaceflight-effects",
+   "title": "Biological effects of multi-generational spaceflight",
+   "blocker": "timescale",
+   "summary": "Whether humans can reproduce and develop normally across generations in partial gravity and elevated radiation. Answering it requires observations spanning generations in an environment that does not yet exist. Rodent analogues answer a related but different question.",
+   "sources": [
+    {
+     "label": "NASA Human Research Program \u2014 evidence reports",
+     "url": "https://humanresearchroadmap.nasa.gov/evidence/"
+    }
+   ]
+  },
+  {
+   "id": "proton-decay",
+   "title": "Whether the proton decays",
+   "blocker": "timescale",
+   "summary": "Grand unified theories predict proton decay; experiments have pushed the lower bound on the lifetime past 10^34 years. Testing further means instrumenting ever more protons for ever longer, since no single proton can be watched for its lifetime. Each order of magnitude costs a detector generation.",
+   "sources": [
+    {
+     "label": "Super-Kamiokande \u2014 proton decay searches",
+     "url": "https://www-sk.icrr.u-tokyo.ac.jp/en/sk/physics/protondecay/"
+    }
+   ]
+  }
+ ],
+ "blind-spots": [
+  {
+   "id": "non-academic-knowledge",
+   "title": "Craft, practitioner and indigenous knowledge",
+   "kind": "coverage-non-academic",
+   "summary": "OpenAlex indexes academic publishing. Knowledge held by practitioners and transmitted by apprenticeship, demonstration or oral tradition is not merely under-represented here \u2014 it is absent, because it was never a paper. Nothing in this map can register a gap in it, including the gap that it is missing.",
+   "severity": "total",
+   "sources": [
+    {
+     "label": "Local Contexts \u2014 Traditional Knowledge Labels",
+     "url": "https://localcontexts.org/labels/traditional-knowledge-labels/"
+    }
+   ]
+  },
+  {
+   "id": "humanities-reference-linkage",
+   "title": "Humanities citations are only partly linked",
+   "kind": "coverage-humanities",
+   "summary": "Reference linkage in OpenAlex runs near 95% for STEM but around 70% for arts and humanities, where monographs and non-English venues carry much of the scholarship. Every co-occurrence and citation measure in this project is correspondingly weaker there, and a computed gap in the humanities means less than the same number in molecular biology.",
+   "severity": "partial",
+   "sources": [
+    {
+     "label": "Reference coverage of OpenAlex compared to Web of Science and Scopus",
+     "url": "https://doi.org/10.1007/s11192-025-05293-3"
+    },
+    {
+     "label": "An analysis of the suitability of OpenAlex for bibliometric analyses",
+     "url": "https://arxiv.org/pdf/2404.17663"
+    }
+   ]
+  },
+  {
+   "id": "pre-1970-sparsity",
+   "title": "Literature before about 1970 thins out sharply",
+   "kind": "coverage-historical",
+   "summary": "Measured on 2026-07-27: OpenAlex holds roughly 1.38M works published in 1980, 1.05M in 1970, but only 305K in 1950 \u2014 about a fifth of the 1980 density. Historical analyses become progressively less trustworthy the further back they reach, and an apparent gap in older literature may simply be an unindexed one.",
+   "severity": "partial",
+   "measured": {
+    "works_1980": 1383251,
+    "works_1970": 1051187,
+    "works_1950": 304575
+   }
+  },
+  {
+   "id": "ontology-anachronism",
+   "title": "Historical slices use today's ontology, not the period's",
+   "kind": "ontology-anachronism",
+   "summary": "OpenAlex assigns topics with a model trained on the modern corpus and applies it retroactively. Filtering to works published before 1986 therefore does not reconstruct the literature as it was organised in 1986 \u2014 it projects the 2026 classification backwards onto it. Any claim about what was knowable at a past date inherits this distortion.",
+   "severity": "structural"
+  },
+  {
+   "id": "computed-gap-layer-unvalidated",
+   "title": "The computed gap layer failed its own validation",
+   "kind": "method-failure",
+   "summary": "The Swanson-style metric this project was built around does not reproduce the canonical result it was tested against. On pre-1986 data the fish-oil / Raynaud's pair ranks at top 30.8% of scored pairs against a pre-registered bar of top 5%. Two metric designs failed the same way: 'structurally close but rarely co-occurring' is dominated by adjacent clinical specialties that split papers between them rather than by holes in knowledge. No computed gaps are published as discoveries.",
+   "severity": "total",
+   "measured": {
+    "target_percentile_cosine": 38.0,
+    "target_percentile_bridge": 30.8,
+    "preregistered_bar": 5.0
+   },
+   "sources": [
+    {
+     "label": "Validation report",
+     "url": "plans/reports/validation-260727-1140-swanson-reproduction-negative-result-report.md"
+    },
+    {
+     "label": "Pre-registration",
+     "url": "docs/metric-validation-preregistration.md"
+    }
+   ]
+  },
+  {
+   "id": "classifier-dumping-grounds",
+   "title": "Some topics are dumping grounds for unclassifiable work",
+   "kind": "coverage-artifact",
+   "summary": "OpenAlex assigns a topic to every work, so works with thin metadata land wherever the classifier defaults. 'Military Technology and Strategies' holds 22.3M works \u2014 7% of the entire corpus \u2014 and 'Diverse Scientific and Economic Studies' holds 5.1M. These are artifacts of classification, not fields of that size, and any measure averaged over them is meaningless.",
+   "severity": "partial",
+   "measured": {
+    "T14423_works": 22343805,
+    "T13370_works": 5142288
+   }
+  }
+ ]
+}

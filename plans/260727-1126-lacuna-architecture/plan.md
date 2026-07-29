@@ -1,6 +1,7 @@
 # lacuna — architecture plan
 
-**Status:** proposed, awaiting approval
+**Status:** implemented through the validation gate; metric v1 and v2 failed, so later phases are
+paused. See the linked negative-result report and `plans/metric-v3-validation-plan.md`.
 **Date:** 2026-07-27
 **Research inputs:** `plans/reports/researcher-260727-1126-*.md` (3 reports)
 **Verification:** all numbers below marked ✅ were measured live against `api.openalex.org` /

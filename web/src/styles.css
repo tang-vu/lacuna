@@ -1,0 +1,129 @@
+/* Measured and written content must never look alike. Curated cards are set in the body serif with
+   a neutral border; anything measured is monospace and tinted; the failed computed layer carries a
+   warning border it cannot be read without noticing. That distinction drives most of this file. */
+
+:root {
+  --bg: #fbfaf7;
+  --fg: #1c1b19;
+  --muted: #6b6862;
+  --rule: #ddd9d0;
+  --measured: #1d4e73;
+  --measured-bg: #eef4f9;
+  --warn: #8a3d12;
+  --warn-bg: #fdf1e8;
+  --curated-bg: #fff;
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #16151a;
+    --fg: #e9e6e0;
+    --muted: #9a958c;
+    --rule: #34313a;
+    --measured: #8fc4ea;
+    --measured-bg: #172733;
+    --warn: #e9a171;
+    --warn-bg: #2e1d13;
+    --curated-bg: #1e1d23;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 2.5rem 1.25rem 6rem;
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.6 Charter, Georgia, "Iowan Old Style", serif;
+}
+
+#app { max-width: 56rem; margin: 0 auto; }
+
+header { border-bottom: 1px solid var(--rule); padding-bottom: 1.75rem; margin-bottom: 2.5rem; }
+h1 { font-size: 2.75rem; margin: 0; letter-spacing: -0.02em; }
+.tagline { font-size: 1.15rem; margin: 0.35rem 0 1rem; color: var(--muted); }
+.lede { max-width: 40rem; margin: 0 0 1rem; }
+.version { font: 0.8rem var(--mono); color: var(--muted); margin: 0; }
+
+.layer { margin: 3.5rem 0; }
+h2 { font-size: 1.5rem; margin: 0 0 0.4rem; }
+.blurb { color: var(--muted); max-width: 42rem; margin: 0 0 1.5rem; }
+
+/* -- curated ------------------------------------------------------------- */
+
+.cards { display: grid; gap: 1rem; }
+.card-curated {
+  background: var(--curated-bg);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 1.1rem 1.25rem;
+}
+.card-curated h3 { margin: 0 0 0.6rem; font-size: 1.12rem; }
+.card-curated p { margin: 0.6rem 0; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.chip {
+  font: 0.72rem var(--mono);
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  color: var(--muted);
+  white-space: nowrap;
+}
+.chip-measured { color: var(--measured); background: var(--measured-bg); border-color: transparent; }
+.chip-unvalidated,
+.chip-verdict { color: var(--warn); background: var(--warn-bg); border-color: transparent; }
+
+.sources { margin: 0.75rem 0 0; padding-left: 1.1rem; font-size: 0.88rem; }
+.sources a { color: inherit; }
+
+.measured-values {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 0.15rem 1rem;
+  justify-content: start;
+  font: 0.82rem var(--mono);
+  background: var(--measured-bg);
+  color: var(--measured);
+  padding: 0.6rem 0.8rem;
+  border-radius: 4px;
+  margin: 0.75rem 0 0;
+}
+.measured-values dt { margin: 0; }
+.measured-values dd { margin: 0; text-align: right; }
+
+/* -- computed layer ------------------------------------------------------ */
+
+.layer-computed { border-left: 3px solid var(--warn); padding-left: 1.25rem; }
+.verdict {
+  background: var(--warn-bg);
+  border-radius: 6px;
+  padding: 1rem 1.15rem;
+  margin: 1.25rem 0;
+}
+.verdict p { margin: 0.7rem 0 0; }
+.verdict-detail { font: 0.85rem var(--mono); color: var(--warn); }
+.method { font-size: 0.88rem; color: var(--muted); margin: 0.5rem 0; }
+
+.table-scroll { overflow-x: auto; margin-top: 0.75rem; }
+table { border-collapse: collapse; width: 100%; font-size: 0.85rem; }
+th, td { text-align: left; padding: 0.45rem 0.6rem; border-bottom: 1px solid var(--rule); }
+th { font: 0.72rem var(--mono); color: var(--muted); text-transform: uppercase; }
+.num, .rank { font-family: var(--mono); text-align: right; color: var(--measured); }
+.pair { white-space: nowrap; }
+.verify { font: 0.75rem var(--mono); color: var(--measured); }
+
+/* -- tree ---------------------------------------------------------------- */
+
+.tree details { border-bottom: 1px solid var(--rule); }
+.tree summary { cursor: pointer; padding: 0.45rem 0; }
+.domain > summary { font-size: 1.05rem; font-weight: 600; }
+.field, .subfield { margin-left: 1.25rem; }
+.topics { list-style: none; margin: 0 0 0.6rem; padding: 0 0 0 1.25rem; }
+.topics li { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.88rem; }
+.topic-count { color: var(--muted); font-size: 0.78rem; }
+.more { color: var(--muted); font-style: italic; }
+
+.error { border: 1px solid var(--warn); border-radius: 6px; padding: 1.25rem; }

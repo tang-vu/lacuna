@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from datetime import datetime, timezone
 
 from pipeline.openalex_client import OpenAlexClient, RateLimited
 from pipeline.paths import COOCCURRENCE_DIR, TAXONOMY_PATH, ensure_dirs
@@ -41,10 +42,9 @@ MAX_GROUPS = 200  # API hard cap; 201 returns a pagination error.
 def load_topics(domains: list[str] | None) -> list[dict]:
     """Topics forming the analysis set, in ascending id order.
 
-    Ordering is deliberately neutral. OpenAlex topic ids carry no relation to topic size, so an
-    id-ordered sweep that gets interrupted leaves an unbiased subset rather than one skewed toward
-    large or biomedical topics. Sweeps span several days at the free tier's ~1000 calls/day, so
-    partial results are the normal case, not the exception.
+    Ordering is deterministic so a sweep can resume, but a partial ID-ordered prefix is not assumed
+    to be representative. Every artifact reports exact coverage and remains unvalidated until the
+    planned analysis set is complete.
     """
     taxonomy = json.loads(TAXONOMY_PATH.read_text(encoding="utf-8"))
     topics = taxonomy["topics"]
@@ -84,6 +84,7 @@ def fetch_row(client: OpenAlexClient, topic_id: str, slice_filters: dict) -> dic
         "partners": partners,
         "truncated": truncated,
         "ceiling": ceiling,
+        "fetched_at": datetime.now(timezone.utc).isoformat(),
         "source_url": payload.get("_lacuna_source_url", ""),
     }
 
