@@ -18,7 +18,7 @@ def test_current_candidate_ledger_separates_intake_from_benchmark_readiness():
 
     assert intake.counts == {
         "accepted": 2,
-        "proposed": 5,
+        "proposed": 10,
         "rejected": 2,
     }
     assert set(intake.accepted_benchmark_ids) == {
@@ -62,4 +62,17 @@ def test_candidate_intake_rejects_metric_outputs(tmp_path):
     path.write_text(json.dumps(payload), encoding="utf-8")
 
     with pytest.raises(CandidateContractError, match="metric output fields"):
+        audit_candidates(path, BENCHMARK_PATH)
+
+
+def test_proposed_candidate_requires_a_selection_source(tmp_path):
+    payload = json.loads(CANDIDATES_PATH.read_text(encoding="utf-8"))
+    proposed = next(item for item in payload["candidates"] if item["status"] == "proposed")
+    proposed["evidence"] = [
+        source for source in proposed["evidence"] if source["role"] != "selection_source"
+    ]
+    path = tmp_path / "candidates.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+
+    with pytest.raises(CandidateContractError, match="needs a selection source"):
         audit_candidates(path, BENCHMARK_PATH)

@@ -123,6 +123,34 @@ def audit_candidates(
                 isinstance(concept, dict) and bool(concept.get("label")),
                 f"{candidate_id}.{role}: missing concept label",
             )
+            if "source_entity_id" in concept:
+                _require(
+                    isinstance(concept["source_entity_id"], str)
+                    and ":" in concept["source_entity_id"],
+                    f"{candidate_id}.{role}: malformed source entity id",
+                )
+
+        bridge = candidate.get("bridge")
+        if bridge is not None:
+            _require(
+                isinstance(bridge, dict)
+                and bool(bridge.get("label"))
+                and isinstance(bridge.get("source_entity_id"), str)
+                and ":" in bridge["source_entity_id"],
+                f"{candidate_id}: malformed bridge identity",
+            )
+
+        if "source_discovery_year" in candidate:
+            _require(
+                isinstance(candidate["source_discovery_year"], int)
+                and candidate["source_discovery_year"] >= 1900,
+                f"{candidate_id}: malformed source discovery year",
+            )
+            _require(
+                isinstance(candidate.get("source_evaluation_lag_years"), int)
+                and candidate["source_evaluation_lag_years"] > 0,
+                f"{candidate_id}: discovery year needs a positive evaluation lag",
+            )
 
         if "candidate_cutoff" in candidate:
             try:
@@ -194,6 +222,10 @@ def audit_candidates(
                 isinstance(candidate.get("open_questions"), list)
                 and bool(candidate["open_questions"]),
                 f"{candidate_id}: proposed candidate needs open questions",
+            )
+            _require(
+                "selection_source" in evidence_roles,
+                f"{candidate_id}: proposed candidate needs a selection source",
             )
         else:
             _require(

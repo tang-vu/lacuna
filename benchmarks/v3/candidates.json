@@ -236,6 +236,246 @@
       }
     },
     {
+      "id": "lion-nfkb-adenoma",
+      "proposed_kind": "positive",
+      "status": "proposed",
+      "selection_stage": "pre_metric",
+      "source_discovery_year": 2016,
+      "source_evaluation_lag_years": 5,
+      "concepts": {
+        "a": {
+          "label": "NF-kappa B",
+          "source_entity_id": "PR:000001754"
+        },
+        "c": {
+          "label": "Adenoma",
+          "source_entity_id": "MESH:D000236"
+        }
+      },
+      "bridge": {
+        "label": "Bcl-2",
+        "source_entity_id": "PR:000002307"
+      },
+      "evidence": [
+        {
+          "role": "selection_source",
+          "label": "Pyysalo et al. (2019), cancer-biologist-curated LION discovery dataset",
+          "url": "https://doi.org/10.1093/bioinformatics/bty845"
+        },
+        {
+          "role": "bridge_candidate",
+          "label": "van der Heijden et al. (2016), Bcl-2 is a critical mediator of intestinal transformation",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/26956214/"
+        },
+        {
+          "role": "replication_source",
+          "label": "Crichton et al. (2020), independent reuse of the LION cases",
+          "url": "https://doi.org/10.1371/journal.pone.0232891"
+        }
+      ],
+      "open_questions": [
+        "Resolve the source's five-year evaluation lag to an exact archived-baseline cutoff.",
+        "Map the Protein Ontology A term to a period-appropriate MeSH descriptor without changing the case identity.",
+        "Independently adjudicate the discovery claim rather than relying only on reuse of the LION label."
+      ],
+      "adjudication": {
+        "decision": "proposed",
+        "rationale": "A domain-expert-curated post-2002 case with a reconstructable time range, but its source identity mixes Protein Ontology and MeSH rather than the v3 descriptor-only contract."
+      }
+    },
+    {
+      "id": "lion-notch1-cebpb",
+      "proposed_kind": "positive",
+      "status": "proposed",
+      "selection_stage": "pre_metric",
+      "source_discovery_year": 2016,
+      "source_evaluation_lag_years": 5,
+      "concepts": {
+        "a": {
+          "label": "NOTCH1",
+          "source_entity_id": "PR:000011331"
+        },
+        "c": {
+          "label": "C/EBP beta",
+          "source_entity_id": "PR:000005308"
+        }
+      },
+      "bridge": {
+        "label": "senescence",
+        "source_entity_id": "HOC:42"
+      },
+      "evidence": [
+        {
+          "role": "selection_source",
+          "label": "Pyysalo et al. (2019), cancer-biologist-curated LION discovery dataset",
+          "url": "https://doi.org/10.1093/bioinformatics/bty845"
+        },
+        {
+          "role": "bridge_candidate",
+          "label": "Hoare et al. (2016), NOTCH1 mediates a switch between two distinct secretomes during senescence",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/27525720/"
+        },
+        {
+          "role": "replication_source",
+          "label": "Crichton et al. (2020), independent reuse of the LION cases",
+          "url": "https://doi.org/10.1371/journal.pone.0232891"
+        }
+      ],
+      "open_questions": [
+        "Resolve the source's five-year evaluation lag to an exact archived-baseline cutoff.",
+        "Map both Protein Ontology endpoints and the Cancer Hallmarks bridge to period-appropriate MeSH without changing the case identity.",
+        "Independently adjudicate the discovery claim rather than relying only on reuse of the LION label."
+      ],
+      "adjudication": {
+        "decision": "proposed",
+        "rationale": "A post-2002 case with a primary publication and later LBD reuse, but all three source entities come from vocabularies outside the v3 descriptor-only contract."
+      }
+    },
+    {
+      "id": "lion-il17-mkp1",
+      "proposed_kind": "positive",
+      "status": "proposed",
+      "selection_stage": "pre_metric",
+      "source_discovery_year": 2015,
+      "source_evaluation_lag_years": 5,
+      "concepts": {
+        "a": {
+          "label": "IL-17",
+          "source_entity_id": "PR:000001138"
+        },
+        "c": {
+          "label": "MKP-1",
+          "source_entity_id": "PR:000006736"
+        }
+      },
+      "bridge": {
+        "label": "p38 alpha",
+        "source_entity_id": "PR:000003107"
+      },
+      "evidence": [
+        {
+          "role": "selection_source",
+          "label": "Pyysalo et al. (2019), LION discovery dataset",
+          "url": "https://doi.org/10.1093/bioinformatics/bty845"
+        },
+        {
+          "role": "bridge_candidate",
+          "label": "Gaffen and McGeachy (2015), Integrating p38 alpha MAPK immune signals in nonimmune cells",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/25737584/"
+        },
+        {
+          "role": "replication_source",
+          "label": "Crichton et al. (2020), independent reuse of the LION cases",
+          "url": "https://doi.org/10.1371/journal.pone.0232891"
+        }
+      ],
+      "open_questions": [
+        "Resolve the source's five-year evaluation lag to an exact archived-baseline cutoff.",
+        "Map all three Protein Ontology entities to period-appropriate MeSH without changing the case identity.",
+        "Adjudicate why a commentary about a multiple-sclerosis mouse model is grouped with cancer discoveries and whether it is a primary discovery publication."
+      ],
+      "adjudication": {
+        "decision": "proposed",
+        "rationale": "The source record is usable for intake but its domain and publication role conflict with the surrounding description of the LION set; acceptance would currently overstate the evidence."
+      }
+    },
+    {
+      "id": "lion-nrf2-pancreatic-cancer",
+      "proposed_kind": "positive",
+      "status": "proposed",
+      "selection_stage": "pre_metric",
+      "source_discovery_year": 2011,
+      "source_evaluation_lag_years": 5,
+      "concepts": {
+        "a": {
+          "label": "Nrf2",
+          "source_entity_id": "PR:000011170"
+        },
+        "c": {
+          "label": "Pancreatic Neoplasms",
+          "source_entity_id": "MESH:D010190"
+        }
+      },
+      "bridge": {
+        "label": "Reactive Oxygen Species",
+        "source_entity_id": "CHEBI:26523"
+      },
+      "evidence": [
+        {
+          "role": "selection_source",
+          "label": "Pyysalo et al. (2019), cancer-biologist-curated LION discovery dataset",
+          "url": "https://doi.org/10.1093/bioinformatics/bty845"
+        },
+        {
+          "role": "bridge_candidate",
+          "label": "DeNicola et al. (2011), Oncogene-induced Nrf2 transcription promotes ROS detoxification and tumorigenesis",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/21734707/"
+        },
+        {
+          "role": "replication_source",
+          "label": "Crichton et al. (2020), independent reuse of the LION cases",
+          "url": "https://doi.org/10.1371/journal.pone.0232891"
+        }
+      ],
+      "open_questions": [
+        "Resolve the source's five-year evaluation lag to an exact archived-baseline cutoff.",
+        "Determine whether the Nrf2 Protein Ontology identity had a period-appropriate MeSH descriptor at the cutoff.",
+        "Verify that translating the ChEBI bridge to MeSH preserves the source case."
+      ],
+      "adjudication": {
+        "decision": "proposed",
+        "rationale": "A strong post-2002 candidate with a primary publication, but only one endpoint is natively MeSH and the source bridge is ChEBI."
+      }
+    },
+    {
+      "id": "lion-cxcl12-thyroid-cancer",
+      "proposed_kind": "positive",
+      "status": "proposed",
+      "selection_stage": "pre_metric",
+      "source_discovery_year": 2017,
+      "source_evaluation_lag_years": 5,
+      "concepts": {
+        "a": {
+          "label": "CXCL12",
+          "source_entity_id": "PR:000006066"
+        },
+        "c": {
+          "label": "Thyroid Neoplasms",
+          "source_entity_id": "MESH:D013964"
+        }
+      },
+      "bridge": {
+        "label": "senescence",
+        "source_entity_id": "HOC:42"
+      },
+      "evidence": [
+        {
+          "role": "selection_source",
+          "label": "Pyysalo et al. (2019), cancer-biologist-curated LION discovery dataset",
+          "url": "https://doi.org/10.1093/bioinformatics/bty845"
+        },
+        {
+          "role": "bridge_candidate",
+          "label": "Kim et al. (2017), Senescent tumor cells lead the collective invasion in thyroid cancer",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/28489070/"
+        },
+        {
+          "role": "replication_source",
+          "label": "Crichton et al. (2020), independent reuse of the LION cases",
+          "url": "https://doi.org/10.1371/journal.pone.0232891"
+        }
+      ],
+      "open_questions": [
+        "Resolve the source's five-year evaluation lag to an exact archived-baseline cutoff.",
+        "Map the Protein Ontology endpoint and Cancer Hallmarks bridge to period-appropriate MeSH without changing the case identity.",
+        "Independently adjudicate the discovery claim rather than relying only on reuse of the LION label."
+      ],
+      "adjudication": {
+        "decision": "proposed",
+        "rationale": "A post-2002 candidate with a primary publication and MeSH disease endpoint, but the other endpoint and bridge use vocabularies outside the v3 contract."
+      }
+    },
+    {
       "id": "timeslice-ebola-professional-burnout",
       "proposed_kind": "positive",
       "status": "rejected",

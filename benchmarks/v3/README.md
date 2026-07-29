@@ -6,9 +6,10 @@ negatives, and no held-out case with reconstructable period-appropriate indexing
 
 `candidates.json` is the intake ledger in front of that benchmark. It currently records two
 accepted development cases, five proposed cases from a published seven-case replication catalog,
-and two rejected examples of noisy time-sliced labels. Proposed and rejected entries contribute
-**zero** cases to readiness. The separation is deliberate: reuse in an LBD paper is evidence for
-review, not automatic proof that a pair was a meaningful discovery.
+five proposed post-2002 cases from LION's nominal cancer set, and two rejected examples of noisy
+time-sliced labels. Proposed and rejected entries contribute **zero** cases to readiness. The
+separation is deliberate: reuse in an LBD paper is evidence for review, not automatic proof that a
+pair was a meaningful discovery.
 
 Run its structural audit separately:
 
@@ -61,6 +62,13 @@ Sources:
 
 - [Preiss and Stevenson (2017), replication cases and filtering analysis](https://doi.org/10.1186/s12859-017-1641-9)
 - [Moreau (2023), critique of LBD evaluation methodology](https://doi.org/10.1093/bioinformatics/btad090)
+- [Pyysalo et al. (2019), LION case-selection procedure and source entity IDs](https://doi.org/10.1093/bioinformatics/bty845)
+- [Crichton et al. (2020), independent reuse of the LION cases](https://doi.org/10.1371/journal.pone.0232891)
+
+The LION cases are promising candidates for the post-2002 held-out requirement, not ready-made
+MeSH cases. Their source triples mix Protein Ontology, ChEBI, Cancer Hallmarks, and MeSH IDs. The
+intake preserves those identities and records descriptor mapping as unresolved; silently replacing
+them with convenient modern MeSH terms could change the discovery being tested.
 
 For citation and current MeSH metadata audits, a small EFetch client is available:
 
