@@ -242,6 +242,8 @@
       "selection_stage": "pre_metric",
       "source_discovery_year": 2016,
       "source_evaluation_lag_years": 5,
+      "source_cutoff_basis": "publication_year_lte_discovery_year_minus_lag",
+      "source_cutoff_year": 2011,
       "concepts": {
         "a": {
           "label": "NF-kappa B",
@@ -300,7 +302,7 @@
         }
       ],
       "open_questions": [
-        "Resolve the source's five-year evaluation lag to an exact archived-baseline cutoff.",
+        "Pin the complete historical MEDLINE release needed to evaluate the source-defined 2011 publication-year cutoff.",
         "Map the Protein Ontology A term to a period-appropriate MeSH descriptor without changing the case identity.",
         "Independently adjudicate the discovery claim rather than relying only on reuse of the LION label."
       ],
@@ -316,6 +318,8 @@
       "selection_stage": "pre_metric",
       "source_discovery_year": 2016,
       "source_evaluation_lag_years": 5,
+      "source_cutoff_basis": "publication_year_lte_discovery_year_minus_lag",
+      "source_cutoff_year": 2011,
       "concepts": {
         "a": {
           "label": "NOTCH1",
@@ -374,7 +378,7 @@
         }
       ],
       "open_questions": [
-        "Resolve the source's five-year evaluation lag to an exact archived-baseline cutoff.",
+        "Pin the complete historical MEDLINE release needed to evaluate the source-defined 2011 publication-year cutoff.",
         "Map both Protein Ontology endpoints and the Cancer Hallmarks bridge to period-appropriate MeSH without changing the case identity.",
         "Independently adjudicate the discovery claim rather than relying only on reuse of the LION label."
       ],
@@ -390,6 +394,8 @@
       "selection_stage": "pre_metric",
       "source_discovery_year": 2015,
       "source_evaluation_lag_years": 5,
+      "source_cutoff_basis": "publication_year_lte_discovery_year_minus_lag",
+      "source_cutoff_year": 2010,
       "concepts": {
         "a": {
           "label": "IL-17",
@@ -448,7 +454,7 @@
         }
       ],
       "open_questions": [
-        "Resolve the source's five-year evaluation lag to an exact archived-baseline cutoff.",
+        "Pin the complete historical MEDLINE release needed to evaluate the source-defined 2010 publication-year cutoff.",
         "Map all three Protein Ontology entities to period-appropriate MeSH without changing the case identity.",
         "Adjudicate why a commentary about a multiple-sclerosis mouse model is grouped with cancer discoveries and whether it is a primary discovery publication."
       ],
@@ -464,6 +470,8 @@
       "selection_stage": "pre_metric",
       "source_discovery_year": 2011,
       "source_evaluation_lag_years": 5,
+      "source_cutoff_basis": "publication_year_lte_discovery_year_minus_lag",
+      "source_cutoff_year": 2006,
       "concepts": {
         "a": {
           "label": "Nrf2",
@@ -522,7 +530,7 @@
         }
       ],
       "open_questions": [
-        "Resolve the source's five-year evaluation lag to an exact archived-baseline cutoff.",
+        "Pin the complete historical MEDLINE release needed to evaluate the source-defined 2006 publication-year cutoff.",
         "Determine whether the Nrf2 Protein Ontology identity had a period-appropriate MeSH descriptor at the cutoff.",
         "Verify that translating the ChEBI bridge to MeSH preserves the source case."
       ],
@@ -538,6 +546,8 @@
       "selection_stage": "pre_metric",
       "source_discovery_year": 2017,
       "source_evaluation_lag_years": 5,
+      "source_cutoff_basis": "publication_year_lte_discovery_year_minus_lag",
+      "source_cutoff_year": 2012,
       "concepts": {
         "a": {
           "label": "CXCL12",
@@ -596,7 +606,7 @@
         }
       ],
       "open_questions": [
-        "Resolve the source's five-year evaluation lag to an exact archived-baseline cutoff.",
+        "Pin the complete historical MEDLINE release needed to evaluate the source-defined 2012 publication-year cutoff.",
         "Map the Protein Ontology endpoint and Cancer Hallmarks bridge to period-appropriate MeSH without changing the case identity.",
         "Independently adjudicate the discovery claim rather than relying only on reuse of the LION label."
       ],

@@ -180,6 +180,15 @@ def audit_candidates(
                 - candidate["source_evaluation_lag_years"]
             )
             _require(
+                candidate.get("source_cutoff_basis")
+                == "publication_year_lte_discovery_year_minus_lag",
+                f"{candidate_id}: unsupported source cutoff basis",
+            )
+            _require(
+                candidate.get("source_cutoff_year") == expected_year,
+                f"{candidate_id}: source cutoff year differs from the source evaluation lag",
+            )
+            _require(
                 mapping_audit.get("vocabulary_year") == expected_year,
                 f"{candidate_id}: mapping year differs from the source evaluation lag",
             )

@@ -87,3 +87,25 @@ def test_production_year_mapping_must_use_the_pinned_vocabulary(tmp_path):
 
     with pytest.raises(CandidateContractError, match="differs from the pinned vocabulary"):
         audit_candidates(path, BENCHMARK_PATH)
+
+
+def test_source_cutoff_must_match_the_documented_evaluation_lag(tmp_path):
+    payload = json.loads(CANDIDATES_PATH.read_text(encoding="utf-8"))
+    mapped = next(item for item in payload["candidates"] if "source_cutoff_year" in item)
+    mapped["source_cutoff_year"] += 1
+    path = tmp_path / "candidates.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+
+    with pytest.raises(CandidateContractError, match="source cutoff year differs"):
+        audit_candidates(path, BENCHMARK_PATH)
+
+
+def test_source_cutoff_basis_must_be_publication_year_bounded(tmp_path):
+    payload = json.loads(CANDIDATES_PATH.read_text(encoding="utf-8"))
+    mapped = next(item for item in payload["candidates"] if "source_cutoff_basis" in item)
+    mapped["source_cutoff_basis"] = "exact_publication_date"
+    path = tmp_path / "candidates.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+
+    with pytest.raises(CandidateContractError, match="unsupported source cutoff basis"):
+        audit_candidates(path, BENCHMARK_PATH)

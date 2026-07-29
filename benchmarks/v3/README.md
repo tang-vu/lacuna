@@ -129,6 +129,12 @@ MeSH cases. Their source triples mix Protein Ontology, ChEBI, Cancer Hallmarks, 
 intake preserves those identities and records descriptor mapping as unresolved; silently replacing
 them with convenient modern MeSH terms could change the discovery being tested.
 
+LION defines its evaluation corpus at publication-year granularity: literature through the year
+five years before the relevant discovery publication. The intake therefore records both the
+source rule and the derived cutoff year. This resolves the temporal rule without pretending that
+an exact calendar date was published; acquiring and pinning the complete matching MEDLINE
+releases remains a separate source-readiness requirement.
+
 For citation and current MeSH metadata audits, a small EFetch client is available:
 
 ```bash
