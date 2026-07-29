@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "observed_on": "2026-07-29",
+  "required_baseline_years": [
+    2006,
+    2010,
+    2011,
+    2012
+  ],
+  "sources": [
+    {
+      "id": "historical-medline-records",
+      "kind": "historical_records",
+      "status": "unavailable",
+      "required_for_shipping": true,
+      "legacy_download_url": "https://mbr.nlm.nih.gov/Download/index.shtml",
+      "evidence": [
+        {
+          "label": "NLM (2005), MBR stores annual baselines from 2002 and originally restricted query/raw access",
+          "url": "https://www.nlm.nih.gov/pubs/techbull/nd05/nd05_technote_mbr.html"
+        },
+        {
+          "label": "NLM MBR reference material, now served only through an Archive-It wrapper",
+          "url": "https://lhncbc.nlm.nih.gov/ii/information/MBR/MEDLINE_Baseline_Repository_Detail_2017.pdf"
+        }
+      ],
+      "observation": "The documented mbr.nlm.nih.gov host did not resolve. The surviving Lister Hill URL redirected to an Archive-It HTML capture rather than a raw baseline file.",
+      "next_action": "Ask NLM Support whether raw annual baseline XML for 2006, 2010, 2011, and 2012 remains obtainable, and record exact file URLs and checksums before changing this status."
+    },
+    {
+      "id": "historical-mesh-vocabularies",
+      "kind": "historical_vocabulary",
+      "status": "available_unpinned",
+      "required_for_shipping": true,
+      "url_template": "https://nlmpubs.nlm.nih.gov/projects/mesh/{year}/xmlmesh/desc{year}.gz",
+      "pre_2011_url_template": "https://nlmpubs.nlm.nih.gov/projects/mesh/1999-2010/xmlmesh/desc{year}.gz",
+      "evidence": [
+        {
+          "label": "NLM MeSH data downloads and archive of prior production years",
+          "url": "https://www.nlm.nih.gov/databases/download/mesh.html"
+        },
+        {
+          "label": "NLM public MeSH production-year directory",
+          "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/"
+        }
+      ],
+      "observation": "Descriptor archives for all required years were reachable, but no lacuna-owned checksum manifest has been created yet.",
+      "next_action": "Download the exact descriptor archives, verify their contents, and pin SHA-256 checksums before using any mapping as period-appropriate."
+    },
+    {
+      "id": "current-pubmed-baseline",
+      "kind": "current_records",
+      "status": "available_unsuitable",
+      "required_for_shipping": false,
+      "evidence": [
+        {
+          "label": "NLM PubMed annual baseline download documentation",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/download/"
+        },
+        {
+          "label": "NLM annual baseline maintenance overview",
+          "url": "https://www.nlm.nih.gov/bsd/licensee/baseline.html"
+        }
+      ],
+      "observation": "The current annual baseline is public, but records are maintained to the current production-year vocabulary and cannot reconstruct an older indexing state.",
+      "next_action": "Use only for current metadata checks; never satisfy a period-appropriate mapping or historical-record gate with this source."
+    }
+  ]
+}

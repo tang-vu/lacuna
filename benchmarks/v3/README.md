@@ -17,6 +17,18 @@ Run its structural audit separately:
 python -m pipeline.benchmark.validate_candidates
 ```
 
+Historical inputs have their own dated access record:
+
+```bash
+python -m pipeline.benchmark.validate_sources
+python -m pipeline.benchmark.validate_sources --require-ready
+```
+
+The first command validates the record and reports its blockers. The second is intentionally red:
+the legacy MBR download host is unavailable, while the public production-year MeSH archives have
+not yet been checksummed. `sources.json` keeps those as separate gates because vocabulary files
+without the matching historical citation records cannot reconstruct period-appropriate indexing.
+
 An accepted intake record must link to exactly one case in `cases.json` and carry a selection
 source, bridge publication, and independent LBD replication. Replication supports using the pair
 as a development diagnostic; it does not establish that the proposed biological relationship is

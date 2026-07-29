@@ -19,9 +19,12 @@ MeSH vocabulary assigned in that year. NLM's own baseline documentation says the
 each annual baseline, records are maintained to reflect the **next year's MeSH vocabulary**. The
 current baseline and E-utilities therefore expose maintained indexing, not a frozen 1986 view.
 
-NLM's MEDLINE/PubMed Baseline Repository stores annual static views only from 2002 onward. Its
-reference material also states that each baseline has already undergone year-end processing for
-that baseline's vocabulary year. This has three consequences:
+NLM's MEDLINE/PubMed Baseline Repository documented annual static views only from 2002 onward. Its
+reference material also states that each baseline had already undergone year-end processing for
+that baseline's vocabulary year. However, the documented `mbr.nlm.nih.gov` download host no longer
+resolved when checked on 2026-07-29, and the surviving reference URL redirected to an Archive-It
+HTML wrapper rather than raw baseline data. Public production-year MeSH files remain reachable.
+This has four consequences:
 
 - no pre-2002 experiment may be called period-appropriate unless a separate contemporaneous
   MEDLINE source is acquired and pinned;
@@ -29,6 +32,8 @@ that baseline's vocabulary year. This has three consequences:
   run over today's PubMed indexing is not a historical replication;
 - genuinely held-out, period-appropriate tests should use archived baselines from 2002 onward,
   with the baseline year—not only the article publication cutoff—part of the input identity.
+- the archive's documented existence is not evidence that the raw historical records are currently
+  retrievable; source acquisition is a blocker until NLM supplies or identifies stable files.
 
 Primary documentation:
 
@@ -39,8 +44,10 @@ Primary documentation:
 ## Data path
 
 - Use a pinned archived MEDLINE/PubMed baseline and its matching MeSH production-year files for
-  candidate generation and retrospective validation. The official baseline archive supports this
-  design from 2002 onward, not for the 1986 canonical case.
+  candidate generation and retrospective validation. NLM documentation establishes that this
+  design existed from 2002 onward, but the raw historical-record access path must be reacquired.
+- Track historical citation records and production-year MeSH as separate source gates. Having the
+  vocabulary without the records is not a reconstructable baseline.
 - Treat current PubMed E-utilities as a metadata and mapping-audit aid only. A descriptor returned
   today must be labelled `maintained_current_indexing`, never `period_appropriate`.
 - Use OpenAlex only as a complementary source for stable work links, citation context, and the
@@ -112,8 +119,9 @@ after seeing them.
 2. Build the benchmark contract and mapping audit, explicitly separating maintained-current,
    period-appropriate, ambiguous, and unavailable mappings.
 3. Pre-register candidate formulas and thresholds.
-4. Implement the smallest archived-baseline/MeSH pipeline needed for the benchmark; E-utilities
-   may supply citation metadata but not historical vocabulary state.
+4. Acquire stable raw baseline files from NLM or another source NLM identifies, then implement the
+   smallest archived-baseline/MeSH pipeline needed for the benchmark; E-utilities may supply
+   citation metadata but not historical vocabulary state.
 5. Run development cases, make at most one documented revision, then freeze.
 6. Run held-out cases and the manual audit.
 7. Only after a pass, design the LLM interpretation schema and pair-detail UI.

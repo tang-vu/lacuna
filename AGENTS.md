@@ -18,6 +18,8 @@ the expense of gap detection, validation, or traceability.
   benchmark.
 - Current PubMed/MeSH indexing is maintained to newer vocabularies. Never describe it as
   period-appropriate historical indexing; the official static baseline archive begins in 2002.
+- The legacy MBR download endpoint is currently unavailable. Public production-year MeSH files do
+  not substitute for the matching historical citation records; both source gates must be pinned.
 - The v3 benchmark is a draft until `python -m pipeline.benchmark.validate_v3 --require-ready`
   passes. Structural validation of an incomplete draft is not scientific validation.
 
@@ -37,6 +39,7 @@ the expense of gap detection, validation, or traceability.
 python -m pytest -m "not slow"
 python -m pytest
 python -m pipeline.export.validate_curated
+python -m pipeline.benchmark.validate_sources
 python -m pipeline.benchmark.validate_candidates
 python -m pipeline.benchmark.validate_v3
 python -m pipeline.export.build_artifacts
