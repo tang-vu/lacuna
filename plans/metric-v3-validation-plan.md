@@ -12,10 +12,37 @@ Metric v3 must test a narrower claim: whether term-level, time-appropriate biome
 recover literature-based discoveries across multiple historical cases without ranking ontology
 siblings and unrelated pairs as gaps.
 
+## Feasibility correction: "historical MeSH" is not in the current baseline
+
+The first draft assumed that filtering current PubMed records by publication year preserved the
+MeSH vocabulary assigned in that year. NLM's own baseline documentation says the opposite: before
+each annual baseline, records are maintained to reflect the **next year's MeSH vocabulary**. The
+current baseline and E-utilities therefore expose maintained indexing, not a frozen 1986 view.
+
+NLM's MEDLINE/PubMed Baseline Repository stores annual static views only from 2002 onward. Its
+reference material also states that each baseline has already undergone year-end processing for
+that baseline's vocabulary year. This has three consequences:
+
+- no pre-2002 experiment may be called period-appropriate unless a separate contemporaneous
+  MEDLINE source is acquired and pinned;
+- the fish-oil/Raynaud and magnesium/migraine cases remain useful development diagnostics, but a
+  run over today's PubMed indexing is not a historical replication;
+- genuinely held-out, period-appropriate tests should use archived baselines from 2002 onward,
+  with the baseline year—not only the article publication cutoff—part of the input identity.
+
+Primary documentation:
+
+- [NLM annual baseline overview](https://www.nlm.nih.gov/bsd/licensee/baseline.html)
+- [NLM MEDLINE/PubMed Baseline Repository reference material](https://lhncbc.nlm.nih.gov/ii/information/MBR/MEDLINE_Baseline_Repository_Detail_2017.pdf)
+- [NLM MeSH production-year archives](https://www.nlm.nih.gov/databases/download/mesh.html)
+
 ## Data path
 
-- Use the free MEDLINE/PubMed baseline files and the MeSH descriptor assigned in each publication
-  year for candidate generation and retrospective validation.
+- Use a pinned archived MEDLINE/PubMed baseline and its matching MeSH production-year files for
+  candidate generation and retrospective validation. The official baseline archive supports this
+  design from 2002 onward, not for the 1986 canonical case.
+- Treat current PubMed E-utilities as a metadata and mapping-audit aid only. A descriptor returned
+  today must be labelled `maintained_current_indexing`, never `period_appropriate`.
 - Use OpenAlex only as a complementary source for stable work links, citation context, and the
   project taxonomy. Do not project OpenAlex's modern topics backward and call them historical
   indexing.
@@ -37,7 +64,9 @@ Map every case to period-appropriate MeSH descriptors before computing a score. 
 mappings rather than choosing the mapping that ranks best.
 
 Split cases into development and held-out sets. The fish-oil/Raynaud case may remain a development
-diagnostic, but it cannot be the sole or final acceptance test.
+diagnostic, but it cannot be the sole or final acceptance test. At least two held-out cutoffs must
+be 2002 or later so their vocabulary state can be reconstructed from an official archived
+baseline. Any earlier case without a contemporaneous source is excluded from the shipping gate.
 
 ## Candidate families
 
@@ -78,9 +107,11 @@ after seeing them.
 ## Sequencing
 
 1. Freeze this plan after review.
-2. Build the benchmark and mapping audit.
+2. Build the benchmark contract and mapping audit, explicitly separating maintained-current,
+   period-appropriate, ambiguous, and unavailable mappings.
 3. Pre-register candidate formulas and thresholds.
-4. Implement the smallest MEDLINE/MeSH pipeline needed for the benchmark.
+4. Implement the smallest archived-baseline/MeSH pipeline needed for the benchmark; E-utilities
+   may supply citation metadata but not historical vocabulary state.
 5. Run development cases, make at most one documented revision, then freeze.
 6. Run held-out cases and the manual audit.
 7. Only after a pass, design the LLM interpretation schema and pair-detail UI.
