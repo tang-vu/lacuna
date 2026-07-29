@@ -50,6 +50,14 @@ green, every local filename, byte count, and SHA-256 must match the complete pin
 requested baseline year. A successful report also carries the checksum of the source contract and
 the matching production-year MeSH archive. The low-level fixture API labels arbitrary XML as
 `unverified_medline_xml`; only this exact-match path may emit `pinned_historical_medline`.
+Multi-file releases use generated manifests under `benchmarks/v3/manifests/`; `sources.json`
+contains only one checksummed reference and aggregate totals per release rather than hundreds of
+hand-maintained file entries.
+
+The reader selects its record shape from the document root. It supports the historical
+`MedlineCitationSet/MedlineCitation` distribution and the current
+`PubmedArticleSet/PubmedArticle/MedlineCitation` distribution without counting current citations
+twice. Delete records are ignored.
 
 The same streaming parser has also read one checksum-verified file from the current 2026 PubMed
 baseline: 30,000 records, with no missing publication year or descriptor UI in that file. The

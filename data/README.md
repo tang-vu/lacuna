@@ -20,6 +20,10 @@ requires every file in the selected release to match the filename, byte count, a
 in `benchmarks/v3/sources.json`. The record source is currently unavailable, so the command remains
 closed even though its parser and exact pair/ABC accumulator are fixture-tested.
 
+After acquiring a complete release, use `pipeline.benchmark.build_release_manifest` to fingerprint
+and count its files. XML stays here; the generated manifest is reviewed and committed under
+`benchmarks/v3/manifests/`.
+
 The committed manifest pins canonical SHA-256 digests of the exact taxonomy and row content used
 to build each artifact. Canonicalisation excludes fetch timestamps and strips `mailto` and
 `api_key` query parameters; neither personal identifiers nor credentials are part of a published

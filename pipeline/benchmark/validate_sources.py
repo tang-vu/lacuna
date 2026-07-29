@@ -19,6 +19,10 @@ from datetime import date
 from pathlib import Path
 from urllib.parse import urlsplit
 
+from pipeline.benchmark.source_manifests import (
+    ReleaseManifestError,
+    load_release_manifest,
+)
 from pipeline.paths import REPO_ROOT
 
 SOURCES_PATH = REPO_ROOT / "benchmarks" / "v3" / "sources.json"
@@ -110,6 +114,39 @@ def audit_sources(path: Path = SOURCES_PATH) -> SourceAudit:
         if source["required_for_shipping"]:
             required_kinds.add(kind)
         if status == "available_pinned":
+            if kind == "historical_records":
+                manifests = source.get("manifests")
+                _require(
+                    isinstance(manifests, list) and manifests,
+                    f"{source_id}: pinned record source needs manifests",
+                )
+                manifest_years: set[int] = set()
+                for index, reference in enumerate(manifests):
+                    _require(
+                        isinstance(reference, dict),
+                        f"{source_id}: malformed manifest {index}",
+                    )
+                    year = reference.get("year")
+                    _require(
+                        year in required_years,
+                        f"{source_id}: unexpected manifest year {year}",
+                    )
+                    _require(
+                        year not in manifest_years,
+                        f"{source_id}: duplicate manifest year {year}",
+                    )
+                    try:
+                        load_release_manifest(path, reference)
+                    except ReleaseManifestError as exc:
+                        raise SourceContractError(f"{source_id}: {exc}") from exc
+                    manifest_years.add(year)
+                _require(
+                    manifest_years == set(required_years),
+                    f"{source_id}: manifests must cover every required year",
+                )
+                statuses[kind] = str(status)
+                continue
+
             files = source.get("files")
             _require(
                 isinstance(files, list) and files,
@@ -120,11 +157,10 @@ def audit_sources(path: Path = SOURCES_PATH) -> SourceAudit:
                 _require(isinstance(item, dict), f"{source_id}: malformed file {index}")
                 year = item.get("year")
                 _require(year in required_years, f"{source_id}: unexpected pinned year {year}")
-                if kind == "historical_vocabulary":
-                    _require(
-                        year not in pinned_years,
-                        f"{source_id}: duplicate pinned year {year}",
-                    )
+                _require(
+                    year not in pinned_years,
+                    f"{source_id}: duplicate pinned year {year}",
+                )
                 _require_https(item.get("url"), f"{source_id}.files[{index}]")
                 _require(
                     bool(SHA256.fullmatch(str(item.get("sha256", "")))),
@@ -134,18 +170,11 @@ def audit_sources(path: Path = SOURCES_PATH) -> SourceAudit:
                     isinstance(item.get("bytes"), int) and item["bytes"] > 0,
                     f"{source_id}: file {index} needs a positive byte count",
                 )
-                if kind == "historical_vocabulary":
-                    _require(
-                        isinstance(item.get("descriptor_count"), int)
-                        and item["descriptor_count"] > 0,
-                        f"{source_id}: file {index} needs a positive descriptor count",
-                    )
-                elif kind == "historical_records":
-                    _require(
-                        isinstance(item.get("record_count"), int)
-                        and item["record_count"] > 0,
-                        f"{source_id}: file {index} needs a positive record count",
-                    )
+                _require(
+                    isinstance(item.get("descriptor_count"), int)
+                    and item["descriptor_count"] > 0,
+                    f"{source_id}: file {index} needs a positive descriptor count",
+                )
                 pinned_years.add(year)
             _require(
                 pinned_years == set(required_years),

@@ -82,5 +82,7 @@ data exists. For each required release:
 - obtain the complete file inventory, not a convenient subset;
 - record the compressed byte count and SHA-256 for every file;
 - parse the release and reconcile its total record count with NLM's inventory;
+- generate one committed per-release manifest with
+  `pipeline.benchmark.build_release_manifest`, then pin that manifest in `sources.json`;
 - preserve the matching baseline year and MeSH archive checksum in every measurement;
 - keep any personal support correspondence out of committed provenance.

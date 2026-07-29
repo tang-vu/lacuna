@@ -8,6 +8,7 @@ import pytest
 
 from pipeline.benchmark.medline_baseline import (
     HistoricalRecordsNotReady,
+    MedlineRecord,
     iter_medline_records,
     measure_pairs,
     measure_pinned_release,
@@ -19,6 +20,39 @@ A = "D000001"
 B = "D000002"
 C = "D000003"
 SECOND_BRIDGE = "D000004"
+
+
+def _write_release_manifest(tmp_path, year, files):
+    manifest_dir = tmp_path / "manifests"
+    manifest_dir.mkdir(exist_ok=True)
+    path = manifest_dir / f"medline-{year}.json"
+    payload = {
+        "schema_version": 1,
+        "kind": "historical_medline_release",
+        "release_year": year,
+        "files": files,
+    }
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    return {
+        "year": year,
+        "path": f"manifests/{path.name}",
+        "inventory_url": f"https://example.test/inventory/{year}",
+        "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+        "file_count": len(files),
+        "total_bytes": sum(item["bytes"] for item in files),
+        "total_record_count": sum(item["record_count"] for item in files),
+    }
+
+
+def _dummy_release_file(year):
+    filename = f"medline{str(year)[-2:]}n0001.xml.gz"
+    return {
+        "filename": filename,
+        "url": f"https://example.test/{filename}",
+        "sha256": str(year)[-1] * 64,
+        "bytes": 1,
+        "record_count": 1,
+    }
 
 
 def _article(pmid: str, date_xml: str, descriptors: list[str]) -> str:
@@ -65,6 +99,31 @@ def test_stream_parser_handles_gzip_medline_dates_and_duplicate_descriptors(tmp_
     assert records[0].descriptor_uis == frozenset({A, B})
     assert records[1].publication_year == 2010
     assert records[-1].publication_year is None
+
+
+def test_stream_parser_supports_historical_direct_citation_sets_and_ignores_deletes(
+    tmp_path,
+):
+    wrapped = _article("9", "<Year>2006</Year>", [A, B])
+    citation = wrapped.removeprefix("<PubmedArticle>").removesuffix("</PubmedArticle>")
+    xml = (
+        "<MedlineCitationSet>"
+        f"{citation}"
+        "<DeleteCitation><PMID>8</PMID></DeleteCitation>"
+        "</MedlineCitationSet>"
+    )
+    path = tmp_path / "medline06n0001.xml"
+    path.write_text(xml, encoding="utf-8")
+
+    records = list(iter_medline_records([path]))
+
+    assert records == [
+        MedlineRecord(
+            pmid="9",
+            publication_year=2006,
+            descriptor_uis=frozenset({A, B}),
+        )
+    ]
 
 
 def test_pair_measurement_counts_denominator_direct_pair_and_abc_bridges(tmp_path):
@@ -119,19 +178,10 @@ def test_production_source_gate_accepts_only_explicit_pinned_status(tmp_path):
     source = next(
         item for item in payload["sources"] if item["kind"] == "historical_records"
     )
-    vocabulary = next(
-        item for item in payload["sources"] if item["kind"] == "historical_vocabulary"
-    )
     source["status"] = "available_pinned"
-    source["files"] = [
-        {
-            "year": item["year"],
-            "url": item["url"],
-            "sha256": item["sha256"],
-            "bytes": item["bytes"],
-            "record_count": 1,
-        }
-        for item in vocabulary["files"]
+    source["manifests"] = [
+        _write_release_manifest(tmp_path, year, [_dummy_release_file(year)])
+        for year in payload["required_baseline_years"]
     ]
     path = tmp_path / "sources.json"
     path.write_text(json.dumps(payload), encoding="utf-8")
@@ -147,20 +197,20 @@ def test_pinned_release_requires_and_labels_an_exact_complete_file_set(tmp_path)
     )
     records["status"] = "available_pinned"
     digest = hashlib.sha256(fixture.read_bytes()).hexdigest()
-    records["files"] = [
-        {
-            "year": year,
-            "url": (
-                "https://example.test/baseline.xml.gz"
-                if year == 2010
-                else f"https://example.test/baseline-{year}.xml.gz"
-            ),
-            "sha256": digest if year == 2010 else str(year)[-1] * 64,
-            "bytes": fixture.stat().st_size if year == 2010 else 1,
-            "record_count": 8 if year == 2010 else 1,
-        }
-        for year in payload["required_baseline_years"]
-    ]
+    records["manifests"] = []
+    for year in payload["required_baseline_years"]:
+        files = [_dummy_release_file(year)]
+        if year == 2010:
+            files = [
+                {
+                    "filename": fixture.name,
+                    "url": f"https://example.test/{fixture.name}",
+                    "sha256": digest,
+                    "bytes": fixture.stat().st_size,
+                    "record_count": 8,
+                }
+            ]
+        records["manifests"].append(_write_release_manifest(tmp_path, year, files))
     source_path = tmp_path / "sources.json"
     source_path.write_text(json.dumps(payload), encoding="utf-8")
 
@@ -195,7 +245,13 @@ def test_pinned_release_requires_and_labels_an_exact_complete_file_set(tmp_path)
             source_path=source_path,
         )
 
-    records["files"][1]["record_count"] = 7
+    reference = next(item for item in records["manifests"] if item["year"] == 2010)
+    manifest_path = tmp_path / reference["path"]
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["files"][0]["record_count"] = 7
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    reference["sha256"] = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+    reference["total_record_count"] = 7
     source_path.write_text(json.dumps(payload), encoding="utf-8")
     with pytest.raises(HistoricalRecordsNotReady, match="record count"):
         measure_pinned_release(

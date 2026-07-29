@@ -25,6 +25,7 @@ from typing import BinaryIO, Iterable, Iterator
 from urllib.parse import unquote, urlsplit
 from xml.etree import ElementTree
 
+from pipeline.benchmark.source_manifests import load_release_for_year
 from pipeline.benchmark.validate_sources import SOURCES_PATH, audit_sources
 
 MESH_DESCRIPTOR_UI = re.compile(r"^D\d{6}$")
@@ -114,7 +115,7 @@ def _open_xml(path: Path) -> BinaryIO:
     return path.open("rb")
 
 
-def _fingerprint(path: Path) -> SourceFileEvidence:
+def fingerprint_file(path: Path) -> SourceFileEvidence:
     digest = hashlib.sha256()
     size = 0
     with path.open("rb") as handle:
@@ -136,10 +137,7 @@ def _publication_year(citation: ElementTree.Element) -> int | None:
     return int(match.group()) if match else None
 
 
-def _record_from_element(item: ElementTree.Element) -> MedlineRecord | None:
-    citation = item.find("./MedlineCitation")
-    if citation is None:
-        return None
+def _record_from_citation(citation: ElementTree.Element) -> MedlineRecord:
     descriptor_uis = frozenset(
         descriptor.get("UI", "")
         for descriptor in citation.findall("./MeshHeadingList/MeshHeading/DescriptorName")
@@ -157,18 +155,27 @@ def iter_medline_records(paths: Iterable[Path]) -> Iterator[MedlineRecord]:
 
     ``Element.clear`` releases each completed article before the next one is parsed. Delete records
     and unsupported book records are ignored because they do not contain the citation/MeSH shape
-    measured here.
+    measured here. Historical licensee distributions use ``MedlineCitationSet`` with direct
+    ``MedlineCitation`` children; current PubMed files wrap each citation in ``PubmedArticle``.
     """
     for raw_path in paths:
         path = Path(raw_path)
         with _open_xml(path) as handle:
             context = ElementTree.iterparse(handle, events=("start", "end"))
             _event, root = next(context)
+            if root.tag == "MedlineCitationSet":
+                record_tag = "MedlineCitation"
+                direct_citation = True
+            elif root.tag == "PubmedArticleSet":
+                record_tag = "PubmedArticle"
+                direct_citation = False
+            else:
+                raise ValueError(f"{path}: unsupported MEDLINE XML root {root.tag!r}")
             for event, element in context:
-                if event == "end" and element.tag == "PubmedArticle":
-                    record = _record_from_element(element)
-                    if record is not None:
-                        yield record
+                if event == "end" and element.tag == record_tag:
+                    citation = element if direct_citation else element.find("./MedlineCitation")
+                    if citation is not None:
+                        yield _record_from_citation(citation)
                     # Clearing only the article leaves an empty child attached to the document
                     # root for every citation. Clear the root to release those references too.
                     root.clear()
@@ -204,7 +211,7 @@ def measure_pairs(
     source_paths = tuple(Path(path) for path in paths)
     if not source_paths:
         raise ValueError("at least one MEDLINE baseline file is required")
-    source_files = tuple(_fingerprint(path) for path in source_paths)
+    source_files = tuple(fingerprint_file(path) for path in source_paths)
     selected_pairs = _normalise_pairs(pairs)
     endpoints = {endpoint for pair in selected_pairs for endpoint in pair}
 
@@ -312,26 +319,20 @@ def measure_pinned_release(
         raise ValueError("cutoff_year cannot be later than the baseline release year")
     source = _source_by_kind(source_path, "historical_records")
     vocabulary = _source_by_kind(source_path, "historical_vocabulary")
-    expected = [
-        item for item in source["files"] if item["year"] == baseline_release_year
-    ]
-    if not expected:
-        raise HistoricalRecordsNotReady(
-            f"no pinned historical MEDLINE files for baseline year {baseline_release_year}"
-        )
+    release = load_release_for_year(source_path, source, baseline_release_year)
     vocabulary_file = next(
         item for item in vocabulary["files"] if item["year"] == baseline_release_year
     )
 
     source_paths = tuple(Path(path) for path in paths)
-    actual = tuple(_fingerprint(path) for path in source_paths)
+    actual = tuple(fingerprint_file(path) for path in source_paths)
     expected_identities = sorted(
         (
-            unquote(Path(urlsplit(item["url"]).path).name),
-            item["sha256"],
-            item["bytes"],
+            unquote(Path(urlsplit(item.url).path).name),
+            item.sha256,
+            item.bytes,
         )
-        for item in expected
+        for item in release.files
     )
     actual_identities = sorted(
         (item.filename, item.sha256, item.bytes) for item in actual
@@ -343,7 +344,7 @@ def measure_pinned_release(
         )
 
     evidence = measure_pairs(source_paths, pairs, cutoff_year=cutoff_year)
-    expected_record_count = sum(item["record_count"] for item in expected)
+    expected_record_count = release.total_record_count
     if evidence.stats.records_seen != expected_record_count:
         raise HistoricalRecordsNotReady(
             "parsed MEDLINE record count does not match the pinned release "
