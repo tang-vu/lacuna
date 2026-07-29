@@ -61,3 +61,39 @@ def test_pinned_vocabulary_needs_a_measured_descriptor_count(tmp_path):
 
     with pytest.raises(SourceContractError, match="positive descriptor count"):
         audit_sources(path)
+
+
+def test_pinned_historical_records_need_record_counts_but_allow_many_files_per_year(
+    tmp_path,
+):
+    payload = json.loads(SOURCES_PATH.read_text(encoding="utf-8"))
+    records = next(
+        source for source in payload["sources"] if source["kind"] == "historical_records"
+    )
+    vocabulary = next(
+        source for source in payload["sources"] if source["kind"] == "historical_vocabulary"
+    )
+    records["status"] = "available_pinned"
+    records["files"] = []
+    for item in vocabulary["files"]:
+        record_file = {
+            "year": item["year"],
+            "url": item["url"],
+            "sha256": item["sha256"],
+            "bytes": item["bytes"],
+            "record_count": 1,
+        }
+        records["files"].append(record_file)
+        if item["year"] == 2010:
+            records["files"].append({**record_file, "url": record_file["url"] + "?part=2"})
+    path = tmp_path / "sources.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+
+    audit = audit_sources(path)
+
+    assert audit.statuses["historical_records"] == "available_pinned"
+
+    del records["files"][0]["record_count"]
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(SourceContractError, match="positive record count"):
+        audit_sources(path)

@@ -30,6 +30,25 @@ MeSH descriptor archives are now parsed and pinned by SHA-256, but `sources.json
 vocabulary as separate gates because vocabulary files alone cannot reconstruct period-appropriate
 indexing.
 
+The archived-baseline reader is implemented and fixture-tested:
+
+```bash
+python -m pipeline.benchmark.medline_baseline \
+  --baseline-year 2010 \
+  --cutoff-year 2005 \
+  --pair D016328:D000236 \
+  data/medline-baseline/*.xml.gz
+```
+
+It streams XML files without loading the corpus into memory, fingerprints the compressed inputs,
+counts direct endpoint co-occurrence, computes the independence expectation, and reports shared
+ABC descriptors with counts from both sides. The command currently refuses to run before touching
+the supplied files because `historical_records` is not `available_pinned`. Once that source gate is
+green, every local filename, byte count, and SHA-256 must match the complete pinned release for the
+requested baseline year. A successful report also carries the checksum of the source contract and
+the matching production-year MeSH archive. The low-level fixture API labels arbitrary XML as
+`unverified_medline_xml`; only this exact-match path may emit `pinned_historical_medline`.
+
 Search a pinned vocabulary without falling back to today's MeSH service:
 
 ```bash

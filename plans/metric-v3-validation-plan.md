@@ -121,9 +121,11 @@ after seeing them.
 2. Build the benchmark contract and mapping audit, explicitly separating maintained-current,
    period-appropriate, ambiguous, and unavailable mappings.
 3. Pre-register candidate formulas and thresholds.
-4. Acquire stable raw baseline files from NLM or another source NLM identifies, then implement the
-   smallest archived-baseline/MeSH pipeline needed for the benchmark; E-utilities may supply
-   citation metadata but not historical vocabulary state.
+4. Acquire stable raw baseline files from NLM or another source NLM identifies. The smallest
+   streaming archived-baseline reader and targeted pair/ABC accumulator are implemented and
+   fixture-tested, but their production path stays closed until the full release file set is pinned
+   by filename, byte count, and SHA-256. E-utilities may supply citation metadata but not historical
+   vocabulary state.
 5. Run development cases, make at most one documented revision, then freeze.
 6. Run held-out cases and the manual audit.
 7. Only after a pass, design the LLM interpretation schema and pair-detail UI.

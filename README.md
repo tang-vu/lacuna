@@ -181,7 +181,10 @@ The historical-input gate is also red: NLM's legacy MBR download endpoint no lon
 required 2006/2010/2011/2012 MeSH descriptor archives are public and now pinned by SHA-256, but that
 vocabulary does not replace the missing citation records. `benchmarks/v3/sources.json` records the
 dated observation; `python -m pipeline.benchmark.validate_sources --require-ready` must keep
-failing until the matching historical records also have stable URLs and checksums.
+failing until the matching historical records also have stable URLs and checksums. The streaming
+baseline reader and targeted pair/ABC accumulator are implemented and fixture-tested, but their
+production entry point is deliberately closed: it accepts a baseline only when every local file
+matches the complete pinned release by filename, byte count, and SHA-256.
 
 ## Licence
 

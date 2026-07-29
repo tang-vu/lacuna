@@ -120,10 +120,11 @@ def audit_sources(path: Path = SOURCES_PATH) -> SourceAudit:
                 _require(isinstance(item, dict), f"{source_id}: malformed file {index}")
                 year = item.get("year")
                 _require(year in required_years, f"{source_id}: unexpected pinned year {year}")
-                _require(
-                    year not in pinned_years,
-                    f"{source_id}: duplicate pinned year {year}",
-                )
+                if kind == "historical_vocabulary":
+                    _require(
+                        year not in pinned_years,
+                        f"{source_id}: duplicate pinned year {year}",
+                    )
                 _require_https(item.get("url"), f"{source_id}.files[{index}]")
                 _require(
                     bool(SHA256.fullmatch(str(item.get("sha256", "")))),
@@ -133,11 +134,18 @@ def audit_sources(path: Path = SOURCES_PATH) -> SourceAudit:
                     isinstance(item.get("bytes"), int) and item["bytes"] > 0,
                     f"{source_id}: file {index} needs a positive byte count",
                 )
-                _require(
-                    isinstance(item.get("descriptor_count"), int)
-                    and item["descriptor_count"] > 0,
-                    f"{source_id}: file {index} needs a positive descriptor count",
-                )
+                if kind == "historical_vocabulary":
+                    _require(
+                        isinstance(item.get("descriptor_count"), int)
+                        and item["descriptor_count"] > 0,
+                        f"{source_id}: file {index} needs a positive descriptor count",
+                    )
+                elif kind == "historical_records":
+                    _require(
+                        isinstance(item.get("record_count"), int)
+                        and item["record_count"] > 0,
+                        f"{source_id}: file {index} needs a positive record count",
+                    )
                 pinned_years.add(year)
             _require(
                 pinned_years == set(required_years),

@@ -16,7 +16,6 @@ dev = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-cache_dir = ".pytest_cache"
 markers = [
     "slow: runs the metric over a fetched sweep; minutes, and needs data/ populated",
 ]

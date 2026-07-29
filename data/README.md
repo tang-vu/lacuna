@@ -14,6 +14,12 @@ python -m pipeline.benchmark.pin_mesh
 
 The command prints checksums for review but does not edit the committed source contract.
 
+Historical MEDLINE baseline XML belongs under `data/medline-baseline/` and is ignored by Git. The
+streaming reader will not trust files merely because they are in that directory: a production run
+requires every file in the selected release to match the filename, byte count, and SHA-256 pinned
+in `benchmarks/v3/sources.json`. The record source is currently unavailable, so the command remains
+closed even though its parser and exact pair/ABC accumulator are fixture-tested.
+
 The committed manifest pins canonical SHA-256 digests of the exact taxonomy and row content used
 to build each artifact. Canonicalisation excludes fetch timestamps and strips `mailto` and
 `api_key` query parameters; neither personal identifiers nor credentials are part of a published

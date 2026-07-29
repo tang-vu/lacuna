@@ -17,6 +17,7 @@ CACHE_DIR = DATA_DIR / "cache"
 COOCCURRENCE_DIR = DATA_DIR / "cooccurrence"
 PUBMED_CACHE_DIR = DATA_DIR / "pubmed-cache"
 MESH_CACHE_DIR = DATA_DIR / "mesh"
+MEDLINE_BASELINE_DIR = DATA_DIR / "medline-baseline"
 
 # Published, versioned output the frontend reads. Committed.
 ARTIFACTS_DIR = REPO_ROOT / "artifacts"
@@ -34,6 +35,7 @@ def ensure_dirs() -> None:
         COOCCURRENCE_DIR,
         PUBMED_CACHE_DIR,
         MESH_CACHE_DIR,
+        MEDLINE_BASELINE_DIR,
         ARTIFACTS_DIR,
     ):
         path.mkdir(parents=True, exist_ok=True)
