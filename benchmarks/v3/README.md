@@ -51,6 +51,11 @@ requested baseline year. A successful report also carries the checksum of the so
 the matching production-year MeSH archive. The low-level fixture API labels arbitrary XML as
 `unverified_medline_xml`; only this exact-match path may emit `pinned_historical_medline`.
 
+The same streaming parser has also read one checksum-verified file from the current 2026 PubMed
+baseline: 30,000 records, with no missing publication year or descriptor UI in that file. The
+dated [smoke-test report](../../plans/reports/validation-260729-medline-reader-smoke.md) labels this
+as schema compatibility only. Current indexing remains unsuitable for the historical experiment.
+
 Search a pinned vocabulary without falling back to today's MeSH service:
 
 ```bash
