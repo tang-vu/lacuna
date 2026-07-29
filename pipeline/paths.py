@@ -16,6 +16,7 @@ DATA_DIR = REPO_ROOT / "data"
 CACHE_DIR = DATA_DIR / "cache"
 COOCCURRENCE_DIR = DATA_DIR / "cooccurrence"
 PUBMED_CACHE_DIR = DATA_DIR / "pubmed-cache"
+MESH_CACHE_DIR = DATA_DIR / "mesh"
 
 # Published, versioned output the frontend reads. Committed.
 ARTIFACTS_DIR = REPO_ROOT / "artifacts"
@@ -27,5 +28,12 @@ TAXONOMY_PATH = DATA_DIR / "taxonomy.json"
 
 
 def ensure_dirs() -> None:
-    for path in (DATA_DIR, CACHE_DIR, COOCCURRENCE_DIR, PUBMED_CACHE_DIR, ARTIFACTS_DIR):
+    for path in (
+        DATA_DIR,
+        CACHE_DIR,
+        COOCCURRENCE_DIR,
+        PUBMED_CACHE_DIR,
+        MESH_CACHE_DIR,
+        ARTIFACTS_DIR,
+    ):
         path.mkdir(parents=True, exist_ok=True)

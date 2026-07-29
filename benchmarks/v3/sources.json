@@ -30,7 +30,7 @@
     {
       "id": "historical-mesh-vocabularies",
       "kind": "historical_vocabulary",
-      "status": "available_unpinned",
+      "status": "available_pinned",
       "required_for_shipping": true,
       "url_template": "https://nlmpubs.nlm.nih.gov/projects/mesh/{year}/xmlmesh/desc{year}.gz",
       "pre_2011_url_template": "https://nlmpubs.nlm.nih.gov/projects/mesh/1999-2010/xmlmesh/desc{year}.gz",
@@ -44,8 +44,38 @@
           "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/"
         }
       ],
-      "observation": "Descriptor archives for all required years were reachable, but no lacuna-owned checksum manifest has been created yet.",
-      "next_action": "Download the exact descriptor archives, verify their contents, and pin SHA-256 checksums before using any mapping as period-appropriate."
+      "files": [
+        {
+          "year": 2006,
+          "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/1999-2010/xmlmesh/desc2006.gz",
+          "sha256": "d47221d57a2c6015449c276ab02c31fa26c12de48f33f05e9e5a4f73a683dcb7",
+          "bytes": 13968153,
+          "descriptor_count": 23885
+        },
+        {
+          "year": 2010,
+          "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/1999-2010/xmlmesh/desc2010.gz",
+          "sha256": "af4284ab661a999a01b3b5b064545ffaa3584d50baa5b33f597e14af1a2a118a",
+          "bytes": 15243407,
+          "descriptor_count": 25588
+        },
+        {
+          "year": 2011,
+          "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/2011/xmlmesh/desc2011.gz",
+          "sha256": "2c1e582760a6ea93eb37777134d6b8c742c49a9e4e17675e55055063fd0042a4",
+          "bytes": 15586193,
+          "descriptor_count": 26142
+        },
+        {
+          "year": 2012,
+          "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/2012/xmlmesh/desc2012.gz",
+          "sha256": "381e804c7615e7a5332b2991e659a64b0ad0f216c4481ef6b7e3c614fc45095f",
+          "bytes": 15871262,
+          "descriptor_count": 26581
+        }
+      ],
+      "observation": "All required descriptor archives were downloaded as raw gzip bytes, parsed as MeSH XML, counted, and pinned by SHA-256.",
+      "next_action": "Use these pinned vocabularies to adjudicate candidate descriptor mappings; do not call a mapping period-appropriate until matching historical citation records are also pinned."
     },
     {
       "id": "current-pubmed-baseline",

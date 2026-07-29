@@ -177,10 +177,11 @@ from the classic replication catalog, five proposed post-2002 cases from LION's 
 set, and two rejected noise examples do not count toward readiness; only accepted entries with an
 independent LBD replication may be copied into `cases.json`. Run
 `python -m pipeline.benchmark.validate_candidates` to audit that boundary.
-The historical-input gate is also red: NLM's legacy MBR download endpoint no longer resolves, while
-the production-year MeSH archives remain public but unpinned. `benchmarks/v3/sources.json` records
-that dated observation; `python -m pipeline.benchmark.validate_sources --require-ready` must keep
-failing until both the citation records and matching vocabularies have stable URLs and checksums.
+The historical-input gate is also red: NLM's legacy MBR download endpoint no longer resolves. The
+required 2006/2010/2011/2012 MeSH descriptor archives are public and now pinned by SHA-256, but that
+vocabulary does not replace the missing citation records. `benchmarks/v3/sources.json` records the
+dated observation; `python -m pipeline.benchmark.validate_sources --require-ready` must keep
+failing until the matching historical records also have stable URLs and checksums.
 
 ## Licence
 

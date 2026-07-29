@@ -25,9 +25,10 @@ python -m pipeline.benchmark.validate_sources --require-ready
 ```
 
 The first command validates the record and reports its blockers. The second is intentionally red:
-the legacy MBR download host is unavailable, while the public production-year MeSH archives have
-not yet been checksummed. `sources.json` keeps those as separate gates because vocabulary files
-without the matching historical citation records cannot reconstruct period-appropriate indexing.
+the legacy MBR download host is unavailable. The public 2006, 2010, 2011, and 2012 production-year
+MeSH descriptor archives are now parsed and pinned by SHA-256, but `sources.json` keeps records and
+vocabulary as separate gates because vocabulary files alone cannot reconstruct period-appropriate
+indexing.
 
 An accepted intake record must link to exactly one case in `cases.json` and carry a selection
 source, bridge publication, and independent LBD replication. Replication supports using the pair

@@ -23,7 +23,9 @@ NLM's MEDLINE/PubMed Baseline Repository documented annual static views only fro
 reference material also states that each baseline had already undergone year-end processing for
 that baseline's vocabulary year. However, the documented `mbr.nlm.nih.gov` download host no longer
 resolved when checked on 2026-07-29, and the surviving reference URL redirected to an Archive-It
-HTML wrapper rather than raw baseline data. Public production-year MeSH files remain reachable.
+HTML wrapper rather than raw baseline data. Public production-year MeSH files remain reachable;
+the required 2006, 2010, 2011, and 2012 descriptor archives were parsed and pinned by SHA-256 on
+2026-07-29 in `benchmarks/v3/sources.json`.
 This has four consequences:
 
 - no pre-2002 experiment may be called period-appropriate unless a separate contemporaneous
