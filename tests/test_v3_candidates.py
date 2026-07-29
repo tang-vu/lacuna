@@ -76,3 +76,14 @@ def test_proposed_candidate_requires_a_selection_source(tmp_path):
 
     with pytest.raises(CandidateContractError, match="needs a selection source"):
         audit_candidates(path, BENCHMARK_PATH)
+
+
+def test_production_year_mapping_must_use_the_pinned_vocabulary(tmp_path):
+    payload = json.loads(CANDIDATES_PATH.read_text(encoding="utf-8"))
+    mapped = next(item for item in payload["candidates"] if "mapping_audit" in item)
+    mapped["mapping_audit"]["source_sha256"] = "0" * 64
+    path = tmp_path / "candidates.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+
+    with pytest.raises(CandidateContractError, match="differs from the pinned vocabulary"):
+        audit_candidates(path, BENCHMARK_PATH)

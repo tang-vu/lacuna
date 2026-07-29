@@ -16,6 +16,8 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 from pipeline.benchmark.validate_v3 import BENCHMARK_PATH, FORBIDDEN_OUTPUT_FIELDS, KINDS
+from pipeline.benchmark.validate_v3 import DESCRIPTOR_UI, SHA256
+from pipeline.benchmark.validate_sources import SOURCES_PATH
 from pipeline.paths import REPO_ROOT
 
 CANDIDATES_PATH = REPO_ROOT / "benchmarks" / "v3" / "candidates.json"
@@ -64,9 +66,24 @@ def _load_benchmark_cases(path: Path) -> dict[str, dict]:
     return {case["id"]: case for case in cases}
 
 
+def _load_pinned_vocabularies(path: Path) -> dict[int, dict]:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    vocabulary = next(
+        source
+        for source in payload["sources"]
+        if source["kind"] == "historical_vocabulary"
+    )
+    _require(
+        vocabulary.get("status") == "available_pinned",
+        "candidate mapping audits require pinned historical vocabularies",
+    )
+    return {item["year"]: item for item in vocabulary["files"]}
+
+
 def audit_candidates(
     path: Path = CANDIDATES_PATH,
     benchmark_path: Path = BENCHMARK_PATH,
+    sources_path: Path = SOURCES_PATH,
 ) -> CandidateAudit:
     payload = json.loads(path.read_text(encoding="utf-8"))
     _require(payload.get("schema_version") == 1, "unsupported candidate schema")
@@ -90,6 +107,7 @@ def audit_candidates(
     )
 
     benchmark_cases = _load_benchmark_cases(benchmark_path)
+    pinned_vocabularies = _load_pinned_vocabularies(sources_path)
     counts = {status: 0 for status in STATUSES}
     accepted_benchmark_ids: list[str] = []
     seen: set[str] = set()
@@ -150,6 +168,49 @@ def audit_candidates(
                 isinstance(candidate.get("source_evaluation_lag_years"), int)
                 and candidate["source_evaluation_lag_years"] > 0,
                 f"{candidate_id}: discovery year needs a positive evaluation lag",
+            )
+            mapping_audit = candidate.get("mapping_audit")
+            _require(
+                isinstance(mapping_audit, dict)
+                and mapping_audit.get("status") == "production_year_candidate",
+                f"{candidate_id}: missing production-year mapping audit",
+            )
+            expected_year = (
+                candidate["source_discovery_year"]
+                - candidate["source_evaluation_lag_years"]
+            )
+            _require(
+                mapping_audit.get("vocabulary_year") == expected_year,
+                f"{candidate_id}: mapping year differs from the source evaluation lag",
+            )
+            pinned = pinned_vocabularies.get(expected_year)
+            _require(pinned is not None, f"{candidate_id}: mapping year is not pinned")
+            _require(
+                mapping_audit.get("source_sha256") == pinned["sha256"],
+                f"{candidate_id}: mapping audit checksum differs from the pinned vocabulary",
+            )
+            _require(
+                bool(SHA256.fullmatch(str(mapping_audit.get("source_sha256", "")))),
+                f"{candidate_id}: malformed mapping audit checksum",
+            )
+            expected_roles = {"a", "c"} | ({"b"} if bridge is not None else set())
+            mappings = mapping_audit.get("mappings")
+            _require(
+                isinstance(mappings, dict) and set(mappings) == expected_roles,
+                f"{candidate_id}: mapping audit must cover {sorted(expected_roles)}",
+            )
+            for role, mapping in mappings.items():
+                _require(
+                    isinstance(mapping, dict)
+                    and bool(DESCRIPTOR_UI.fullmatch(str(mapping.get("descriptor_ui", ""))))
+                    and bool(mapping.get("descriptor_label"))
+                    and bool(mapping.get("matched_term"))
+                    and mapping.get("match_basis") in {"descriptor_label", "entry_term"},
+                    f"{candidate_id}.{role}: malformed production-year mapping",
+                )
+            _require(
+                bool(mapping_audit.get("limitation")),
+                f"{candidate_id}: mapping audit must state its limitation",
             )
 
         if "candidate_cutoff" in candidate:

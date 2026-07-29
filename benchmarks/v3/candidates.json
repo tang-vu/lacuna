@@ -256,6 +256,32 @@
         "label": "Bcl-2",
         "source_entity_id": "PR:000002307"
       },
+      "mapping_audit": {
+        "status": "production_year_candidate",
+        "vocabulary_year": 2011,
+        "source_sha256": "2c1e582760a6ea93eb37777134d6b8c742c49a9e4e17675e55055063fd0042a4",
+        "mappings": {
+          "a": {
+            "descriptor_ui": "D016328",
+            "descriptor_label": "NF-kappa B",
+            "matched_term": "NF-kappa B",
+            "match_basis": "descriptor_label"
+          },
+          "b": {
+            "descriptor_ui": "D019253",
+            "descriptor_label": "Proto-Oncogene Proteins c-bcl-2",
+            "matched_term": "Proto-Oncogene Proteins c-bcl-2",
+            "match_basis": "descriptor_label"
+          },
+          "c": {
+            "descriptor_ui": "D000236",
+            "descriptor_label": "Adenoma",
+            "matched_term": "Adenoma",
+            "match_basis": "descriptor_label"
+          }
+        },
+        "limitation": "These are vocabulary-presence and semantic-mapping candidates, not evidence of descriptor assignments in historical citations."
+      },
       "evidence": [
         {
           "role": "selection_source",
@@ -303,6 +329,32 @@
       "bridge": {
         "label": "senescence",
         "source_entity_id": "HOC:42"
+      },
+      "mapping_audit": {
+        "status": "production_year_candidate",
+        "vocabulary_year": 2011,
+        "source_sha256": "2c1e582760a6ea93eb37777134d6b8c742c49a9e4e17675e55055063fd0042a4",
+        "mappings": {
+          "a": {
+            "descriptor_ui": "D051881",
+            "descriptor_label": "Receptor, Notch1",
+            "matched_term": "Receptor, Notch1",
+            "match_basis": "descriptor_label"
+          },
+          "b": {
+            "descriptor_ui": "D016922",
+            "descriptor_label": "Cell Aging",
+            "matched_term": "Cellular Senescence",
+            "match_basis": "entry_term"
+          },
+          "c": {
+            "descriptor_ui": "D022782",
+            "descriptor_label": "CCAAT-Enhancer-Binding Protein-beta",
+            "matched_term": "CCAAT-Enhancer-Binding Protein-beta",
+            "match_basis": "descriptor_label"
+          }
+        },
+        "limitation": "These are vocabulary-presence and semantic-mapping candidates, not evidence of descriptor assignments in historical citations."
       },
       "evidence": [
         {
@@ -352,6 +404,32 @@
         "label": "p38 alpha",
         "source_entity_id": "PR:000003107"
       },
+      "mapping_audit": {
+        "status": "production_year_candidate",
+        "vocabulary_year": 2010,
+        "source_sha256": "af4284ab661a999a01b3b5b064545ffaa3584d50baa5b33f597e14af1a2a118a",
+        "mappings": {
+          "a": {
+            "descriptor_ui": "D020381",
+            "descriptor_label": "Interleukin-17",
+            "matched_term": "Interleukin-17",
+            "match_basis": "descriptor_label"
+          },
+          "b": {
+            "descriptor_ui": "D048051",
+            "descriptor_label": "p38 Mitogen-Activated Protein Kinases",
+            "matched_term": "p38 Mitogen-Activated Protein Kinases",
+            "match_basis": "descriptor_label"
+          },
+          "c": {
+            "descriptor_ui": "D054638",
+            "descriptor_label": "Dual Specificity Phosphatase 1",
+            "matched_term": "Dual Specificity Phosphatase 1",
+            "match_basis": "descriptor_label"
+          }
+        },
+        "limitation": "These are vocabulary-presence and semantic-mapping candidates, not evidence of descriptor assignments in historical citations."
+      },
       "evidence": [
         {
           "role": "selection_source",
@@ -400,6 +478,32 @@
         "label": "Reactive Oxygen Species",
         "source_entity_id": "CHEBI:26523"
       },
+      "mapping_audit": {
+        "status": "production_year_candidate",
+        "vocabulary_year": 2006,
+        "source_sha256": "d47221d57a2c6015449c276ab02c31fa26c12de48f33f05e9e5a4f73a683dcb7",
+        "mappings": {
+          "a": {
+            "descriptor_ui": "D051267",
+            "descriptor_label": "NF-E2-Related Factor 2",
+            "matched_term": "NF-E2-Related Factor 2",
+            "match_basis": "descriptor_label"
+          },
+          "b": {
+            "descriptor_ui": "D017382",
+            "descriptor_label": "Reactive Oxygen Species",
+            "matched_term": "Reactive Oxygen Species",
+            "match_basis": "descriptor_label"
+          },
+          "c": {
+            "descriptor_ui": "D010190",
+            "descriptor_label": "Pancreatic Neoplasms",
+            "matched_term": "Pancreatic Neoplasms",
+            "match_basis": "descriptor_label"
+          }
+        },
+        "limitation": "These are vocabulary-presence and semantic-mapping candidates, not evidence of descriptor assignments in historical citations."
+      },
       "evidence": [
         {
           "role": "selection_source",
@@ -447,6 +551,32 @@
       "bridge": {
         "label": "senescence",
         "source_entity_id": "HOC:42"
+      },
+      "mapping_audit": {
+        "status": "production_year_candidate",
+        "vocabulary_year": 2012,
+        "source_sha256": "381e804c7615e7a5332b2991e659a64b0ad0f216c4481ef6b7e3c614fc45095f",
+        "mappings": {
+          "a": {
+            "descriptor_ui": "D054377",
+            "descriptor_label": "Chemokine CXCL12",
+            "matched_term": "Chemokine CXCL12",
+            "match_basis": "descriptor_label"
+          },
+          "b": {
+            "descriptor_ui": "D016922",
+            "descriptor_label": "Cell Aging",
+            "matched_term": "Cellular Senescence",
+            "match_basis": "entry_term"
+          },
+          "c": {
+            "descriptor_ui": "D013964",
+            "descriptor_label": "Thyroid Neoplasms",
+            "matched_term": "Thyroid Neoplasms",
+            "match_basis": "descriptor_label"
+          }
+        },
+        "limitation": "These are vocabulary-presence and semantic-mapping candidates, not evidence of descriptor assignments in historical citations."
       },
       "evidence": [
         {

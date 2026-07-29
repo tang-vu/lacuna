@@ -30,6 +30,18 @@ MeSH descriptor archives are now parsed and pinned by SHA-256, but `sources.json
 vocabulary as separate gates because vocabulary files alone cannot reconstruct period-appropriate
 indexing.
 
+Search a pinned vocabulary without falling back to today's MeSH service:
+
+```bash
+python -m pipeline.benchmark.audit_mesh 2011 "NF-kappa B" "Adenoma"
+```
+
+The output includes the archive checksum and calls unmatched terms out explicitly. It is mapping
+evidence, not evidence that the descriptor was assigned to any particular historical citation.
+All ten LION endpoints and all five nominated bridges have mapping candidates in the relevant
+production-year vocabulary. They remain `proposed`: cross-vocabulary identity still needs
+adjudication, and the historical-record source gate is unavailable.
+
 An accepted intake record must link to exactly one case in `cases.json` and carry a selection
 source, bridge publication, and independent LBD replication. Replication supports using the pair
 as a development diagnostic; it does not establish that the proposed biological relationship is
