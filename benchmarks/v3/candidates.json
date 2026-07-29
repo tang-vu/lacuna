@@ -1,0 +1,283 @@
+{
+  "schema_version": 1,
+  "purpose": "A metric-blind intake ledger for possible v3 benchmark cases. This file is not a benchmark result and its counts do not contribute to readiness.",
+  "policy": {
+    "metric_blind": true,
+    "accepted_only_enters_benchmark": true,
+    "acceptance_requires_independent_replication": true
+  },
+  "candidates": [
+    {
+      "id": "swanson-fish-oil-raynaud",
+      "proposed_kind": "positive",
+      "status": "accepted",
+      "benchmark_case_id": "swanson-fish-oil-raynaud",
+      "selection_stage": "pre_metric",
+      "candidate_cutoff": "1985-12-31",
+      "concepts": {
+        "a": {"label": "Fish Oils"},
+        "c": {"label": "Raynaud Disease"}
+      },
+      "evidence": [
+        {
+          "role": "selection_source",
+          "label": "Preiss and Stevenson (2017), replication catalog and 1960-1985 time window",
+          "url": "https://doi.org/10.1186/s12859-017-1641-9"
+        },
+        {
+          "role": "bridge_publication",
+          "label": "Swanson (1986), Fish oil, Raynaud's syndrome, and undiscovered public knowledge",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/3797213/"
+        },
+        {
+          "role": "independent_replication",
+          "label": "Gordon and Lindsay (1996), independent replication and re-examination",
+          "url": "https://doi.org/10.1002/(SICI)1097-4571(199602)47:2%3C116::AID-ASI3%3E3.0.CO;2-1"
+        },
+        {
+          "role": "clinical_confirmation",
+          "label": "DiGiacomo et al. (1989), double-blind controlled prospective study",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/2536517/"
+        }
+      ],
+      "adjudication": {
+        "decision": "accepted",
+        "decided_on": "2026-07-29",
+        "rationale": "Canonical development diagnostic with a documented pre-discovery window, later bridge publication, independent LBD replication, and subsequent clinical study. Historical MeSH remains unavailable, so it is not eligible as a period-appropriate held-out case."
+      }
+    },
+    {
+      "id": "swanson-magnesium-migraine",
+      "proposed_kind": "positive",
+      "status": "accepted",
+      "benchmark_case_id": "swanson-magnesium-migraine",
+      "selection_stage": "pre_metric",
+      "candidate_cutoff": "1987-12-31",
+      "concepts": {
+        "a": {"label": "Magnesium Deficiency"},
+        "c": {"label": "Migraine Disorders"}
+      },
+      "evidence": [
+        {
+          "role": "selection_source",
+          "label": "Preiss and Stevenson (2017), replication catalog",
+          "url": "https://doi.org/10.1186/s12859-017-1641-9"
+        },
+        {
+          "role": "bridge_publication",
+          "label": "Swanson (1988), Migraine and magnesium: eleven neglected connections",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/3075738/"
+        },
+        {
+          "role": "independent_replication",
+          "label": "Weeber et al. (2001), concept-based simulation of both Swanson discoveries",
+          "url": "https://doi.org/10.1002/asi.1104"
+        }
+      ],
+      "adjudication": {
+        "decision": "accepted",
+        "decided_on": "2026-07-29",
+        "rationale": "Canonical development diagnostic with a bridge publication and independent concept-based replication. Historical MeSH remains unavailable, so it is not eligible as a period-appropriate held-out case."
+      }
+    },
+    {
+      "id": "swanson-somatomedin-c-arginine",
+      "proposed_kind": "positive",
+      "status": "proposed",
+      "selection_stage": "pre_metric",
+      "source_time_window": "1960-1989",
+      "concepts": {
+        "a": {"label": "Somatomedin C"},
+        "c": {"label": "Arginine"}
+      },
+      "evidence": [
+        {
+          "role": "selection_source",
+          "label": "Preiss and Stevenson (2017), one of seven literature replication cases",
+          "url": "https://doi.org/10.1186/s12859-017-1641-9"
+        },
+        {
+          "role": "bridge_candidate",
+          "label": "Swanson (1990), Somatomedin C and arginine",
+          "url": "https://doi.org/10.1353/pbm.1990.0031"
+        }
+      ],
+      "open_questions": [
+        "Adjudicate the exact cutoff independently of the published evaluation window.",
+        "Audit both concepts against the intended vocabulary release.",
+        "Find independent evidence that the relationship qualifies as a discovery rather than only an LBD replication target."
+      ],
+      "adjudication": {
+        "decision": "proposed",
+        "rationale": "A frequently reused replication case is only a candidate until its cutoff, mapping, and discovery status are independently adjudicated."
+      }
+    },
+    {
+      "id": "smalheiser-magnesium-neurologic-disease",
+      "proposed_kind": "positive",
+      "status": "proposed",
+      "selection_stage": "pre_metric",
+      "source_time_window": "1960-1994",
+      "concepts": {
+        "a": {"label": "Magnesium Deficiency"},
+        "c": {"label": "Neurologic Disease"}
+      },
+      "evidence": [
+        {
+          "role": "selection_source",
+          "label": "Preiss and Stevenson (2017), one of seven literature replication cases",
+          "url": "https://doi.org/10.1186/s12859-017-1641-9"
+        }
+      ],
+      "open_questions": [
+        "Locate a stable primary-publication record for the 1994 bridge paper.",
+        "Adjudicate the cutoff independently of the published evaluation window.",
+        "Resolve the broad neurologic-disease concept to a period-appropriate descriptor."
+      ],
+      "adjudication": {
+        "decision": "proposed",
+        "rationale": "The replication catalog is sufficient for intake, not for positive-case acceptance."
+      }
+    },
+    {
+      "id": "smalheiser-alzheimer-indomethacin",
+      "proposed_kind": "positive",
+      "status": "proposed",
+      "selection_stage": "pre_metric",
+      "source_time_window": "1966-1996",
+      "concepts": {
+        "a": {"label": "Alzheimer Disease"},
+        "c": {"label": "Indomethacin"}
+      },
+      "evidence": [
+        {
+          "role": "selection_source",
+          "label": "Preiss and Stevenson (2017), one of seven literature replication cases",
+          "url": "https://doi.org/10.1186/s12859-017-1641-9"
+        },
+        {
+          "role": "bridge_candidate",
+          "label": "Smalheiser and Swanson (1996), Indomethacin and Alzheimer's disease",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/8614542/"
+        }
+      ],
+      "open_questions": [
+        "Adjudicate whether this is a discovery case when direct pre-window connections are reported.",
+        "Define a cutoff that precedes the bridge publication.",
+        "Audit both concepts against the intended vocabulary release."
+      ],
+      "adjudication": {
+        "decision": "proposed",
+        "rationale": "The catalog reports six direct connections in its evaluation segment, so novelty cannot be assumed from reuse as an LBD case."
+      }
+    },
+    {
+      "id": "smalheiser-alzheimer-estrogen",
+      "proposed_kind": "positive",
+      "status": "proposed",
+      "selection_stage": "pre_metric",
+      "source_time_window": "1960-1995",
+      "concepts": {
+        "a": {"label": "Alzheimer Disease"},
+        "c": {"label": "Estrogens"}
+      },
+      "evidence": [
+        {
+          "role": "selection_source",
+          "label": "Preiss and Stevenson (2017), one of seven literature replication cases",
+          "url": "https://doi.org/10.1186/s12859-017-1641-9"
+        },
+        {
+          "role": "bridge_candidate",
+          "label": "Smalheiser and Swanson (1996), Linking estrogen to Alzheimer's disease",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/8797484/"
+        }
+      ],
+      "open_questions": [
+        "Adjudicate whether this is a discovery case when direct pre-window connections are reported.",
+        "Pin the pre-publication cutoff and vocabulary release.",
+        "Find an independent assessment of the claimed discovery."
+      ],
+      "adjudication": {
+        "decision": "proposed",
+        "rationale": "The catalog reports 25 direct connections in its evaluation segment; this may be hypothesis organization rather than a previously absent relation."
+      }
+    },
+    {
+      "id": "smalheiser-schizophrenia-ipla2",
+      "proposed_kind": "positive",
+      "status": "proposed",
+      "selection_stage": "pre_metric",
+      "source_time_window": "1960-1997",
+      "concepts": {
+        "a": {"label": "Schizophrenia"},
+        "c": {"label": "Calcium-Independent Phospholipase A2"}
+      },
+      "evidence": [
+        {
+          "role": "selection_source",
+          "label": "Preiss and Stevenson (2017), one of seven literature replication cases",
+          "url": "https://doi.org/10.1186/s12859-017-1641-9"
+        },
+        {
+          "role": "bridge_candidate",
+          "label": "Smalheiser and Swanson (1998), Calcium-independent phospholipase A2 and schizophrenia",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/9707387/"
+        }
+      ],
+      "open_questions": [
+        "Resolve the source's inconsistent 1997/1998 publication dating before fixing a cutoff.",
+        "Audit the enzyme concept against the intended vocabulary release.",
+        "Find an independent assessment of the claimed discovery."
+      ],
+      "adjudication": {
+        "decision": "proposed",
+        "rationale": "The stable PubMed record dates the bridge to 1998 while secondary replication literature sometimes labels it 1997; the case cannot be frozen with an unresolved cutoff."
+      }
+    },
+    {
+      "id": "timeslice-ebola-professional-burnout",
+      "proposed_kind": "positive",
+      "status": "rejected",
+      "selection_stage": "pre_metric",
+      "concepts": {
+        "a": {"label": "Ebolavirus"},
+        "c": {"label": "Burnout, Professional"}
+      },
+      "evidence": [
+        {
+          "role": "methodological_rejection",
+          "label": "Moreau (2023), example of a chance co-occurrence mislabelled by time-sliced evaluation",
+          "url": "https://doi.org/10.1093/bioinformatics/btad090"
+        }
+      ],
+      "adjudication": {
+        "decision": "rejected",
+        "decided_on": "2026-07-29",
+        "rationale": "A later co-occurrence alone is not evidence of a meaningful discovery. This pair is retained only as an audit example of noisy timeslice labels."
+      }
+    },
+    {
+      "id": "timeslice-alzheimer-elderly",
+      "proposed_kind": "positive",
+      "status": "rejected",
+      "selection_stage": "pre_metric",
+      "concepts": {
+        "a": {"label": "Alzheimer Disease"},
+        "c": {"label": "Elderly"}
+      },
+      "evidence": [
+        {
+          "role": "methodological_rejection",
+          "label": "Moreau (2023), example involving a generic term mislabelled by time-sliced evaluation",
+          "url": "https://doi.org/10.1093/bioinformatics/btad090"
+        }
+      ],
+      "adjudication": {
+        "decision": "rejected",
+        "decided_on": "2026-07-29",
+        "rationale": "A generic population term newly co-occurring with a disease is not by itself a discovery. This pair is retained only as a benchmark-construction warning."
+      }
+    }
+  ]
+}

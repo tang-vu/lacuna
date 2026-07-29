@@ -171,6 +171,11 @@ third formula on the canonical pair. Its
 `python -m pipeline.benchmark.validate_v3` to see the blockers; only `--require-ready` is a
 shipping gate. `pipeline.pubmed_client` can batch citation/MeSH metadata for mapping audits, but its
 output is explicitly maintained-current and cannot satisfy the historical-indexing gate.
+Potential cases first enter the separate
+[`benchmarks/v3/candidates.json`](benchmarks/v3/candidates.json) ledger. Its five proposed cases
+and two rejected noise examples do not count toward readiness; only accepted entries with an
+independent LBD replication may be copied into `cases.json`. Run
+`python -m pipeline.benchmark.validate_candidates` to audit that boundary.
 
 ## Licence
 
