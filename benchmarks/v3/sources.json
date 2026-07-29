@@ -2,10 +2,10 @@
   "schema_version": 1,
   "observed_on": "2026-07-29",
   "required_baseline_years": [
-    2006,
-    2010,
+    2007,
     2011,
-    2012
+    2012,
+    2013
   ],
   "sources": [
     {
@@ -20,6 +20,10 @@
           "url": "https://www.nlm.nih.gov/pubs/techbull/nd05/nd05_technote_mbr.html"
         },
         {
+          "label": "NLM annual baseline overview, documenting December release after maintenance to the new year's MeSH",
+          "url": "https://www.nlm.nih.gov/bsd/licensee/baseline.html"
+        },
+        {
           "label": "NLM MBR reference material, now served only through an Archive-It wrapper",
           "url": "https://lhncbc.nlm.nih.gov/ii/information/MBR/MEDLINE_Baseline_Repository_Detail_2017.pdf"
         },
@@ -30,9 +34,13 @@
         {
           "label": "NLM 2012 inventory, still live with 684 filenames and measured sizes",
           "url": "https://www.nlm.nih.gov/bsd/licensee/2012_stats/baseline_med_filecount.html"
+        },
+        {
+          "label": "NLM 2013 inventory, still live with 717 filenames and measured sizes",
+          "url": "https://www.nlm.nih.gov/bsd/licensee/2013_stats/baseline_med_filecount.html"
         }
       ],
-      "observation": "The documented mbr.nlm.nih.gov host and the HTTPS form of the former hidden FTP distribution path returned 404. NLM's archive index still names the annual distribution inventories, but the 2006, 2010, and 2011 inventory links returned 404; the live 2012 page inventories 684 files and 20,494,848 records but does not provide raw download URLs or checksums. NLM's launch notice says the raw FTP and query tool were originally controlled for registered licensees.",
+      "observation": "NLM documents that a baseline labelled year R is released in December after records are maintained to year R's MeSH and contains the preceding production year's updates. The source contract therefore requires releases 2007, 2011, 2012, and 2013 to cover publication-year cutoffs 2006, 2010, 2011, and 2012. The documented mbr.nlm.nih.gov host and the HTTPS form of the former hidden FTP distribution path returned 404. NLM's archive index still names the annual distributions; the live 2012 and 2013 inventory pages expose file counts and record counts but not raw download URLs or checksums. NLM's launch notice says the raw FTP and query tool were originally controlled for registered licensees.",
       "next_action": "Submit the prepared NLM Support request in plans/requests/nlm-historical-medline-access.md. If NLM identifies an access path, pin the complete file set by URL, byte count, SHA-256, and parsed record count before changing this status."
     },
     {
@@ -54,18 +62,11 @@
       ],
       "files": [
         {
-          "year": 2006,
-          "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/1999-2010/xmlmesh/desc2006.gz",
-          "sha256": "d47221d57a2c6015449c276ab02c31fa26c12de48f33f05e9e5a4f73a683dcb7",
-          "bytes": 13968153,
-          "descriptor_count": 23885
-        },
-        {
-          "year": 2010,
-          "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/1999-2010/xmlmesh/desc2010.gz",
-          "sha256": "af4284ab661a999a01b3b5b064545ffaa3584d50baa5b33f597e14af1a2a118a",
-          "bytes": 15243407,
-          "descriptor_count": 25588
+          "year": 2007,
+          "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/1999-2010/xmlmesh/desc2007.gz",
+          "sha256": "2ba693d147557886a05f854194219ff81f5a38e5f3fde6921023fff18ad03f4a",
+          "bytes": 14287929,
+          "descriptor_count": 24357
         },
         {
           "year": 2011,
@@ -80,6 +81,13 @@
           "sha256": "381e804c7615e7a5332b2991e659a64b0ad0f216c4481ef6b7e3c614fc45095f",
           "bytes": 15871262,
           "descriptor_count": 26581
+        },
+        {
+          "year": 2013,
+          "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/2013/xmlmesh/desc2013.gz",
+          "sha256": "c928973ae228ebd03ceeec8950b31f63a867fc9dc2699ae1578e506f25739740",
+          "bytes": 16103897,
+          "descriptor_count": 26853
         }
       ],
       "observation": "All required descriptor archives were downloaded as raw gzip bytes, parsed as MeSH XML, counted, and pinned by SHA-256.",

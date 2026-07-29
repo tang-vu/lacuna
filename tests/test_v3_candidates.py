@@ -109,3 +109,16 @@ def test_source_cutoff_basis_must_be_publication_year_bounded(tmp_path):
 
     with pytest.raises(CandidateContractError, match="unsupported source cutoff basis"):
         audit_candidates(path, BENCHMARK_PATH)
+
+
+def test_baseline_release_must_follow_the_publication_cutoff(tmp_path):
+    payload = json.loads(CANDIDATES_PATH.read_text(encoding="utf-8"))
+    mapped = next(
+        item for item in payload["candidates"] if "source_baseline_release_year" in item
+    )
+    mapped["source_baseline_release_year"] = mapped["source_cutoff_year"]
+    path = tmp_path / "candidates.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+
+    with pytest.raises(CandidateContractError, match="year after the publication cutoff"):
+        audit_candidates(path, BENCHMARK_PATH)

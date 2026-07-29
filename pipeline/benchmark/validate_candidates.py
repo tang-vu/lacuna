@@ -175,25 +175,30 @@ def audit_candidates(
                 and mapping_audit.get("status") == "production_year_candidate",
                 f"{candidate_id}: missing production-year mapping audit",
             )
-            expected_year = (
+            expected_cutoff_year = (
                 candidate["source_discovery_year"]
                 - candidate["source_evaluation_lag_years"]
             )
+            expected_release_year = expected_cutoff_year + 1
             _require(
                 candidate.get("source_cutoff_basis")
                 == "publication_year_lte_discovery_year_minus_lag",
                 f"{candidate_id}: unsupported source cutoff basis",
             )
             _require(
-                candidate.get("source_cutoff_year") == expected_year,
+                candidate.get("source_cutoff_year") == expected_cutoff_year,
                 f"{candidate_id}: source cutoff year differs from the source evaluation lag",
             )
             _require(
-                mapping_audit.get("vocabulary_year") == expected_year,
-                f"{candidate_id}: mapping year differs from the source evaluation lag",
+                candidate.get("source_baseline_release_year") == expected_release_year,
+                f"{candidate_id}: baseline release must be the year after the publication cutoff",
             )
-            pinned = pinned_vocabularies.get(expected_year)
-            _require(pinned is not None, f"{candidate_id}: mapping year is not pinned")
+            _require(
+                mapping_audit.get("vocabulary_year") == expected_release_year,
+                f"{candidate_id}: mapping year differs from the baseline release",
+            )
+            pinned = pinned_vocabularies.get(expected_release_year)
+            _require(pinned is not None, f"{candidate_id}: baseline vocabulary is not pinned")
             _require(
                 mapping_audit.get("source_sha256") == pinned["sha256"],
                 f"{candidate_id}: mapping audit checksum differs from the pinned vocabulary",

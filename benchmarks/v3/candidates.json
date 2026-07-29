@@ -244,6 +244,7 @@
       "source_evaluation_lag_years": 5,
       "source_cutoff_basis": "publication_year_lte_discovery_year_minus_lag",
       "source_cutoff_year": 2011,
+      "source_baseline_release_year": 2012,
       "concepts": {
         "a": {
           "label": "NF-kappa B",
@@ -260,8 +261,8 @@
       },
       "mapping_audit": {
         "status": "production_year_candidate",
-        "vocabulary_year": 2011,
-        "source_sha256": "2c1e582760a6ea93eb37777134d6b8c742c49a9e4e17675e55055063fd0042a4",
+        "vocabulary_year": 2012,
+        "source_sha256": "381e804c7615e7a5332b2991e659a64b0ad0f216c4481ef6b7e3c614fc45095f",
         "mappings": {
           "a": {
             "descriptor_ui": "D016328",
@@ -302,7 +303,7 @@
         }
       ],
       "open_questions": [
-        "Pin the complete historical MEDLINE release needed to evaluate the source-defined 2011 publication-year cutoff.",
+        "Pin the complete 2012 MEDLINE baseline release needed to evaluate the source-defined 2011 publication-year cutoff.",
         "Map the Protein Ontology A term to a period-appropriate MeSH descriptor without changing the case identity.",
         "Independently adjudicate the discovery claim rather than relying only on reuse of the LION label."
       ],
@@ -320,6 +321,7 @@
       "source_evaluation_lag_years": 5,
       "source_cutoff_basis": "publication_year_lte_discovery_year_minus_lag",
       "source_cutoff_year": 2011,
+      "source_baseline_release_year": 2012,
       "concepts": {
         "a": {
           "label": "NOTCH1",
@@ -336,8 +338,8 @@
       },
       "mapping_audit": {
         "status": "production_year_candidate",
-        "vocabulary_year": 2011,
-        "source_sha256": "2c1e582760a6ea93eb37777134d6b8c742c49a9e4e17675e55055063fd0042a4",
+        "vocabulary_year": 2012,
+        "source_sha256": "381e804c7615e7a5332b2991e659a64b0ad0f216c4481ef6b7e3c614fc45095f",
         "mappings": {
           "a": {
             "descriptor_ui": "D051881",
@@ -378,7 +380,7 @@
         }
       ],
       "open_questions": [
-        "Pin the complete historical MEDLINE release needed to evaluate the source-defined 2011 publication-year cutoff.",
+        "Pin the complete 2012 MEDLINE baseline release needed to evaluate the source-defined 2011 publication-year cutoff.",
         "Map both Protein Ontology endpoints and the Cancer Hallmarks bridge to period-appropriate MeSH without changing the case identity.",
         "Independently adjudicate the discovery claim rather than relying only on reuse of the LION label."
       ],
@@ -396,6 +398,7 @@
       "source_evaluation_lag_years": 5,
       "source_cutoff_basis": "publication_year_lte_discovery_year_minus_lag",
       "source_cutoff_year": 2010,
+      "source_baseline_release_year": 2011,
       "concepts": {
         "a": {
           "label": "IL-17",
@@ -412,8 +415,8 @@
       },
       "mapping_audit": {
         "status": "production_year_candidate",
-        "vocabulary_year": 2010,
-        "source_sha256": "af4284ab661a999a01b3b5b064545ffaa3584d50baa5b33f597e14af1a2a118a",
+        "vocabulary_year": 2011,
+        "source_sha256": "2c1e582760a6ea93eb37777134d6b8c742c49a9e4e17675e55055063fd0042a4",
         "mappings": {
           "a": {
             "descriptor_ui": "D020381",
@@ -454,7 +457,7 @@
         }
       ],
       "open_questions": [
-        "Pin the complete historical MEDLINE release needed to evaluate the source-defined 2010 publication-year cutoff.",
+        "Pin the complete 2011 MEDLINE baseline release needed to evaluate the source-defined 2010 publication-year cutoff.",
         "Map all three Protein Ontology entities to period-appropriate MeSH without changing the case identity.",
         "Adjudicate why a commentary about a multiple-sclerosis mouse model is grouped with cancer discoveries and whether it is a primary discovery publication."
       ],
@@ -472,6 +475,7 @@
       "source_evaluation_lag_years": 5,
       "source_cutoff_basis": "publication_year_lte_discovery_year_minus_lag",
       "source_cutoff_year": 2006,
+      "source_baseline_release_year": 2007,
       "concepts": {
         "a": {
           "label": "Nrf2",
@@ -488,8 +492,8 @@
       },
       "mapping_audit": {
         "status": "production_year_candidate",
-        "vocabulary_year": 2006,
-        "source_sha256": "d47221d57a2c6015449c276ab02c31fa26c12de48f33f05e9e5a4f73a683dcb7",
+        "vocabulary_year": 2007,
+        "source_sha256": "2ba693d147557886a05f854194219ff81f5a38e5f3fde6921023fff18ad03f4a",
         "mappings": {
           "a": {
             "descriptor_ui": "D051267",
@@ -530,7 +534,7 @@
         }
       ],
       "open_questions": [
-        "Pin the complete historical MEDLINE release needed to evaluate the source-defined 2006 publication-year cutoff.",
+        "Pin the complete 2007 MEDLINE baseline release needed to evaluate the source-defined 2006 publication-year cutoff.",
         "Determine whether the Nrf2 Protein Ontology identity had a period-appropriate MeSH descriptor at the cutoff.",
         "Verify that translating the ChEBI bridge to MeSH preserves the source case."
       ],
@@ -548,6 +552,7 @@
       "source_evaluation_lag_years": 5,
       "source_cutoff_basis": "publication_year_lte_discovery_year_minus_lag",
       "source_cutoff_year": 2012,
+      "source_baseline_release_year": 2013,
       "concepts": {
         "a": {
           "label": "CXCL12",
@@ -564,8 +569,8 @@
       },
       "mapping_audit": {
         "status": "production_year_candidate",
-        "vocabulary_year": 2012,
-        "source_sha256": "381e804c7615e7a5332b2991e659a64b0ad0f216c4481ef6b7e3c614fc45095f",
+        "vocabulary_year": 2013,
+        "source_sha256": "c928973ae228ebd03ceeec8950b31f63a867fc9dc2699ae1578e506f25739740",
         "mappings": {
           "a": {
             "descriptor_ui": "D054377",
@@ -606,7 +611,7 @@
         }
       ],
       "open_questions": [
-        "Pin the complete historical MEDLINE release needed to evaluate the source-defined 2012 publication-year cutoff.",
+        "Pin the complete 2013 MEDLINE baseline release needed to evaluate the source-defined 2012 publication-year cutoff.",
         "Map the Protein Ontology endpoint and Cancer Hallmarks bridge to period-appropriate MeSH without changing the case identity.",
         "Independently adjudicate the discovery claim rather than relying only on reuse of the LION label."
       ],

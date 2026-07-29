@@ -200,7 +200,7 @@ def test_pinned_release_requires_and_labels_an_exact_complete_file_set(tmp_path)
     records["manifests"] = []
     for year in payload["required_baseline_years"]:
         files = [_dummy_release_file(year)]
-        if year == 2010:
+        if year == 2011:
             files = [
                 {
                     "filename": fixture.name,
@@ -217,13 +217,13 @@ def test_pinned_release_requires_and_labels_an_exact_complete_file_set(tmp_path)
     evidence = measure_pinned_release(
         [fixture],
         [(A, C)],
-        baseline_release_year=2010,
+        baseline_release_year=2011,
         cutoff_year=2010,
         source_path=source_path,
     )
 
     assert evidence.indexing_basis == "pinned_historical_medline"
-    assert evidence.baseline_release_year == 2010
+    assert evidence.baseline_release_year == 2011
     assert evidence.source_contract_sha256 == hashlib.sha256(
         source_path.read_bytes()
     ).hexdigest()
@@ -231,7 +231,7 @@ def test_pinned_release_requires_and_labels_an_exact_complete_file_set(tmp_path)
         item for item in payload["sources"] if item["kind"] == "historical_vocabulary"
     )
     assert evidence.vocabulary_sha256 == next(
-        item["sha256"] for item in vocabulary["files"] if item["year"] == 2010
+        item["sha256"] for item in vocabulary["files"] if item["year"] == 2011
     )
 
     renamed = tmp_path / "wrong-name.xml.gz"
@@ -240,12 +240,12 @@ def test_pinned_release_requires_and_labels_an_exact_complete_file_set(tmp_path)
         measure_pinned_release(
             [renamed],
             [(A, C)],
-            baseline_release_year=2010,
+            baseline_release_year=2011,
             cutoff_year=2010,
             source_path=source_path,
         )
 
-    reference = next(item for item in records["manifests"] if item["year"] == 2010)
+    reference = next(item for item in records["manifests"] if item["year"] == 2011)
     manifest_path = tmp_path / reference["path"]
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     manifest["files"][0]["record_count"] = 7
@@ -257,16 +257,16 @@ def test_pinned_release_requires_and_labels_an_exact_complete_file_set(tmp_path)
         measure_pinned_release(
             [fixture],
             [(A, C)],
-            baseline_release_year=2010,
+            baseline_release_year=2011,
             cutoff_year=2010,
             source_path=source_path,
         )
 
-    with pytest.raises(ValueError, match="later than"):
+    with pytest.raises(ValueError, match="year after cutoff_year"):
         measure_pinned_release(
             [fixture],
             [(A, C)],
-            baseline_release_year=2010,
+            baseline_release_year=2011,
             cutoff_year=2011,
             source_path=source_path,
         )

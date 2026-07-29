@@ -178,7 +178,7 @@ set, and two rejected noise examples do not count toward readiness; only accepte
 independent LBD replication may be copied into `cases.json`. Run
 `python -m pipeline.benchmark.validate_candidates` to audit that boundary.
 The historical-input gate is also red: NLM's legacy MBR download endpoint no longer resolves. The
-required 2006/2010/2011/2012 MeSH descriptor archives are public and now pinned by SHA-256, but that
+required 2007/2011/2012/2013 MeSH descriptor archives are public and now pinned by SHA-256, but that
 vocabulary does not replace the missing citation records. `benchmarks/v3/sources.json` records the
 dated observation; `python -m pipeline.benchmark.validate_sources --require-ready` must keep
 failing until the matching historical records also have stable URLs and checksums. The streaming

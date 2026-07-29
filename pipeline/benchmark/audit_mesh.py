@@ -5,7 +5,7 @@ matches. A vocabulary match is mapping evidence only; it does not substitute for
 citation records and does not make a benchmark case period-appropriate.
 
 Run:
-    python -m pipeline.benchmark.audit_mesh 2011 "NF-kappa B" "Adenoma"
+    python -m pipeline.benchmark.audit_mesh 2012 "NF-kappa B" "Adenoma"
 """
 
 from __future__ import annotations

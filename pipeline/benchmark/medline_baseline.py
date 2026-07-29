@@ -315,8 +315,11 @@ def measure_pinned_release(
 ) -> BaselineEvidence:
     """Verify a complete pinned release before labelling its measurements historical."""
     require_pinned_historical_records(source_path)
-    if cutoff_year > baseline_release_year:
-        raise ValueError("cutoff_year cannot be later than the baseline release year")
+    if baseline_release_year != cutoff_year + 1:
+        raise ValueError(
+            "baseline_release_year must be the year after cutoff_year so the release "
+            "contains the completed cutoff production year"
+        )
     source = _source_by_kind(source_path, "historical_records")
     vocabulary = _source_by_kind(source_path, "historical_vocabulary")
     release = load_release_for_year(source_path, source, baseline_release_year)

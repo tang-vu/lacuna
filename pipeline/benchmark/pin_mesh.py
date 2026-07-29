@@ -5,7 +5,7 @@ Files are cached under gitignored ``data/mesh/``. The command prints candidate e
 
 Run:
     python -m pipeline.benchmark.pin_mesh
-    python -m pipeline.benchmark.pin_mesh 2006 2010 2011 2012
+    python -m pipeline.benchmark.pin_mesh 2007 2011 2012 2013
 """
 
 from __future__ import annotations

@@ -24,7 +24,7 @@ reference material also states that each baseline had already undergone year-end
 that baseline's vocabulary year. However, the documented `mbr.nlm.nih.gov` download host no longer
 resolved when checked on 2026-07-29, and the surviving reference URL redirected to an Archive-It
 HTML wrapper rather than raw baseline data. Public production-year MeSH files remain reachable;
-the required 2006, 2010, 2011, and 2012 descriptor archives were parsed and pinned by SHA-256 on
+the required 2007, 2011, 2012, and 2013 descriptor archives were parsed and pinned by SHA-256 on
 2026-07-29 in `benchmarks/v3/sources.json`.
 This has four consequences:
 
@@ -34,6 +34,9 @@ This has four consequences:
   run over today's PubMed indexing is not a historical replication;
 - genuinely held-out, period-appropriate tests should use archived baselines from 2002 onward,
   with the baseline year—not only the article publication cutoff—part of the input identity.
+- a publication-year cutoff `Y` requires baseline release and MeSH year `Y + 1`, because NLM
+  releases that baseline in December after incorporating production-year `Y` updates; using
+  baseline `Y` would omit most records published during cutoff year `Y`;
 - the archive's documented existence is not evidence that the raw historical records are currently
   retrievable; source acquisition is a blocker until NLM supplies or identifies stable files.
 

@@ -25,7 +25,7 @@ python -m pipeline.benchmark.validate_sources --require-ready
 ```
 
 The first command validates the record and reports its blockers. The second is intentionally red:
-the legacy MBR download host is unavailable. The public 2006, 2010, 2011, and 2012 production-year
+the legacy MBR download host is unavailable. The public 2007, 2011, 2012, and 2013 production-year
 MeSH descriptor archives are now parsed and pinned by SHA-256, but `sources.json` keeps records and
 vocabulary as separate gates because vocabulary files alone cannot reconstruct period-appropriate
 indexing. A support request is prepared at
@@ -36,8 +36,8 @@ The archived-baseline reader is implemented and fixture-tested:
 
 ```bash
 python -m pipeline.benchmark.medline_baseline \
-  --baseline-year 2010 \
-  --cutoff-year 2005 \
+  --baseline-year 2012 \
+  --cutoff-year 2011 \
   --pair D016328:D000236 \
   data/medline-baseline/*.xml.gz
 ```
@@ -50,6 +50,9 @@ green, every local filename, byte count, and SHA-256 must match the complete pin
 requested baseline year. A successful report also carries the checksum of the source contract and
 the matching production-year MeSH archive. The low-level fixture API labels arbitrary XML as
 `unverified_medline_xml`; only this exact-match path may emit `pinned_historical_medline`.
+The production entry point requires baseline release year `R = cutoff year + 1`: NLM releases
+baseline `R` in December after incorporating production-year `R-1` updates and maintaining records
+to MeSH `R`. A same-numbered baseline and cutoff would omit most of the claimed cutoff year.
 Multi-file releases use generated manifests under `benchmarks/v3/manifests/`; `sources.json`
 contains only one checksummed reference and aggregate totals per release rather than hundreds of
 hand-maintained file entries.
@@ -67,7 +70,7 @@ as schema compatibility only. Current indexing remains unsuitable for the histor
 Search a pinned vocabulary without falling back to today's MeSH service:
 
 ```bash
-python -m pipeline.benchmark.audit_mesh 2011 "NF-kappa B" "Adenoma"
+python -m pipeline.benchmark.audit_mesh 2012 "NF-kappa B" "Adenoma"
 ```
 
 The output includes the archive checksum and calls unmatched terms out explicitly. It is mapping
@@ -131,9 +134,10 @@ them with convenient modern MeSH terms could change the discovery being tested.
 
 LION defines its evaluation corpus at publication-year granularity: literature through the year
 five years before the relevant discovery publication. The intake therefore records both the
-source rule and the derived cutoff year. This resolves the temporal rule without pretending that
-an exact calendar date was published; acquiring and pinning the complete matching MEDLINE
-releases remains a separate source-readiness requirement.
+source rule and the derived cutoff year. It separately records the following year's MEDLINE
+baseline release and MeSH vocabulary, reflecting NLM's year-end production cycle. This resolves
+the temporal rule without pretending that an exact calendar date was published; acquiring and
+pinning the complete matching MEDLINE releases remains a separate source-readiness requirement.
 
 For citation and current MeSH metadata audits, a small EFetch client is available:
 

@@ -48,7 +48,7 @@ def _record_file(year, index=1):
 def test_current_historical_sources_are_explicitly_not_ready():
     audit = audit_sources()
 
-    assert audit.required_years == (2006, 2010, 2011, 2012)
+    assert audit.required_years == (2007, 2011, 2012, 2013)
     assert audit.statuses["historical_records"] == "unavailable"
     assert audit.statuses["historical_vocabulary"] == "available_pinned"
     assert audit.statuses["current_records"] == "available_unsuitable"
@@ -108,7 +108,7 @@ def test_pinned_historical_records_need_record_counts_but_allow_many_files_per_y
     records["manifests"] = []
     for year in payload["required_baseline_years"]:
         files = [_record_file(year)]
-        if year == 2010:
+        if year == 2011:
             files.append(_record_file(year, 2))
         records["manifests"].append(_write_manifest(tmp_path, year, files))
     path = tmp_path / "sources.json"
