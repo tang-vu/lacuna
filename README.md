@@ -1,5 +1,9 @@
 # lacuna
 
+[![CI](https://github.com/tang-vu/lacuna/actions/workflows/ci.yml/badge.svg)](https://github.com/tang-vu/lacuna/actions/workflows/ci.yml)
+[![Live map](https://img.shields.io/badge/live-lacuna.tangvu.dev-1d4e73)](https://lacuna.tangvu.dev)
+[![License: MIT](https://img.shields.io/badge/license-MIT-8a3d12.svg)](LICENSE)
+
 A map of what humanity hasn't figured out yet.
 
 Most knowledge maps show what we know. lacuna tries to show where knowledge stops. The knowledge
@@ -161,6 +165,13 @@ Persistent project rules live in `AGENTS.md`. Repeatable workflows are repositor
 - `$validate` runs every available validation gate and reports skips or drift.
 - `$gap` inspects one topic pair and prints raw evidence and source queries.
 - `$honest` audits the latest change for a claim that outruns its evidence.
+
+## Contributing
+
+The highest-impact contributions are historical MEDLINE source leads, metric-blind benchmark-case
+review, and provenance or validation engineering. Read [`CONTRIBUTING.md`](CONTRIBUTING.md) before
+opening an issue: a vocabulary file is not a historical citation baseline, and a plausible pair is
+not automatically a positive case.
 
 The interpretation layer remains gated off. The proposed replacement experiment is documented in
 [`plans/metric-v3-validation-plan.md`](plans/metric-v3-validation-plan.md); it moves the biomedical

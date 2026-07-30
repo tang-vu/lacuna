@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: If you use lacuna, cite the software and the specific versioned artifact or validation report you relied on.
+title: "lacuna: a map of what humanity has not figured out yet"
+type: software
+authors:
+  - family-names: Vu
+    given-names: Tang
+repository-code: "https://github.com/tang-vu/lacuna"
+url: "https://lacuna.tangvu.dev"
+license: MIT
+abstract: >-
+  An open-source, provenance-first pipeline and static map for measuring and curating research
+  gaps. Its current computed methods failed their pre-registered validation and are published as
+  negative results rather than validated discoveries.
+keywords:
+  - bibliometrics
+  - literature-based discovery
+  - research gaps
+  - OpenAlex
+  - open science

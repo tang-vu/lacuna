@@ -1,0 +1,66 @@
+name: Historical MEDLINE source lead
+description: Submit a provenance-bearing lead for a required archived baseline release.
+title: "[source] "
+labels: ["source-lead"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The missing historical citation records are a shipping blocker. A vocabulary archive or a
+        current PubMed export does not replace the matching historical baseline.
+  - type: dropdown
+    id: baseline_year
+    attributes:
+      label: Baseline release year
+      options:
+        - "2007"
+        - "2011"
+        - "2012"
+        - "2013"
+        - Multiple required years
+    validations:
+      required: true
+  - type: input
+    id: custodian
+    attributes:
+      label: Custodian or preserving institution
+      placeholder: National Library of Medicine
+    validations:
+      required: true
+  - type: input
+    id: source_url
+    attributes:
+      label: Stable source or preservation URL
+      placeholder: https://
+    validations:
+      required: true
+  - type: textarea
+    id: provenance
+    attributes:
+      label: Provenance chain
+      description: Explain why these files are the named historical release rather than maintained-current records.
+    validations:
+      required: true
+  - type: textarea
+    id: completeness
+    attributes:
+      label: Completeness evidence
+      description: Provide inventory URL, expected file count, compressed bytes, record count, and any published checksums.
+    validations:
+      required: true
+  - type: textarea
+    id: access_terms
+    attributes:
+      label: Access and redistribution terms
+      description: Note registration, license, or redistribution constraints. Do not attach restricted data.
+    validations:
+      required: true
+  - type: checkboxes
+    id: safeguards
+    attributes:
+      label: Safeguards
+      options:
+        - label: I have not pasted credentials, access tokens, private links, or restricted records.
+          required: true
+        - label: I understand that a source lead does not change the readiness status until the complete release is pinned and validated.
+          required: true

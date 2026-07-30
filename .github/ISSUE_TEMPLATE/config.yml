@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Read the contribution guide
+    url: https://github.com/tang-vu/lacuna/blob/main/CONTRIBUTING.md
+    about: Choose the right evidence and validation path before opening an issue.
+  - name: View the live map
+    url: https://lacuna.tangvu.dev
+    about: Inspect the current curated layers and failed computed layer.

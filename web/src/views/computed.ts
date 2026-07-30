@@ -61,7 +61,7 @@ function gapRow(gap: Gap, rank: number): HTMLElement {
 export function renderComputed(computed: ComputedLayer): HTMLElement {
   const header = ['#', 'topic pair', 'observed', 'expected', 'obs/exp', 'closeness', 'query'];
 
-  return el('section', { class: 'layer layer-computed' }, [
+  return el('section', { class: 'layer layer-computed', id: 'computed' }, [
     el('h2', {}, ['Computed pairs']),
     el('p', { class: 'blurb' }, [
       'Topic pairs that co-occur less than chance predicts while sharing intermediate topics. ' +

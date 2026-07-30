@@ -1,0 +1,83 @@
+name: Metric-blind benchmark case
+description: Propose evidence for a positive, hard-negative, or distant-negative v3 case.
+title: "[benchmark] "
+labels: ["benchmark-candidate"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Cases are selected before metric v3 sees the held-out benchmark. A later co-occurrence by
+        itself is not evidence of a meaningful discovery.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Proposed case kind
+      options:
+        - Positive
+        - Hard negative
+        - Distant negative
+    validations:
+      required: true
+  - type: input
+    id: concept_a
+    attributes:
+      label: Concept A
+    validations:
+      required: true
+  - type: input
+    id: concept_c
+    attributes:
+      label: Concept C
+    validations:
+      required: true
+  - type: input
+    id: cutoff
+    attributes:
+      label: Documented cutoff
+      placeholder: YYYY-MM-DD
+    validations:
+      required: true
+  - type: input
+    id: selection_source
+    attributes:
+      label: Metric-blind selection source
+      placeholder: DOI, PMID, or stable URL
+    validations:
+      required: true
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Selection rationale
+      description: Explain why the source supports this kind without referring to a lacuna score or rank.
+    validations:
+      required: true
+  - type: input
+    id: bridge
+    attributes:
+      label: Bridge or discovery publication
+      description: Required for positives; write N/A with an explanation for negatives.
+    validations:
+      required: true
+  - type: input
+    id: replication
+    attributes:
+      label: Independent LBD replication
+      description: Required before a positive can be accepted; write not found if this remains unresolved.
+    validations:
+      required: true
+  - type: textarea
+    id: mesh_mapping
+    attributes:
+      label: Period-appropriate MeSH mapping evidence
+      description: Include vocabulary year, descriptor UIs, ambiguity, and source checksum if available.
+    validations:
+      required: true
+  - type: checkboxes
+    id: safeguards
+    attributes:
+      label: Safeguards
+      options:
+        - label: I selected this case without inspecting any lacuna metric score or rank.
+          required: true
+        - label: I understand that a proposal contributes zero cases to benchmark readiness until independently reviewed and accepted.
+          required: true

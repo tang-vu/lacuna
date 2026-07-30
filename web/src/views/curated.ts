@@ -56,11 +56,12 @@ function entryCard(entry: CuratedEntry): HTMLElement {
 }
 
 export function renderCurated(
+  id: string,
   title: string,
   blurb: string,
   entries: CuratedEntry[],
 ): HTMLElement {
-  return el('section', { class: 'layer' }, [
+  return el('section', { class: 'layer', id }, [
     el('h2', {}, [title]),
     el('p', { class: 'blurb' }, [blurb]),
     el('div', { class: 'cards' }, entries.map(entryCard)),

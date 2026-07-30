@@ -1,0 +1,52 @@
+name: Reproducible bug
+description: Report a pipeline, provenance, artifact, or website defect.
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Historical source validation
+        - Benchmark contract
+        - OpenAlex ingestion
+        - Gap metric
+        - Artifact export or provenance
+        - Website
+        - Documentation
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behavior
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      description: Include commands, smallest safe input, and relevant public provenance. Remove credentials.
+    validations:
+      required: true
+  - type: textarea
+    id: scientific_impact
+    attributes:
+      label: Scientific or provenance impact
+      description: Could this change a published number, bound, readiness status, or claim?
+    validations:
+      required: true
+  - type: checkboxes
+    id: safeguards
+    attributes:
+      label: Safeguards
+      options:
+        - label: I removed API keys, account emails, tokens, and private URLs from this report.
+          required: true
