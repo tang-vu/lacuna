@@ -27,6 +27,9 @@ def _write_manifest(tmp_path, year, files):
         "year": year,
         "path": f"manifests/{path.name}",
         "inventory_url": f"https://example.test/inventory/{year}",
+        "inventory_file_count": len(files),
+        "inventory_total_bytes": sum(item["bytes"] for item in files),
+        "inventory_total_record_count": sum(item["record_count"] for item in files),
         "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
         "file_count": len(files),
         "total_bytes": sum(item["bytes"] for item in files),
@@ -144,4 +147,22 @@ def test_pinned_historical_record_manifest_checksum_is_load_bearing(tmp_path):
     path.write_text(json.dumps(payload), encoding="utf-8")
 
     with pytest.raises(SourceContractError, match="manifest checksum mismatch"):
+        audit_sources(path)
+
+
+def test_pinned_manifest_must_match_independent_inventory_totals(tmp_path):
+    payload = json.loads(SOURCES_PATH.read_text(encoding="utf-8"))
+    records = next(
+        source for source in payload["sources"] if source["kind"] == "historical_records"
+    )
+    records["status"] = "available_pinned"
+    records["manifests"] = [
+        _write_manifest(tmp_path, year, [_record_file(year)])
+        for year in payload["required_baseline_years"]
+    ]
+    records["manifests"][0]["inventory_file_count"] = 2
+    path = tmp_path / "sources.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+
+    with pytest.raises(SourceContractError, match="differs from inventory file count"):
         audit_sources(path)

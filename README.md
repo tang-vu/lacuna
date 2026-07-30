@@ -184,7 +184,10 @@ dated observation; `python -m pipeline.benchmark.validate_sources --require-read
 failing until the matching historical records also have stable URLs and checksums. The streaming
 baseline reader and targeted pair/ABC accumulator are implemented and fixture-tested, but their
 production entry point is deliberately closed: it accepts a baseline only when every local file
-matches the complete pinned release by filename, byte count, and SHA-256.
+matches the complete pinned release by filename, byte count, and SHA-256. Release-manifest
+generation also requires measured file, byte, and record totals to match independently recorded
+official-inventory totals, so a local subset that disagrees with the reviewed inventory values
+cannot self-certify.
 
 ## Licence
 

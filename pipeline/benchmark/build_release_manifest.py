@@ -10,6 +10,9 @@ Run:
       --year 2010 \
       --base-url https://official.example/baseline/2010/ \
       --inventory-url https://official.example/baseline/2010/inventory \
+      --inventory-file-count INVENTORY_FILE_COUNT \
+      --inventory-total-bytes INVENTORY_TOTAL_BYTES \
+      --inventory-total-record-count INVENTORY_TOTAL_RECORD_COUNT \
       --output benchmarks/v3/manifests/medline-2010.json \
       data/medline-baseline/2010/*.xml.gz
 """
@@ -38,6 +41,13 @@ def _validate_https_url(value: str) -> str:
 
 def _validate_base_url(value: str) -> str:
     return _validate_https_url(value).rstrip("/") + "/"
+
+
+def _positive_int(value: str) -> int:
+    parsed = int(value)
+    if parsed <= 0:
+        raise argparse.ArgumentTypeError("value must be a positive integer")
+    return parsed
 
 
 def build_manifest(
@@ -83,18 +93,57 @@ def build_manifest(
     }
 
 
+def validate_inventory_totals(
+    manifest: dict,
+    *,
+    inventory_file_count: int,
+    inventory_total_bytes: int,
+    inventory_total_record_count: int,
+) -> None:
+    """Refuse a local subset that disagrees with the supplied independent inventory totals."""
+    files = manifest["files"]
+    measured = {
+        "file count": len(files),
+        "total bytes": sum(item["bytes"] for item in files),
+        "total record count": sum(item["record_count"] for item in files),
+    }
+    expected = {
+        "file count": inventory_file_count,
+        "total bytes": inventory_total_bytes,
+        "total record count": inventory_total_record_count,
+    }
+    for label, actual in measured.items():
+        if actual != expected[label]:
+            raise ValueError(
+                f"manifest {label} differs from the official inventory "
+                f"({actual} != {expected[label]})"
+            )
+
+
 def manifest_reference(
     output: Path,
     manifest: dict,
     *,
     relative_path: str,
     inventory_url: str,
+    inventory_file_count: int,
+    inventory_total_bytes: int,
+    inventory_total_record_count: int,
 ) -> dict:
+    validate_inventory_totals(
+        manifest,
+        inventory_file_count=inventory_file_count,
+        inventory_total_bytes=inventory_total_bytes,
+        inventory_total_record_count=inventory_total_record_count,
+    )
     raw = output.read_bytes()
     return {
         "year": manifest["release_year"],
         "path": relative_path,
         "inventory_url": inventory_url,
+        "inventory_file_count": inventory_file_count,
+        "inventory_total_bytes": inventory_total_bytes,
+        "inventory_total_record_count": inventory_total_record_count,
         "sha256": hashlib.sha256(raw).hexdigest(),
         "file_count": len(manifest["files"]),
         "total_bytes": sum(item["bytes"] for item in manifest["files"]),
@@ -113,6 +162,9 @@ def main() -> None:
         type=_validate_https_url,
         help="official file inventory or preservation record used to establish completeness",
     )
+    parser.add_argument("--inventory-file-count", required=True, type=_positive_int)
+    parser.add_argument("--inventory-total-bytes", required=True, type=_positive_int)
+    parser.add_argument("--inventory-total-record-count", required=True, type=_positive_int)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument(
         "--contract-path",
@@ -131,6 +183,15 @@ def main() -> None:
                 "--contract-path is required when output is outside benchmarks/v3"
             ) from None
     manifest = build_manifest(args.files, year=args.year, base_url=args.base_url)
+    try:
+        validate_inventory_totals(
+            manifest,
+            inventory_file_count=args.inventory_file_count,
+            inventory_total_bytes=args.inventory_total_bytes,
+            inventory_total_record_count=args.inventory_total_record_count,
+        )
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from None
     args.output.parent.mkdir(parents=True, exist_ok=True)
     try:
         with args.output.open("x", encoding="utf-8", newline="\n") as handle:
@@ -144,6 +205,9 @@ def main() -> None:
         manifest,
         relative_path=contract_path,
         inventory_url=args.inventory_url,
+        inventory_file_count=args.inventory_file_count,
+        inventory_total_bytes=args.inventory_total_bytes,
+        inventory_total_record_count=args.inventory_total_record_count,
     )
     print(json.dumps(reference, indent=2))
 

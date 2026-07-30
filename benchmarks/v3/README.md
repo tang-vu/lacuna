@@ -54,8 +54,10 @@ The production entry point requires baseline release year `R = cutoff year + 1`:
 baseline `R` in December after incorporating production-year `R-1` updates and maintaining records
 to MeSH `R`. A same-numbered baseline and cutoff would omit most of the claimed cutoff year.
 Multi-file releases use generated manifests under `benchmarks/v3/manifests/`; `sources.json`
-contains only one checksummed reference and aggregate totals per release rather than hundreds of
-hand-maintained file entries.
+contains only one checksummed reference per release rather than hundreds of hand-maintained file
+entries. Each reference keeps measured aggregates separate from totals transcribed from the
+official inventory, and validation requires them to agree. This catches a local subset that
+disagrees with the reviewed values; it does not verify the remote inventory page automatically.
 
 The reader selects its record shape from the document root. It supports the historical
 `MedlineCitationSet/MedlineCitation` distribution and the current

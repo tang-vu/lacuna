@@ -76,6 +76,15 @@ def load_release_manifest(
             isinstance(reference.get(field), int) and reference[field] > 0,
             f"{year}: manifest reference needs a positive {field}",
         )
+    for field in (
+        "inventory_file_count",
+        "inventory_total_bytes",
+        "inventory_total_record_count",
+    ):
+        _require(
+            isinstance(reference.get(field), int) and reference[field] > 0,
+            f"{year}: manifest reference needs a positive {field}",
+        )
     inventory_url = reference.get("inventory_url")
     parsed_inventory_url = urlsplit(str(inventory_url))
     _require(
@@ -156,6 +165,10 @@ def load_release_manifest(
         len(parsed_files) == reference["file_count"],
         f"{year}: file count does not match manifest reference",
     )
+    _require(
+        len(parsed_files) == reference["inventory_file_count"],
+        f"{year}: manifest file count differs from inventory file count",
+    )
     total_bytes = sum(item.bytes for item in parsed_files)
     total_records = sum(item.record_count for item in parsed_files)
     _require(
@@ -165,6 +178,14 @@ def load_release_manifest(
     _require(
         total_records == reference["total_record_count"],
         f"{year}: record total does not match manifest reference",
+    )
+    _require(
+        total_bytes == reference["inventory_total_bytes"],
+        f"{year}: manifest byte total differs from inventory byte total",
+    )
+    _require(
+        total_records == reference["inventory_total_record_count"],
+        f"{year}: manifest record total differs from inventory record total",
     )
     return ReleaseManifest(
         year=year,

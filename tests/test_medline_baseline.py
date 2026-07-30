@@ -37,6 +37,9 @@ def _write_release_manifest(tmp_path, year, files):
         "year": year,
         "path": f"manifests/{path.name}",
         "inventory_url": f"https://example.test/inventory/{year}",
+        "inventory_file_count": len(files),
+        "inventory_total_bytes": sum(item["bytes"] for item in files),
+        "inventory_total_record_count": sum(item["record_count"] for item in files),
         "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
         "file_count": len(files),
         "total_bytes": sum(item["bytes"] for item in files),
@@ -252,6 +255,7 @@ def test_pinned_release_requires_and_labels_an_exact_complete_file_set(tmp_path)
     manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
     reference["sha256"] = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
     reference["total_record_count"] = 7
+    reference["inventory_total_record_count"] = 7
     source_path.write_text(json.dumps(payload), encoding="utf-8")
     with pytest.raises(HistoricalRecordsNotReady, match="record count"):
         measure_pinned_release(

@@ -6,7 +6,11 @@ import sys
 
 import pytest
 
-from pipeline.benchmark.build_release_manifest import build_manifest, main
+from pipeline.benchmark.build_release_manifest import (
+    build_manifest,
+    main,
+    manifest_reference,
+)
 from pipeline.benchmark.source_manifests import (
     ReleaseManifestError,
     load_release_manifest,
@@ -68,6 +72,12 @@ def test_builder_cli_creates_a_loadable_manifest_and_refuses_overwrite(
         "https://example.test/baseline/2010/",
         "--inventory-url",
         "https://example.test/baseline/2010/inventory",
+        "--inventory-file-count",
+        "1",
+        "--inventory-total-bytes",
+        str(baseline.stat().st_size),
+        "--inventory-total-record-count",
+        "1",
         "--output",
         str(output),
         "--contract-path",
@@ -82,6 +92,9 @@ def test_builder_cli_creates_a_loadable_manifest_and_refuses_overwrite(
     loaded = load_release_manifest(tmp_path / "sources.json", reference)
     assert loaded.total_record_count == 1
     assert loaded.files[0].filename == baseline.name
+    assert reference["inventory_file_count"] == 1
+    assert reference["inventory_total_bytes"] == baseline.stat().st_size
+    assert reference["inventory_total_record_count"] == 1
 
     with pytest.raises(SystemExit, match="refusing to overwrite"):
         main()
@@ -107,6 +120,64 @@ def test_builder_rejects_non_https_source_identity(tmp_path):
         )
 
 
+def test_manifest_reference_rejects_a_self_consistent_but_incomplete_release(tmp_path):
+    baseline = tmp_path / "medline10n0001.xml.gz"
+    output = tmp_path / "medline-2010.json"
+    _write_baseline(baseline, ["1"])
+    manifest = build_manifest(
+        [baseline],
+        year=2010,
+        base_url="https://example.test/baseline/2010/",
+    )
+    output.write_text(json.dumps(manifest), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="file count differs from the official inventory"):
+        manifest_reference(
+            output,
+            manifest,
+            relative_path=output.name,
+            inventory_url="https://example.test/baseline/2010/inventory",
+            inventory_file_count=2,
+            inventory_total_bytes=baseline.stat().st_size,
+            inventory_total_record_count=1,
+        )
+
+
+def test_cli_checks_inventory_totals_before_creating_manifest(tmp_path, monkeypatch):
+    baseline = tmp_path / "medline10n0001.xml.gz"
+    output = tmp_path / "medline-2010.json"
+    _write_baseline(baseline, ["1"])
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "build-release-manifest",
+            "--year",
+            "2010",
+            "--base-url",
+            "https://example.test/baseline/2010/",
+            "--inventory-url",
+            "https://example.test/baseline/2010/inventory",
+            "--inventory-file-count",
+            "2",
+            "--inventory-total-bytes",
+            str(baseline.stat().st_size),
+            "--inventory-total-record-count",
+            "1",
+            "--output",
+            str(output),
+            "--contract-path",
+            output.name,
+            str(baseline),
+        ],
+    )
+
+    with pytest.raises(SystemExit, match="file count differs from the official inventory"):
+        main()
+
+    assert not output.exists()
+
+
 def test_cli_requires_contract_path_before_creating_external_output(
     tmp_path,
     monkeypatch,
@@ -125,6 +196,12 @@ def test_cli_requires_contract_path_before_creating_external_output(
             "https://example.test/baseline/2010/",
             "--inventory-url",
             "https://example.test/baseline/2010/inventory",
+            "--inventory-file-count",
+            "1",
+            "--inventory-total-bytes",
+            str(baseline.stat().st_size),
+            "--inventory-total-record-count",
+            "1",
             "--output",
             str(output),
             str(baseline),
