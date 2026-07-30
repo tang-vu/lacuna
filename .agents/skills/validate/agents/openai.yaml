@@ -1,0 +1,4 @@
+interface:
+  display_name: "Validate lacuna"
+  short_description: "Run and report lacuna validation gates"
+  default_prompt: "Use $validate to run every lacuna validation gate and report metric drift."

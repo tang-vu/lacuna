@@ -1,0 +1,63 @@
+{
+ "version": "2026-07-27/v2-bridge-k5",
+ "schema_version": 3,
+ "source": "OpenAlex REST API",
+ "snapshot": {
+  "date": "2026-07-27",
+  "slice": "pre1986",
+  "to_publication_date": "1985-12-31",
+  "total_works": 38458832,
+  "inputs": {
+   "taxonomy": {
+    "sha256": "7699d52dbdfe5ac8011a1b739ac086ccdd74c932c8de82d811e6998ab8153d72",
+    "canonicalisation": "canonical-json-v1"
+   },
+   "cooccurrence_rows": {
+    "sha256": "b6fe4bcc86b4489f28c9f16c81918911586b34c43782b3d26e5b71477311fa03",
+    "rows": 909,
+    "canonicalisation": "counts+public-query-v1"
+   }
+  }
+ },
+ "files": {
+  "taxonomy.json": {
+   "sha256": "076bd59fcb8b712dc4d23e79c369c467dfdf17191483182af3f5da8dde396327",
+   "canonicalisation": "canonical-json-v1"
+  },
+  "curated.json": {
+   "sha256": "eed153152b99bf551375dbf390d7f2a45023757eb03c6a82a8715102e9f8881f",
+   "canonicalisation": "canonical-json-v1"
+  },
+  "computed-gaps.json": {
+   "sha256": "ea61e5007b5c537b1805553a2b1b093f9dc3a4e14c4af50d871ea9a3c2f4e228",
+   "canonicalisation": "canonical-json-v1"
+  }
+ },
+ "source_queries": {
+  "total_works": "https://api.openalex.org/works?filter=to_publication_date:1985-12-31&per-page=1",
+  "taxonomy_counts": {
+   "domains": "https://api.openalex.org/domains?per-page=1",
+   "fields": "https://api.openalex.org/fields?per-page=1",
+   "subfields": "https://api.openalex.org/subfields?per-page=1",
+   "topics": "https://api.openalex.org/topics?per-page=1"
+  }
+ },
+ "metric": {
+  "version": "v2-bridge-k5",
+  "closeness": "bridge",
+  "bridge_k": 5
+ },
+ "counts": {
+  "domains": 4,
+  "fields": 26,
+  "subfields": 252,
+  "topics": 4516,
+  "open": 5,
+  "blocked": 5,
+  "blind-spots": 6,
+  "computed_gaps": 500,
+  "excluded_topics": 1
+ },
+ "computed_layer_status": "unvalidated",
+ "computed_layer_verdict": "FAIL"
+}

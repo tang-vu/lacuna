@@ -1,0 +1,24 @@
+[project]
+name = "lacuna"
+version = "0.1.0"
+description = "A map of what humanity hasn't figured out yet"
+requires-python = ">=3.11"
+dependencies = [
+    "requests>=2.31",
+    "numpy>=1.26",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pre-commit>=3.7",
+    "pytest>=8.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "slow: runs the metric over a fetched sweep; minutes, and needs data/ populated",
+]
+
+[tool.setuptools.packages.find]
+include = ["pipeline*"]

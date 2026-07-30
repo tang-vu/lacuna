@@ -1,0 +1,4 @@
+interface:
+  display_name: "Inspect a gap"
+  short_description: "Inspect one lacuna topic pair"
+  default_prompt: "Use $gap to inspect two lacuna topics and show raw evidence."

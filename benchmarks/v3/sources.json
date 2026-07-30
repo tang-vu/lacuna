@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "observed_on": "2026-07-29",
+  "required_baseline_years": [
+    2007,
+    2011,
+    2012,
+    2013
+  ],
+  "sources": [
+    {
+      "id": "historical-medline-records",
+      "kind": "historical_records",
+      "status": "unavailable",
+      "required_for_shipping": true,
+      "legacy_download_url": "https://mbr.nlm.nih.gov/Download/index.shtml",
+      "evidence": [
+        {
+          "label": "NLM (2005), MBR stores annual baselines from 2002 and originally restricted query/raw access",
+          "url": "https://www.nlm.nih.gov/pubs/techbull/nd05/nd05_technote_mbr.html"
+        },
+        {
+          "label": "NLM annual baseline overview, documenting December release after maintenance to the new year's MeSH",
+          "url": "https://www.nlm.nih.gov/bsd/licensee/baseline.html"
+        },
+        {
+          "label": "NLM MBR reference material, now served only through an Archive-It wrapper",
+          "url": "https://lhncbc.nlm.nih.gov/ii/information/MBR/MEDLINE_Baseline_Repository_Detail_2017.pdf"
+        },
+        {
+          "label": "NLM archive of historical distribution documentation and file inventories",
+          "url": "https://www.nlm.nih.gov/bsd/licensee/archive_doc.html"
+        },
+        {
+          "label": "NLM 2012 inventory, still live with 684 filenames and measured sizes",
+          "url": "https://www.nlm.nih.gov/bsd/licensee/2012_stats/baseline_med_filecount.html"
+        },
+        {
+          "label": "NLM 2013 inventory, still live with 717 filenames and measured sizes",
+          "url": "https://www.nlm.nih.gov/bsd/licensee/2013_stats/baseline_med_filecount.html"
+        }
+      ],
+      "observation": "NLM documents that a baseline labelled year R is released in December after records are maintained to year R's MeSH and contains the preceding production year's updates. The source contract therefore requires releases 2007, 2011, 2012, and 2013 to cover publication-year cutoffs 2006, 2010, 2011, and 2012. The documented mbr.nlm.nih.gov host and the HTTPS form of the former hidden FTP distribution path returned 404. NLM's archive index still names the annual distributions; the live 2012 and 2013 inventory pages expose file counts and record counts but not raw download URLs or checksums. NLM's launch notice says the raw FTP and query tool were originally controlled for registered licensees.",
+      "next_action": "Submit the prepared NLM Support request in plans/requests/nlm-historical-medline-access.md. If NLM identifies an access path, pin the complete file set by URL, byte count, SHA-256, and parsed record count before changing this status."
+    },
+    {
+      "id": "historical-mesh-vocabularies",
+      "kind": "historical_vocabulary",
+      "status": "available_pinned",
+      "required_for_shipping": true,
+      "url_template": "https://nlmpubs.nlm.nih.gov/projects/mesh/{year}/xmlmesh/desc{year}.gz",
+      "pre_2011_url_template": "https://nlmpubs.nlm.nih.gov/projects/mesh/1999-2010/xmlmesh/desc{year}.gz",
+      "evidence": [
+        {
+          "label": "NLM MeSH data downloads and archive of prior production years",
+          "url": "https://www.nlm.nih.gov/databases/download/mesh.html"
+        },
+        {
+          "label": "NLM public MeSH production-year directory",
+          "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/"
+        }
+      ],
+      "files": [
+        {
+          "year": 2007,
+          "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/1999-2010/xmlmesh/desc2007.gz",
+          "sha256": "2ba693d147557886a05f854194219ff81f5a38e5f3fde6921023fff18ad03f4a",
+          "bytes": 14287929,
+          "descriptor_count": 24357
+        },
+        {
+          "year": 2011,
+          "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/2011/xmlmesh/desc2011.gz",
+          "sha256": "2c1e582760a6ea93eb37777134d6b8c742c49a9e4e17675e55055063fd0042a4",
+          "bytes": 15586193,
+          "descriptor_count": 26142
+        },
+        {
+          "year": 2012,
+          "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/2012/xmlmesh/desc2012.gz",
+          "sha256": "381e804c7615e7a5332b2991e659a64b0ad0f216c4481ef6b7e3c614fc45095f",
+          "bytes": 15871262,
+          "descriptor_count": 26581
+        },
+        {
+          "year": 2013,
+          "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/2013/xmlmesh/desc2013.gz",
+          "sha256": "c928973ae228ebd03ceeec8950b31f63a867fc9dc2699ae1578e506f25739740",
+          "bytes": 16103897,
+          "descriptor_count": 26853
+        }
+      ],
+      "observation": "All required descriptor archives were downloaded as raw gzip bytes, parsed as MeSH XML, counted, and pinned by SHA-256.",
+      "next_action": "Use these pinned vocabularies to adjudicate candidate descriptor mappings; do not call a mapping period-appropriate until matching historical citation records are also pinned."
+    },
+    {
+      "id": "current-pubmed-baseline",
+      "kind": "current_records",
+      "status": "available_unsuitable",
+      "required_for_shipping": false,
+      "evidence": [
+        {
+          "label": "NLM PubMed annual baseline download documentation",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/download/"
+        },
+        {
+          "label": "NLM annual baseline maintenance overview",
+          "url": "https://www.nlm.nih.gov/bsd/licensee/baseline.html"
+        }
+      ],
+      "observation": "The current annual baseline is public, but records are maintained to the current production-year vocabulary and cannot reconstruct an older indexing state.",
+      "next_action": "Use only for current metadata checks; never satisfy a period-appropriate mapping or historical-record gate with this source."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+# Regenerable pipeline state: cached API responses and intermediate matrices.
+# Every cached file records the URL that produced it, so this tree can be rebuilt exactly.
+data/*
+!data/README.md
+
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.pre-commit-cache/
+.uv-cache/
+.env
+
+node_modules/
+web/dist/
+.DS_Store

@@ -1,0 +1,103 @@
+{
+ "schema_version": 1,
+ "status": "draft",
+ "preregistration": "plans/metric-v3-validation-plan.md",
+ "requirements": {
+  "minimum_per_kind": 8,
+  "minimum_heldout_per_kind": 4,
+  "minimum_period_appropriate_heldout_cutoffs": 2
+ },
+ "selection": {
+  "frozen": false,
+  "completed_before_metric": false,
+  "notes": "Only the two canonical development diagnostics are recorded. Controls and post-2002 held-out cases must be selected and reviewed before any v3 formula is run."
+ },
+ "cases": [
+  {
+   "id": "swanson-fish-oil-raynaud",
+   "kind": "positive",
+   "split": "development",
+   "cutoff": "1985-12-31",
+   "selection_stage": "pre_metric",
+   "selection_rationale": "Canonical Swanson literature-based discovery case named before metric v3 design.",
+   "evidence": [
+    {
+     "role": "bridge_publication",
+     "label": "Swanson (1986), Fish oil, Raynaud's syndrome, and undiscovered public knowledge",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/3797213/",
+     "pmid": "3797213",
+     "doi": "10.1353/pbm.1986.0087"
+    }
+   ],
+   "concepts": {
+    "a": {
+     "label": "Fish Oils",
+     "mapping": {
+      "status": "maintained_current",
+      "descriptor_ui": "D005395",
+      "descriptor_label": "Fish Oils",
+      "vocabulary_year": 2026,
+      "verified_on": "2026-07-29",
+      "evidence_url": "https://id.nlm.nih.gov/mesh/D005395.json",
+      "note": "Verified in the current MeSH service; not evidence of the descriptor state in 1985."
+     }
+    },
+    "c": {
+     "label": "Raynaud Disease",
+     "mapping": {
+      "status": "maintained_current",
+      "descriptor_ui": "D011928",
+      "descriptor_label": "Raynaud Disease",
+      "vocabulary_year": 2026,
+      "verified_on": "2026-07-29",
+      "evidence_url": "https://id.nlm.nih.gov/mesh/D011928.json",
+      "note": "Verified in the current MeSH service; not evidence of the descriptor state in 1985."
+     }
+    }
+   }
+  },
+  {
+   "id": "swanson-magnesium-migraine",
+   "kind": "positive",
+   "split": "development",
+   "cutoff": "1987-12-31",
+   "selection_stage": "pre_metric",
+   "selection_rationale": "Second canonical Swanson case, included to prevent the benchmark resting on one pair.",
+   "evidence": [
+    {
+     "role": "bridge_publication",
+     "label": "Swanson (1988), Migraine and magnesium: eleven neglected connections",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/3075738/",
+     "pmid": "3075738",
+     "doi": "10.1353/pbm.1988.0009"
+    }
+   ],
+   "concepts": {
+    "a": {
+     "label": "Magnesium Deficiency",
+     "mapping": {
+      "status": "maintained_current",
+      "descriptor_ui": "D008275",
+      "descriptor_label": "Magnesium Deficiency",
+      "vocabulary_year": 2026,
+      "verified_on": "2026-07-29",
+      "evidence_url": "https://id.nlm.nih.gov/mesh/D008275.json",
+      "note": "Verified in the current MeSH service; not evidence of the descriptor state in 1987."
+     }
+    },
+    "c": {
+     "label": "Migraine Disorders",
+     "mapping": {
+      "status": "maintained_current",
+      "descriptor_ui": "D008881",
+      "descriptor_label": "Migraine Disorders",
+      "vocabulary_year": 2026,
+      "verified_on": "2026-07-29",
+      "evidence_url": "https://id.nlm.nih.gov/mesh/D008881.json",
+      "note": "Verified in the current MeSH service; not evidence of the descriptor state in 1987."
+     }
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,51 @@
+[
+  {
+    "id": "riemann-hypothesis",
+    "title": "The Riemann hypothesis",
+    "summary": "Whether every non-trivial zero of the Riemann zeta function has real part 1/2. Open since 1859. A proof would sharpen what is known about the distribution of prime numbers; a great deal of published number theory is currently stated conditionally on it holding.",
+    "topics": ["T10061"],
+    "posed": 1859,
+    "sources": [
+      { "label": "Clay Mathematics Institute — Millennium Problems", "url": "https://www.claymath.org/millennium-problems/" },
+      { "label": "Bombieri, official problem description (PDF)", "url": "https://www.claymath.org/wp-content/uploads/2022/05/riemann.pdf" }
+    ]
+  },
+  {
+    "id": "p-versus-np",
+    "title": "P versus NP",
+    "summary": "Whether every problem whose solution can be verified quickly can also be solved quickly. Formalised in 1971. The answer determines whether large parts of cryptography rest on genuine hardness or on an unproven assumption.",
+    "posed": 1971,
+    "sources": [
+      { "label": "Clay Mathematics Institute — Millennium Problems", "url": "https://www.claymath.org/millennium-problems/" },
+      { "label": "Cook, official problem description (PDF)", "url": "https://www.claymath.org/wp-content/uploads/2022/06/pvsnp.pdf" }
+    ]
+  },
+  {
+    "id": "navier-stokes-smoothness",
+    "title": "Navier–Stokes existence and smoothness",
+    "summary": "Whether smooth solutions to the Navier–Stokes equations always exist in three dimensions, or whether they can blow up in finite time. The equations are used daily in engineering; nobody has shown they always behave.",
+    "posed": 2000,
+    "sources": [
+      { "label": "Clay Mathematics Institute — Millennium Problems", "url": "https://www.claymath.org/millennium-problems/" },
+      { "label": "Fefferman, official problem description (PDF)", "url": "https://www.claymath.org/wp-content/uploads/2022/06/navierstokes.pdf" }
+    ]
+  },
+  {
+    "id": "hard-problem-of-consciousness",
+    "title": "The hard problem of consciousness",
+    "summary": "Why physical processing in a brain is accompanied by subjective experience at all. Distinguished by Chalmers from the 'easy' problems of explaining discrimination, integration and report, which are hard but not of this kind. It is contested whether this is a scientific question, which is itself part of the problem.",
+    "posed": 1995,
+    "sources": [
+      { "label": "Chalmers, Facing Up to the Problem of Consciousness (1995)", "url": "https://consc.net/papers/facing.html" },
+      { "label": "Stanford Encyclopedia of Philosophy — Consciousness", "url": "https://plato.stanford.edu/entries/consciousness/" }
+    ]
+  },
+  {
+    "id": "nature-of-dark-matter",
+    "title": "What dark matter is made of",
+    "summary": "Roughly a quarter of the mass-energy of the universe is inferred from gravitational effects but has never been directly detected. Decades of increasingly sensitive direct-detection experiments have returned null results, ruling out much of the parameter space once considered most likely.",
+    "sources": [
+      { "label": "Particle Data Group — Dark Matter review", "url": "https://pdg.lbl.gov/2023/reviews/rpp2023-rev-dark-matter.pdf" }
+    ]
+  }
+]

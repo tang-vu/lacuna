@@ -1,0 +1,4 @@
+interface:
+  display_name: "Honesty audit"
+  short_description: "Find claims that outrun measured evidence"
+  default_prompt: "Use $honest to audit the latest changes for claims presented beyond the evidence."

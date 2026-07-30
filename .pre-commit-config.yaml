@@ -1,0 +1,17 @@
+repos:
+  - repo: local
+    hooks:
+      - id: pytest-fast
+        name: pytest (fast)
+        entry: python -m pytest -p no:cacheprovider -m "not slow" -q
+        language: python
+        additional_dependencies:
+          - "numpy>=1.26"
+          - "pytest>=8.0"
+          - "requests>=2.31"
+        pass_filenames: false
+      - id: web-typecheck
+        name: web typecheck
+        entry: npm --prefix web run typecheck
+        language: system
+        pass_filenames: false
