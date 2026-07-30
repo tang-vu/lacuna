@@ -1,0 +1,71 @@
+from __future__ import annotations
+
+import json
+
+from pipeline.export.build_project_status import (
+    PROJECT_STATUS_PATH,
+    build_project_status,
+)
+from pipeline.export.verify_artifacts import verify_project_status
+
+
+def test_project_status_exposes_validator_results_without_claiming_readiness():
+    status = build_project_status()
+
+    assert status["schema_version"] == 1
+    assert status["status"] == "not_ready"
+    assert status["historical_sources"] == {
+        "ready": False,
+        "required_years": [2007, 2011, 2012, 2013],
+        "statuses": {
+            "current_records": "available_unsuitable",
+            "historical_records": "unavailable",
+            "historical_vocabulary": "available_pinned",
+        },
+        "readiness_blockers": [
+            "historical_records: unavailable (must be available_pinned)"
+        ],
+    }
+    assert status["candidate_intake"]["counts"] == {
+        "accepted": 2,
+        "proposed": 10,
+        "rejected": 2,
+    }
+    assert status["candidate_intake"]["accepted_benchmark_links"] == 2
+    assert status["candidate_intake"]["readiness_contribution"] == (
+        "accepted benchmark links only"
+    )
+    assert status["benchmark"]["ready"] is False
+    assert status["benchmark"]["requirements"] == {
+        "minimum_per_kind": 8,
+        "minimum_heldout_per_kind": 4,
+        "minimum_period_appropriate_heldout_cutoffs": 2,
+    }
+    assert status["benchmark"]["counts"] == {
+        "positive": 2,
+        "hard_negative": 0,
+        "distant_negative": 0,
+    }
+    assert status["benchmark"]["heldout_counts"] == {
+        "positive": 0,
+        "hard_negative": 0,
+        "distant_negative": 0,
+    }
+    assert status["benchmark"]["mapping_counts"]["maintained_current"] == 4
+    assert status["benchmark"]["mapping_counts"]["period_appropriate"] == 0
+    assert status["benchmark"]["readiness_blockers"]
+
+
+def test_committed_project_status_matches_its_pinned_contract_inputs():
+    committed = json.loads(PROJECT_STATUS_PATH.read_text(encoding="utf-8"))
+
+    assert committed == build_project_status()
+    assert verify_project_status() == committed
+    assert set(committed["inputs"]) == {
+        "historical_sources",
+        "candidate_intake",
+        "benchmark",
+    }
+    for source in committed["inputs"].values():
+        assert source["canonicalisation"] == "canonical-json-v1"
+        assert len(source["sha256"]) == 64

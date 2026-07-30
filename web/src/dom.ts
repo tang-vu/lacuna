@@ -25,10 +25,13 @@ export function formatNumber(value: number): string {
 /** Chip marking where a claim comes from. The distinction between measured and written is the
  * one thing this interface must never blur, so it is a shared component rather than a per-view
  * styling choice. */
-export function provenanceChip(kind: 'measured' | 'curated' | 'unvalidated'): HTMLElement {
+export function provenanceChip(
+  kind: 'measured' | 'curated' | 'generated' | 'unvalidated',
+): HTMLElement {
   const labels = {
     measured: 'measured',
     curated: 'written by a person',
+    generated: 'generated from contracts',
     unvalidated: 'failed validation',
   };
   return el('span', { class: `chip chip-${kind}` }, [labels[kind]]);

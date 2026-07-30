@@ -16,6 +16,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from pipeline.export.build_project_status import write_project_status
 from pipeline.export.validate_curated import load_all
 from pipeline.metric.gap_score import (
     BRIDGE_K,
@@ -234,7 +235,9 @@ def main() -> None:
     (ARTIFACTS_DIR / "latest.json").write_text(
         json.dumps({"version": version}, indent=1), encoding="utf-8"
     )
+    project_status = write_project_status()
     print(f"\nwrote artifacts/{version}/ (computed layer: {VALIDATION['verdict']})")
+    print(f"wrote artifacts/project-status.json (v3 readiness: {project_status['status']})")
 
 
 if __name__ == "__main__":

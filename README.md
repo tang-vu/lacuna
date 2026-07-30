@@ -1,6 +1,7 @@
 # lacuna
 
 [![CI](https://github.com/tang-vu/lacuna/actions/workflows/ci.yml/badge.svg)](https://github.com/tang-vu/lacuna/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/tang-vu/lacuna?display_name=tag)](https://github.com/tang-vu/lacuna/releases/latest)
 [![Live map](https://img.shields.io/badge/live-lacuna.tangvu.dev-1d4e73)](https://lacuna.tangvu.dev)
 [![License: MIT](https://img.shields.io/badge/license-MIT-8a3d12.svg)](LICENSE)
 
@@ -96,6 +97,7 @@ python -m pipeline.ingest.fetch_taxonomy                      # ~31 calls, asser
 python -m pipeline.ingest.fetch_cooccurrence --slice pre1986  # resumable; re-run to continue
 python -m pipeline.validate.validate_swanson                  # the pre-registered test
 python -m pipeline.export.build_artifacts                     # writes artifacts/{date}/
+python -m pipeline.export.build_project_status                # writes contributor gate status
 python -m pipeline.export.verify_artifacts                    # checks committed file digests
 
 cd web && npm install && npm run dev
@@ -150,6 +152,7 @@ pipeline/
   export/                 versioned static artifacts + curated content validation
 curated/                  open.json, blocked.json, blind-spots.json
 artifacts/{snapshot}/{metric-version}/  what the site reads; no backend
+artifacts/project-status.json           generated v3 source/benchmark gate status
 web/                      TypeScript, static build
 docs/metric-validation-preregistration.md    criteria, committed before any score existed
 ```
@@ -171,7 +174,9 @@ Persistent project rules live in `AGENTS.md`. Repeatable workflows are repositor
 The highest-impact contributions are historical MEDLINE source leads, metric-blind benchmark-case
 review, and provenance or validation engineering. Read [`CONTRIBUTING.md`](CONTRIBUTING.md) before
 opening an issue: a vocabulary file is not a historical citation baseline, and a plausible pair is
-not automatically a positive case.
+not automatically a positive case. The live site's **Open work** board is generated from
+`artifacts/project-status.json`; its counts and contract fingerprints are rebuilt from the same
+validators used by CI rather than maintained as website copy.
 
 The interpretation layer remains gated off. The proposed replacement experiment is documented in
 [`plans/metric-v3-validation-plan.md`](plans/metric-v3-validation-plan.md); it moves the biomedical

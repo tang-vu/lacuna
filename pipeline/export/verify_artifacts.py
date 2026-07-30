@@ -12,6 +12,10 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from pipeline.export.build_project_status import (
+    PROJECT_STATUS_PATH,
+    build_project_status,
+)
 from pipeline.paths import ARTIFACTS_DIR
 from pipeline.provenance import sha256_payload
 
@@ -55,11 +59,25 @@ def verify_latest() -> dict:
     return manifest
 
 
+def verify_project_status() -> dict:
+    if not PROJECT_STATUS_PATH.is_file():
+        raise ArtifactIntegrityError("missing artifact file: project-status.json")
+    committed = json.loads(PROJECT_STATUS_PATH.read_text(encoding="utf-8"))
+    expected = build_project_status()
+    if committed != expected:
+        raise ArtifactIntegrityError(
+            "project-status.json is stale for its benchmark or source contracts"
+        )
+    return committed
+
+
 def main() -> None:
     manifest = verify_latest()
+    project_status = verify_project_status()
     print(f"artifact set OK: {manifest['version']}")
     print(f"verified files: {len(manifest['files'])}")
     print(f"computed verdict: {manifest['computed_layer_verdict']}")
+    print(f"project status OK: v3 {project_status['status']}")
 
 
 if __name__ == "__main__":

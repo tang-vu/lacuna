@@ -6,6 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "web" / "index.html"
 SOCIAL_CARD = ROOT / "web" / "public" / "social-card.png"
+PROJECT_STATUS = ROOT / "artifacts" / "project-status.json"
 
 
 def test_social_preview_is_wired_to_the_canonical_production_url():
@@ -37,3 +38,17 @@ def test_core_contribution_issue_forms_are_present():
     assert (issue_templates / "historical-source.yml").is_file()
     assert (issue_templates / "benchmark-case.yml").is_file()
     assert (issue_templates / "bug-report.yml").is_file()
+
+
+def test_generated_contribution_surface_reads_the_validated_status_artifact():
+    data_source = (ROOT / "web" / "src" / "data.ts").read_text(encoding="utf-8")
+    view_source = (ROOT / "web" / "src" / "views" / "contribute.ts").read_text(
+        encoding="utf-8"
+    )
+
+    assert PROJECT_STATUS.is_file()
+    assert "fetchJson<ProjectStatus>('/project-status.json')" in data_source
+    assert "provenanceChip('generated')" in view_source
+    assert "issues/6" in view_source
+    assert "issues/7" in view_source
+    assert "milestone/1" in view_source

@@ -136,3 +136,44 @@ export interface Manifest {
   computed_layer_status: string;
   computed_layer_verdict: string;
 }
+
+export interface ProjectStatus {
+  schema_version: number;
+  status: 'ready' | 'not_ready';
+  inputs: Record<
+    string,
+    { path: string; sha256: string; canonicalisation: 'canonical-json-v1' }
+  >;
+  historical_sources: {
+    ready: boolean;
+    required_years: number[];
+    statuses: Record<string, string>;
+    readiness_blockers: string[];
+  };
+  candidate_intake: {
+    counts: { accepted: number; proposed: number; rejected: number };
+    accepted_benchmark_links: number;
+    readiness_contribution: string;
+  };
+  benchmark: {
+    ready: boolean;
+    requirements: {
+      minimum_per_kind: number;
+      minimum_heldout_per_kind: number;
+      minimum_period_appropriate_heldout_cutoffs: number;
+    };
+    counts: {
+      positive: number;
+      hard_negative: number;
+      distant_negative: number;
+    };
+    heldout_counts: {
+      positive: number;
+      hard_negative: number;
+      distant_negative: number;
+    };
+    mapping_counts: Record<string, number>;
+    period_appropriate_heldout_cutoffs: string[];
+    readiness_blockers: string[];
+  };
+}

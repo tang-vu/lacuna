@@ -9,6 +9,8 @@
   --rule: #ddd9d0;
   --measured: #1d4e73;
   --measured-bg: #eef4f9;
+  --generated: #654875;
+  --generated-bg: #f4eff6;
   --warn: #8a3d12;
   --warn-bg: #fdf1e8;
   --accent: #d95d0b;
@@ -24,6 +26,8 @@
     --rule: #34313a;
     --measured: #8fc4ea;
     --measured-bg: #172733;
+    --generated: #c7a7d8;
+    --generated-bg: #29212f;
     --warn: #e9a171;
     --warn-bg: #2e1d13;
     --accent: #f28a45;
@@ -137,6 +141,81 @@ h1 {
 .button-primary:hover { background: var(--accent); color: var(--bg); }
 .status-meta { margin: 1rem 0 0; color: var(--muted); font: 0.72rem var(--mono); }
 
+/* Generated operational status is neither measured evidence nor curated knowledge. It gets its
+   own violet contract treatment and always exposes the input fingerprints that produced it. */
+.contribution-missions {
+  padding: 5rem 0;
+  border-bottom: 1px solid var(--rule);
+  scroll-margin-top: 1rem;
+}
+.contribution-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+}
+.contribution-heading > div { max-width: 47rem; }
+.contribution-heading h2 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+}
+.mission-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 2.25rem 0 1.5rem;
+}
+.mission-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 19rem;
+  padding: 1.25rem;
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--generated);
+  background: var(--generated-bg);
+}
+.mission-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+.mission-state {
+  color: var(--generated);
+  font: 0.68rem var(--mono);
+  letter-spacing: 0.12em;
+}
+.mission-card h3 { margin: 1.75rem 0 0.55rem; font-size: 1.25rem; }
+.mission-card p { margin: 0; color: var(--muted); }
+.mission-progress {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+  margin: auto 0 1rem;
+  padding-top: 1.5rem;
+}
+.mission-progress progress {
+  width: 100%;
+  height: 0.45rem;
+  accent-color: var(--generated);
+}
+.mission-progress span { color: var(--generated); font: 0.7rem var(--mono); }
+.mission-link {
+  color: var(--fg);
+  font: 0.75rem var(--mono);
+  text-underline-offset: 0.2rem;
+}
+.contract-provenance {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 1rem;
+  color: var(--muted);
+  font: 0.66rem var(--mono);
+}
+.contract-provenance a { color: var(--generated); }
+
 .layer { margin: 5rem 0; scroll-margin-top: 1rem; }
 h2 { font-size: 1.5rem; margin: 0 0 0.4rem; }
 .blurb { color: var(--muted); max-width: 42rem; margin: 0 0 1.5rem; }
@@ -163,6 +242,7 @@ h2 { font-size: 1.5rem; margin: 0 0 0.4rem; }
   white-space: nowrap;
 }
 .chip-measured { color: var(--measured); background: var(--measured-bg); border-color: transparent; }
+.chip-generated { color: var(--generated); background: var(--generated-bg); border-color: transparent; }
 .chip-unvalidated,
 .chip-verdict { color: var(--warn); background: var(--warn-bg); border-color: transparent; }
 
@@ -233,15 +313,19 @@ footer a { color: var(--muted); }
 
 @media (max-width: 720px) {
   .topbar > div { gap: 0.7rem; }
+  .topbar > div a:nth-child(1),
+  .topbar > div a:nth-child(3) { display: none; }
   .hero { min-height: 28rem; }
   .hero::after { right: -2rem; width: 15rem; opacity: 0.25; }
   .status-grid { grid-template-columns: 1fr; }
   .status-card { min-height: 0; }
+  .contribution-heading { flex-direction: column; gap: 0.5rem; }
+  .mission-grid { grid-template-columns: 1fr; }
+  .mission-card { min-height: 17rem; }
   footer { align-items: flex-start; flex-direction: column; }
 }
 
 @media (max-width: 480px) {
-  .topbar > div a:not(:last-child) { display: none; }
   h1 { font-size: clamp(3rem, 15vw, 4.25rem); }
   .tagline { font-size: 1.1rem; }
 }

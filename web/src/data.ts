@@ -1,10 +1,11 @@
-import type { ComputedLayer, Curated, Manifest, Taxonomy } from './types';
+import type { ComputedLayer, Curated, Manifest, ProjectStatus, Taxonomy } from './types';
 
 export interface Dataset {
   manifest: Manifest;
   taxonomy: Taxonomy;
   curated: Curated;
   computed: ComputedLayer;
+  projectStatus: ProjectStatus;
 }
 
 async function fetchJson<T>(path: string): Promise<T> {
@@ -21,11 +22,12 @@ async function fetchJson<T>(path: string): Promise<T> {
  * set: publishing a new version never leaves the page mixing files from two sweeps. */
 export async function loadDataset(): Promise<Dataset> {
   const { version } = await fetchJson<{ version: string }>('/latest.json');
-  const [manifest, taxonomy, curated, computed] = await Promise.all([
+  const [manifest, taxonomy, curated, computed, projectStatus] = await Promise.all([
     fetchJson<Manifest>(`/${version}/manifest.json`),
     fetchJson<Taxonomy>(`/${version}/taxonomy.json`),
     fetchJson<Curated>(`/${version}/curated.json`),
     fetchJson<ComputedLayer>(`/${version}/computed-gaps.json`),
+    fetchJson<ProjectStatus>('/project-status.json'),
   ]);
   if (manifest.version !== version) {
     throw new Error(`artifact version mismatch: latest=${version}, manifest=${manifest.version}`);
@@ -35,5 +37,5 @@ export async function loadDataset(): Promise<Dataset> {
       `metric version mismatch: manifest=${manifest.metric.version}, computed=${computed.method.version}`,
     );
   }
-  return { manifest, taxonomy, curated, computed };
+  return { manifest, taxonomy, curated, computed, projectStatus };
 }

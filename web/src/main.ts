@@ -2,6 +2,7 @@ import './styles.css';
 import { loadDataset } from './data';
 import { el } from './dom';
 import { renderComputed } from './views/computed';
+import { renderContributionMissions } from './views/contribute';
 import { renderCurated } from './views/curated';
 import { renderFooter, renderProjectStatus } from './views/project';
 import { renderTaxonomy } from './views/taxonomy';
@@ -12,6 +13,7 @@ function header(version: string): HTMLElement {
       el('a', { class: 'wordmark', href: '/' }, ['lacuna']),
       el('div', {}, [
         el('a', { href: '#status' }, ['Status']),
+        el('a', { href: '#contribute' }, ['Contribute']),
         el('a', { href: '#computed' }, ['Evidence']),
         el('a', { href: 'https://github.com/tang-vu/lacuna' }, ['GitHub ↗']),
       ]),
@@ -36,10 +38,11 @@ async function main(): Promise<void> {
   if (!app) return;
 
   try {
-    const { manifest, taxonomy, curated, computed } = await loadDataset();
+    const { manifest, taxonomy, curated, computed, projectStatus } = await loadDataset();
     app.replaceChildren(
       header(manifest.version),
       renderProjectStatus(manifest, computed),
+      renderContributionMissions(projectStatus),
       renderCurated(
         'open-problems',
         'Open problems',

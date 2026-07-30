@@ -1,0 +1,84 @@
+{
+ "schema_version": 1,
+ "status": "not_ready",
+ "inputs": {
+  "historical_sources": {
+   "path": "benchmarks/v3/sources.json",
+   "sha256": "c1206d5e1e504bd5e8e80ff9a993fad63e2b952bd23b055debf169c4de8858d4",
+   "canonicalisation": "canonical-json-v1"
+  },
+  "candidate_intake": {
+   "path": "benchmarks/v3/candidates.json",
+   "sha256": "370031b9bb31fe27b023d14117cac499b67b8a866ca6b23b25a63195ef7bb4d6",
+   "canonicalisation": "canonical-json-v1"
+  },
+  "benchmark": {
+   "path": "benchmarks/v3/cases.json",
+   "sha256": "94f64ee2bd55b7fd826336ef743a1345aa272a0931644e991c7df237b05d2065",
+   "canonicalisation": "canonical-json-v1"
+  }
+ },
+ "historical_sources": {
+  "ready": false,
+  "required_years": [
+   2007,
+   2011,
+   2012,
+   2013
+  ],
+  "statuses": {
+   "current_records": "available_unsuitable",
+   "historical_records": "unavailable",
+   "historical_vocabulary": "available_pinned"
+  },
+  "readiness_blockers": [
+   "historical_records: unavailable (must be available_pinned)"
+  ]
+ },
+ "candidate_intake": {
+  "counts": {
+   "accepted": 2,
+   "proposed": 10,
+   "rejected": 2
+  },
+  "accepted_benchmark_links": 2,
+  "readiness_contribution": "accepted benchmark links only"
+ },
+ "benchmark": {
+  "ready": false,
+  "requirements": {
+   "minimum_per_kind": 8,
+   "minimum_heldout_per_kind": 4,
+   "minimum_period_appropriate_heldout_cutoffs": 2
+  },
+  "counts": {
+   "positive": 2,
+   "hard_negative": 0,
+   "distant_negative": 0
+  },
+  "heldout_counts": {
+   "positive": 0,
+   "hard_negative": 0,
+   "distant_negative": 0
+  },
+  "mapping_counts": {
+   "ambiguous": 0,
+   "maintained_current": 4,
+   "period_appropriate": 0,
+   "unavailable": 0
+  },
+  "period_appropriate_heldout_cutoffs": [],
+  "readiness_blockers": [
+   "positive: 6 more case(s) required",
+   "positive: 4 more held-out case(s) required",
+   "hard_negative: 8 more case(s) required",
+   "hard_negative: 4 more held-out case(s) required",
+   "distant_negative: 8 more case(s) required",
+   "distant_negative: 4 more held-out case(s) required",
+   "period-appropriate held-out cutoffs: 2 more required",
+   "benchmark status is draft",
+   "case selection is not frozen",
+   "pre-metric selection is not marked complete"
+  ]
+ }
+}

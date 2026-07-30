@@ -6,6 +6,19 @@ works.
 
 Read `AGENTS.md` and the current status in `README.md` before changing code or data.
 
+## Current campaign
+
+The [Metric v3 readiness milestone](https://github.com/tang-vu/lacuna/milestone/1) keeps the
+pre-metric work public:
+
+- [recover complete historical MEDLINE baselines](https://github.com/tang-vu/lacuna/issues/6);
+- [adjudicate the proposed positive-case queue](https://github.com/tang-vu/lacuna/issues/7);
+- [build the hard-negative cohort](https://github.com/tang-vu/lacuna/issues/4);
+- [build the distant-negative cohort](https://github.com/tang-vu/lacuna/issues/3).
+
+Each issue has evidence and acceptance criteria. Comment before starting a large investigation so
+parallel contributors do not repeat the same source search or adjudication.
+
 ## Where help matters most
 
 ### 1. Recover a historical MEDLINE baseline
