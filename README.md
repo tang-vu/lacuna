@@ -199,10 +199,9 @@ npm --prefix web ci && npm --prefix web run build
 ```
 
 The published directory is `web/dist`; Vite copies the committed, versioned artifacts into that
-directory without reshaping their contents. The Cloudflare Pages origin is
-[`lacuna-a2y.pages.dev`](https://lacuna-a2y.pages.dev). The custom domain
-`lacuna.tangvu.dev` must be associated with the Pages project and have a proxied CNAME to
-`lacuna-a2y.pages.dev`.
+directory without reshaping their contents. The production site is
+[`lacuna.tangvu.dev`](https://lacuna.tangvu.dev); its Cloudflare Pages origin is
+[`lacuna-a2y.pages.dev`](https://lacuna-a2y.pages.dev).
 
 ## Licence
 
