@@ -189,6 +189,21 @@ generation also requires measured file, byte, and record totals to match indepen
 official-inventory totals, so a local subset that disagrees with the reviewed inventory values
 cannot self-certify.
 
+## Deployment
+
+The static site is deployed from `main` by the Git-integrated Cloudflare Pages project `lacuna`.
+Cloudflare builds from the repository root with:
+
+```bash
+npm --prefix web ci && npm --prefix web run build
+```
+
+The published directory is `web/dist`; Vite copies the committed, versioned artifacts into that
+directory without reshaping their contents. The Cloudflare Pages origin is
+[`lacuna-a2y.pages.dev`](https://lacuna-a2y.pages.dev). The custom domain
+`lacuna.tangvu.dev` must be associated with the Pages project and have a proxied CNAME to
+`lacuna-a2y.pages.dev`.
+
 ## Licence
 
 Code is released under the [MIT License](LICENSE). Data from [OpenAlex](https://openalex.org) is

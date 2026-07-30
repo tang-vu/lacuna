@@ -15,4 +15,5 @@ venv/
 node_modules/
 web/dist/
 web/.vite/
+.wrangler/
 .DS_Store
