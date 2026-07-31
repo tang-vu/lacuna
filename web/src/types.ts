@@ -154,6 +154,13 @@ export interface ProjectStatus {
     counts: { accepted: number; proposed: number; rejected: number };
     accepted_benchmark_links: number;
     readiness_contribution: string;
+    purpose: string;
+    policy: {
+      metric_blind: true;
+      accepted_only_enters_benchmark: true;
+      acceptance_requires_independent_replication: true;
+    };
+    entries: CandidateEntry[];
   };
   benchmark: {
     ready: boolean;
@@ -175,5 +182,49 @@ export interface ProjectStatus {
     mapping_counts: Record<string, number>;
     period_appropriate_heldout_cutoffs: string[];
     readiness_blockers: string[];
+  };
+}
+
+export interface CandidateEvidence {
+  role: string;
+  label: string;
+  url: string;
+}
+
+export interface CandidateMapping {
+  descriptor_ui: string;
+  descriptor_label: string;
+  matched_term: string;
+  match_basis: 'descriptor_label' | 'entry_term';
+}
+
+export interface CandidateEntry {
+  id: string;
+  proposed_kind: 'positive' | 'hard_negative' | 'distant_negative';
+  status: 'accepted' | 'proposed' | 'rejected';
+  selection_stage: 'pre_metric';
+  candidate_cutoff?: string;
+  source_time_window?: string;
+  source_discovery_year?: number;
+  source_cutoff_year?: number;
+  source_baseline_release_year?: number;
+  concepts: {
+    a: { label: string; source_entity_id?: string };
+    c: { label: string; source_entity_id?: string };
+  };
+  bridge?: { label: string; source_entity_id: string };
+  mapping_audit?: {
+    status: 'production_year_candidate';
+    vocabulary_year: number;
+    source_sha256: string;
+    mappings: Record<string, CandidateMapping>;
+    limitation: string;
+  };
+  evidence: CandidateEvidence[];
+  open_questions?: string[];
+  adjudication: {
+    decision: CandidateEntry['status'];
+    decided_on?: string;
+    rationale: string;
   };
 }

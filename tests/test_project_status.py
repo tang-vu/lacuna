@@ -12,7 +12,7 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 1
+    assert status["schema_version"] == 2
     assert status["status"] == "not_ready"
     assert status["historical_sources"] == {
         "ready": False,
@@ -34,6 +34,32 @@ def test_project_status_exposes_validator_results_without_claiming_readiness():
     assert status["candidate_intake"]["accepted_benchmark_links"] == 2
     assert status["candidate_intake"]["readiness_contribution"] == (
         "accepted benchmark links only"
+    )
+    assert status["candidate_intake"]["policy"] == {
+        "metric_blind": True,
+        "accepted_only_enters_benchmark": True,
+        "acceptance_requires_independent_replication": True,
+    }
+    entries = status["candidate_intake"]["entries"]
+    assert len(entries) == 14
+    assert {
+        entry["id"] for entry in entries if entry["status"] == "proposed"
+    } == {
+        "swanson-somatomedin-c-arginine",
+        "smalheiser-magnesium-neurologic-disease",
+        "smalheiser-alzheimer-indomethacin",
+        "smalheiser-alzheimer-estrogen",
+        "smalheiser-schizophrenia-ipla2",
+        "lion-nfkb-adenoma",
+        "lion-notch1-cebpb",
+        "lion-il17-mkp1",
+        "lion-nrf2-pancreatic-cancer",
+        "lion-cxcl12-thyroid-cancer",
+    }
+    assert all(
+        entry["open_questions"]
+        for entry in entries
+        if entry["status"] == "proposed"
     )
     assert status["benchmark"]["ready"] is False
     assert status["benchmark"]["requirements"] == {

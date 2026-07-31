@@ -39,9 +39,10 @@ def build_project_status() -> dict:
     candidates = audit_candidates()
     benchmark = audit_benchmark()
     ready = sources.ready and benchmark.ready
+    candidate_payload = json.loads(CANDIDATES_PATH.read_text(encoding="utf-8"))
 
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "status": "ready" if ready else "not_ready",
         "inputs": {
             "historical_sources": _input_identity(SOURCES_PATH),
@@ -58,6 +59,12 @@ def build_project_status() -> dict:
             "counts": dict(candidates.counts),
             "accepted_benchmark_links": len(candidates.accepted_benchmark_ids),
             "readiness_contribution": "accepted benchmark links only",
+            "purpose": candidate_payload["purpose"],
+            "policy": candidate_payload["policy"],
+            # These entries remain human-curated intake records. Copying them into the generated
+            # status artifact makes the public review surface reproducible without changing the
+            # dated v2 measurement snapshot or creating a second hand-edited candidate source.
+            "entries": candidate_payload["candidates"],
         },
         "benchmark": {
             "ready": benchmark.ready,

@@ -11,6 +11,8 @@ than disappearing behind later versions.
   exporting the 500 published outputs of the failed metric.
 - A data-backed observatory hero that exposes the current method count, validated-gap-pair count,
   scored-pair count, and pinned artifact version without recasting measurements as findings.
+- A metric-blind benchmark review desk exposing all 14 contract-validated intake records, evidence
+  links, mapping limitations, open questions, status filters, search, and candidate deep links.
 
 ### Changed
 
@@ -18,6 +20,8 @@ than disappearing behind later versions.
   upper bounds, verification queries, source-row queries, and the failed verdict visually linked.
 - Expanded the non-JavaScript fallback so crawlers and constrained clients can see what the
   evidence lab does and that its rows are not candidate discoveries.
+- Advanced `project-status.json` to schema 2 so the contributor UI reads candidate records from the
+  same validated, fingerprinted ledger as CI instead of maintaining a second presentation copy.
 
 ## [0.1.0] — 2026-07-31
 

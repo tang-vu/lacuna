@@ -1,5 +1,5 @@
 {
- "schema_version": 1,
+ "schema_version": 2,
  "status": "not_ready",
  "inputs": {
   "historical_sources": {
@@ -42,7 +42,708 @@
    "rejected": 2
   },
   "accepted_benchmark_links": 2,
-  "readiness_contribution": "accepted benchmark links only"
+  "readiness_contribution": "accepted benchmark links only",
+  "purpose": "A metric-blind intake ledger for possible v3 benchmark cases. This file is not a benchmark result and its counts do not contribute to readiness.",
+  "policy": {
+   "metric_blind": true,
+   "accepted_only_enters_benchmark": true,
+   "acceptance_requires_independent_replication": true
+  },
+  "entries": [
+   {
+    "id": "swanson-fish-oil-raynaud",
+    "proposed_kind": "positive",
+    "status": "accepted",
+    "benchmark_case_id": "swanson-fish-oil-raynaud",
+    "selection_stage": "pre_metric",
+    "candidate_cutoff": "1985-12-31",
+    "concepts": {
+     "a": {
+      "label": "Fish Oils"
+     },
+     "c": {
+      "label": "Raynaud Disease"
+     }
+    },
+    "evidence": [
+     {
+      "role": "selection_source",
+      "label": "Preiss and Stevenson (2017), replication catalog and 1960-1985 time window",
+      "url": "https://doi.org/10.1186/s12859-017-1641-9"
+     },
+     {
+      "role": "bridge_publication",
+      "label": "Swanson (1986), Fish oil, Raynaud's syndrome, and undiscovered public knowledge",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/3797213/"
+     },
+     {
+      "role": "independent_replication",
+      "label": "Gordon and Lindsay (1996), independent replication and re-examination",
+      "url": "https://doi.org/10.1002/(SICI)1097-4571(199602)47:2%3C116::AID-ASI3%3E3.0.CO;2-1"
+     },
+     {
+      "role": "clinical_confirmation",
+      "label": "DiGiacomo et al. (1989), double-blind controlled prospective study",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/2536517/"
+     }
+    ],
+    "adjudication": {
+     "decision": "accepted",
+     "decided_on": "2026-07-29",
+     "rationale": "Canonical development diagnostic with a documented pre-discovery window, later bridge publication, independent LBD replication, and subsequent clinical study. Historical MeSH remains unavailable, so it is not eligible as a period-appropriate held-out case."
+    }
+   },
+   {
+    "id": "swanson-magnesium-migraine",
+    "proposed_kind": "positive",
+    "status": "accepted",
+    "benchmark_case_id": "swanson-magnesium-migraine",
+    "selection_stage": "pre_metric",
+    "candidate_cutoff": "1987-12-31",
+    "concepts": {
+     "a": {
+      "label": "Magnesium Deficiency"
+     },
+     "c": {
+      "label": "Migraine Disorders"
+     }
+    },
+    "evidence": [
+     {
+      "role": "selection_source",
+      "label": "Preiss and Stevenson (2017), replication catalog",
+      "url": "https://doi.org/10.1186/s12859-017-1641-9"
+     },
+     {
+      "role": "bridge_publication",
+      "label": "Swanson (1988), Migraine and magnesium: eleven neglected connections",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/3075738/"
+     },
+     {
+      "role": "independent_replication",
+      "label": "Weeber et al. (2001), concept-based simulation of both Swanson discoveries",
+      "url": "https://doi.org/10.1002/asi.1104"
+     }
+    ],
+    "adjudication": {
+     "decision": "accepted",
+     "decided_on": "2026-07-29",
+     "rationale": "Canonical development diagnostic with a bridge publication and independent concept-based replication. Historical MeSH remains unavailable, so it is not eligible as a period-appropriate held-out case."
+    }
+   },
+   {
+    "id": "swanson-somatomedin-c-arginine",
+    "proposed_kind": "positive",
+    "status": "proposed",
+    "selection_stage": "pre_metric",
+    "source_time_window": "1960-1989",
+    "concepts": {
+     "a": {
+      "label": "Somatomedin C"
+     },
+     "c": {
+      "label": "Arginine"
+     }
+    },
+    "evidence": [
+     {
+      "role": "selection_source",
+      "label": "Preiss and Stevenson (2017), one of seven literature replication cases",
+      "url": "https://doi.org/10.1186/s12859-017-1641-9"
+     },
+     {
+      "role": "bridge_candidate",
+      "label": "Swanson (1990), Somatomedin C and arginine",
+      "url": "https://doi.org/10.1353/pbm.1990.0031"
+     }
+    ],
+    "open_questions": [
+     "Adjudicate the exact cutoff independently of the published evaluation window.",
+     "Audit both concepts against the intended vocabulary release.",
+     "Find independent evidence that the relationship qualifies as a discovery rather than only an LBD replication target."
+    ],
+    "adjudication": {
+     "decision": "proposed",
+     "rationale": "A frequently reused replication case is only a candidate until its cutoff, mapping, and discovery status are independently adjudicated."
+    }
+   },
+   {
+    "id": "smalheiser-magnesium-neurologic-disease",
+    "proposed_kind": "positive",
+    "status": "proposed",
+    "selection_stage": "pre_metric",
+    "source_time_window": "1960-1994",
+    "concepts": {
+     "a": {
+      "label": "Magnesium Deficiency"
+     },
+     "c": {
+      "label": "Neurologic Disease"
+     }
+    },
+    "evidence": [
+     {
+      "role": "selection_source",
+      "label": "Preiss and Stevenson (2017), one of seven literature replication cases",
+      "url": "https://doi.org/10.1186/s12859-017-1641-9"
+     }
+    ],
+    "open_questions": [
+     "Locate a stable primary-publication record for the 1994 bridge paper.",
+     "Adjudicate the cutoff independently of the published evaluation window.",
+     "Resolve the broad neurologic-disease concept to a period-appropriate descriptor."
+    ],
+    "adjudication": {
+     "decision": "proposed",
+     "rationale": "The replication catalog is sufficient for intake, not for positive-case acceptance."
+    }
+   },
+   {
+    "id": "smalheiser-alzheimer-indomethacin",
+    "proposed_kind": "positive",
+    "status": "proposed",
+    "selection_stage": "pre_metric",
+    "source_time_window": "1966-1996",
+    "concepts": {
+     "a": {
+      "label": "Alzheimer Disease"
+     },
+     "c": {
+      "label": "Indomethacin"
+     }
+    },
+    "evidence": [
+     {
+      "role": "selection_source",
+      "label": "Preiss and Stevenson (2017), one of seven literature replication cases",
+      "url": "https://doi.org/10.1186/s12859-017-1641-9"
+     },
+     {
+      "role": "bridge_candidate",
+      "label": "Smalheiser and Swanson (1996), Indomethacin and Alzheimer's disease",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/8614542/"
+     }
+    ],
+    "open_questions": [
+     "Adjudicate whether this is a discovery case when direct pre-window connections are reported.",
+     "Define a cutoff that precedes the bridge publication.",
+     "Audit both concepts against the intended vocabulary release."
+    ],
+    "adjudication": {
+     "decision": "proposed",
+     "rationale": "The catalog reports six direct connections in its evaluation segment, so novelty cannot be assumed from reuse as an LBD case."
+    }
+   },
+   {
+    "id": "smalheiser-alzheimer-estrogen",
+    "proposed_kind": "positive",
+    "status": "proposed",
+    "selection_stage": "pre_metric",
+    "source_time_window": "1960-1995",
+    "concepts": {
+     "a": {
+      "label": "Alzheimer Disease"
+     },
+     "c": {
+      "label": "Estrogens"
+     }
+    },
+    "evidence": [
+     {
+      "role": "selection_source",
+      "label": "Preiss and Stevenson (2017), one of seven literature replication cases",
+      "url": "https://doi.org/10.1186/s12859-017-1641-9"
+     },
+     {
+      "role": "bridge_candidate",
+      "label": "Smalheiser and Swanson (1996), Linking estrogen to Alzheimer's disease",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/8797484/"
+     }
+    ],
+    "open_questions": [
+     "Adjudicate whether this is a discovery case when direct pre-window connections are reported.",
+     "Pin the pre-publication cutoff and vocabulary release.",
+     "Find an independent assessment of the claimed discovery."
+    ],
+    "adjudication": {
+     "decision": "proposed",
+     "rationale": "The catalog reports 25 direct connections in its evaluation segment; this may be hypothesis organization rather than a previously absent relation."
+    }
+   },
+   {
+    "id": "smalheiser-schizophrenia-ipla2",
+    "proposed_kind": "positive",
+    "status": "proposed",
+    "selection_stage": "pre_metric",
+    "source_time_window": "1960-1997",
+    "concepts": {
+     "a": {
+      "label": "Schizophrenia"
+     },
+     "c": {
+      "label": "Calcium-Independent Phospholipase A2"
+     }
+    },
+    "evidence": [
+     {
+      "role": "selection_source",
+      "label": "Preiss and Stevenson (2017), one of seven literature replication cases",
+      "url": "https://doi.org/10.1186/s12859-017-1641-9"
+     },
+     {
+      "role": "bridge_candidate",
+      "label": "Smalheiser and Swanson (1998), Calcium-independent phospholipase A2 and schizophrenia",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9707387/"
+     }
+    ],
+    "open_questions": [
+     "Resolve the source's inconsistent 1997/1998 publication dating before fixing a cutoff.",
+     "Audit the enzyme concept against the intended vocabulary release.",
+     "Find an independent assessment of the claimed discovery."
+    ],
+    "adjudication": {
+     "decision": "proposed",
+     "rationale": "The stable PubMed record dates the bridge to 1998 while secondary replication literature sometimes labels it 1997; the case cannot be frozen with an unresolved cutoff."
+    }
+   },
+   {
+    "id": "lion-nfkb-adenoma",
+    "proposed_kind": "positive",
+    "status": "proposed",
+    "selection_stage": "pre_metric",
+    "source_discovery_year": 2016,
+    "source_evaluation_lag_years": 5,
+    "source_cutoff_basis": "publication_year_lte_discovery_year_minus_lag",
+    "source_cutoff_year": 2011,
+    "source_baseline_release_year": 2012,
+    "concepts": {
+     "a": {
+      "label": "NF-kappa B",
+      "source_entity_id": "PR:000001754"
+     },
+     "c": {
+      "label": "Adenoma",
+      "source_entity_id": "MESH:D000236"
+     }
+    },
+    "bridge": {
+     "label": "Bcl-2",
+     "source_entity_id": "PR:000002307"
+    },
+    "mapping_audit": {
+     "status": "production_year_candidate",
+     "vocabulary_year": 2012,
+     "source_sha256": "381e804c7615e7a5332b2991e659a64b0ad0f216c4481ef6b7e3c614fc45095f",
+     "mappings": {
+      "a": {
+       "descriptor_ui": "D016328",
+       "descriptor_label": "NF-kappa B",
+       "matched_term": "NF-kappa B",
+       "match_basis": "descriptor_label"
+      },
+      "b": {
+       "descriptor_ui": "D019253",
+       "descriptor_label": "Proto-Oncogene Proteins c-bcl-2",
+       "matched_term": "Proto-Oncogene Proteins c-bcl-2",
+       "match_basis": "descriptor_label"
+      },
+      "c": {
+       "descriptor_ui": "D000236",
+       "descriptor_label": "Adenoma",
+       "matched_term": "Adenoma",
+       "match_basis": "descriptor_label"
+      }
+     },
+     "limitation": "These are vocabulary-presence and semantic-mapping candidates, not evidence of descriptor assignments in historical citations."
+    },
+    "evidence": [
+     {
+      "role": "selection_source",
+      "label": "Pyysalo et al. (2019), cancer-biologist-curated LION discovery dataset",
+      "url": "https://doi.org/10.1093/bioinformatics/bty845"
+     },
+     {
+      "role": "bridge_candidate",
+      "label": "van der Heijden et al. (2016), Bcl-2 is a critical mediator of intestinal transformation",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26956214/"
+     },
+     {
+      "role": "replication_source",
+      "label": "Crichton et al. (2020), independent reuse of the LION cases",
+      "url": "https://doi.org/10.1371/journal.pone.0232891"
+     }
+    ],
+    "open_questions": [
+     "Pin the complete 2012 MEDLINE baseline release needed to evaluate the source-defined 2011 publication-year cutoff.",
+     "Map the Protein Ontology A term to a period-appropriate MeSH descriptor without changing the case identity.",
+     "Independently adjudicate the discovery claim rather than relying only on reuse of the LION label."
+    ],
+    "adjudication": {
+     "decision": "proposed",
+     "rationale": "A domain-expert-curated post-2002 case with a reconstructable time range, but its source identity mixes Protein Ontology and MeSH rather than the v3 descriptor-only contract."
+    }
+   },
+   {
+    "id": "lion-notch1-cebpb",
+    "proposed_kind": "positive",
+    "status": "proposed",
+    "selection_stage": "pre_metric",
+    "source_discovery_year": 2016,
+    "source_evaluation_lag_years": 5,
+    "source_cutoff_basis": "publication_year_lte_discovery_year_minus_lag",
+    "source_cutoff_year": 2011,
+    "source_baseline_release_year": 2012,
+    "concepts": {
+     "a": {
+      "label": "NOTCH1",
+      "source_entity_id": "PR:000011331"
+     },
+     "c": {
+      "label": "C/EBP beta",
+      "source_entity_id": "PR:000005308"
+     }
+    },
+    "bridge": {
+     "label": "senescence",
+     "source_entity_id": "HOC:42"
+    },
+    "mapping_audit": {
+     "status": "production_year_candidate",
+     "vocabulary_year": 2012,
+     "source_sha256": "381e804c7615e7a5332b2991e659a64b0ad0f216c4481ef6b7e3c614fc45095f",
+     "mappings": {
+      "a": {
+       "descriptor_ui": "D051881",
+       "descriptor_label": "Receptor, Notch1",
+       "matched_term": "Receptor, Notch1",
+       "match_basis": "descriptor_label"
+      },
+      "b": {
+       "descriptor_ui": "D016922",
+       "descriptor_label": "Cell Aging",
+       "matched_term": "Cellular Senescence",
+       "match_basis": "entry_term"
+      },
+      "c": {
+       "descriptor_ui": "D022782",
+       "descriptor_label": "CCAAT-Enhancer-Binding Protein-beta",
+       "matched_term": "CCAAT-Enhancer-Binding Protein-beta",
+       "match_basis": "descriptor_label"
+      }
+     },
+     "limitation": "These are vocabulary-presence and semantic-mapping candidates, not evidence of descriptor assignments in historical citations."
+    },
+    "evidence": [
+     {
+      "role": "selection_source",
+      "label": "Pyysalo et al. (2019), cancer-biologist-curated LION discovery dataset",
+      "url": "https://doi.org/10.1093/bioinformatics/bty845"
+     },
+     {
+      "role": "bridge_candidate",
+      "label": "Hoare et al. (2016), NOTCH1 mediates a switch between two distinct secretomes during senescence",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/27525720/"
+     },
+     {
+      "role": "replication_source",
+      "label": "Crichton et al. (2020), independent reuse of the LION cases",
+      "url": "https://doi.org/10.1371/journal.pone.0232891"
+     }
+    ],
+    "open_questions": [
+     "Pin the complete 2012 MEDLINE baseline release needed to evaluate the source-defined 2011 publication-year cutoff.",
+     "Map both Protein Ontology endpoints and the Cancer Hallmarks bridge to period-appropriate MeSH without changing the case identity.",
+     "Independently adjudicate the discovery claim rather than relying only on reuse of the LION label."
+    ],
+    "adjudication": {
+     "decision": "proposed",
+     "rationale": "A post-2002 case with a primary publication and later LBD reuse, but all three source entities come from vocabularies outside the v3 descriptor-only contract."
+    }
+   },
+   {
+    "id": "lion-il17-mkp1",
+    "proposed_kind": "positive",
+    "status": "proposed",
+    "selection_stage": "pre_metric",
+    "source_discovery_year": 2015,
+    "source_evaluation_lag_years": 5,
+    "source_cutoff_basis": "publication_year_lte_discovery_year_minus_lag",
+    "source_cutoff_year": 2010,
+    "source_baseline_release_year": 2011,
+    "concepts": {
+     "a": {
+      "label": "IL-17",
+      "source_entity_id": "PR:000001138"
+     },
+     "c": {
+      "label": "MKP-1",
+      "source_entity_id": "PR:000006736"
+     }
+    },
+    "bridge": {
+     "label": "p38 alpha",
+     "source_entity_id": "PR:000003107"
+    },
+    "mapping_audit": {
+     "status": "production_year_candidate",
+     "vocabulary_year": 2011,
+     "source_sha256": "2c1e582760a6ea93eb37777134d6b8c742c49a9e4e17675e55055063fd0042a4",
+     "mappings": {
+      "a": {
+       "descriptor_ui": "D020381",
+       "descriptor_label": "Interleukin-17",
+       "matched_term": "Interleukin-17",
+       "match_basis": "descriptor_label"
+      },
+      "b": {
+       "descriptor_ui": "D048051",
+       "descriptor_label": "p38 Mitogen-Activated Protein Kinases",
+       "matched_term": "p38 Mitogen-Activated Protein Kinases",
+       "match_basis": "descriptor_label"
+      },
+      "c": {
+       "descriptor_ui": "D054638",
+       "descriptor_label": "Dual Specificity Phosphatase 1",
+       "matched_term": "Dual Specificity Phosphatase 1",
+       "match_basis": "descriptor_label"
+      }
+     },
+     "limitation": "These are vocabulary-presence and semantic-mapping candidates, not evidence of descriptor assignments in historical citations."
+    },
+    "evidence": [
+     {
+      "role": "selection_source",
+      "label": "Pyysalo et al. (2019), LION discovery dataset",
+      "url": "https://doi.org/10.1093/bioinformatics/bty845"
+     },
+     {
+      "role": "bridge_candidate",
+      "label": "Gaffen and McGeachy (2015), Integrating p38 alpha MAPK immune signals in nonimmune cells",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/25737584/"
+     },
+     {
+      "role": "replication_source",
+      "label": "Crichton et al. (2020), independent reuse of the LION cases",
+      "url": "https://doi.org/10.1371/journal.pone.0232891"
+     }
+    ],
+    "open_questions": [
+     "Pin the complete 2011 MEDLINE baseline release needed to evaluate the source-defined 2010 publication-year cutoff.",
+     "Map all three Protein Ontology entities to period-appropriate MeSH without changing the case identity.",
+     "Adjudicate why a commentary about a multiple-sclerosis mouse model is grouped with cancer discoveries and whether it is a primary discovery publication."
+    ],
+    "adjudication": {
+     "decision": "proposed",
+     "rationale": "The source record is usable for intake but its domain and publication role conflict with the surrounding description of the LION set; acceptance would currently overstate the evidence."
+    }
+   },
+   {
+    "id": "lion-nrf2-pancreatic-cancer",
+    "proposed_kind": "positive",
+    "status": "proposed",
+    "selection_stage": "pre_metric",
+    "source_discovery_year": 2011,
+    "source_evaluation_lag_years": 5,
+    "source_cutoff_basis": "publication_year_lte_discovery_year_minus_lag",
+    "source_cutoff_year": 2006,
+    "source_baseline_release_year": 2007,
+    "concepts": {
+     "a": {
+      "label": "Nrf2",
+      "source_entity_id": "PR:000011170"
+     },
+     "c": {
+      "label": "Pancreatic Neoplasms",
+      "source_entity_id": "MESH:D010190"
+     }
+    },
+    "bridge": {
+     "label": "Reactive Oxygen Species",
+     "source_entity_id": "CHEBI:26523"
+    },
+    "mapping_audit": {
+     "status": "production_year_candidate",
+     "vocabulary_year": 2007,
+     "source_sha256": "2ba693d147557886a05f854194219ff81f5a38e5f3fde6921023fff18ad03f4a",
+     "mappings": {
+      "a": {
+       "descriptor_ui": "D051267",
+       "descriptor_label": "NF-E2-Related Factor 2",
+       "matched_term": "NF-E2-Related Factor 2",
+       "match_basis": "descriptor_label"
+      },
+      "b": {
+       "descriptor_ui": "D017382",
+       "descriptor_label": "Reactive Oxygen Species",
+       "matched_term": "Reactive Oxygen Species",
+       "match_basis": "descriptor_label"
+      },
+      "c": {
+       "descriptor_ui": "D010190",
+       "descriptor_label": "Pancreatic Neoplasms",
+       "matched_term": "Pancreatic Neoplasms",
+       "match_basis": "descriptor_label"
+      }
+     },
+     "limitation": "These are vocabulary-presence and semantic-mapping candidates, not evidence of descriptor assignments in historical citations."
+    },
+    "evidence": [
+     {
+      "role": "selection_source",
+      "label": "Pyysalo et al. (2019), cancer-biologist-curated LION discovery dataset",
+      "url": "https://doi.org/10.1093/bioinformatics/bty845"
+     },
+     {
+      "role": "bridge_candidate",
+      "label": "DeNicola et al. (2011), Oncogene-induced Nrf2 transcription promotes ROS detoxification and tumorigenesis",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21734707/"
+     },
+     {
+      "role": "replication_source",
+      "label": "Crichton et al. (2020), independent reuse of the LION cases",
+      "url": "https://doi.org/10.1371/journal.pone.0232891"
+     }
+    ],
+    "open_questions": [
+     "Pin the complete 2007 MEDLINE baseline release needed to evaluate the source-defined 2006 publication-year cutoff.",
+     "Determine whether the Nrf2 Protein Ontology identity had a period-appropriate MeSH descriptor at the cutoff.",
+     "Verify that translating the ChEBI bridge to MeSH preserves the source case."
+    ],
+    "adjudication": {
+     "decision": "proposed",
+     "rationale": "A strong post-2002 candidate with a primary publication, but only one endpoint is natively MeSH and the source bridge is ChEBI."
+    }
+   },
+   {
+    "id": "lion-cxcl12-thyroid-cancer",
+    "proposed_kind": "positive",
+    "status": "proposed",
+    "selection_stage": "pre_metric",
+    "source_discovery_year": 2017,
+    "source_evaluation_lag_years": 5,
+    "source_cutoff_basis": "publication_year_lte_discovery_year_minus_lag",
+    "source_cutoff_year": 2012,
+    "source_baseline_release_year": 2013,
+    "concepts": {
+     "a": {
+      "label": "CXCL12",
+      "source_entity_id": "PR:000006066"
+     },
+     "c": {
+      "label": "Thyroid Neoplasms",
+      "source_entity_id": "MESH:D013964"
+     }
+    },
+    "bridge": {
+     "label": "senescence",
+     "source_entity_id": "HOC:42"
+    },
+    "mapping_audit": {
+     "status": "production_year_candidate",
+     "vocabulary_year": 2013,
+     "source_sha256": "c928973ae228ebd03ceeec8950b31f63a867fc9dc2699ae1578e506f25739740",
+     "mappings": {
+      "a": {
+       "descriptor_ui": "D054377",
+       "descriptor_label": "Chemokine CXCL12",
+       "matched_term": "Chemokine CXCL12",
+       "match_basis": "descriptor_label"
+      },
+      "b": {
+       "descriptor_ui": "D016922",
+       "descriptor_label": "Cell Aging",
+       "matched_term": "Cellular Senescence",
+       "match_basis": "entry_term"
+      },
+      "c": {
+       "descriptor_ui": "D013964",
+       "descriptor_label": "Thyroid Neoplasms",
+       "matched_term": "Thyroid Neoplasms",
+       "match_basis": "descriptor_label"
+      }
+     },
+     "limitation": "These are vocabulary-presence and semantic-mapping candidates, not evidence of descriptor assignments in historical citations."
+    },
+    "evidence": [
+     {
+      "role": "selection_source",
+      "label": "Pyysalo et al. (2019), cancer-biologist-curated LION discovery dataset",
+      "url": "https://doi.org/10.1093/bioinformatics/bty845"
+     },
+     {
+      "role": "bridge_candidate",
+      "label": "Kim et al. (2017), Senescent tumor cells lead the collective invasion in thyroid cancer",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28489070/"
+     },
+     {
+      "role": "replication_source",
+      "label": "Crichton et al. (2020), independent reuse of the LION cases",
+      "url": "https://doi.org/10.1371/journal.pone.0232891"
+     }
+    ],
+    "open_questions": [
+     "Pin the complete 2013 MEDLINE baseline release needed to evaluate the source-defined 2012 publication-year cutoff.",
+     "Map the Protein Ontology endpoint and Cancer Hallmarks bridge to period-appropriate MeSH without changing the case identity.",
+     "Independently adjudicate the discovery claim rather than relying only on reuse of the LION label."
+    ],
+    "adjudication": {
+     "decision": "proposed",
+     "rationale": "A post-2002 candidate with a primary publication and MeSH disease endpoint, but the other endpoint and bridge use vocabularies outside the v3 contract."
+    }
+   },
+   {
+    "id": "timeslice-ebola-professional-burnout",
+    "proposed_kind": "positive",
+    "status": "rejected",
+    "selection_stage": "pre_metric",
+    "concepts": {
+     "a": {
+      "label": "Ebolavirus"
+     },
+     "c": {
+      "label": "Burnout, Professional"
+     }
+    },
+    "evidence": [
+     {
+      "role": "methodological_rejection",
+      "label": "Moreau (2023), example of a chance co-occurrence mislabelled by time-sliced evaluation",
+      "url": "https://doi.org/10.1093/bioinformatics/btad090"
+     }
+    ],
+    "adjudication": {
+     "decision": "rejected",
+     "decided_on": "2026-07-29",
+     "rationale": "A later co-occurrence alone is not evidence of a meaningful discovery. This pair is retained only as an audit example of noisy timeslice labels."
+    }
+   },
+   {
+    "id": "timeslice-alzheimer-elderly",
+    "proposed_kind": "positive",
+    "status": "rejected",
+    "selection_stage": "pre_metric",
+    "concepts": {
+     "a": {
+      "label": "Alzheimer Disease"
+     },
+     "c": {
+      "label": "Elderly"
+     }
+    },
+    "evidence": [
+     {
+      "role": "methodological_rejection",
+      "label": "Moreau (2023), example involving a generic term mislabelled by time-sliced evaluation",
+      "url": "https://doi.org/10.1093/bioinformatics/btad090"
+     }
+    ],
+    "adjudication": {
+     "decision": "rejected",
+     "decided_on": "2026-07-29",
+     "rationale": "A generic population term newly co-occurring with a disease is not by itself a discovery. This pair is retained only as a benchmark-construction warning."
+    }
+   }
+  ]
  },
  "benchmark": {
   "ready": false,

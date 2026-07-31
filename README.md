@@ -209,6 +209,12 @@ from the classic replication catalog, five proposed post-2002 cases from LION's 
 set, and two rejected noise examples do not count toward readiness; only accepted entries with an
 independent LBD replication may be copied into `cases.json`. Run
 `python -m pipeline.benchmark.validate_candidates` to audit that boundary.
+The live **Metric-blind review desk** publishes all 14 contract-validated intake records directly
+from that ledger, including their evidence links, mapping limitations, adjudication rationale, and
+unresolved questions. Structural validity is not scientific acceptance: it defaults to the ten
+proposed records and labels each one as contributing zero to readiness; accepted and rejected
+records remain visible as the audit trail. Deep links let reviewers discuss one stable candidate
+identity in issue #7 without duplicating the source data.
 The historical-input gate is also red: NLM's legacy MBR download endpoint no longer resolves. The
 required 2007/2011/2012/2013 MeSH descriptor archives are public and now pinned by SHA-256, but that
 vocabulary does not replace the missing citation records. `benchmarks/v3/sources.json` records the

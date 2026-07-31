@@ -1,7 +1,8 @@
 import { el, formatNumber, provenanceChip } from '../dom';
-import type { ProjectStatus } from '../types';
+import type { CandidateEntry, ProjectStatus } from '../types';
 
 const REPOSITORY = 'https://github.com/tang-vu/lacuna';
+type CandidateStatus = CandidateEntry['status'];
 
 function total(values: Record<string, number>): number {
   return Object.values(values).reduce((sum, value) => sum + value, 0);
@@ -37,6 +38,288 @@ function mission(
     progressNode,
     el('a', { class: 'mission-link', href }, [action, ' ↗']),
   ]);
+}
+
+function candidatePath(candidate: CandidateEntry): HTMLElement {
+  return el('div', { class: 'candidate-path', 'aria-label': 'Proposed literature path' }, [
+    el('span', {}, [
+      el('small', {}, ['A']),
+      candidate.concepts.a.label,
+    ]),
+    el('span', { class: 'candidate-path-link', 'aria-hidden': 'true' }, ['→']),
+    el('span', { class: 'candidate-bridge' }, [
+      el('small', {}, ['B · bridge']),
+      candidate.bridge?.label ?? 'not yet specified',
+    ]),
+    el('span', { class: 'candidate-path-link', 'aria-hidden': 'true' }, ['→']),
+    el('span', {}, [
+      el('small', {}, ['C']),
+      candidate.concepts.c.label,
+    ]),
+  ]);
+}
+
+function copyCandidateButton(candidate: CandidateEntry): HTMLButtonElement {
+  const button = el(
+    'button',
+    { class: 'candidate-copy', type: 'button' },
+    ['copy review link'],
+  ) as HTMLButtonElement;
+  button.addEventListener('click', async () => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('candidate', candidate.id);
+    url.hash = 'review-desk';
+    try {
+      await navigator.clipboard.writeText(url.toString());
+      button.textContent = 'link copied';
+      window.setTimeout(() => {
+        button.textContent = 'copy review link';
+      }, 1600);
+    } catch {
+      button.textContent = 'copy failed';
+    }
+  });
+  return button;
+}
+
+function candidateCard(candidate: CandidateEntry, selected: boolean): HTMLElement {
+  const meta: HTMLElement[] = [
+    provenanceChip('curated'),
+    el('span', { class: `chip chip-candidate-${candidate.status}` }, [
+      candidate.status === 'proposed'
+        ? 'proposed · 0 readiness'
+        : candidate.status,
+    ]),
+    el('span', { class: 'chip' }, [candidate.proposed_kind.replace('_', ' ')]),
+  ];
+  if (candidate.mapping_audit) {
+    meta.push(
+      el('span', { class: 'chip chip-mapping' }, [
+        `${candidate.mapping_audit.vocabulary_year} vocabulary candidate`,
+      ]),
+    );
+  }
+
+  const timeline = candidate.candidate_cutoff
+    ? `cutoff ${candidate.candidate_cutoff}`
+    : candidate.source_cutoff_year
+      ? `source-defined cutoff ${candidate.source_cutoff_year}`
+      : candidate.source_time_window
+        ? `source window ${candidate.source_time_window}`
+        : 'cutoff unresolved';
+
+  const body: HTMLElement[] = [
+    el('div', { class: 'chips' }, meta),
+    candidatePath(candidate),
+    el('div', { class: 'candidate-meta' }, [
+      el('span', {}, [timeline]),
+      el('span', {}, [`selected ${candidate.selection_stage.replace('_', '-')}`]),
+      el('span', {}, [`${candidate.evidence.length} evidence source(s)`]),
+    ]),
+  ];
+
+  if (candidate.mapping_audit) {
+    body.push(
+      el('div', { class: 'candidate-mapping' }, [
+        el('p', {}, [
+          el('strong', {}, ['Mapping audit · ']),
+          candidate.mapping_audit.limitation,
+        ]),
+        el(
+          'dl',
+          {},
+          Object.entries(candidate.mapping_audit.mappings).flatMap(([role, mapping]) => [
+            el('dt', {}, [role.toUpperCase()]),
+            el('dd', {}, [`${mapping.descriptor_ui} · ${mapping.descriptor_label}`]),
+          ]),
+        ),
+        el('code', {}, [
+          `vocabulary SHA-256 ${candidate.mapping_audit.source_sha256.slice(0, 16)}…`,
+        ]),
+      ]),
+    );
+  }
+
+  body.push(
+    el('div', { class: 'candidate-evidence' }, [
+      el('h4', {}, ['Evidence on record']),
+      el(
+        'ul',
+        {},
+        candidate.evidence.map((source) =>
+          el('li', {}, [
+            el('span', {}, [source.role.replace(/_/g, ' ')]),
+            el('a', { href: source.url, target: '_blank', rel: 'noreferrer' }, [
+              source.label,
+              ' ↗',
+            ]),
+          ]),
+        ),
+      ),
+    ]),
+  );
+
+  if (candidate.open_questions?.length) {
+    body.push(
+      el('div', { class: 'candidate-questions' }, [
+        el('h4', {}, ['What review must settle']),
+        el(
+          'ol',
+          {},
+          candidate.open_questions.map((question) => el('li', {}, [question])),
+        ),
+      ]),
+    );
+  }
+
+  body.push(
+    el('div', { class: 'candidate-decision' }, [
+      el('p', {}, [
+        el('strong', {}, [`Current decision: ${candidate.adjudication.decision}. `]),
+        candidate.adjudication.rationale,
+      ]),
+      el('div', { class: 'candidate-actions' }, [
+        copyCandidateButton(candidate),
+        el(
+          'a',
+          {
+            href: `${REPOSITORY}/issues/7`,
+            target: '_blank',
+            rel: 'noreferrer',
+          },
+          ['Review in issue #7 ↗'],
+        ),
+      ]),
+    ]),
+  );
+
+  return el('details', {
+    class: 'candidate-card',
+    id: `candidate-${candidate.id}`,
+    ...(selected ? { open: '' } : {}),
+  }, [
+    el('summary', {}, [
+      el('span', { class: 'candidate-index' }, [candidate.id]),
+      el('span', { class: 'candidate-title' }, [
+        candidate.concepts.a.label,
+        el('span', { 'aria-hidden': 'true' }, [' × ']),
+        candidate.concepts.c.label,
+      ]),
+      el('span', { class: `candidate-state candidate-state-${candidate.status}` }, [
+        candidate.status,
+      ]),
+    ]),
+    el('div', { class: 'candidate-body' }, body),
+  ]);
+}
+
+function statusButton(
+  status: CandidateStatus,
+  count: number,
+  active: boolean,
+): HTMLButtonElement {
+  return el(
+    'button',
+    {
+      type: 'button',
+      class: 'candidate-filter',
+      'data-status': status,
+      'aria-pressed': String(active),
+    },
+    [`${status} · ${formatNumber(count)}`],
+  ) as HTMLButtonElement;
+}
+
+function renderCandidateDesk(status: ProjectStatus): HTMLElement {
+  const selectedId = new URLSearchParams(window.location.search).get('candidate');
+  const selected = status.candidate_intake.entries.find((entry) => entry.id === selectedId);
+  let activeStatus: CandidateStatus = selected?.status ?? 'proposed';
+  const search = el('input', {
+    type: 'search',
+    class: 'candidate-search',
+    placeholder: 'Search concepts, bridges, IDs, or open questions…',
+    'aria-label': 'Search benchmark intake candidates',
+  }) as HTMLInputElement;
+  const filters = (['proposed', 'accepted', 'rejected'] as const).map((candidateStatus) =>
+    statusButton(
+      candidateStatus,
+      status.candidate_intake.counts[candidateStatus],
+      candidateStatus === activeStatus,
+    ),
+  );
+  const resultCount = el('p', { class: 'candidate-result-count', 'aria-live': 'polite' });
+  const list = el('div', { class: 'candidate-list' });
+  const empty = el('p', { class: 'candidate-empty', hidden: '' }, [
+    'No intake record matches this search.',
+  ]);
+
+  function update(): void {
+    const terms = search.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    const matching = status.candidate_intake.entries
+      .filter((candidate) => candidate.status === activeStatus)
+      .filter((candidate) => {
+        const haystack = [
+          candidate.id,
+          candidate.concepts.a.label,
+          candidate.concepts.c.label,
+          candidate.bridge?.label ?? '',
+          ...(candidate.open_questions ?? []),
+        ]
+          .join(' ')
+          .toLowerCase();
+        return terms.every((term) => haystack.includes(term));
+      })
+      .sort((a, b) => {
+        if (a.id === selectedId) return -1;
+        if (b.id === selectedId) return 1;
+        return a.id.localeCompare(b.id);
+      });
+    list.replaceChildren(
+      ...matching.map((candidate) => candidateCard(candidate, candidate.id === selectedId)),
+    );
+    resultCount.textContent =
+      `${formatNumber(matching.length)} ${activeStatus} intake record` +
+      `${matching.length === 1 ? '' : 's'}`;
+    empty.hidden = matching.length > 0;
+  }
+
+  search.addEventListener('input', update);
+  for (const button of filters) {
+    button.addEventListener('click', () => {
+      activeStatus = button.dataset.status as CandidateStatus;
+      for (const peer of filters) {
+        peer.setAttribute('aria-pressed', String(peer === button));
+      }
+      update();
+    });
+  }
+
+  const node = el('section', { class: 'candidate-desk', id: 'review-desk' }, [
+    el('div', { class: 'candidate-desk-heading' }, [
+      el('div', {}, [
+        el('div', { class: 'section-kicker' }, ['METRIC-BLIND REVIEW DESK']),
+        el('h3', {}, ['Open the candidate ledger.']),
+        el('p', {}, [
+          status.candidate_intake.purpose,
+        ]),
+      ]),
+      el('div', { class: 'chips' }, [
+        provenanceChip('curated'),
+        el('span', { class: 'chip chip-candidate-proposed' }, [
+          'proposals count as 0',
+        ]),
+      ]),
+    ]),
+    el('div', { class: 'candidate-controls' }, [
+      search,
+      el('div', { class: 'candidate-filters', role: 'group', 'aria-label': 'Candidate status' }, filters),
+    ]),
+    resultCount,
+    list,
+    empty,
+  ]);
+  update();
+  return node;
 }
 
 export function renderContributionMissions(status: ProjectStatus): HTMLElement {
@@ -117,5 +400,6 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
         ]),
       ),
     ]),
+    renderCandidateDesk(status),
   ]);
 }

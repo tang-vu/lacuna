@@ -145,3 +145,17 @@ def test_evidence_lab_keeps_failure_before_interaction_and_exports_provenance():
     assert "'observed_kind'" in view_source
     assert "'verification_query'" in view_source
     assert "gap.row_source_urls" in view_source
+
+
+def test_candidate_review_desk_keeps_proposals_curated_and_out_of_readiness():
+    view_source = (ROOT / "web" / "src" / "views" / "contribute.ts").read_text(
+        encoding="utf-8"
+    )
+
+    assert "METRIC-BLIND REVIEW DESK" in view_source
+    assert "provenanceChip('curated')" in view_source
+    assert "proposed · 0 readiness" in view_source
+    assert "proposals count as 0" in view_source
+    assert "candidate.mapping_audit.limitation" in view_source
+    assert "candidate.open_questions" in view_source
+    assert "candidate.evidence.map" in view_source
