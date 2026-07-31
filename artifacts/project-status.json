@@ -1,10 +1,15 @@
 {
- "schema_version": 2,
+ "schema_version": 3,
  "status": "not_ready",
  "inputs": {
   "historical_sources": {
    "path": "benchmarks/v3/sources.json",
-   "sha256": "c1206d5e1e504bd5e8e80ff9a993fad63e2b952bd23b055debf169c4de8858d4",
+   "sha256": "9ebbfe1d788c2f564a2e448202205df6805cb78fc5177350be4035ea6ffa4be3",
+   "canonicalisation": "canonical-json-v1"
+  },
+  "historical_inventories": {
+   "path": "benchmarks/v3/inventories.json",
+   "sha256": "5c9938355b7cebdcea7e2868da87deb09ba107a44649c0e5cef5bceb79f11416",
    "canonicalisation": "canonical-json-v1"
   },
   "candidate_intake": {
@@ -26,6 +31,22 @@
    2012,
    2013
   ],
+  "inventory_metadata": {
+   "available": 4,
+   "required": 4,
+   "years": [
+    2007,
+    2011,
+    2012,
+    2013
+   ],
+   "scope": "official inventory metadata only"
+  },
+  "raw_record_releases": {
+   "pinned": 0,
+   "required": 4,
+   "years": []
+  },
   "statuses": {
    "current_records": "available_unsuitable",
    "historical_records": "unavailable",

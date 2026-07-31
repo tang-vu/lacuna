@@ -12,11 +12,22 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 2
+    assert status["schema_version"] == 3
     assert status["status"] == "not_ready"
     assert status["historical_sources"] == {
         "ready": False,
         "required_years": [2007, 2011, 2012, 2013],
+        "inventory_metadata": {
+            "available": 4,
+            "required": 4,
+            "years": [2007, 2011, 2012, 2013],
+            "scope": "official inventory metadata only",
+        },
+        "raw_record_releases": {
+            "pinned": 0,
+            "required": 4,
+            "years": [],
+        },
         "statuses": {
             "current_records": "available_unsuitable",
             "historical_records": "unavailable",
@@ -89,6 +100,7 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
     assert verify_project_status() == committed
     assert set(committed["inputs"]) == {
         "historical_sources",
+        "historical_inventories",
         "candidate_intake",
         "benchmark",
     }

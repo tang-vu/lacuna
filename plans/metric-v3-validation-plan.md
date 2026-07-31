@@ -26,6 +26,9 @@ resolved when checked on 2026-07-29, and the surviving reference URL redirected 
 HTML wrapper rather than raw baseline data. Public production-year MeSH files remain reachable;
 the required 2007, 2011, 2012, and 2013 descriptor archives were parsed and pinned by SHA-256 on
 2026-07-29 in `benchmarks/v3/sources.json`.
+On 2026-07-31, official NLM file inventories were also recovered for all four releases and pinned
+in `benchmarks/v3/inventories.json`. Those pages establish completeness totals but expose neither
+the raw citation XML nor per-file checksums, so the historical-record gate remains unavailable.
 This has four consequences:
 
 - no pre-2002 experiment may be called period-appropriate unless a separate contemporaneous

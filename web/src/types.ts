@@ -147,6 +147,17 @@ export interface ProjectStatus {
   historical_sources: {
     ready: boolean;
     required_years: number[];
+    inventory_metadata: {
+      available: number;
+      required: number;
+      years: number[];
+      scope: 'official inventory metadata only';
+    };
+    raw_record_releases: {
+      pinned: number;
+      required: number;
+      years: number[];
+    };
     statuses: Record<string, string>;
     readiness_blockers: string[];
   };

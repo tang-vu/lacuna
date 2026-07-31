@@ -13,6 +13,8 @@ than disappearing behind later versions.
   scored-pair count, and pinned artifact version without recasting measurements as findings.
 - A metric-blind benchmark review desk exposing all 14 contract-validated intake records, evidence
   links, mapping limitations, open questions, status filters, search, and candidate deep links.
+- A fingerprinted four-release NLM inventory contract and live drift probe for the 2007, 2011,
+  2012, and 2013 MEDLINE completeness targets.
 
 ### Changed
 
@@ -22,6 +24,8 @@ than disappearing behind later versions.
   evidence lab does and that its rows are not candidate discoveries.
 - Advanced `project-status.json` to schema 2 so the contributor UI reads candidate records from the
   same validated, fingerprinted ledger as CI instead of maintaining a second presentation copy.
+- Advanced `project-status.json` to schema 3 so the source-recovery mission distinguishes 4/4
+  official inventories from 0/4 pinned raw citation releases.
 
 ## [0.1.0] — 2026-07-31
 

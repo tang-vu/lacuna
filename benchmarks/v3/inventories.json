@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "observed_on": "2026-07-31",
+  "evidence_scope": "official_inventory_metadata_only",
+  "note": "These NLM pages establish release completeness targets. They do not provide the historical citation XML or file checksums and therefore do not satisfy the historical-record source gate.",
+  "releases": [
+    {
+      "release_year": 2007,
+      "publication_cutoff_year": 2006,
+      "inventory_url": "https://www.nlm.nih.gov/archive/20090811/bsd/licensee/2007_stats/baseline_med_filecount.html",
+      "file_count": 538,
+      "first_filename": "medline07n0001.xml",
+      "last_filename": "medline07n0538.xml",
+      "default_records_per_file": 30000,
+      "last_file_record_count": 10074,
+      "total_record_count": 16120074,
+      "total_uncompressed_bytes": 60983640309,
+      "total_compressed_bytes": 7805729432
+    },
+    {
+      "release_year": 2011,
+      "publication_cutoff_year": 2010,
+      "inventory_url": "https://www.nlm.nih.gov/archive/20120410/bsd/licensee/2011_stats/baseline_med_filecount.html",
+      "file_count": 653,
+      "first_filename": "medline11n0001.xml",
+      "last_filename": "medline11n0653.xml",
+      "default_records_per_file": 30000,
+      "last_file_record_count": 9568,
+      "total_record_count": 19569568,
+      "total_uncompressed_bytes": 83435347372,
+      "total_compressed_bytes": 11079780708
+    },
+    {
+      "release_year": 2012,
+      "publication_cutoff_year": 2011,
+      "inventory_url": "https://www.nlm.nih.gov/bsd/licensee/2012_stats/baseline_med_filecount.html",
+      "file_count": 684,
+      "first_filename": "medline12n0001.xml",
+      "last_filename": "medline12n0684.xml",
+      "default_records_per_file": 30000,
+      "last_file_record_count": 4848,
+      "total_record_count": 20494848,
+      "total_uncompressed_bytes": 88623013415,
+      "total_compressed_bytes": 11883998478
+    },
+    {
+      "release_year": 2013,
+      "publication_cutoff_year": 2012,
+      "inventory_url": "https://www.nlm.nih.gov/bsd/licensee/2013_stats/baseline_med_filecount.html",
+      "file_count": 717,
+      "first_filename": "medline13n0001.xml",
+      "last_filename": "medline13n0717.xml",
+      "default_records_per_file": 30000,
+      "last_file_record_count": 28439,
+      "total_record_count": 21508439,
+      "total_uncompressed_bytes": 94189245558,
+      "total_compressed_bytes": 12749024577
+    }
+  ]
+}

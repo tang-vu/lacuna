@@ -216,10 +216,16 @@ proposed records and labels each one as contributing zero to readiness; accepted
 records remain visible as the audit trail. Deep links let reviewers discuss one stable candidate
 identity in issue #7 without duplicating the source data.
 The historical-input gate is also red: NLM's legacy MBR download endpoint no longer resolves. The
-required 2007/2011/2012/2013 MeSH descriptor archives are public and now pinned by SHA-256, but that
-vocabulary does not replace the missing citation records. `benchmarks/v3/sources.json` records the
-dated observation; `python -m pipeline.benchmark.validate_sources --require-ready` must keep
-failing until the matching historical records also have stable URLs and checksums. The streaming
+official NLM file inventories are now recovered for all four required releases—archived snapshots
+for 2007 and 2011, plus the live 2012 and 2013 pages—and pinned in
+[`benchmarks/v3/inventories.json`](benchmarks/v3/inventories.json). Run
+`python -m pipeline.benchmark.source_inventories --probe --require-match` to fetch every page, sum
+every file-size row, and fail on drift. This is completeness metadata only: it establishes targets
+of 538, 653, 684, and 717 files, but supplies neither the raw XML nor per-file checksums. The
+required MeSH descriptor archives are separately pinned by SHA-256, and that vocabulary also does
+not replace the missing citation records. `benchmarks/v3/sources.json` records the dated
+observation; `python -m pipeline.benchmark.validate_sources --require-ready` must keep failing until
+the matching historical records have stable URLs and checksums. The streaming
 baseline reader and targeted pair/ABC accumulator are implemented and fixture-tested, but their
 production entry point is deliberately closed: it accepts a baseline only when every local file
 matches the complete pinned release by filename, byte count, and SHA-256. Release-manifest

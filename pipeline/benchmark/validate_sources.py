@@ -23,6 +23,10 @@ from pipeline.benchmark.source_manifests import (
     ReleaseManifestError,
     load_release_manifest,
 )
+from pipeline.benchmark.source_inventories import (
+    InventoryContractError,
+    load_inventory_contract,
+)
 from pipeline.paths import REPO_ROOT
 
 SOURCES_PATH = REPO_ROOT / "benchmarks" / "v3" / "sources.json"
@@ -39,6 +43,8 @@ class SourceContractError(ValueError):
 class SourceAudit:
     statuses: dict[str, str]
     required_years: tuple[int, ...]
+    inventory_years: tuple[int, ...]
+    pinned_record_years: tuple[int, ...]
     readiness_blockers: tuple[str, ...]
 
     @property
@@ -83,6 +89,9 @@ def audit_sources(path: Path = SOURCES_PATH) -> SourceAudit:
     seen_kinds: set[str] = set()
     statuses: dict[str, str] = {}
     required_kinds: set[str] = set()
+    inventory_years: set[int] = set()
+    pinned_record_years: set[int] = set()
+    inventories_by_year = {}
 
     for source in sources:
         _require(isinstance(source, dict), "every source must be an object")
@@ -113,6 +122,24 @@ def audit_sources(path: Path = SOURCES_PATH) -> SourceAudit:
 
         if source["required_for_shipping"]:
             required_kinds.add(kind)
+        if kind == "historical_records":
+            inventory_reference = source.get("inventory_contract")
+            _require(
+                isinstance(inventory_reference, dict),
+                f"{source_id}: missing inventory contract",
+            )
+            try:
+                inventory = load_inventory_contract(
+                    path,
+                    inventory_reference,
+                    set(required_years),
+                )
+            except InventoryContractError as exc:
+                raise SourceContractError(f"{source_id}: {exc}") from exc
+            inventory_years.update(item.release_year for item in inventory.releases)
+            inventories_by_year.update(
+                (item.release_year, item) for item in inventory.releases
+            )
         if status == "available_pinned":
             if kind == "historical_records":
                 manifests = source.get("manifests")
@@ -139,7 +166,29 @@ def audit_sources(path: Path = SOURCES_PATH) -> SourceAudit:
                         load_release_manifest(path, reference)
                     except ReleaseManifestError as exc:
                         raise SourceContractError(f"{source_id}: {exc}") from exc
+                    official_inventory = inventories_by_year[year]
+                    _require(
+                        reference.get("inventory_url")
+                        == official_inventory.inventory_url,
+                        f"{source_id}: {year} inventory URL differs from the pinned NLM contract",
+                    )
+                    _require(
+                        reference.get("inventory_file_count")
+                        == official_inventory.file_count,
+                        f"{source_id}: {year} file count differs from the pinned NLM contract",
+                    )
+                    _require(
+                        reference.get("inventory_total_bytes")
+                        == official_inventory.total_compressed_bytes,
+                        f"{source_id}: {year} byte total differs from the pinned NLM contract",
+                    )
+                    _require(
+                        reference.get("inventory_total_record_count")
+                        == official_inventory.total_record_count,
+                        f"{source_id}: {year} record total differs from the pinned NLM contract",
+                    )
                     manifest_years.add(year)
+                    pinned_record_years.add(year)
                 _require(
                     manifest_years == set(required_years),
                     f"{source_id}: manifests must cover every required year",
@@ -196,6 +245,8 @@ def audit_sources(path: Path = SOURCES_PATH) -> SourceAudit:
     return SourceAudit(
         statuses=statuses,
         required_years=tuple(sorted(required_years)),
+        inventory_years=tuple(sorted(inventory_years)),
+        pinned_record_years=tuple(sorted(pinned_record_years)),
         readiness_blockers=tuple(blockers),
     )
 
@@ -208,6 +259,14 @@ def main() -> None:
     audit = audit_sources()
     print("v3 historical source contract: structurally valid")
     print("required years: " + ", ".join(str(year) for year in audit.required_years))
+    print(
+        "official inventories: "
+        f"{len(audit.inventory_years)}/{len(audit.required_years)} metadata targets pinned"
+    )
+    print(
+        "raw record releases: "
+        f"{len(audit.pinned_record_years)}/{len(audit.required_years)} pinned"
+    )
     for kind in sorted(audit.statuses):
         print(f"{kind}: {audit.statuses[kind]}")
     if audit.ready:

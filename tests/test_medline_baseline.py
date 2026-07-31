@@ -3,6 +3,7 @@ from __future__ import annotations
 import gzip
 import hashlib
 import json
+import shutil
 
 import pytest
 
@@ -16,10 +17,47 @@ from pipeline.benchmark.medline_baseline import (
 )
 from pipeline.benchmark.validate_sources import SOURCES_PATH
 
+INVENTORIES_PATH = SOURCES_PATH.parent / "inventories.json"
+
 A = "D000001"
 B = "D000002"
 C = "D000003"
 SECOND_BRIDGE = "D000004"
+
+
+def _write_sources(tmp_path, payload):
+    records = next(
+        source for source in payload["sources"] if source["kind"] == "historical_records"
+    )
+    inventory_payload = json.loads(INVENTORIES_PATH.read_text(encoding="utf-8"))
+    references = {item["year"]: item for item in records["manifests"]}
+    for release in inventory_payload["releases"]:
+        reference = references[release["release_year"]]
+        file_count = reference["file_count"]
+        total_records = reference["total_record_count"]
+        default_records = total_records // file_count
+        last_records = total_records - default_records * (file_count - 1)
+        release.update(
+            file_count=file_count,
+            first_filename=f"medline{str(release['release_year'])[-2:]}n0001.xml",
+            last_filename=(
+                f"medline{str(release['release_year'])[-2:]}n{file_count:04d}.xml"
+            ),
+            default_records_per_file=default_records,
+            last_file_record_count=last_records,
+            total_record_count=total_records,
+            total_uncompressed_bytes=reference["total_bytes"] + 1,
+            total_compressed_bytes=reference["total_bytes"],
+        )
+        reference["inventory_url"] = release["inventory_url"]
+    inventory_path = tmp_path / "inventories.json"
+    inventory_path.write_text(json.dumps(inventory_payload), encoding="utf-8")
+    records["inventory_contract"]["sha256"] = hashlib.sha256(
+        inventory_path.read_bytes()
+    ).hexdigest()
+    path = tmp_path / "sources.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    return path
 
 
 def _write_release_manifest(tmp_path, year, files):
@@ -186,8 +224,7 @@ def test_production_source_gate_accepts_only_explicit_pinned_status(tmp_path):
         _write_release_manifest(tmp_path, year, [_dummy_release_file(year)])
         for year in payload["required_baseline_years"]
     ]
-    path = tmp_path / "sources.json"
-    path.write_text(json.dumps(payload), encoding="utf-8")
+    path = _write_sources(tmp_path, payload)
 
     require_pinned_historical_records(path)
 
@@ -214,8 +251,7 @@ def test_pinned_release_requires_and_labels_an_exact_complete_file_set(tmp_path)
                 }
             ]
         records["manifests"].append(_write_release_manifest(tmp_path, year, files))
-    source_path = tmp_path / "sources.json"
-    source_path.write_text(json.dumps(payload), encoding="utf-8")
+    source_path = _write_sources(tmp_path, payload)
 
     evidence = measure_pinned_release(
         [fixture],
@@ -256,6 +292,18 @@ def test_pinned_release_requires_and_labels_an_exact_complete_file_set(tmp_path)
     reference["sha256"] = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
     reference["total_record_count"] = 7
     reference["inventory_total_record_count"] = 7
+    inventory_path = tmp_path / "inventories.json"
+    inventory_payload = json.loads(inventory_path.read_text(encoding="utf-8"))
+    inventory_2011 = next(
+        item for item in inventory_payload["releases"] if item["release_year"] == 2011
+    )
+    inventory_2011["default_records_per_file"] = 7
+    inventory_2011["last_file_record_count"] = 7
+    inventory_2011["total_record_count"] = 7
+    inventory_path.write_text(json.dumps(inventory_payload), encoding="utf-8")
+    records["inventory_contract"]["sha256"] = hashlib.sha256(
+        inventory_path.read_bytes()
+    ).hexdigest()
     source_path.write_text(json.dumps(payload), encoding="utf-8")
     with pytest.raises(HistoricalRecordsNotReady, match="record count"):
         measure_pinned_release(

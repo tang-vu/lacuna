@@ -13,6 +13,7 @@ import json
 from pathlib import Path
 
 from pipeline.benchmark.validate_candidates import CANDIDATES_PATH, audit_candidates
+from pipeline.benchmark.source_inventories import INVENTORIES_PATH
 from pipeline.benchmark.validate_sources import SOURCES_PATH, audit_sources
 from pipeline.benchmark.validate_v3 import (
     BENCHMARK_PATH,
@@ -42,16 +43,28 @@ def build_project_status() -> dict:
     candidate_payload = json.loads(CANDIDATES_PATH.read_text(encoding="utf-8"))
 
     return {
-        "schema_version": 2,
+        "schema_version": 3,
         "status": "ready" if ready else "not_ready",
         "inputs": {
             "historical_sources": _input_identity(SOURCES_PATH),
+            "historical_inventories": _input_identity(INVENTORIES_PATH),
             "candidate_intake": _input_identity(CANDIDATES_PATH),
             "benchmark": _input_identity(BENCHMARK_PATH),
         },
         "historical_sources": {
             "ready": sources.ready,
             "required_years": list(sources.required_years),
+            "inventory_metadata": {
+                "available": len(sources.inventory_years),
+                "required": len(sources.required_years),
+                "years": list(sources.inventory_years),
+                "scope": "official inventory metadata only",
+            },
+            "raw_record_releases": {
+                "pinned": len(sources.pinned_record_years),
+                "required": len(sources.required_years),
+                "years": list(sources.pinned_record_years),
+            },
             "statuses": dict(sorted(sources.statuses.items())),
             "readiness_blockers": list(sources.readiness_blockers),
         },

@@ -1,7 +1,8 @@
 # NLM historical MEDLINE baseline access request
 
 **Status:** prepared, not sent  
-**Prepared:** 2026-07-29  
+**Prepared:** 2026-07-31
+
 **Owner action required:** add contact details and submit through the
 [NLM Support Center](https://support.nlm.nih.gov/).
 
@@ -14,17 +15,18 @@ the current PubMed record filtered by publication year.
 
 NLM documents static annual MEDLINE/PubMed baselines from 2002 onward. The original launch notice
 also says raw FTP and query access were controlled for registered licensees. As checked on
-2026-07-29:
+2026-07-31:
 
-- `mbr.nlm.nih.gov` and the HTTPS form of the former hidden `.medleasebaseline` FTP path returned
-  404;
+- the legacy access paths did not yield records: `mbr.nlm.nih.gov` did not resolve and the HTTPS
+  form of the former hidden `.medleasebaseline` FTP path returned 404;
 - NLM's annual-baseline documentation establishes that release year `R` incorporates the preceding
   production year's updates and uses MeSH `R`, so the publication cutoffs require releases 2007,
   2011, 2012, and 2013 rather than same-numbered releases;
-- the archived distribution-document index still lists those annual distributions;
-- the linked 2007 inventory page returned 404 and the 2011 page was not reliably retrievable;
-- the live 2012 and 2013 inventories expose file and record counts, but no raw download URL or file
-  checksums;
+- the archive index's old 2007 and 2011 links return 404, but both pages remain available under
+  NLM's own dated `/archive/` snapshots;
+- official inventories are now pinned for all four releases and reconcile to 538, 653, 684, and
+  717 files respectively, including record and compressed/uncompressed byte totals;
+- none of those inventory pages exposes raw download URLs or file checksums;
 - the separate BioNLP persistent-abstract service describes title/abstract snapshots, not the
   historical MeSH assignments needed here.
 
@@ -43,8 +45,9 @@ MEDLINE/PubMed baseline XML distributions for 2007, 2011, 2012, and 2013, includ
 assignments present in each release.
 
 The former MEDLINE Baseline Repository and hidden FTP paths no longer resolve for us. NLM's archive
-of licensee documentation still identifies the annual distributions, and the 2012 and 2013 file
-inventories are still visible, but we could not find stable raw-file URLs or checksums.
+of licensee documentation still identifies the annual distributions, and we recovered official
+inventory pages for all four required releases, but we could not find stable raw-file URLs or
+checksums.
 
 Could you please confirm:
 
@@ -72,6 +75,8 @@ Thank you,
 
 - [NLM 2005 MBR launch notice](https://www.nlm.nih.gov/pubs/techbull/nd05/nd05_technote_mbr.html)
 - [NLM historical distribution documentation index](https://www.nlm.nih.gov/bsd/licensee/archive_doc.html)
+- [NLM archived 2007 baseline file inventory](https://www.nlm.nih.gov/archive/20090811/bsd/licensee/2007_stats/baseline_med_filecount.html)
+- [NLM archived 2011 baseline file inventory](https://www.nlm.nih.gov/archive/20120410/bsd/licensee/2011_stats/baseline_med_filecount.html)
 - [NLM annual baseline overview](https://www.nlm.nih.gov/bsd/licensee/baseline.html)
 - [NLM 2012 baseline file inventory](https://www.nlm.nih.gov/bsd/licensee/2012_stats/baseline_med_filecount.html)
 - [NLM 2013 baseline file inventory](https://www.nlm.nih.gov/bsd/licensee/2013_stats/baseline_med_filecount.html)
