@@ -6,6 +6,7 @@ import hashlib
 import json
 
 import pytest
+import requests
 
 from pipeline.benchmark.mbr_capture import (
     CAPTURE_PATH,
@@ -13,6 +14,7 @@ from pipeline.benchmark.mbr_capture import (
     _parse_warc_record,
     load_capture_contract,
     parse_capture_html,
+    probe_capture,
 )
 from pipeline.benchmark.source_inventories import load_inventory_contract
 from pipeline.benchmark.validate_sources import SOURCES_PATH
@@ -89,6 +91,87 @@ def _capture_with_digest(contract, digest):
         raw_payload_status=contract.raw_payload_status,
         limitation=contract.limitation,
     )
+
+
+class _Response:
+    def __init__(self, content=b"", error=None):
+        self.content = content
+        self.text = content.decode("utf-8", errors="replace")
+        self.error = error
+
+    def raise_for_status(self):
+        if self.error is not None:
+            raise self.error
+
+
+def _replay_fixture(capture):
+    rows = "".join(
+        "<tr><td><a href='{directory}'>{year}</a></td><td>{release_date}</td>"
+        "<td>{files}</td><td>{records:,}</td></tr>".format(
+            directory=item.directory_path,
+            year=item.release_year,
+            release_date=item.release_date_text,
+            files=item.file_count,
+            records=item.total_record_count,
+        )
+        for item in capture.releases
+    )
+    body = f"<html><table>{rows}</table></html>".encode()
+    digest = base64.b32encode(hashlib.sha1(body).digest()).decode("ascii").rstrip("=")
+    http_record = b"HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n" + body
+    record = (
+        f"WARC/1.0\r\nWARC-Target-URI: {capture.capture['url']}\r\n"
+        f"Content-Length: {len(http_record)}\r\n\r\n"
+    ).encode("ascii") + http_record
+    compressed = gzip.compress(record)
+    mutable = type(capture)(
+        path=capture.path,
+        sha256=capture.sha256,
+        observed_on=capture.observed_on,
+        capture={**capture.capture, "digest": digest, "length": len(compressed)},
+        releases=capture.releases,
+        raw_payload_status=capture.raw_payload_status,
+        limitation=capture.limitation,
+    )
+    return mutable, compressed
+
+
+def test_probe_replays_warc_when_index_api_is_unreachable():
+    capture, _ = _contracts()
+    mutable, compressed = _replay_fixture(capture)
+    calls = []
+
+    def fetch(url, **_kwargs):
+        calls.append(url)
+        if url == mutable.capture["index_api"]:
+            raise requests.ConnectionError("index unavailable")
+        return _Response(compressed)
+
+    result = probe_capture(mutable, fetch=fetch)
+
+    assert result.index_status == "unreachable"
+    assert result.index_detail == "ConnectionError"
+    assert result.warc_status == "match"
+    assert not result.fully_matched
+    assert len(calls) == 2
+
+
+def test_probe_reports_warc_content_drift_separately_from_matching_index():
+    capture, _ = _contracts()
+    mutable, compressed = _replay_fixture(capture)
+    fields = ("timestamp", "url", "status", "mime", "digest", "length", "offset", "filename")
+    index_record = {field: mutable.capture[field] for field in fields}
+
+    def fetch(url, **_kwargs):
+        if url == mutable.capture["index_api"]:
+            return _Response((json.dumps(index_record) + "\n").encode())
+        return _Response(b"not-gzip" + compressed[8:])
+
+    result = probe_capture(mutable, fetch=fetch)
+
+    assert result.index_status == "match"
+    assert result.warc_status == "drift"
+    assert not result.fully_matched
 
 
 def test_capture_checksum_and_metadata_scope_are_load_bearing(tmp_path):

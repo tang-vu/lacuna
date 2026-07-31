@@ -60,6 +60,18 @@ class MbrCaptureContract:
     limitation: str
 
 
+@dataclass(frozen=True)
+class CaptureProbeResult:
+    index_status: str
+    warc_status: str
+    index_detail: str | None = None
+    warc_detail: str | None = None
+
+    @property
+    def fully_matched(self) -> bool:
+        return self.index_status == "match" and self.warc_status == "match"
+
+
 class _CaptureTableParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
@@ -276,18 +288,21 @@ def _parse_warc_record(compressed: bytes, contract: MbrCaptureContract) -> str:
         raise MbrCaptureError("preserved MBR homepage is not UTF-8") from exc
 
 
-def probe_capture(
+def _probe_index(
     contract: MbrCaptureContract,
-    fetch: Callable[..., requests.Response] = requests.get,
-    timeout: float = 30.0,
+    fetch: Callable[..., requests.Response],
+    timeout: float,
 ) -> None:
-    """Replay the exact Common Crawl range and compare its HTML with the contract."""
+    """Check that the Common Crawl index still returns the pinned capture."""
     headers = {"User-Agent": USER_AGENT}
     index_response = fetch(contract.capture["index_api"], headers=headers, timeout=timeout)
     index_response.raise_for_status()
     if len(index_response.content) > 1_000_000:
         raise MbrCaptureError("Common Crawl index response is unexpectedly large")
-    records = [json.loads(line) for line in index_response.text.splitlines() if line.strip()]
+    try:
+        records = [json.loads(line) for line in index_response.text.splitlines() if line.strip()]
+    except json.JSONDecodeError as exc:
+        raise MbrCaptureError("Common Crawl index response is not JSON Lines") from exc
     expected_fields = ("timestamp", "url", "status", "mime", "digest", "length", "offset", "filename")
     if not any(
         all(str(record.get(field)) == str(contract.capture[field]) for field in expected_fields)
@@ -295,6 +310,14 @@ def probe_capture(
     ):
         raise MbrCaptureError("Common Crawl index no longer returns the pinned MBR capture")
 
+
+def _probe_warc(
+    contract: MbrCaptureContract,
+    fetch: Callable[..., requests.Response],
+    timeout: float,
+) -> None:
+    """Replay the exact WARC range without depending on index API availability."""
+    headers = {"User-Agent": USER_AGENT}
     start = contract.capture["offset"]
     end = start + contract.capture["length"] - 1
     data_url = f"https://data.commoncrawl.org/{contract.capture['filename']}"
@@ -308,6 +331,41 @@ def probe_capture(
         raise MbrCaptureError("Common Crawl returned the wrong WARC range length")
     html = _parse_warc_record(range_response.content, contract)
     parse_capture_html(html, contract.releases)
+
+
+def _component_result(check: Callable[[], None]) -> tuple[str, str | None]:
+    try:
+        check()
+    except requests.RequestException as exc:
+        return "unreachable", type(exc).__name__
+    except MbrCaptureError as exc:
+        return "drift", str(exc)
+    return "match", None
+
+
+def probe_capture(
+    contract: MbrCaptureContract,
+    fetch: Callable[..., requests.Response] = requests.get,
+    timeout: float = 30.0,
+) -> CaptureProbeResult:
+    """Audit the index and WARC independently so one outage does not hide the other result."""
+    index_status, index_detail = _component_result(
+        lambda: _probe_index(contract, fetch, timeout)
+    )
+    warc_status, warc_detail = _component_result(
+        lambda: _probe_warc(contract, fetch, timeout)
+    )
+    return CaptureProbeResult(
+        index_status=index_status,
+        warc_status=warc_status,
+        index_detail=index_detail,
+        warc_detail=warc_detail,
+    )
+
+
+def _format_component(label: str, status: str, detail: str | None) -> str:
+    suffix = f" ({detail})" if detail else ""
+    return f"{label}: {status}{suffix}"
 
 
 def main() -> None:
@@ -340,23 +398,22 @@ def main() -> None:
         print(f"repository directory metadata: {len(contract.releases)} releases")
         print("raw historical records: not established by this command")
         return
-    try:
-        probe_capture(contract)
-    except requests.RequestException as exc:
-        print(f"MBR preservation capture: unreachable ({type(exc).__name__})")
-        print("raw historical records: not established by this probe")
-        if args.require_match:
-            raise SystemExit(2) from exc
-        return
-    except MbrCaptureError as exc:
-        print(f"MBR preservation capture: drift ({exc})")
-        print("raw historical records: not established by this probe")
-        if args.require_match:
-            raise SystemExit(2) from exc
-        return
-    print("MBR preservation capture: match")
-    print(f"repository directory metadata: {len(contract.releases)} releases")
+    result = probe_capture(contract)
+    print(
+        _format_component(
+            "Common Crawl index record", result.index_status, result.index_detail
+        )
+    )
+    print(
+        _format_component(
+            "Common Crawl WARC payload", result.warc_status, result.warc_detail
+        )
+    )
+    if result.warc_status == "match":
+        print(f"repository directory metadata: {len(contract.releases)} releases")
     print("raw historical records: not established by this probe")
+    if args.require_match and not result.fully_matched:
+        raise SystemExit(2)
 
 
 if __name__ == "__main__":

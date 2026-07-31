@@ -55,10 +55,12 @@ python -m pipeline.benchmark.mbr_capture
 python -m pipeline.benchmark.mbr_capture --probe --require-match
 ```
 
-The live probe fetches the exact WARC byte range, checks its SHA-1 payload digest, and parses the
-2007, 2011, 2012, and 2013 `Download/Baselines/{year}` rows against `inventories.json`. That capture
-contains directory metadata, not baseline XML; success leaves historical records at 0/4, while an
-unreachable archive is reported separately from content drift.
+The live probe checks the index record and independently fetches the exact WARC byte range, checks
+its SHA-1 payload digest, and parses the 2007, 2011, 2012, and 2013
+`Download/Baselines/{year}` rows against `inventories.json`. An index outage therefore does not hide
+a valid payload replay, although `--require-match` still requires both checks. That capture contains
+directory metadata, not baseline XML; success leaves historical records at 0/4, while unreachable
+dependencies are reported separately from content drift.
 
 The archived-baseline reader is implemented and fixture-tested:
 

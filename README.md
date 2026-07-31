@@ -234,10 +234,12 @@ of 538, 653, 684, and 717 files, but supplies neither the raw XML nor per-file c
 retired MBR homepage itself is now preserved as a digest-addressed Common Crawl WARC range in
 [`benchmarks/v3/mbr-capture.json`](benchmarks/v3/mbr-capture.json). It independently confirms the
 historical `Download/Baselines/{year}` directory rows and the same release totals. Run
-`python -m pipeline.benchmark.mbr_capture --probe --require-match` to replay the exact compressed
-record, verify its payload digest, and parse those rows. This is repository metadata only: no
-required XML payload was recovered, and an unreachable preservation service is reported as
-reachability failure rather than data drift.
+`python -m pipeline.benchmark.mbr_capture --probe --require-match` to check the index record and
+independently replay the exact compressed WARC range, verify its payload digest, and parse those
+rows. A transient index outage no longer prevents the pinned WARC from being audited, but the
+strict command still exits non-zero unless both components match. This is repository metadata
+only: no required XML payload was recovered, and an unreachable preservation service is reported
+as reachability failure rather than data drift.
 The required MeSH descriptor archives are separately pinned by SHA-256, and that vocabulary also does
 not replace the missing citation records. `benchmarks/v3/sources.json` records the dated
 observation; `python -m pipeline.benchmark.validate_sources --require-ready` must keep failing until

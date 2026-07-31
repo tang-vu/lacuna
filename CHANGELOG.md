@@ -19,6 +19,8 @@ than disappearing behind later versions.
   proposals, split evenly between development and held-out review while contributing zero readiness.
 - A digest-addressed Common Crawl WARC contract and replay probe for the retired MBR homepage,
   preserving all four required repository directory rows without treating metadata as raw records.
+- Independent live checks for the Common Crawl index and pinned WARC byte range, so an index outage
+  no longer suppresses payload-integrity evidence.
 
 ### Changed
 

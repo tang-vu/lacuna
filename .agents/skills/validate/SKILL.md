@@ -35,8 +35,9 @@ description: Run lacuna's complete validation workflow and report metric drift, 
    python -m pipeline.benchmark.mbr_capture --probe --require-match
    ```
 
-   The MBR capture preserves repository directory metadata only. A successful replay contributes
-   zero raw record releases; an unreachable archive is a skipped live check, not evidence of drift.
+   The MBR capture preserves repository directory metadata only. Its index and exact WARC range are
+   probed independently, so report both statuses. A successful replay contributes zero raw record
+   releases; an unreachable dependency is a skipped live check, not evidence of drift.
 
    Both `--require-ready` commands are expected to fail while historical inputs are unavailable
    and the benchmark is a draft. Record their blockers and exit codes; never change a status merely
