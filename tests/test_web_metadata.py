@@ -131,3 +131,17 @@ def test_generated_contribution_surface_reads_the_validated_status_artifact():
     assert "issues/6" in view_source
     assert "issues/7" in view_source
     assert "milestone/1" in view_source
+
+
+def test_evidence_lab_keeps_failure_before_interaction_and_exports_provenance():
+    view_source = (ROOT / "web" / "src" / "views" / "computed.ts").read_text(
+        encoding="utf-8"
+    )
+
+    assert view_source.index("verdictBanner(computed)") < view_source.index(
+        "explorer(computed)"
+    )
+    assert "failed validation—not candidate discoveries" in view_source
+    assert "'observed_kind'" in view_source
+    assert "'verification_query'" in view_source
+    assert "gap.row_source_urls" in view_source

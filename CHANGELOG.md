@@ -3,6 +3,22 @@
 All notable public changes to lacuna are recorded here. Scientific failures remain visible rather
 than disappearing behind later versions.
 
+## [Unreleased]
+
+### Added
+
+- An interactive evidence lab for searching, filtering, sorting, deep-linking, auditing, and
+  exporting the 500 published outputs of the failed metric.
+- A data-backed observatory hero that exposes the current method count, validated-gap-pair count,
+  scored-pair count, and pinned artifact version without recasting measurements as findings.
+
+### Changed
+
+- Replaced the static computed-pair table with compact evidence cards that keep exact counts,
+  upper bounds, verification queries, source-row queries, and the failed verdict visually linked.
+- Expanded the non-JavaScript fallback so crawlers and constrained clients can see what the
+  evidence lab does and that its rows are not candidate discoveries.
+
 ## [0.1.0] — 2026-07-31
 
 First public release.

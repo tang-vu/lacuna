@@ -30,6 +30,22 @@ can find things nobody thought to write down. That is also why its failure is th
 
 ---
 
+## The evidence lab
+
+The [live map](https://lacuna.tangvu.dev/#computed) includes an interactive lab for auditing the
+failed metric rather than hiding its output:
+
+- search all 500 exported measurements by topic name or OpenAlex topic ID;
+- separate exact counts from API-derived upper bounds;
+- sort by original metric rank, observed/expected ratio, or structural closeness;
+- open the pair query and both source-row queries behind any measurement;
+- copy a deep link to one pair or export the current filtered view as CSV.
+
+The validation verdict renders before the controls and every card. Searchability does not promote
+these rows into candidate discoveries; it makes a negative result easier to inspect and falsify.
+
+---
+
 ## What the gap metric tries to do, in plain English
 
 In 1986 Don Swanson noticed that papers on fish oil described effects on blood — lower viscosity,
