@@ -1,8 +1,9 @@
 import { el, formatNumber, provenanceChip } from '../dom';
-import type { CandidateEntry, ProjectStatus } from '../types';
+import type { CandidateEntry, NegativeCandidate, ProjectStatus } from '../types';
 
 const REPOSITORY = 'https://github.com/tang-vu/lacuna';
 type CandidateStatus = CandidateEntry['status'];
+type NegativeKind = NegativeCandidate['kind'];
 
 function total(values: Record<string, number>): number {
   return Object.values(values).reduce((sum, value) => sum + value, 0);
@@ -322,6 +323,166 @@ function renderCandidateDesk(status: ProjectStatus): HTMLElement {
   return node;
 }
 
+function negativeCard(candidate: NegativeCandidate, selected: boolean): HTMLElement {
+  const evidence = candidate.kind === 'hard_negative'
+    ? `shared parent ${candidate.selection_evidence.shared_parent} · ` +
+      `${candidate.selection_evidence.sibling_group_size} eligible siblings`
+    : `fixed branch stratum ${candidate.selection_evidence.branch_stratum?.join(' × ')}`;
+  const issue = candidate.kind === 'hard_negative' ? 4 : 3;
+
+  return el('details', {
+    class: 'candidate-card negative-card',
+    id: `control-${candidate.id}`,
+    ...(selected ? { open: '' } : {}),
+  }, [
+    el('summary', {}, [
+      el('span', { class: 'candidate-index' }, [candidate.id]),
+      el('span', { class: 'candidate-title' }, [
+        candidate.concepts.a.descriptor_label,
+        el('span', { 'aria-hidden': 'true' }, [' × ']),
+        candidate.concepts.c.descriptor_label,
+      ]),
+      el('span', { class: 'candidate-state candidate-state-proposed' }, [
+        candidate.kind.replace('_', ' '),
+      ]),
+    ]),
+    el('div', { class: 'candidate-body' }, [
+      el('div', { class: 'chips' }, [
+        provenanceChip('generated'),
+        el('span', { class: 'chip chip-candidate-proposed' }, ['proposed · 0 readiness']),
+        el('span', { class: 'chip' }, [candidate.proposed_split]),
+        el('span', { class: 'chip chip-mapping' }, [
+          `${candidate.baseline_release_year} vocabulary candidate`,
+        ]),
+      ]),
+      el('div', { class: 'candidate-path negative-path', 'aria-label': 'Generated descriptor pair' }, [
+        el('span', {}, [
+          el('small', {}, [`A · ${candidate.concepts.a.descriptor_ui}`]),
+          candidate.concepts.a.descriptor_label,
+          el('code', {}, [candidate.concepts.a.tree_number]),
+        ]),
+        el('span', { class: 'candidate-path-link', 'aria-hidden': 'true' }, ['×']),
+        el('span', {}, [
+          el('small', {}, [`C · ${candidate.concepts.c.descriptor_ui}`]),
+          candidate.concepts.c.descriptor_label,
+          el('code', {}, [candidate.concepts.c.tree_number]),
+        ]),
+      ]),
+      el('div', { class: 'candidate-meta' }, [
+        el('span', {}, [`cutoff ${candidate.cutoff}`]),
+        el('span', {}, [evidence]),
+        el('span', {}, ['selected pre-metric']),
+      ]),
+      el('div', { class: 'candidate-questions' }, [
+        el('h4', {}, ['Why it entered the review queue']),
+        el('p', {}, [candidate.negative_rationale]),
+        el('h4', {}, ['Human review required']),
+        el('ol', {}, candidate.review_required.map((item) => el('li', {}, [item]))),
+      ]),
+      el('div', { class: 'candidate-decision' }, [
+        el('p', {}, [
+          el('strong', {}, ['Generated proposal · ']),
+          'This record is not in the benchmark and makes no absence claim.',
+        ]),
+        el('div', { class: 'candidate-actions' }, [
+          el('a', {
+            href: `${REPOSITORY}/issues/${issue}`,
+            target: '_blank',
+            rel: 'noreferrer',
+          }, [`Review in issue #${issue} ↗`]),
+        ]),
+      ]),
+    ]),
+  ]);
+}
+
+function renderNegativeQueue(status: ProjectStatus): HTMLElement {
+  const selectedId = new URLSearchParams(window.location.search).get('control');
+  const selected = status.negative_candidate_queue.entries.find((entry) => entry.id === selectedId);
+  let activeKind: NegativeKind = selected?.kind ?? 'hard_negative';
+  const search = el('input', {
+    type: 'search',
+    class: 'candidate-search',
+    placeholder: 'Search generated concepts, IDs, or tree numbers…',
+    'aria-label': 'Search generated negative-control proposals',
+  }) as HTMLInputElement;
+  const kinds = (['hard_negative', 'distant_negative'] as const);
+  const filters = kinds.map((kind) =>
+    el('button', {
+      type: 'button',
+      class: 'candidate-filter',
+      'data-kind': kind,
+      'aria-pressed': String(kind === activeKind),
+    }, [`${kind.replace('_', ' ')} · ${status.negative_candidate_queue.counts[kind]}`]) as HTMLButtonElement,
+  );
+  const resultCount = el('p', { class: 'candidate-result-count', 'aria-live': 'polite' });
+  const list = el('div', { class: 'candidate-list' });
+  const empty = el('p', { class: 'candidate-empty', hidden: '' }, [
+    'No generated proposal matches this search.',
+  ]);
+
+  function update(): void {
+    const terms = search.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    const matching = status.negative_candidate_queue.entries
+      .filter((candidate) => candidate.kind === activeKind)
+      .filter((candidate) => {
+        const haystack = [
+          candidate.id,
+          candidate.concepts.a.descriptor_ui,
+          candidate.concepts.a.descriptor_label,
+          candidate.concepts.a.tree_number,
+          candidate.concepts.c.descriptor_ui,
+          candidate.concepts.c.descriptor_label,
+          candidate.concepts.c.tree_number,
+          candidate.negative_rationale,
+        ].join(' ').toLowerCase();
+        return terms.every((term) => haystack.includes(term));
+      })
+      .sort((a, b) => {
+        if (a.id === selectedId) return -1;
+        if (b.id === selectedId) return 1;
+        return a.id.localeCompare(b.id);
+      });
+    list.replaceChildren(
+      ...matching.map((candidate) => negativeCard(candidate, candidate.id === selectedId)),
+    );
+    resultCount.textContent = `${matching.length} generated ${activeKind.replace('_', ' ')} proposals`;
+    empty.hidden = matching.length > 0;
+  }
+
+  search.addEventListener('input', update);
+  for (const button of filters) {
+    button.addEventListener('click', () => {
+      activeKind = button.dataset.kind as NegativeKind;
+      for (const peer of filters) peer.setAttribute('aria-pressed', String(peer === button));
+      update();
+    });
+  }
+
+  const node = el('section', { class: 'candidate-desk negative-desk', id: 'control-desk' }, [
+    el('div', { class: 'candidate-desk-heading' }, [
+      el('div', {}, [
+        el('div', { class: 'section-kicker' }, ['METRIC-BLIND CONTROL QUEUE']),
+        el('h3', {}, ['Review generated negatives before they count.']),
+        el('p', {}, [status.negative_candidate_queue.warning]),
+      ]),
+      el('div', { class: 'chips' }, [
+        provenanceChip('generated'),
+        el('span', { class: 'chip chip-candidate-proposed' }, ['16 proposals · 0 readiness']),
+      ]),
+    ]),
+    el('div', { class: 'candidate-controls' }, [
+      search,
+      el('div', { class: 'candidate-filters', role: 'group', 'aria-label': 'Negative-control kind' }, filters),
+    ]),
+    resultCount,
+    list,
+    empty,
+  ]);
+  update();
+  return node;
+}
+
 export function renderContributionMissions(status: ProjectStatus): HTMLElement {
   const sourceStatuses = Object.entries(status.historical_sources.statuses).filter(
     ([kind]) => kind === 'historical_records' || kind === 'historical_vocabulary',
@@ -374,7 +535,8 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
         'DRAFT',
         'Build the benchmark',
         `${currentCases} of ${minimumCases} minimum cases are accepted; ${currentHeldout} of ` +
-          `${minimumHeldout} required held-out cases are recorded. Plausibility alone does not count.`,
+          `${minimumHeldout} required held-out cases are recorded. The generated negative queue ` +
+          `contains ${total(status.negative_candidate_queue.counts)} proposals and contributes zero.`,
         progress(currentCases, minimumCases, 'Minimum benchmark cases accepted'),
         'See the v3 readiness milestone',
         `${REPOSITORY}/milestone/1`,
@@ -402,6 +564,7 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
         ]),
       ),
     ]),
+    renderNegativeQueue(status),
     renderCandidateDesk(status),
   ]);
 }

@@ -15,6 +15,8 @@ than disappearing behind later versions.
   links, mapping limitations, open questions, status filters, search, and candidate deep links.
 - A fingerprinted four-release NLM inventory contract and live drift probe for the 2007, 2011,
   2012, and 2013 MEDLINE completeness targets.
+- A frozen, metric-blind sampler and public review queue for 8 hard-negative and 8 distant-negative
+  proposals, split evenly between development and held-out review while contributing zero readiness.
 
 ### Changed
 
@@ -26,6 +28,8 @@ than disappearing behind later versions.
   same validated, fingerprinted ledger as CI instead of maintaining a second presentation copy.
 - Advanced `project-status.json` to schema 3 so the source-recovery mission distinguishes 4/4
   official inventories from 0/4 pinned raw citation releases.
+- Advanced `project-status.json` to schema 4 so generated negative-control proposals and their
+  frozen selection contract are independently fingerprinted and visibly separate from accepted cases.
 
 ## [0.1.0] — 2026-07-31
 

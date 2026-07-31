@@ -85,6 +85,14 @@ baseline. Any earlier case without a contemporaneous source is excluded from the
 Before any formula is run, freeze at least four held-out cases of each kind so the nominal
 eight-case minimum cannot be satisfied almost entirely with development examples.
 
+Negative candidate generation is frozen separately in
+`benchmarks/v3/negative-selection.json`. Its fixed seed samples four ontology-sibling hard pairs
+and four predefined cross-branch distant pairs from each of the pinned 2012 and 2013 MeSH trees,
+alternating development and held-out proposals within each year and kind. Generated records are
+not ground truth: they contribute zero until metric-blind human review records a defensible
+negative rationale and accepts them into `cases.json`. The generator and validator forbid metric
+score, rank, or percentile fields throughout this selection path.
+
 ## Candidate families
 
 Evaluate these as separately pre-registered candidates:

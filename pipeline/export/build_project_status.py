@@ -12,6 +12,12 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from pipeline.benchmark.negative_controls import (
+    OUTPUT_PATH as NEGATIVE_QUEUE_PATH,
+    PROTOCOL_PATH as NEGATIVE_PROTOCOL_PATH,
+    audit_queue,
+    load_protocol,
+)
 from pipeline.benchmark.validate_candidates import CANDIDATES_PATH, audit_candidates
 from pipeline.benchmark.source_inventories import INVENTORIES_PATH
 from pipeline.benchmark.validate_sources import SOURCES_PATH, audit_sources
@@ -38,17 +44,22 @@ def _input_identity(path: Path) -> dict[str, str]:
 def build_project_status() -> dict:
     sources = audit_sources()
     candidates = audit_candidates()
+    negative_queue = audit_queue()
     benchmark = audit_benchmark()
     ready = sources.ready and benchmark.ready
     candidate_payload = json.loads(CANDIDATES_PATH.read_text(encoding="utf-8"))
+    negative_payload = json.loads(NEGATIVE_QUEUE_PATH.read_text(encoding="utf-8"))
+    negative_protocol = load_protocol()
 
     return {
-        "schema_version": 3,
+        "schema_version": 4,
         "status": "ready" if ready else "not_ready",
         "inputs": {
             "historical_sources": _input_identity(SOURCES_PATH),
             "historical_inventories": _input_identity(INVENTORIES_PATH),
             "candidate_intake": _input_identity(CANDIDATES_PATH),
+            "negative_selection_protocol": _input_identity(NEGATIVE_PROTOCOL_PATH),
+            "negative_candidate_queue": _input_identity(NEGATIVE_QUEUE_PATH),
             "benchmark": _input_identity(BENCHMARK_PATH),
         },
         "historical_sources": {
@@ -78,6 +89,14 @@ def build_project_status() -> dict:
             # status artifact makes the public review surface reproducible without changing the
             # dated v2 measurement snapshot or creating a second hand-edited candidate source.
             "entries": candidate_payload["candidates"],
+        },
+        "negative_candidate_queue": {
+            "counts": negative_queue["counts"],
+            "heldout_counts": negative_queue["heldout_counts"],
+            "readiness_contribution": negative_queue["readiness_contribution"],
+            "protocol_status": negative_protocol["status"],
+            "warning": negative_payload["warning"],
+            "entries": negative_payload["candidates"],
         },
         "benchmark": {
             "ready": benchmark.ready,

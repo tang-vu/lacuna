@@ -209,6 +209,15 @@ from the classic replication catalog, five proposed post-2002 cases from LION's 
 set, and two rejected noise examples do not count toward readiness; only accepted entries with an
 independent LBD replication may be copied into `cases.json`. Run
 `python -m pipeline.benchmark.validate_candidates` to audit that boundary.
+Negative controls have a separate, frozen selection protocol in
+[`benchmarks/v3/negative-selection.json`](benchmarks/v3/negative-selection.json). Its deterministic
+sampler uses only pinned 2012 and 2013 MeSH tree structure and a fixed pre-metric seed to propose
+8 ontology-adjacent hard negatives and 8 cross-branch distant negatives. Run
+`python -m pipeline.benchmark.negative_controls --build` to reproduce
+[`artifacts/negative-candidates.json`](artifacts/negative-candidates.json), or omit `--build` to
+validate the committed queue. All 16 records are generated review proposals: they contribute zero
+to readiness, assert no absence of knowledge, and cannot enter `cases.json` without public,
+metric-blind human adjudication.
 The live **Metric-blind review desk** publishes all 14 contract-validated intake records directly
 from that ledger, including their evidence links, mapping limitations, adjudication rationale, and
 unresolved questions. Structural validity is not scientific acceptance: it defaults to the ten

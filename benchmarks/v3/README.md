@@ -17,6 +17,22 @@ Run its structural audit separately:
 python -m pipeline.benchmark.validate_candidates
 ```
 
+`negative-selection.json` is the frozen, metric-blind sampling contract for the two negative
+cohorts. It deterministically proposes eight ontology-sibling hard negatives and eight fixed
+cross-branch distant negatives from the pinned 2012 and 2013 MeSH descriptor trees. The generated
+`../../artifacts/negative-candidates.json` queue is review material only: its development and
+held-out labels are proposed, all entries contribute zero readiness, and none are benchmark cases.
+Rebuild it only from the checksum-verified vocabulary archives, then validate the committed result:
+
+```bash
+python -m pipeline.benchmark.negative_controls --build
+python -m pipeline.benchmark.negative_controls
+```
+
+Human adjudication must happen without metric output. A reviewer may reject or replace a generic,
+polysemous, or substantively related pair; acceptance requires a public negative rationale and an
+explicit move into `cases.json`.
+
 Historical inputs have their own dated access record:
 
 ```bash

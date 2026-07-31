@@ -1,0 +1,557 @@
+{
+ "schema_version": 1,
+ "status": "generated_review_queue",
+ "readiness_contribution": 0,
+ "warning": "Generated negative candidates are metric-blind review proposals, not accepted benchmark cases or evidence that a relationship is absent.",
+ "protocol": {
+  "path": "benchmarks/v3/negative-selection.json",
+  "sha256": "f3c983cc7eadb9e97708773750322b53c7b5de980790b51a233b5aade570a22a",
+  "canonicalisation": "canonical-json-v1"
+ },
+ "sources": [
+  {
+   "year": 2012,
+   "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/2012/xmlmesh/desc2012.gz",
+   "sha256": "381e804c7615e7a5332b2991e659a64b0ad0f216c4481ef6b7e3c614fc45095f",
+   "bytes": 15871262,
+   "descriptor_count": 26581
+  },
+  {
+   "year": 2013,
+   "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/2013/xmlmesh/desc2013.gz",
+   "sha256": "c928973ae228ebd03ceeec8950b31f63a867fc9dc2699ae1578e506f25739740",
+   "bytes": 16103897,
+   "descriptor_count": 26853
+  }
+ ],
+ "candidates": [
+  {
+   "id": "generated-distant-2012-01-d011651-d013783",
+   "kind": "distant_negative",
+   "status": "proposed",
+   "proposed_split": "development",
+   "selection_stage": "pre_metric",
+   "cutoff": "2011-12-31",
+   "baseline_release_year": 2012,
+   "mapping_basis": "pinned_production_year_vocabulary_candidate",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D011651",
+     "descriptor_label": "Pulmonary Artery",
+     "tree_number": "A07.231.114.715"
+    },
+    "c": {
+     "descriptor_ui": "D013783",
+     "descriptor_label": "Textile Industry",
+     "tree_number": "J01.576.885"
+    }
+   },
+   "selection_evidence": {
+    "branch_stratum": [
+     "A",
+     "J"
+    ]
+   },
+   "negative_rationale": "The fixed cross-branch stratum proposes semantic distance for blinded review; it does not establish that no relationship or non-academic knowledge exists.",
+   "review_required": [
+    "Check the negative rationale without inspecting any lacuna metric output.",
+    "Reject or replace generic, polysemous, or substantively related concepts.",
+    "Keep this proposal at zero readiness until it is accepted into cases.json."
+   ]
+  },
+  {
+   "id": "generated-distant-2012-02-d047229-d011337",
+   "kind": "distant_negative",
+   "status": "proposed",
+   "proposed_split": "heldout",
+   "selection_stage": "pre_metric",
+   "cutoff": "2011-12-31",
+   "baseline_release_year": 2012,
+   "mapping_basis": "pinned_production_year_vocabulary_candidate",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D047229",
+     "descriptor_label": "Plakortis",
+     "tree_number": "B01.050.500.802.670"
+    },
+    "c": {
+     "descriptor_ui": "D011337",
+     "descriptor_label": "Probability Learning",
+     "tree_number": "F02.463.425.701"
+    }
+   },
+   "selection_evidence": {
+    "branch_stratum": [
+     "B",
+     "F"
+    ]
+   },
+   "negative_rationale": "The fixed cross-branch stratum proposes semantic distance for blinded review; it does not establish that no relationship or non-academic knowledge exists.",
+   "review_required": [
+    "Check the negative rationale without inspecting any lacuna metric output.",
+    "Reject or replace generic, polysemous, or substantively related concepts.",
+    "Keep this proposal at zero readiness until it is accepted into cases.json."
+   ]
+  },
+  {
+   "id": "generated-distant-2012-03-d009008-d008888",
+   "kind": "distant_negative",
+   "status": "proposed",
+   "proposed_split": "development",
+   "selection_stage": "pre_metric",
+   "cutoff": "2011-12-31",
+   "baseline_release_year": 2012,
+   "mapping_basis": "pinned_production_year_vocabulary_candidate",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D009008",
+     "descriptor_label": "Abnormalities, Severe Teratoid",
+     "tree_number": "C16.131.085"
+    },
+    "c": {
+     "descriptor_ui": "D008888",
+     "descriptor_label": "Military Nursing",
+     "tree_number": "H02.478.676.458"
+    }
+   },
+   "selection_evidence": {
+    "branch_stratum": [
+     "C",
+     "H"
+    ]
+   },
+   "negative_rationale": "The fixed cross-branch stratum proposes semantic distance for blinded review; it does not establish that no relationship or non-academic knowledge exists.",
+   "review_required": [
+    "Check the negative rationale without inspecting any lacuna metric output.",
+    "Reject or replace generic, polysemous, or substantively related concepts.",
+    "Keep this proposal at zero readiness until it is accepted into cases.json."
+   ]
+  },
+  {
+   "id": "generated-distant-2012-04-d008524-d055700",
+   "kind": "distant_negative",
+   "status": "proposed",
+   "proposed_split": "heldout",
+   "selection_stage": "pre_metric",
+   "cutoff": "2011-12-31",
+   "baseline_release_year": 2012,
+   "mapping_basis": "pinned_production_year_vocabulary_candidate",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D008524",
+     "descriptor_label": "Medrogestone",
+     "tree_number": "D04.808.745.432.481"
+    },
+    "c": {
+     "descriptor_ui": "D055700",
+     "descriptor_label": "Cremation",
+     "tree_number": "I01.076.201.450.550.175"
+    }
+   },
+   "selection_evidence": {
+    "branch_stratum": [
+     "D",
+     "I"
+    ]
+   },
+   "negative_rationale": "The fixed cross-branch stratum proposes semantic distance for blinded review; it does not establish that no relationship or non-academic knowledge exists.",
+   "review_required": [
+    "Check the negative rationale without inspecting any lacuna metric output.",
+    "Reject or replace generic, polysemous, or substantively related concepts.",
+    "Keep this proposal at zero readiness until it is accepted into cases.json."
+   ]
+  },
+  {
+   "id": "generated-distant-2013-01-d008438-d057141",
+   "kind": "distant_negative",
+   "status": "proposed",
+   "proposed_split": "development",
+   "selection_stage": "pre_metric",
+   "cutoff": "2012-12-31",
+   "baseline_release_year": 2013,
+   "mapping_basis": "pinned_production_year_vocabulary_candidate",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D008438",
+     "descriptor_label": "Maxillary Artery",
+     "tree_number": "A07.231.114.523"
+    },
+    "c": {
+     "descriptor_ui": "D057141",
+     "descriptor_label": "Food, Preserved",
+     "tree_number": "J02.500.521"
+    }
+   },
+   "selection_evidence": {
+    "branch_stratum": [
+     "A",
+     "J"
+    ]
+   },
+   "negative_rationale": "The fixed cross-branch stratum proposes semantic distance for blinded review; it does not establish that no relationship or non-academic knowledge exists.",
+   "review_required": [
+    "Check the negative rationale without inspecting any lacuna metric output.",
+    "Reject or replace generic, polysemous, or substantively related concepts.",
+    "Keep this proposal at zero readiness until it is accepted into cases.json."
+   ]
+  },
+  {
+   "id": "generated-distant-2013-02-d029902-d003887",
+   "kind": "distant_negative",
+   "status": "proposed",
+   "proposed_split": "heldout",
+   "selection_stage": "pre_metric",
+   "cutoff": "2012-12-31",
+   "baseline_release_year": 2013,
+   "mapping_basis": "pinned_production_year_vocabulary_candidate",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D029902",
+     "descriptor_label": "Medicago",
+     "tree_number": "B01.650.940.800.575.100.401.590"
+    },
+    "c": {
+     "descriptor_ui": "D003887",
+     "descriptor_label": "Desensitization, Psychologic",
+     "tree_number": "F04.754.137.506"
+    }
+   },
+   "selection_evidence": {
+    "branch_stratum": [
+     "B",
+     "F"
+    ]
+   },
+   "negative_rationale": "The fixed cross-branch stratum proposes semantic distance for blinded review; it does not establish that no relationship or non-academic knowledge exists.",
+   "review_required": [
+    "Check the negative rationale without inspecting any lacuna metric output.",
+    "Reject or replace generic, polysemous, or substantively related concepts.",
+    "Keep this proposal at zero readiness until it is accepted into cases.json."
+   ]
+  },
+  {
+   "id": "generated-distant-2013-03-d004620-d004581",
+   "kind": "distant_negative",
+   "status": "proposed",
+   "proposed_split": "development",
+   "selection_stage": "pre_metric",
+   "cutoff": "2012-12-31",
+   "baseline_release_year": 2013,
+   "mapping_basis": "pinned_production_year_vocabulary_candidate",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D004620",
+     "descriptor_label": "Embolism, Fat",
+     "tree_number": "C14.907.355.350.454"
+    },
+    "c": {
+     "descriptor_ui": "D004581",
+     "descriptor_label": "Electronics",
+     "tree_number": "H01.671.293"
+    }
+   },
+   "selection_evidence": {
+    "branch_stratum": [
+     "C",
+     "H"
+    ]
+   },
+   "negative_rationale": "The fixed cross-branch stratum proposes semantic distance for blinded review; it does not establish that no relationship or non-academic knowledge exists.",
+   "review_required": [
+    "Check the negative rationale without inspecting any lacuna metric output.",
+    "Reject or replace generic, polysemous, or substantively related concepts.",
+    "Keep this proposal at zero readiness until it is accepted into cases.json."
+   ]
+  },
+  {
+   "id": "generated-distant-2013-04-d011372-d013177",
+   "kind": "distant_negative",
+   "status": "proposed",
+   "proposed_split": "heldout",
+   "selection_stage": "pre_metric",
+   "cutoff": "2012-12-31",
+   "baseline_release_year": 2013,
+   "mapping_basis": "pinned_production_year_vocabulary_candidate",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D011372",
+     "descriptor_label": "Progestins",
+     "tree_number": "D27.505.696.399.472.858"
+    },
+    "c": {
+     "descriptor_ui": "D013177",
+     "descriptor_label": "Sports",
+     "tree_number": "I03.450.642.845"
+    }
+   },
+   "selection_evidence": {
+    "branch_stratum": [
+     "D",
+     "I"
+    ]
+   },
+   "negative_rationale": "The fixed cross-branch stratum proposes semantic distance for blinded review; it does not establish that no relationship or non-academic knowledge exists.",
+   "review_required": [
+    "Check the negative rationale without inspecting any lacuna metric output.",
+    "Reject or replace generic, polysemous, or substantively related concepts.",
+    "Keep this proposal at zero readiness until it is accepted into cases.json."
+   ]
+  },
+  {
+   "id": "generated-hard-2012-01-d001174-d014143",
+   "kind": "hard_negative",
+   "status": "proposed",
+   "proposed_split": "development",
+   "selection_stage": "pre_metric",
+   "cutoff": "2011-12-31",
+   "baseline_release_year": 2012,
+   "mapping_basis": "pinned_production_year_vocabulary_candidate",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D001174",
+     "descriptor_label": "Arthrodesis",
+     "tree_number": "E04.555.100"
+    },
+    "c": {
+     "descriptor_ui": "D014143",
+     "descriptor_label": "Traction",
+     "tree_number": "E04.555.720"
+    }
+   },
+   "selection_evidence": {
+    "shared_parent": "E04.555",
+    "sibling_group_size": 10
+   },
+   "negative_rationale": "Ontology-adjacent MeSH siblings are a declared hard confounder, not evidence of a knowledge gap.",
+   "review_required": [
+    "Check the negative rationale without inspecting any lacuna metric output.",
+    "Reject or replace generic, polysemous, or substantively related concepts.",
+    "Keep this proposal at zero readiness until it is accepted into cases.json."
+   ]
+  },
+  {
+   "id": "generated-hard-2012-02-d003652-d010169",
+   "kind": "hard_negative",
+   "status": "proposed",
+   "proposed_split": "heldout",
+   "selection_stage": "pre_metric",
+   "cutoff": "2011-12-31",
+   "baseline_release_year": 2012,
+   "mapping_basis": "pinned_production_year_vocabulary_candidate",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D003652",
+     "descriptor_label": "Decanoic Acids",
+     "tree_number": "D10.251.175"
+    },
+    "c": {
+     "descriptor_ui": "D010169",
+     "descriptor_label": "Palmitic Acids",
+     "tree_number": "D10.251.694"
+    }
+   },
+   "selection_evidence": {
+    "shared_parent": "D10.251",
+    "sibling_group_size": 12
+   },
+   "negative_rationale": "Ontology-adjacent MeSH siblings are a declared hard confounder, not evidence of a knowledge gap.",
+   "review_required": [
+    "Check the negative rationale without inspecting any lacuna metric output.",
+    "Reject or replace generic, polysemous, or substantively related concepts.",
+    "Keep this proposal at zero readiness until it is accepted into cases.json."
+   ]
+  },
+  {
+   "id": "generated-hard-2012-03-d016496-d041382",
+   "kind": "hard_negative",
+   "status": "proposed",
+   "proposed_split": "development",
+   "selection_stage": "pre_metric",
+   "cutoff": "2011-12-31",
+   "baseline_release_year": 2012,
+   "mapping_basis": "pinned_production_year_vocabulary_candidate",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D016496",
+     "descriptor_label": "Incontinence Pads",
+     "tree_number": "E07.325.068.500"
+    },
+    "c": {
+     "descriptor_ui": "D041382",
+     "descriptor_label": "Diapers, Adult",
+     "tree_number": "E07.325.068.124"
+    }
+   },
+   "selection_evidence": {
+    "shared_parent": "E07.325.068",
+    "sibling_group_size": 3
+   },
+   "negative_rationale": "Ontology-adjacent MeSH siblings are a declared hard confounder, not evidence of a knowledge gap.",
+   "review_required": [
+    "Check the negative rationale without inspecting any lacuna metric output.",
+    "Reject or replace generic, polysemous, or substantively related concepts.",
+    "Keep this proposal at zero readiness until it is accepted into cases.json."
+   ]
+  },
+  {
+   "id": "generated-hard-2012-04-d019956-d019960",
+   "kind": "hard_negative",
+   "status": "proposed",
+   "proposed_split": "heldout",
+   "selection_stage": "pre_metric",
+   "cutoff": "2011-12-31",
+   "baseline_release_year": 2012,
+   "mapping_basis": "pinned_production_year_vocabulary_candidate",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D019956",
+     "descriptor_label": "Stereotypic Movement Disorder",
+     "tree_number": "F03.550.787"
+    },
+    "c": {
+     "descriptor_ui": "D019960",
+     "descriptor_label": "Elimination Disorders",
+     "tree_number": "F03.550.375"
+    }
+   },
+   "selection_evidence": {
+    "shared_parent": "F03.550",
+    "sibling_group_size": 11
+   },
+   "negative_rationale": "Ontology-adjacent MeSH siblings are a declared hard confounder, not evidence of a knowledge gap.",
+   "review_required": [
+    "Check the negative rationale without inspecting any lacuna metric output.",
+    "Reject or replace generic, polysemous, or substantively related concepts.",
+    "Keep this proposal at zero readiness until it is accepted into cases.json."
+   ]
+  },
+  {
+   "id": "generated-hard-2013-01-d004309-d007389",
+   "kind": "hard_negative",
+   "status": "proposed",
+   "proposed_split": "development",
+   "selection_stage": "pre_metric",
+   "cutoff": "2012-12-31",
+   "baseline_release_year": 2013,
+   "mapping_basis": "pinned_production_year_vocabulary_candidate",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D004309",
+     "descriptor_label": "Double Bind Interaction",
+     "tree_number": "F01.829.131"
+    },
+    "c": {
+     "descriptor_ui": "D007389",
+     "descriptor_label": "Internal-External Control",
+     "tree_number": "F01.829.379"
+    }
+   },
+   "selection_evidence": {
+    "shared_parent": "F01.829",
+    "sibling_group_size": 8
+   },
+   "negative_rationale": "Ontology-adjacent MeSH siblings are a declared hard confounder, not evidence of a knowledge gap.",
+   "review_required": [
+    "Check the negative rationale without inspecting any lacuna metric output.",
+    "Reject or replace generic, polysemous, or substantively related concepts.",
+    "Keep this proposal at zero readiness until it is accepted into cases.json."
+   ]
+  },
+  {
+   "id": "generated-hard-2013-02-d004553-d025802",
+   "kind": "hard_negative",
+   "status": "proposed",
+   "proposed_split": "heldout",
+   "selection_stage": "pre_metric",
+   "cutoff": "2012-12-31",
+   "baseline_release_year": 2013,
+   "mapping_basis": "pinned_production_year_vocabulary_candidate",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D004553",
+     "descriptor_label": "Electric Conductivity",
+     "tree_number": "G01.358.500.249.277"
+    },
+    "c": {
+     "descriptor_ui": "D025802",
+     "descriptor_label": "Electric Capacitance",
+     "tree_number": "G01.358.500.249.270"
+    }
+   },
+   "selection_evidence": {
+    "shared_parent": "G01.358.500.249",
+    "sibling_group_size": 3
+   },
+   "negative_rationale": "Ontology-adjacent MeSH siblings are a declared hard confounder, not evidence of a knowledge gap.",
+   "review_required": [
+    "Check the negative rationale without inspecting any lacuna metric output.",
+    "Reject or replace generic, polysemous, or substantively related concepts.",
+    "Keep this proposal at zero readiness until it is accepted into cases.json."
+   ]
+  },
+  {
+   "id": "generated-hard-2013-03-d016082-d055609",
+   "kind": "hard_negative",
+   "status": "proposed",
+   "proposed_split": "development",
+   "selection_stage": "pre_metric",
+   "cutoff": "2012-12-31",
+   "baseline_release_year": 2013,
+   "mapping_basis": "pinned_production_year_vocabulary_candidate",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D016082",
+     "descriptor_label": "Solar System",
+     "tree_number": "G01.060.249.730"
+    },
+    "c": {
+     "descriptor_ui": "D055609",
+     "descriptor_label": "Stars, Celestial",
+     "tree_number": "G01.060.249.750"
+    }
+   },
+   "selection_evidence": {
+    "shared_parent": "G01.060.249",
+    "sibling_group_size": 4
+   },
+   "negative_rationale": "Ontology-adjacent MeSH siblings are a declared hard confounder, not evidence of a knowledge gap.",
+   "review_required": [
+    "Check the negative rationale without inspecting any lacuna metric output.",
+    "Reject or replace generic, polysemous, or substantively related concepts.",
+    "Keep this proposal at zero readiness until it is accepted into cases.json."
+   ]
+  },
+  {
+   "id": "generated-hard-2013-04-d005685-d009844",
+   "kind": "hard_negative",
+   "status": "proposed",
+   "proposed_split": "heldout",
+   "selection_stage": "pre_metric",
+   "cutoff": "2012-12-31",
+   "baseline_release_year": 2013,
+   "mapping_basis": "pinned_production_year_vocabulary_candidate",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D005685",
+     "descriptor_label": "Galactans",
+     "tree_number": "D09.698.360"
+    },
+    "c": {
+     "descriptor_ui": "D009844",
+     "descriptor_label": "Oligosaccharides",
+     "tree_number": "D09.698.629"
+    }
+   },
+   "selection_evidence": {
+    "shared_parent": "D09.698",
+    "sibling_group_size": 10
+   },
+   "negative_rationale": "Ontology-adjacent MeSH siblings are a declared hard confounder, not evidence of a knowledge gap.",
+   "review_required": [
+    "Check the negative rationale without inspecting any lacuna metric output.",
+    "Reject or replace generic, polysemous, or substantively related concepts.",
+    "Keep this proposal at zero readiness until it is accepted into cases.json."
+   ]
+  }
+ ]
+}

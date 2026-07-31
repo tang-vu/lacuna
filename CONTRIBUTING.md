@@ -54,6 +54,13 @@ Proposed cases enter `benchmarks/v3/candidates.json`. They do not count toward r
 reviewed and accepted into `cases.json`. Start with the
 [benchmark-case issue form](https://github.com/tang-vu/lacuna/issues/new?template=benchmark-case.yml).
 
+For negative controls, begin with the generated queue in `artifacts/negative-candidates.json`
+rather than choosing a pair after seeing a metric. The frozen protocol in
+`benchmarks/v3/negative-selection.json` proposes ontology siblings and fixed cross-branch pairs
+from pinned MeSH vocabularies. A proposal is not an accepted negative and contributes zero to
+readiness. Reviewers should reject or replace generic, polysemous, or substantively related pairs
+without inspecting any lacuna score, then document the rationale publicly in issue #4 or #3.
+
 ### 3. Improve the pipeline
 
 Good engineering contributions strengthen provenance, source validation, bounded-count handling,
@@ -73,6 +80,7 @@ python -m pytest -m "not slow"
 python -m pipeline.export.validate_curated
 python -m pipeline.benchmark.validate_sources
 python -m pipeline.benchmark.validate_candidates
+python -m pipeline.benchmark.negative_controls
 python -m pipeline.benchmark.validate_v3
 python -m pipeline.export.verify_artifacts
 npm --prefix web run build

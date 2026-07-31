@@ -388,6 +388,7 @@ h1 {
   border-radius: 5px;
   background: var(--curated-bg);
 }
+.negative-card { background: var(--generated-bg); }
 .candidate-card[open] { border-color: var(--generated); }
 .candidate-card > summary {
   position: relative;
@@ -466,6 +467,13 @@ h1 {
 .candidate-path .candidate-bridge {
   border-color: color-mix(in srgb, var(--generated) 48%, var(--rule));
   background: var(--generated-bg);
+}
+.negative-path { grid-template-columns: 1fr auto 1fr; }
+.negative-path code {
+  display: block;
+  margin-top: 0.45rem;
+  color: var(--muted);
+  font: 0.62rem var(--mono);
 }
 .candidate-path-link { align-self: center; color: var(--generated); font-family: var(--mono); }
 .candidate-meta {

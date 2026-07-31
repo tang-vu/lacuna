@@ -173,6 +173,14 @@ export interface ProjectStatus {
     };
     entries: CandidateEntry[];
   };
+  negative_candidate_queue: {
+    counts: Record<NegativeCandidate['kind'], number>;
+    heldout_counts: Record<NegativeCandidate['kind'], number>;
+    readiness_contribution: 0;
+    protocol_status: 'frozen_before_v3_metric';
+    warning: string;
+    entries: NegativeCandidate[];
+  };
   benchmark: {
     ready: boolean;
     requirements: {
@@ -194,6 +202,28 @@ export interface ProjectStatus {
     period_appropriate_heldout_cutoffs: string[];
     readiness_blockers: string[];
   };
+}
+
+export interface NegativeCandidate {
+  id: string;
+  kind: 'hard_negative' | 'distant_negative';
+  status: 'proposed';
+  proposed_split: 'development' | 'heldout';
+  selection_stage: 'pre_metric';
+  cutoff: string;
+  baseline_release_year: number;
+  mapping_basis: 'pinned_production_year_vocabulary_candidate';
+  concepts: {
+    a: { descriptor_ui: string; descriptor_label: string; tree_number: string };
+    c: { descriptor_ui: string; descriptor_label: string; tree_number: string };
+  };
+  selection_evidence: {
+    shared_parent?: string;
+    sibling_group_size?: number;
+    branch_stratum?: [string, string];
+  };
+  negative_rationale: string;
+  review_required: string[];
 }
 
 export interface CandidateEvidence {

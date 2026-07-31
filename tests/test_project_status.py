@@ -12,7 +12,7 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 3
+    assert status["schema_version"] == 4
     assert status["status"] == "not_ready"
     assert status["historical_sources"] == {
         "ready": False,
@@ -72,6 +72,19 @@ def test_project_status_exposes_validator_results_without_claiming_readiness():
         for entry in entries
         if entry["status"] == "proposed"
     )
+    negative_queue = status["negative_candidate_queue"]
+    assert negative_queue["counts"] == {
+        "hard_negative": 8,
+        "distant_negative": 8,
+    }
+    assert negative_queue["heldout_counts"] == {
+        "hard_negative": 4,
+        "distant_negative": 4,
+    }
+    assert negative_queue["readiness_contribution"] == 0
+    assert negative_queue["protocol_status"] == "frozen_before_v3_metric"
+    assert len(negative_queue["entries"]) == 16
+    assert all(entry["status"] == "proposed" for entry in negative_queue["entries"])
     assert status["benchmark"]["ready"] is False
     assert status["benchmark"]["requirements"] == {
         "minimum_per_kind": 8,
@@ -102,6 +115,8 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
         "historical_sources",
         "historical_inventories",
         "candidate_intake",
+        "negative_selection_protocol",
+        "negative_candidate_queue",
         "benchmark",
     }
     for source in committed["inputs"].values():
