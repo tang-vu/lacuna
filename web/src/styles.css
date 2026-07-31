@@ -49,6 +49,20 @@ body {
 
 #app { max-width: 64rem; margin: 0 auto; }
 
+.skip-link {
+  position: fixed;
+  z-index: 10;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--fg);
+  color: var(--bg);
+  font: 0.76rem var(--mono);
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+.skip-link:focus { transform: translateY(0); }
+
 .topbar {
   min-height: 4.5rem;
   display: flex;

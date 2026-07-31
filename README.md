@@ -219,6 +219,23 @@ directory without reshaping their contents. The production site is
 [`lacuna.tangvu.dev`](https://lacuna.tangvu.dev); its Cloudflare Pages origin is
 [`lacuna-a2y.pages.dev`](https://lacuna-a2y.pages.dev).
 
+The build also publishes a root sitemap, permissive `robots.txt`, a real noindex 404 page, social
+preview metadata, JSON-LD, and the favicon/install-icon set from `web/public`. The initial HTML
+contains an honest, number-free account of the method status and known coverage limits, so that
+crawlers and readers without JavaScript do not receive an empty loading shell.
+
+Search-engine ownership tokens are intentionally not committed. Set either optional Cloudflare
+Pages build variable to inject its verification meta tag at build time:
+
+```text
+GOOGLE_SITE_VERIFICATION=<Search Console HTML-tag token>
+BING_SITE_VERIFICATION=<Bing Webmaster Tools meta-tag token>
+```
+
+After ownership is verified, submit `https://lacuna.tangvu.dev/sitemap.xml` in the relevant
+webmaster console. The sitemap contains only the canonical homepage; hash sections and versioned
+JSON evidence files are not separate search landing pages.
+
 ## Licence
 
 Code is released under the [MIT License](LICENSE). Data from [OpenAlex](https://openalex.org) is

@@ -3,35 +3,176 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>lacuna — a map of what we haven't figured out</title>
+    <title>lacuna — mapping the limits of published knowledge</title>
     <meta
       name="description"
-      content="An open-source attempt to map where knowledge stops. The first two computed methods failed—and the evidence is public."
+      content="An open-source, provenance-first map of research gaps and the limits of published knowledge. Its failed metrics, evidence, and blind spots are public."
+    />
+    <meta name="author" content="Tang Vu" />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
     />
     <link rel="canonical" href="https://lacuna.tangvu.dev/" />
+    <link rel="alternate" hreflang="en" href="https://lacuna.tangvu.dev/" />
+    <link rel="alternate" hreflang="x-default" href="https://lacuna.tangvu.dev/" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-48x48.png" type="image/png" sizes="48x48" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="license" href="https://github.com/tang-vu/lacuna/blob/main/LICENSE" />
     <meta name="theme-color" content="#fbfaf7" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="application-name" content="lacuna" />
+    <meta name="format-detection" content="telephone=no" />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content="lacuna" />
-    <meta property="og:title" content="lacuna — map the edge of what we know" />
+    <meta property="og:title" content="lacuna — mapping the limits of published knowledge" />
     <meta
       property="og:description"
-      content="An open-source attempt to map where knowledge stops. The first two computed methods failed—and the evidence is public."
+      content="An open-source, provenance-first map of research gaps. Its failed metrics, evidence, and blind spots are public."
     />
     <meta property="og:url" content="https://lacuna.tangvu.dev/" />
     <meta property="og:image" content="https://lacuna.tangvu.dev/social-card.png" />
-    <meta property="og:image:width" content="1536" />
-    <meta property="og:image:height" content="1024" />
+    <meta property="og:image:secure_url" content="https://lacuna.tangvu.dev/social-card.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="A network of knowledge surrounding an empty lacuna." />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="lacuna — map the edge of what we know" />
+    <meta name="twitter:title" content="lacuna — mapping the limits of published knowledge" />
     <meta
       name="twitter:description"
-      content="An open-source attempt to map where knowledge stops. The failures are public."
+      content="An open-source, provenance-first map of research gaps. Its failed metrics and evidence are public."
     />
     <meta name="twitter:image" content="https://lacuna.tangvu.dev/social-card.png" />
+    <meta
+      name="twitter:image:alt"
+      content="A network of knowledge surrounding an empty lacuna."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://lacuna.tangvu.dev/#website",
+            "url": "https://lacuna.tangvu.dev/",
+            "name": "lacuna",
+            "alternateName": "A map of what humanity has not figured out yet",
+            "description": "An open-source, provenance-first map of research gaps and the limits of published knowledge.",
+            "inLanguage": "en",
+            "image": "https://lacuna.tangvu.dev/social-card.png",
+            "sameAs": ["https://github.com/tang-vu/lacuna"]
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://lacuna.tangvu.dev/#webpage",
+            "url": "https://lacuna.tangvu.dev/",
+            "name": "lacuna — mapping the limits of published knowledge",
+            "description": "Explore sourced open questions, blocked questions, coverage blind spots, and transparent negative results from experimental knowledge-gap metrics.",
+            "isPartOf": { "@id": "https://lacuna.tangvu.dev/#website" },
+            "about": { "@id": "https://lacuna.tangvu.dev/#software" },
+            "inLanguage": "en",
+            "primaryImageOfPage": {
+              "@type": "ImageObject",
+              "url": "https://lacuna.tangvu.dev/social-card.png",
+              "width": 1200,
+              "height": 630
+            }
+          },
+          {
+            "@type": "SoftwareSourceCode",
+            "@id": "https://lacuna.tangvu.dev/#software",
+            "name": "lacuna",
+            "description": "An open-source, provenance-first pipeline and static map for measuring and curating research gaps. Its current computed methods failed pre-registered validation and are published as negative results.",
+            "url": "https://lacuna.tangvu.dev/",
+            "codeRepository": "https://github.com/tang-vu/lacuna",
+            "license": "https://github.com/tang-vu/lacuna/blob/main/LICENSE",
+            "programmingLanguage": ["Python", "TypeScript"],
+            "keywords": [
+              "bibliometrics",
+              "literature-based discovery",
+              "research gaps",
+              "OpenAlex",
+              "open science"
+            ],
+            "author": {
+              "@type": "Person",
+              "name": "Tang Vu",
+              "url": "https://github.com/tang-vu"
+            }
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
-    <div id="app">Loading…</div>
+    <div id="app">
+      <a class="skip-link" href="#main-content">Skip to content</a>
+      <header>
+        <nav class="topbar" aria-label="Primary navigation">
+          <a class="wordmark" href="/">lacuna</a>
+          <div>
+            <a href="#status">Status</a>
+            <a href="#method">Method</a>
+            <a href="#limits">Limits</a>
+            <a href="https://github.com/tang-vu/lacuna">GitHub ↗</a>
+          </div>
+        </nav>
+        <div class="hero">
+          <p class="eyebrow">OPEN-SOURCE KNOWLEDGE-GAP RESEARCH</p>
+          <h1>Map the edge of what we know.</h1>
+          <p class="tagline">
+            Most knowledge maps show what humanity has figured out. lacuna is trying to measure
+            where the connections stop.
+          </p>
+          <p class="lede">The knowledge tree is scaffolding. The holes are the product.</p>
+        </div>
+      </header>
+      <main id="main-content">
+        <section class="project-status" id="status">
+          <p class="section-kicker">SCIENTIFIC STATUS</p>
+          <h2>A public experiment, not a discovery engine.</h2>
+          <p class="status-intro">
+            lacuna keeps sourced human-curated questions separate from computed measurements.
+            Metric versions 1 and 2 failed their pre-registered benchmark; version 3 remains a
+            draft until its source and benchmark gates are complete.
+          </p>
+        </section>
+        <section class="layer" id="method">
+          <p class="section-kicker">METHOD AND EVIDENCE</p>
+          <h2>Every exported number points back to its query.</h2>
+          <p class="blurb">
+            The project publishes versioned OpenAlex artifacts, validation reports, exact or
+            bounded co-occurrence evidence, and the negative results of methods that did not work.
+          </p>
+          <a class="button button-secondary" href="https://github.com/tang-vu/lacuna#readme">
+            Read the methodology
+          </a>
+        </section>
+        <section class="layer" id="limits">
+          <p class="section-kicker">KNOWN LIMITS</p>
+          <h2>The map also publishes what it cannot see.</h2>
+          <p class="blurb">
+            OpenAlex is thin across parts of the humanities and historical record, and does not
+            represent much craft, practitioner, indigenous, oral, or other non-academic knowledge.
+          </p>
+        </section>
+      </main>
+      <footer>
+        <p class="footer-statement">
+          Open source. Provenance first. Failed methods stay visible.
+        </p>
+        <nav aria-label="Project links">
+          <a href="https://github.com/tang-vu/lacuna">Source</a>
+          <a href="https://github.com/tang-vu/lacuna/blob/main/CONTRIBUTING.md">Contribute</a>
+          <a href="https://github.com/tang-vu/lacuna/blob/main/CITATION.cff">Cite</a>
+        </nav>
+      </footer>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

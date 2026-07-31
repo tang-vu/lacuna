@@ -15,8 +15,8 @@ First public release.
 - A pre-metric v3 benchmark contract, metric-blind candidate ledger, historical-source contract,
   streaming MEDLINE reader, and fixture-tested accumulators.
 - A production static site at [lacuna.tangvu.dev](https://lacuna.tangvu.dev), including honest
-  validation status, social preview metadata, and a contributor mission board generated from the
-  validated v3 contracts.
+  validation status, crawlable fallback content, crawler controls, structured metadata, social and
+  install icons, and a contributor mission board generated from the validated v3 contracts.
 - Contribution, citation, issue-form, and pull-request workflows for public collaboration.
 
 ### Scientific status

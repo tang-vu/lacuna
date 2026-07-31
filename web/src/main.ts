@@ -9,6 +9,7 @@ import { renderTaxonomy } from './views/taxonomy';
 
 function header(version: string): HTMLElement {
   return el('header', {}, [
+    el('a', { class: 'skip-link', href: '#main-content' }, ['Skip to content']),
     el('nav', { class: 'topbar', 'aria-label': 'Primary navigation' }, [
       el('a', { class: 'wordmark', href: '/' }, ['lacuna']),
       el('div', {}, [
@@ -41,28 +42,30 @@ async function main(): Promise<void> {
     const { manifest, taxonomy, curated, computed, projectStatus } = await loadDataset();
     app.replaceChildren(
       header(manifest.version),
-      renderProjectStatus(manifest, computed),
-      renderContributionMissions(projectStatus),
-      renderCurated(
-        'open-problems',
-        'Open problems',
-        'Questions a field has explicitly acknowledged it cannot answer. Curated, and every entry cites a source.',
-        curated.open,
-      ),
-      renderCurated(
-        'blocked-questions',
-        'Blocked questions',
-        'Well-posed questions that nobody is short of ideas about. What stands in the way is an instrument, a cost, an ethical limit, or a timescale.',
-        curated.blocked,
-      ),
-      renderComputed(computed),
-      renderCurated(
-        'blind-spots',
-        'What this map cannot see',
-        'lacuna’s own blind spots, listed as first-class entries rather than caveats. A map of holes that hides its own is worse than no map.',
-        curated['blind-spots'],
-      ),
-      renderTaxonomy(taxonomy),
+      el('main', { id: 'main-content' }, [
+        renderProjectStatus(manifest, computed),
+        renderContributionMissions(projectStatus),
+        renderCurated(
+          'open-problems',
+          'Open problems',
+          'Questions a field has explicitly acknowledged it cannot answer. Curated, and every entry cites a source.',
+          curated.open,
+        ),
+        renderCurated(
+          'blocked-questions',
+          'Blocked questions',
+          'Well-posed questions that nobody is short of ideas about. What stands in the way is an instrument, a cost, an ethical limit, or a timescale.',
+          curated.blocked,
+        ),
+        renderComputed(computed),
+        renderCurated(
+          'blind-spots',
+          'What this map cannot see',
+          'lacuna’s own blind spots, listed as first-class entries rather than caveats. A map of holes that hides its own is worse than no map.',
+          curated['blind-spots'],
+        ),
+        renderTaxonomy(taxonomy),
+      ]),
       renderFooter(),
     );
   } catch (error) {
