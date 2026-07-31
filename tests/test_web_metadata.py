@@ -159,3 +159,12 @@ def test_candidate_review_desk_keeps_proposals_curated_and_out_of_readiness():
     assert "candidate.mapping_audit.limitation" in view_source
     assert "candidate.open_questions" in view_source
     assert "candidate.evidence.map" in view_source
+
+
+def test_source_recovery_copy_keeps_preservation_metadata_out_of_raw_readiness():
+    view_source = (ROOT / "web" / "src" / "views" / "contribute.ts").read_text(
+        encoding="utf-8"
+    )
+
+    assert "historical MBR directory" in view_source
+    assert "metadata is a target, not the records" in view_source

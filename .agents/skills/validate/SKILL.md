@@ -18,12 +18,25 @@ description: Run lacuna's complete validation workflow and report metric drift, 
    contract, then run their readiness gates separately:
 
    ```bash
+   python -m pipeline.benchmark.source_inventories
+   python -m pipeline.benchmark.mbr_capture
    python -m pipeline.benchmark.validate_sources
    python -m pipeline.benchmark.validate_sources --require-ready
    python -m pipeline.benchmark.validate_candidates
    python -m pipeline.benchmark.validate_v3
    python -m pipeline.benchmark.validate_v3 --require-ready
    ```
+
+   When network access is available, replay both preservation probes and report reachability or
+   drift separately from scientific readiness:
+
+   ```bash
+   python -m pipeline.benchmark.source_inventories --probe --require-match
+   python -m pipeline.benchmark.mbr_capture --probe --require-match
+   ```
+
+   The MBR capture preserves repository directory metadata only. A successful replay contributes
+   zero raw record releases; an unreachable archive is a skipped live check, not evidence of drift.
 
    Both `--require-ready` commands are expected to fail while historical inputs are unavailable
    and the benchmark is a draft. Record their blockers and exit codes; never change a status merely

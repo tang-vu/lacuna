@@ -29,6 +29,10 @@ the required 2007, 2011, 2012, and 2013 descriptor archives were parsed and pinn
 On 2026-07-31, official NLM file inventories were also recovered for all four releases and pinned
 in `benchmarks/v3/inventories.json`. Those pages establish completeness totals but expose neither
 the raw citation XML nor per-file checksums, so the historical-record gate remains unavailable.
+A digest-addressed Common Crawl capture of the retired MBR homepage now also preserves the exact
+`Download/Baselines/{year}` directory rows for all four required releases. It confirms how the
+repository was organized in 2018 but contains no required XML payload, so it contributes no raw
+record release to readiness.
 This has four consequences:
 
 - no pre-2002 experiment may be called period-appropriate unless a separate contemporaneous

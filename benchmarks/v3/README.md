@@ -48,6 +48,18 @@ indexing. A support request is prepared at
 `plans/requests/nlm-historical-medline-access.md`; it is explicitly not sent and contains no
 maintainer contact details.
 
+The retired repository homepage also has a checksum-pinned Common Crawl capture:
+
+```bash
+python -m pipeline.benchmark.mbr_capture
+python -m pipeline.benchmark.mbr_capture --probe --require-match
+```
+
+The live probe fetches the exact WARC byte range, checks its SHA-1 payload digest, and parses the
+2007, 2011, 2012, and 2013 `Download/Baselines/{year}` rows against `inventories.json`. That capture
+contains directory metadata, not baseline XML; success leaves historical records at 0/4, while an
+unreachable archive is reported separately from content drift.
+
 The archived-baseline reader is implemented and fixture-tested:
 
 ```bash

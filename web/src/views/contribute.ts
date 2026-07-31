@@ -521,7 +521,8 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
           `${status.historical_sources.inventory_metadata.required} official file inventories are ` +
           `pinned; ${status.historical_sources.raw_record_releases.pinned} of ` +
           `${status.historical_sources.raw_record_releases.required} raw citation releases are. ` +
-          'Inventory metadata is a target, not the records.',
+          `${status.historical_sources.preservation_metadata.available} historical MBR directory ` +
+          'rows are preserved; metadata is a target, not the records.',
         progress(
           pinnedSources,
           sourceStatuses.length,

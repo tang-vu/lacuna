@@ -231,7 +231,14 @@ for 2007 and 2011, plus the live 2012 and 2013 pages—and pinned in
 `python -m pipeline.benchmark.source_inventories --probe --require-match` to fetch every page, sum
 every file-size row, and fail on drift. This is completeness metadata only: it establishes targets
 of 538, 653, 684, and 717 files, but supplies neither the raw XML nor per-file checksums. The
-required MeSH descriptor archives are separately pinned by SHA-256, and that vocabulary also does
+retired MBR homepage itself is now preserved as a digest-addressed Common Crawl WARC range in
+[`benchmarks/v3/mbr-capture.json`](benchmarks/v3/mbr-capture.json). It independently confirms the
+historical `Download/Baselines/{year}` directory rows and the same release totals. Run
+`python -m pipeline.benchmark.mbr_capture --probe --require-match` to replay the exact compressed
+record, verify its payload digest, and parse those rows. This is repository metadata only: no
+required XML payload was recovered, and an unreachable preservation service is reported as
+reachability failure rather than data drift.
+The required MeSH descriptor archives are separately pinned by SHA-256, and that vocabulary also does
 not replace the missing citation records. `benchmarks/v3/sources.json` records the dated
 observation; `python -m pipeline.benchmark.validate_sources --require-ready` must keep failing until
 the matching historical records have stable URLs and checksums. The streaming

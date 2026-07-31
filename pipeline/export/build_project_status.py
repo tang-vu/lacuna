@@ -18,6 +18,7 @@ from pipeline.benchmark.negative_controls import (
     audit_queue,
     load_protocol,
 )
+from pipeline.benchmark.mbr_capture import CAPTURE_PATH as MBR_CAPTURE_PATH
 from pipeline.benchmark.validate_candidates import CANDIDATES_PATH, audit_candidates
 from pipeline.benchmark.source_inventories import INVENTORIES_PATH
 from pipeline.benchmark.validate_sources import SOURCES_PATH, audit_sources
@@ -52,11 +53,12 @@ def build_project_status() -> dict:
     negative_protocol = load_protocol()
 
     return {
-        "schema_version": 4,
+        "schema_version": 5,
         "status": "ready" if ready else "not_ready",
         "inputs": {
             "historical_sources": _input_identity(SOURCES_PATH),
             "historical_inventories": _input_identity(INVENTORIES_PATH),
+            "mbr_preservation_capture": _input_identity(MBR_CAPTURE_PATH),
             "candidate_intake": _input_identity(CANDIDATES_PATH),
             "negative_selection_protocol": _input_identity(NEGATIVE_PROTOCOL_PATH),
             "negative_candidate_queue": _input_identity(NEGATIVE_QUEUE_PATH),
@@ -75,6 +77,12 @@ def build_project_status() -> dict:
                 "pinned": len(sources.pinned_record_years),
                 "required": len(sources.required_years),
                 "years": list(sources.pinned_record_years),
+            },
+            "preservation_metadata": {
+                "available": len(sources.preservation_capture_years),
+                "required": len(sources.required_years),
+                "years": list(sources.preservation_capture_years),
+                "scope": "preserved repository directory metadata only",
             },
             "statuses": dict(sorted(sources.statuses.items())),
             "readiness_blockers": list(sources.readiness_blockers),

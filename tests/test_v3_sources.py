@@ -13,6 +13,7 @@ from pipeline.benchmark.validate_sources import (
 )
 
 INVENTORIES_PATH = SOURCES_PATH.parent / "inventories.json"
+MBR_CAPTURE_PATH = SOURCES_PATH.parent / "mbr-capture.json"
 
 
 def _write_sources(tmp_path, payload):
@@ -48,6 +49,20 @@ def _write_sources(tmp_path, payload):
         ).hexdigest()
     else:
         shutil.copy2(INVENTORIES_PATH, inventory_path)
+    capture_path = tmp_path / MBR_CAPTURE_PATH.name
+    if records["status"] == "available_pinned":
+        capture_payload = json.loads(MBR_CAPTURE_PATH.read_text(encoding="utf-8"))
+        references = {item["year"]: item for item in records["manifests"]}
+        for release in capture_payload["required_releases"]:
+            reference = references[release["release_year"]]
+            release["file_count"] = reference["file_count"]
+            release["total_record_count"] = reference["total_record_count"]
+        capture_path.write_text(json.dumps(capture_payload), encoding="utf-8")
+        records["preservation_capture_contract"]["sha256"] = hashlib.sha256(
+            capture_path.read_bytes()
+        ).hexdigest()
+    else:
+        shutil.copy2(MBR_CAPTURE_PATH, capture_path)
     path = tmp_path / "sources.json"
     path.write_text(json.dumps(payload), encoding="utf-8")
     return path
@@ -94,6 +109,7 @@ def test_current_historical_sources_are_explicitly_not_ready():
 
     assert audit.required_years == (2007, 2011, 2012, 2013)
     assert audit.inventory_years == (2007, 2011, 2012, 2013)
+    assert audit.preservation_capture_years == (2007, 2011, 2012, 2013)
     assert audit.pinned_record_years == ()
     assert audit.statuses["historical_records"] == "unavailable"
     assert audit.statuses["historical_vocabulary"] == "available_pinned"

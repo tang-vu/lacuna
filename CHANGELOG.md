@@ -17,6 +17,8 @@ than disappearing behind later versions.
   2012, and 2013 MEDLINE completeness targets.
 - A frozen, metric-blind sampler and public review queue for 8 hard-negative and 8 distant-negative
   proposals, split evenly between development and held-out review while contributing zero readiness.
+- A digest-addressed Common Crawl WARC contract and replay probe for the retired MBR homepage,
+  preserving all four required repository directory rows without treating metadata as raw records.
 
 ### Changed
 
@@ -30,6 +32,8 @@ than disappearing behind later versions.
   official inventories from 0/4 pinned raw citation releases.
 - Advanced `project-status.json` to schema 4 so generated negative-control proposals and their
   frozen selection contract are independently fingerprinted and visibly separate from accepted cases.
+- Advanced `project-status.json` to schema 5 so preserved MBR directory metadata remains visible
+  and fingerprinted beside the still-empty raw-record gate.
 
 ## [0.1.0] — 2026-07-31
 

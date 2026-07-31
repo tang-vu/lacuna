@@ -12,7 +12,7 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 4
+    assert status["schema_version"] == 5
     assert status["status"] == "not_ready"
     assert status["historical_sources"] == {
         "ready": False,
@@ -27,6 +27,12 @@ def test_project_status_exposes_validator_results_without_claiming_readiness():
             "pinned": 0,
             "required": 4,
             "years": [],
+        },
+        "preservation_metadata": {
+            "available": 4,
+            "required": 4,
+            "years": [2007, 2011, 2012, 2013],
+            "scope": "preserved repository directory metadata only",
         },
         "statuses": {
             "current_records": "available_unsuitable",
@@ -114,6 +120,7 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
     assert set(committed["inputs"]) == {
         "historical_sources",
         "historical_inventories",
+        "mbr_preservation_capture",
         "candidate_intake",
         "negative_selection_protocol",
         "negative_candidate_queue",

@@ -26,6 +26,9 @@ also says raw FTP and query access were controlled for registered licensees. As 
   NLM's own dated `/archive/` snapshots;
 - official inventories are now pinned for all four releases and reconcile to 538, 653, 684, and
   717 files respectively, including record and compressed/uncompressed byte totals;
+- a digest-addressed Common Crawl capture of the MBR homepage from 2018 preserves the original
+  `Download/Baselines/2007`, `/2011`, `/2012`, and `/2013` directory links and matching totals;
+- the capture contains the repository page only, not the linked XML payloads;
 - none of those inventory pages exposes raw download URLs or file checksums;
 - the separate BioNLP persistent-abstract service describes title/abstract snapshots, not the
   historical MeSH assignments needed here.
@@ -48,6 +51,10 @@ The former MEDLINE Baseline Repository and hidden FTP paths no longer resolve fo
 of licensee documentation still identifies the annual distributions, and we recovered official
 inventory pages for all four required releases, but we could not find stable raw-file URLs or
 checksums.
+
+A preserved 2018 copy of the MBR homepage confirms that the historical directories were named
+`Download/Baselines/2007`, `Download/Baselines/2011`, `Download/Baselines/2012`, and
+`Download/Baselines/2013`. The preservation record does not include the baseline payloads.
 
 Could you please confirm:
 
@@ -81,6 +88,7 @@ Thank you,
 - [NLM 2012 baseline file inventory](https://www.nlm.nih.gov/bsd/licensee/2012_stats/baseline_med_filecount.html)
 - [NLM 2013 baseline file inventory](https://www.nlm.nih.gov/bsd/licensee/2013_stats/baseline_med_filecount.html)
 - [NLM MBR reference material](https://lhncbc.nlm.nih.gov/ii/information/MBR/MEDLINE_Baseline_Repository_Detail_2017.pdf)
+- [Common Crawl index record for the 2018 MBR homepage capture](https://index.commoncrawl.org/CC-MAIN-2018-51-index?url=https%3A%2F%2Fmbr.nlm.nih.gov%2F&output=json)
 - [NLM data terms and conditions](https://www.nlm.nih.gov/databases/download/terms_and_conditions.html)
 
 ## Acceptance checklist for any reply

@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "evidence_scope": "preserved_repository_metadata_only",
+  "observed_on": "2026-07-31",
+  "capture": {
+    "index_api": "https://index.commoncrawl.org/CC-MAIN-2018-51-index?url=https%3A%2F%2Fmbr.nlm.nih.gov%2F&output=json",
+    "index_id": "CC-MAIN-2018-51",
+    "timestamp": "20181213153353",
+    "url": "https://mbr.nlm.nih.gov/",
+    "status": "200",
+    "mime": "text/html",
+    "digest": "JKQISMAT37Y5VJFC7LFXHKAO6VUUVXQF",
+    "length": 9991,
+    "offset": 664112362,
+    "filename": "crawl-data/CC-MAIN-2018-51/segments/1544376824912.16/warc/CC-MAIN-20181213145807-20181213171307-00610.warc.gz"
+  },
+  "required_releases": [
+    {
+      "release_year": 2007,
+      "release_date_text": "November 17 & 18, 2006",
+      "directory_path": "Download/Baselines/2007",
+      "file_count": 538,
+      "total_record_count": 16120074
+    },
+    {
+      "release_year": 2011,
+      "release_date_text": "November 19, 2010",
+      "directory_path": "Download/Baselines/2011",
+      "file_count": 653,
+      "total_record_count": 19569568
+    },
+    {
+      "release_year": 2012,
+      "release_date_text": "November 18, 2011",
+      "directory_path": "Download/Baselines/2012",
+      "file_count": 684,
+      "total_record_count": 20494848
+    },
+    {
+      "release_year": 2013,
+      "release_date_text": "November 15 & 16, 2012",
+      "directory_path": "Download/Baselines/2013",
+      "file_count": 717,
+      "total_record_count": 21508439
+    }
+  ],
+  "raw_payload_status": "not_established",
+  "limitation": "The preserved HTML establishes the historical MBR directory structure and release-level totals. It does not establish preservation or present availability of any baseline XML payload, per-file checksum, or redistribution right."
+}

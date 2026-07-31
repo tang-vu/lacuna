@@ -40,6 +40,8 @@ python -m pytest -m "not slow"
 python -m pytest
 python -m pipeline.export.validate_curated
 python -m pipeline.benchmark.validate_sources
+python -m pipeline.benchmark.source_inventories
+python -m pipeline.benchmark.mbr_capture
 python -m pipeline.benchmark.validate_candidates
 python -m pipeline.benchmark.negative_controls
 python -m pipeline.benchmark.validate_v3

@@ -23,6 +23,7 @@ from pipeline.benchmark.source_manifests import (
     ReleaseManifestError,
     load_release_manifest,
 )
+from pipeline.benchmark.mbr_capture import MbrCaptureError, load_capture_contract
 from pipeline.benchmark.source_inventories import (
     InventoryContractError,
     load_inventory_contract,
@@ -44,6 +45,7 @@ class SourceAudit:
     statuses: dict[str, str]
     required_years: tuple[int, ...]
     inventory_years: tuple[int, ...]
+    preservation_capture_years: tuple[int, ...]
     pinned_record_years: tuple[int, ...]
     readiness_blockers: tuple[str, ...]
 
@@ -90,6 +92,7 @@ def audit_sources(path: Path = SOURCES_PATH) -> SourceAudit:
     statuses: dict[str, str] = {}
     required_kinds: set[str] = set()
     inventory_years: set[int] = set()
+    preservation_capture_years: set[int] = set()
     pinned_record_years: set[int] = set()
     inventories_by_year = {}
 
@@ -139,6 +142,23 @@ def audit_sources(path: Path = SOURCES_PATH) -> SourceAudit:
             inventory_years.update(item.release_year for item in inventory.releases)
             inventories_by_year.update(
                 (item.release_year, item) for item in inventory.releases
+            )
+            capture_reference = source.get("preservation_capture_contract")
+            _require(
+                isinstance(capture_reference, dict),
+                f"{source_id}: missing MBR preservation capture contract",
+            )
+            try:
+                capture = load_capture_contract(
+                    path,
+                    capture_reference,
+                    inventory,
+                    set(required_years),
+                )
+            except MbrCaptureError as exc:
+                raise SourceContractError(f"{source_id}: {exc}") from exc
+            preservation_capture_years.update(
+                item.release_year for item in capture.releases
             )
         if status == "available_pinned":
             if kind == "historical_records":
@@ -246,6 +266,7 @@ def audit_sources(path: Path = SOURCES_PATH) -> SourceAudit:
         statuses=statuses,
         required_years=tuple(sorted(required_years)),
         inventory_years=tuple(sorted(inventory_years)),
+        preservation_capture_years=tuple(sorted(preservation_capture_years)),
         pinned_record_years=tuple(sorted(pinned_record_years)),
         readiness_blockers=tuple(blockers),
     )
@@ -266,6 +287,10 @@ def main() -> None:
     print(
         "raw record releases: "
         f"{len(audit.pinned_record_years)}/{len(audit.required_years)} pinned"
+    )
+    print(
+        "preserved MBR directory metadata: "
+        f"{len(audit.preservation_capture_years)}/{len(audit.required_years)} releases"
     )
     for kind in sorted(audit.statuses):
         print(f"{kind}: {audit.statuses[kind]}")

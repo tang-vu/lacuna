@@ -158,6 +158,12 @@ export interface ProjectStatus {
       required: number;
       years: number[];
     };
+    preservation_metadata: {
+      available: number;
+      required: number;
+      years: number[];
+      scope: 'preserved repository directory metadata only';
+    };
     statuses: Record<string, string>;
     readiness_blockers: string[];
   };

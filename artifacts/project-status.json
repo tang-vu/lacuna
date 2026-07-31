@@ -1,15 +1,20 @@
 {
- "schema_version": 4,
+ "schema_version": 5,
  "status": "not_ready",
  "inputs": {
   "historical_sources": {
    "path": "benchmarks/v3/sources.json",
-   "sha256": "9ebbfe1d788c2f564a2e448202205df6805cb78fc5177350be4035ea6ffa4be3",
+   "sha256": "acdebe36c1aa3734c5e2de3b2aa9baa2b41a6c5ddf4f66a0068d9d56127355d1",
    "canonicalisation": "canonical-json-v1"
   },
   "historical_inventories": {
    "path": "benchmarks/v3/inventories.json",
    "sha256": "5c9938355b7cebdcea7e2868da87deb09ba107a44649c0e5cef5bceb79f11416",
+   "canonicalisation": "canonical-json-v1"
+  },
+  "mbr_preservation_capture": {
+   "path": "benchmarks/v3/mbr-capture.json",
+   "sha256": "b2e446a79ed6fcd8d7afe007dc16f8a27ac8232aee7552394faf1eaec3d62302",
    "canonicalisation": "canonical-json-v1"
   },
   "candidate_intake": {
@@ -56,6 +61,17 @@
    "pinned": 0,
    "required": 4,
    "years": []
+  },
+  "preservation_metadata": {
+   "available": 4,
+   "required": 4,
+   "years": [
+    2007,
+    2011,
+    2012,
+    2013
+   ],
+   "scope": "preserved repository directory metadata only"
   },
   "statuses": {
    "current_records": "available_unsuitable",

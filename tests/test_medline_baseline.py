@@ -18,6 +18,7 @@ from pipeline.benchmark.medline_baseline import (
 from pipeline.benchmark.validate_sources import SOURCES_PATH
 
 INVENTORIES_PATH = SOURCES_PATH.parent / "inventories.json"
+MBR_CAPTURE_PATH = SOURCES_PATH.parent / "mbr-capture.json"
 
 A = "D000001"
 B = "D000002"
@@ -54,6 +55,19 @@ def _write_sources(tmp_path, payload):
     inventory_path.write_text(json.dumps(inventory_payload), encoding="utf-8")
     records["inventory_contract"]["sha256"] = hashlib.sha256(
         inventory_path.read_bytes()
+    ).hexdigest()
+    capture_payload = json.loads(MBR_CAPTURE_PATH.read_text(encoding="utf-8"))
+    inventory_by_year = {
+        item["release_year"]: item for item in inventory_payload["releases"]
+    }
+    for release in capture_payload["required_releases"]:
+        inventory = inventory_by_year[release["release_year"]]
+        release["file_count"] = inventory["file_count"]
+        release["total_record_count"] = inventory["total_record_count"]
+    capture_path = tmp_path / MBR_CAPTURE_PATH.name
+    capture_path.write_text(json.dumps(capture_payload), encoding="utf-8")
+    records["preservation_capture_contract"]["sha256"] = hashlib.sha256(
+        capture_path.read_bytes()
     ).hexdigest()
     path = tmp_path / "sources.json"
     path.write_text(json.dumps(payload), encoding="utf-8")
@@ -303,6 +317,16 @@ def test_pinned_release_requires_and_labels_an_exact_complete_file_set(tmp_path)
     inventory_path.write_text(json.dumps(inventory_payload), encoding="utf-8")
     records["inventory_contract"]["sha256"] = hashlib.sha256(
         inventory_path.read_bytes()
+    ).hexdigest()
+    capture_path = tmp_path / MBR_CAPTURE_PATH.name
+    capture_payload = json.loads(capture_path.read_text(encoding="utf-8"))
+    capture_2011 = next(
+        item for item in capture_payload["required_releases"] if item["release_year"] == 2011
+    )
+    capture_2011["total_record_count"] = 7
+    capture_path.write_text(json.dumps(capture_payload), encoding="utf-8")
+    records["preservation_capture_contract"]["sha256"] = hashlib.sha256(
+        capture_path.read_bytes()
     ).hexdigest()
     source_path.write_text(json.dumps(payload), encoding="utf-8")
     with pytest.raises(HistoricalRecordsNotReady, match="record count"):
