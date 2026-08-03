@@ -61,6 +61,13 @@ from pinned MeSH vocabularies. A proposal is not an accepted negative and contri
 readiness. Reviewers should reject or replace generic, polysemous, or substantively related pairs
 without inspecting any lacuna score, then document the rationale publicly in issue #4 or #3.
 
+When accepting a negative into `benchmarks/v3/cases.json`, keep its generated
+`selection_candidate_id`, cite the commit-pinned `artifacts/negative-candidates.json` permalink
+with evidence role `negative_selection_source`, and cite the direct public issue-comment decision
+with role `metric_blind_adjudication`. The validator reconciles the kind, proposed split, cutoff,
+and both descriptor labels with the audited queue, so a hand-picked replacement cannot silently
+inherit a pre-metric proposal's provenance.
+
 ### 3. Improve the pipeline
 
 Good engineering contributions strengthen provenance, source validation, bounded-count handling,

@@ -19,9 +19,15 @@ from datetime import date
 from pathlib import Path
 from urllib.parse import urlsplit
 
+from pipeline.benchmark.metric_blind import find_forbidden_fields
 from pipeline.paths import REPO_ROOT
 
 BENCHMARK_PATH = REPO_ROOT / "benchmarks" / "v3" / "cases.json"
+NEGATIVE_QUEUE_PATH = REPO_ROOT / "artifacts" / "negative-candidates.json"
+NEGATIVE_QUEUE_PUBLIC_URL = (
+    "https://github.com/tang-vu/lacuna/blob/"
+    "e33d6c297ed09c5ff4edf7eacdaa51effcdca319/artifacts/negative-candidates.json"
+)
 KINDS = ("positive", "hard_negative", "distant_negative")
 SPLITS = {"development", "heldout"}
 MAPPING_STATUSES = {
@@ -29,13 +35,6 @@ MAPPING_STATUSES = {
     "maintained_current",
     "ambiguous",
     "unavailable",
-}
-FORBIDDEN_OUTPUT_FIELDS = {
-    "score",
-    "rank",
-    "percentile",
-    "metric_output",
-    "candidate_score",
 }
 EXPECTED_REQUIREMENTS = {
     "minimum_per_kind": 8,
@@ -72,20 +71,6 @@ def _require_https(url: object, context: str) -> None:
     _require(isinstance(url, str), f"{context}: missing URL")
     parts = urlsplit(url)
     _require(parts.scheme == "https" and bool(parts.netloc), f"{context}: URL must be HTTPS")
-
-
-def _find_forbidden_fields(value: object, path: str = "$") -> list[str]:
-    found = []
-    if isinstance(value, dict):
-        for key, child in value.items():
-            child_path = f"{path}.{key}"
-            if key in FORBIDDEN_OUTPUT_FIELDS:
-                found.append(child_path)
-            found.extend(_find_forbidden_fields(child, child_path))
-    elif isinstance(value, list):
-        for index, child in enumerate(value):
-            found.extend(_find_forbidden_fields(child, f"{path}[{index}]"))
-    return found
 
 
 def _validate_mapping(mapping: dict, context: str) -> str:
@@ -151,7 +136,39 @@ def _validate_mapping(mapping: dict, context: str) -> str:
     return str(status)
 
 
-def audit_benchmark(path: Path = BENCHMARK_PATH) -> BenchmarkAudit:
+def _load_negative_proposals(path: Path) -> dict[str, dict]:
+    """Load only a queue that still satisfies its frozen, metric-blind contract."""
+    from pipeline.benchmark.negative_controls import audit_queue
+
+    try:
+        audit_queue(path)
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        raise BenchmarkContractError(f"negative queue failed validation: {exc}") from exc
+    return {item["id"]: item for item in payload["candidates"]}
+
+
+def _has_public_adjudication(evidence: list[dict], issue: int) -> bool:
+    expected_path = f"/tang-vu/lacuna/issues/{issue}"
+    for source in evidence:
+        if source.get("role") != "metric_blind_adjudication":
+            continue
+        parts = urlsplit(str(source.get("url", "")))
+        if (
+            parts.scheme == "https"
+            and parts.hostname == "github.com"
+            and parts.path == expected_path
+            and re.fullmatch(r"issuecomment-\d+", parts.fragment)
+        ):
+            return True
+    return False
+
+
+def audit_benchmark(
+    path: Path = BENCHMARK_PATH,
+    *,
+    negative_queue_path: Path = NEGATIVE_QUEUE_PATH,
+) -> BenchmarkAudit:
     payload = json.loads(path.read_text(encoding="utf-8"))
     _require(payload.get("schema_version") == 1, "unsupported benchmark schema")
     _require(payload.get("status") in {"draft", "frozen"}, "status must be draft or frozen")
@@ -160,7 +177,7 @@ def audit_benchmark(path: Path = BENCHMARK_PATH) -> BenchmarkAudit:
         "benchmark must point to the v3 validation plan",
     )
 
-    forbidden = _find_forbidden_fields(payload.get("cases", []))
+    forbidden = find_forbidden_fields(payload.get("cases", []))
     _require(
         not forbidden,
         "case selection contains metric output fields: " + ", ".join(forbidden),
@@ -181,6 +198,8 @@ def audit_benchmark(path: Path = BENCHMARK_PATH) -> BenchmarkAudit:
         "selection.completed_before_metric must be boolean",
     )
 
+    negative_proposals = _load_negative_proposals(negative_queue_path)
+
     cases = payload.get("cases")
     _require(isinstance(cases, list), "cases must be a list")
     counts = {kind: 0 for kind in KINDS}
@@ -188,6 +207,7 @@ def audit_benchmark(path: Path = BENCHMARK_PATH) -> BenchmarkAudit:
     mapping_counts = {status: 0 for status in sorted(MAPPING_STATUSES)}
     eligible_cutoffs: set[str] = set()
     seen: set[str] = set()
+    linked_negative_proposals: set[str] = set()
 
     for case in cases:
         _require(isinstance(case, dict), "every case must be an object")
@@ -209,20 +229,65 @@ def audit_benchmark(path: Path = BENCHMARK_PATH) -> BenchmarkAudit:
 
         evidence = case.get("evidence")
         _require(isinstance(evidence, list) and evidence, f"{case_id}: missing evidence")
+        evidence_roles: set[str] = set()
         for index, source in enumerate(evidence):
             _require(isinstance(source, dict), f"{case_id}: evidence {index} is malformed")
             _require(bool(source.get("label")), f"{case_id}: evidence {index} missing label")
             _require_https(source.get("url"), f"{case_id}.evidence[{index}]")
+            if isinstance(source.get("role"), str):
+                evidence_roles.add(source["role"])
         if kind == "positive":
             _require(
-                any(source.get("role") == "bridge_publication" for source in evidence),
+                "bridge_publication" in evidence_roles,
                 f"{case_id}: positive case needs a bridge publication",
+            )
+            _require(
+                "selection_candidate_id" not in case,
+                f"{case_id}: positive case cannot link to a negative proposal",
             )
         else:
             _require(bool(case.get("negative_rationale")), f"{case_id}: missing negative rationale")
             _require(
-                any(source.get("role") == "negative_selection_source" for source in evidence),
+                "negative_selection_source" in evidence_roles,
                 f"{case_id}: negative case needs a selection source",
+            )
+            _require(
+                any(
+                    source.get("role") == "negative_selection_source"
+                    and source.get("url") == NEGATIVE_QUEUE_PUBLIC_URL
+                    for source in evidence
+                ),
+                f"{case_id}: negative selection source must be the frozen review queue",
+            )
+            proposal_id = case.get("selection_candidate_id")
+            _require(
+                isinstance(proposal_id, str) and proposal_id in negative_proposals,
+                f"{case_id}: unknown negative proposal {proposal_id!r}",
+            )
+            _require(
+                proposal_id not in linked_negative_proposals,
+                f"{case_id}: negative proposal {proposal_id} is already linked",
+            )
+            linked_negative_proposals.add(proposal_id)
+            proposal = negative_proposals[proposal_id]
+            _require(
+                kind == proposal["kind"],
+                f"{case_id}: kind differs from frozen proposal",
+            )
+            _require(
+                _has_public_adjudication(
+                    evidence,
+                    4 if kind == "hard_negative" else 3,
+                ),
+                f"{case_id}: negative case needs a direct public metric-blind adjudication",
+            )
+            _require(
+                split == proposal["proposed_split"],
+                f"{case_id}: split differs from frozen proposal",
+            )
+            _require(
+                case.get("cutoff") == proposal["cutoff"],
+                f"{case_id}: cutoff differs from frozen proposal",
             )
 
         concepts = case.get("concepts")
@@ -242,6 +307,20 @@ def audit_benchmark(path: Path = BENCHMARK_PATH) -> BenchmarkAudit:
             status = _validate_mapping(concept["mapping"], f"{case_id}.{role}.mapping")
             mapping_counts[status] += 1
             statuses.append(status)
+            if kind != "positive":
+                proposal_concept = proposal["concepts"][role]
+                _require(
+                    concept["label"] == proposal_concept["descriptor_label"],
+                    f"{case_id}: concept {role} differs from frozen proposal",
+                )
+                if status in {"period_appropriate", "maintained_current"}:
+                    _require(
+                        concept["mapping"]["descriptor_ui"]
+                        == proposal_concept["descriptor_ui"]
+                        and concept["mapping"]["descriptor_label"]
+                        == proposal_concept["descriptor_label"],
+                        f"{case_id}: mapped concept {role} differs from frozen proposal",
+                    )
 
         counts[kind] += 1
         if split == "heldout":

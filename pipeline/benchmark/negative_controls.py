@@ -24,8 +24,8 @@ from pathlib import Path
 from xml.etree import ElementTree
 
 from pipeline.benchmark.audit_mesh import pinned_file
+from pipeline.benchmark.metric_blind import find_forbidden_fields
 from pipeline.benchmark.pin_mesh import inspect_descriptor_archive
-from pipeline.benchmark.validate_v3 import FORBIDDEN_OUTPUT_FIELDS
 from pipeline.benchmark.validate_sources import SOURCES_PATH
 from pipeline.paths import ARTIFACTS_DIR, MESH_CACHE_DIR, REPO_ROOT
 from pipeline.provenance import sha256_payload
@@ -75,20 +75,6 @@ def _require(condition: bool, message: str) -> None:
 def _hash(seed: str, *parts: str) -> str:
     value = "|".join((seed, *parts)).encode("utf-8")
     return hashlib.sha256(value).hexdigest()
-
-
-def _find_forbidden_fields(value: object, path: str = "$") -> list[str]:
-    found = []
-    if isinstance(value, dict):
-        for key, child in value.items():
-            child_path = f"{path}.{key}"
-            if key in FORBIDDEN_OUTPUT_FIELDS:
-                found.append(child_path)
-            found.extend(_find_forbidden_fields(child, child_path))
-    elif isinstance(value, list):
-        for index, child in enumerate(value):
-            found.extend(_find_forbidden_fields(child, f"{path}[{index}]"))
-    return found
 
 
 def load_protocol(path: Path = PROTOCOL_PATH) -> dict:
@@ -170,7 +156,7 @@ def load_protocol(path: Path = PROTOCOL_PATH) -> dict:
         )),
         "negative review policy changed",
     )
-    _require(not _find_forbidden_fields(payload), "protocol contains metric output fields")
+    _require(not find_forbidden_fields(payload), "protocol contains metric output fields")
     return payload
 
 
@@ -398,7 +384,7 @@ def audit_queue(path: Path = OUTPUT_PATH, protocol_path: Path = PROTOCOL_PATH) -
         and payload.get("protocol", {}).get("canonicalisation") == "canonical-json-v1",
         "negative queue protocol identity is malformed",
     )
-    _require(not _find_forbidden_fields(payload), "negative queue contains metric output fields")
+    _require(not find_forbidden_fields(payload), "negative queue contains metric output fields")
 
     expected_sources = {
         year: pinned_file(year) for year in protocol["source_vocabulary_years"]

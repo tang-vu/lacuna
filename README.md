@@ -217,7 +217,9 @@ sampler uses only pinned 2012 and 2013 MeSH tree structure and a fixed pre-metri
 [`artifacts/negative-candidates.json`](artifacts/negative-candidates.json), or omit `--build` to
 validate the committed queue. All 16 records are generated review proposals: they contribute zero
 to readiness, assert no absence of knowledge, and cannot enter `cases.json` without public,
-metric-blind human adjudication.
+metric-blind human adjudication. An accepted negative must preserve its generated proposal ID and
+direct public issue-comment decision; `validate_v3` audits the commit-pinned frozen queue and
+rejects any case whose kind, split, cutoff, or descriptor identity drifts from that proposal.
 The live **Metric-blind review desk** publishes all 14 contract-validated intake records directly
 from that ledger, including their evidence links, mapping limitations, adjudication rationale, and
 unresolved questions. Structural validity is not scientific acceptance: it defaults to the ten

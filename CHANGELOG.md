@@ -36,6 +36,9 @@ than disappearing behind later versions.
   frozen selection contract are independently fingerprinted and visibly separate from accepted cases.
 - Advanced `project-status.json` to schema 5 so preserved MBR directory metadata remains visible
   and fingerprinted beside the still-empty raw-record gate.
+- Bound every future accepted negative case to an audited, commit-pinned queue proposal and a
+  direct public metric-blind adjudication, rejecting drift in kind, split, cutoff, or descriptor
+  identity.
 
 ## [0.1.0] — 2026-07-31
 

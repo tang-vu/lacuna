@@ -95,7 +95,10 @@ and four predefined cross-branch distant pairs from each of the pinned 2012 and 
 alternating development and held-out proposals within each year and kind. Generated records are
 not ground truth: they contribute zero until metric-blind human review records a defensible
 negative rationale and accepts them into `cases.json`. The generator and validator forbid metric
-score, rank, or percentile fields throughout this selection path.
+score, rank, or percentile fields throughout this selection path. An accepted negative retains the
+generated proposal ID, a commit-pinned queue link, and a direct public issue-comment adjudication;
+the benchmark validator audits the frozen queue and rejects drift in kind, split, cutoff, or
+descriptor identity.
 
 ## Candidate families
 

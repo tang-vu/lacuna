@@ -31,7 +31,13 @@ python -m pipeline.benchmark.negative_controls
 
 Human adjudication must happen without metric output. A reviewer may reject or replace a generic,
 polysemous, or substantively related pair; acceptance requires a public negative rationale and an
-explicit move into `cases.json`.
+explicit move into `cases.json`. Every accepted negative must retain its generated
+`selection_candidate_id`, cite the frozen queue as `negative_selection_source`, and cite the public
+issue-comment decision as `metric_blind_adjudication`. The queue evidence URL is pinned to the
+commit that generated it rather than mutable `main`. `validate_v3` audits the queue before trusting
+that link, then requires the case kind, split, cutoff, and descriptor labels to match the frozen proposal.
+Changing any of those fields requires changing and regenerating the pre-metric selection record;
+it cannot be hidden in the accepted case.
 
 Historical inputs have their own dated access record:
 

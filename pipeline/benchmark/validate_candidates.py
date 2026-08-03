@@ -15,7 +15,8 @@ from datetime import date
 from pathlib import Path
 from urllib.parse import urlsplit
 
-from pipeline.benchmark.validate_v3 import BENCHMARK_PATH, FORBIDDEN_OUTPUT_FIELDS, KINDS
+from pipeline.benchmark.metric_blind import find_forbidden_fields
+from pipeline.benchmark.validate_v3 import BENCHMARK_PATH, KINDS
 from pipeline.benchmark.validate_v3 import DESCRIPTOR_UI, SHA256
 from pipeline.benchmark.validate_sources import SOURCES_PATH
 from pipeline.paths import REPO_ROOT
@@ -43,20 +44,6 @@ def _require_https(url: object, context: str) -> None:
     _require(isinstance(url, str), f"{context}: missing URL")
     parts = urlsplit(url)
     _require(parts.scheme == "https" and bool(parts.netloc), f"{context}: URL must be HTTPS")
-
-
-def _find_forbidden_fields(value: object, path: str = "$") -> list[str]:
-    found = []
-    if isinstance(value, dict):
-        for key, child in value.items():
-            child_path = f"{path}.{key}"
-            if key in FORBIDDEN_OUTPUT_FIELDS:
-                found.append(child_path)
-            found.extend(_find_forbidden_fields(child, child_path))
-    elif isinstance(value, list):
-        for index, child in enumerate(value):
-            found.extend(_find_forbidden_fields(child, f"{path}[{index}]"))
-    return found
 
 
 def _load_benchmark_cases(path: Path) -> dict[str, dict]:
@@ -100,7 +87,7 @@ def audit_candidates(
 
     candidates = payload.get("candidates")
     _require(isinstance(candidates, list), "candidates must be a list")
-    forbidden = _find_forbidden_fields(candidates)
+    forbidden = find_forbidden_fields(candidates)
     _require(
         not forbidden,
         "candidate intake contains metric output fields: " + ", ".join(forbidden),
