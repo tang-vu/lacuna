@@ -556,9 +556,28 @@ h2 { font-size: 1.5rem; margin: 0 0 0.4rem; }
   border: 1px solid var(--rule);
   border-radius: 6px;
   padding: 1.1rem 1.25rem;
+  scroll-margin-top: 1rem;
+}
+.card-curated:target {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent);
 }
 .card-curated h3 { margin: 0 0 0.6rem; font-size: 1.12rem; }
 .card-curated p { margin: 0.6rem 0; }
+.curated-actions { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1rem; }
+.curated-actions a,
+.curated-share {
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 0.4rem 0.55rem;
+  background: var(--bg);
+  color: var(--muted);
+  font: 0.66rem var(--mono);
+  text-decoration: none;
+  cursor: pointer;
+}
+.curated-actions a:hover,
+.curated-share:hover { border-color: var(--accent); color: var(--accent); }
 
 .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 .chip {

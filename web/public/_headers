@@ -6,6 +6,10 @@
   Content-Type: application/xml; charset=utf-8
   Cache-Control: public, max-age=3600
 
+/holes/*
+  Cache-Control: public, max-age=3600
+  X-Content-Type-Options: nosniff
+
 /site.webmanifest
   Content-Type: application/manifest+json; charset=utf-8
   Cache-Control: public, max-age=86400

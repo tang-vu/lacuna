@@ -26,7 +26,10 @@
     "kind": "coverage-historical",
     "summary": "Measured on 2026-07-27: OpenAlex holds roughly 1.38M works published in 1980, 1.05M in 1970, but only 305K in 1950 — about a fifth of the 1980 density. Historical analyses become progressively less trustworthy the further back they reach, and an apparent gap in older literature may simply be an unindexed one.",
     "severity": "partial",
-    "measured": { "works_1980": 1383251, "works_1970": 1051187, "works_1950": 304575 }
+    "measured": { "works_1980": 1383251, "works_1970": 1051187, "works_1950": 304575 },
+    "sources": [
+      { "label": "Dated OpenAlex API coverage audit with query form and three count results", "url": "plans/reports/researcher-260727-1126-openalex-api-capabilities-report.md" }
+    ]
   },
   {
     "id": "ontology-anachronism",
@@ -53,6 +56,10 @@
     "kind": "coverage-artifact",
     "summary": "OpenAlex assigns a topic to every work, so works with thin metadata land wherever the classifier defaults. 'Military Technology and Strategies' holds 22.3M works — 7% of the entire corpus — and 'Diverse Scientific and Economic Studies' holds 5.1M. These are artifacts of classification, not fields of that size, and any measure averaged over them is meaningless.",
     "severity": "partial",
-    "measured": { "T14423_works": 22343805, "T13370_works": 5142288 }
+    "measured": { "T14423_works": 22343805, "T13370_works": 5142288 },
+    "sources": [
+      { "label": "Pinned taxonomy artifact containing both OpenAlex topic counts", "url": "artifacts/2026-07-27/v2-bridge-k5/taxonomy.json" },
+      { "label": "Pre-registration documenting the classifier-dumping-ground exclusion", "url": "docs/metric-validation-preregistration.md" }
+    ]
   }
 ]

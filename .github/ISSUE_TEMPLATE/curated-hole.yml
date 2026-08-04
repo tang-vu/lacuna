@@ -1,0 +1,74 @@
+name: Propose a sourced hole
+description: Propose an open question, blocked question, or coverage blind spot with public evidence.
+title: "[curated] "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        lacuna keeps human-curated entries separate from computed measurements. A plausible idea is not enough: open and blocked questions need public sources, and coverage claims must preserve what the map cannot see.
+  - type: dropdown
+    id: layer
+    attributes:
+      label: Layer
+      description: Choose the kind of hole this proposal belongs to.
+      options:
+        - Open question — a field explicitly acknowledges that it cannot answer it
+        - Blocked question — well posed, but stopped by instrumentation, cost, ethics, or timescale
+        - Coverage blind spot — a documented limit of lacuna's sources or method
+    validations:
+      required: true
+  - type: input
+    id: title
+    attributes:
+      label: Proposed title
+      placeholder: A concise question or limitation
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: What remains unknown or blocked?
+      description: State the boundary precisely. Do not describe a computed pair as a discovery or hypothesis.
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Public sources
+      description: One URL per line, with a short note explaining exactly what each source establishes.
+      placeholder: |
+        https://example.org/source — establishes that the field treats this as open
+    validations:
+      required: true
+  - type: dropdown
+    id: blocker
+    attributes:
+      label: Blocker, if this is a blocked question
+      options:
+        - Not applicable
+        - Instrumentation
+        - Cost
+        - Ethics
+        - Timescale
+    validations:
+      required: true
+  - type: textarea
+    id: boundary
+    attributes:
+      label: Why does it fit this layer?
+      description: Explain why this is not merely difficult, underfunded, or absent from OpenAlex.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Evidence checklist
+      options:
+        - label: I did not select this entry because of a lacuna metric score or rank.
+          required: true
+        - label: I have not treated missing academic literature as proof that human knowledge is absent.
+          required: true
+        - label: The summary distinguishes sourced claims from any measured numbers.
+          required: true

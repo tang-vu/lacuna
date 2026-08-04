@@ -28,6 +28,7 @@ function header(manifest: Manifest, computed: ComputedLayer): HTMLElement {
     el('nav', { class: 'topbar', 'aria-label': 'Primary navigation' }, [
       el('a', { class: 'wordmark', href: '/' }, ['lacuna']),
       el('div', {}, [
+        el('a', { href: '/holes/' }, ['Hole atlas']),
         el('a', { href: '#status' }, ['Status']),
         el('a', { href: '#contribute' }, ['Contribute']),
         el('a', { href: '#computed' }, ['Evidence lab']),
@@ -46,7 +47,8 @@ function header(manifest: Manifest, computed: ComputedLayer): HTMLElement {
           'The knowledge tree is scaffolding. The holes are the product.',
         ]),
         el('div', { class: 'hero-actions' }, [
-          el('a', { class: 'button button-primary', href: '#computed' }, ['Enter the evidence lab']),
+          el('a', { class: 'button button-primary', href: '/holes/' }, ['Browse sourced holes']),
+          el('a', { class: 'button button-secondary', href: '#computed' }, ['Audit the failed method']),
           el(
             'a',
             {

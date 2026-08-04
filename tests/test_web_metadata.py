@@ -116,6 +116,7 @@ def test_core_contribution_issue_forms_are_present():
     assert (ROOT / "CITATION.cff").is_file()
     assert (issue_templates / "historical-source.yml").is_file()
     assert (issue_templates / "benchmark-case.yml").is_file()
+    assert (issue_templates / "curated-hole.yml").is_file()
     assert (issue_templates / "bug-report.yml").is_file()
 
 
@@ -168,3 +169,24 @@ def test_source_recovery_copy_keeps_preservation_metadata_out_of_raw_readiness()
 
     assert "historical MBR directory" in view_source
     assert "metadata is a target, not the records" in view_source
+
+
+def test_shareable_hole_atlas_is_generated_from_versioned_curated_artifacts():
+    package = json.loads((ROOT / "web" / "package.json").read_text(encoding="utf-8"))
+    builder = (ROOT / "web" / "scripts" / "build-share-pages.mjs").read_text(
+        encoding="utf-8"
+    )
+    curated_view = (ROOT / "web" / "src" / "views" / "curated.ts").read_text(
+        encoding="utf-8"
+    )
+
+    assert "node scripts/build-share-pages.mjs" in package["scripts"]["build"]
+    assert "latest.json" in builder
+    assert "curated.json" in builder
+    assert "written by a person" in builder
+    assert "not a computed discovery or an actionable hypothesis" in builder
+    assert "sitemap.xml" in builder
+    assert "metric_blind" not in builder
+    assert "navigator.share" in curated_view
+    assert "share this hole" in curated_view
+    assert "id: `hole-${entry.id}`" in curated_view

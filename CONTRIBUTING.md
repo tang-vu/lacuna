@@ -68,7 +68,20 @@ with role `metric_blind_adjudication`. The validator reconciles the kind, propos
 and both descriptor labels with the audited queue, so a hand-picked replacement cannot silently
 inherit a pre-metric proposal's provenance.
 
-### 3. Improve the pipeline
+### 3. Propose a sourced hole
+
+The public [hole atlas](https://lacuna.tangvu.dev/holes/) is generated from `curated/open.json`,
+`curated/blocked.json`, and `curated/blind-spots.json`. Use the
+[sourced-hole issue form](https://github.com/tang-vu/lacuna/issues/new?template=curated-hole.yml)
+instead of editing generated pages.
+
+An open question needs evidence that a field explicitly treats it as unanswered. A blocked
+question needs a well-posed target and a documented instrumentation, cost, ethics, or timescale
+constraint. A coverage blind spot must describe what lacuna's source or method cannot see; missing
+OpenAlex literature is not evidence that human knowledge is absent. Keep measured numbers separate
+from the written summary and cite every public claim.
+
+### 4. Improve the pipeline
 
 Good engineering contributions strengthen provenance, source validation, bounded-count handling,
 streaming performance, accessibility, or reproducibility. Do not implement or tune a v3 scoring

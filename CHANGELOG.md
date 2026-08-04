@@ -21,6 +21,10 @@ than disappearing behind later versions.
   preserving all four required repository directory rows without treating metadata as raw records.
 - Independent live checks for the Common Crawl index and pinned WARC byte range, so an index outage
   no longer suppresses payload-integrity evidence.
+- A build-time hole atlas with one canonical, crawlable, social-shareable page per curated open
+  question, blocked question, and declared blind spot, generated from the versioned artifact.
+- A sourced-hole issue form and share actions that turn a public hole page into a guarded
+  contribution path without routing failed computed pairs into the curated layers.
 
 ### Changed
 
@@ -39,6 +43,8 @@ than disappearing behind later versions.
 - Bound every future accepted negative case to an audited, commit-pinned queue proposal and a
   direct public metric-blind adjudication, rejecting drift in kind, split, cutoff, or descriptor
   identity.
+- Generate the production sitemap from the curated artifact so it covers the hole atlas and every
+  canonical hole page while excluding failed-metric pair URLs.
 
 ## [0.1.0] — 2026-07-31
 

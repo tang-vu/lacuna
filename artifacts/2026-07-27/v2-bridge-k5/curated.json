@@ -182,7 +182,13 @@
     "works_1980": 1383251,
     "works_1970": 1051187,
     "works_1950": 304575
-   }
+   },
+   "sources": [
+    {
+     "label": "Dated OpenAlex API coverage audit with query form and three count results",
+     "url": "plans/reports/researcher-260727-1126-openalex-api-capabilities-report.md"
+    }
+   ]
   },
   {
    "id": "ontology-anachronism",
@@ -222,7 +228,17 @@
    "measured": {
     "T14423_works": 22343805,
     "T13370_works": 5142288
-   }
+   },
+   "sources": [
+    {
+     "label": "Pinned taxonomy artifact containing both OpenAlex topic counts",
+     "url": "artifacts/2026-07-27/v2-bridge-k5/taxonomy.json"
+    },
+    {
+     "label": "Pre-registration documenting the classifier-dumping-ground exclusion",
+     "url": "docs/metric-validation-preregistration.md"
+    }
+   ]
   }
  ]
 }

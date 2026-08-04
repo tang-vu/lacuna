@@ -46,6 +46,22 @@ these rows into candidate discoveries; it makes a negative result easier to insp
 
 ---
 
+## The shareable hole atlas
+
+Every curated open question, blocked question, and declared blind spot has a canonical page under
+[`/holes/`](https://lacuna.tangvu.dev/holes/). The production build generates those pages directly
+from the validated, versioned curated artifact rather than maintaining a second copy of the text.
+Each page works without JavaScript, exposes its sources and provenance label, carries distinct
+Open Graph/Twitter metadata, and links back to the exact card in the full map.
+
+The sitemap is generated from the same artifact. Computed pairs are deliberately excluded: the
+current method failed validation, so social previews and search landing pages must not recast its
+measurements as discoveries. A sourced-hole issue form lets readers propose additions while
+requiring evidence and preserving the boundary between absent academic coverage and absent human
+knowledge.
+
+---
+
 ## What the gap metric tries to do, in plain English
 
 In 1986 Don Swanson noticed that papers on fish oil described effects on blood — lower viscosity,
@@ -281,8 +297,9 @@ BING_SITE_VERIFICATION=<Bing Webmaster Tools meta-tag token>
 ```
 
 After ownership is verified, submit `https://lacuna.tangvu.dev/sitemap.xml` in the relevant
-webmaster console. The sitemap contains only the canonical homepage; hash sections and versioned
-JSON evidence files are not separate search landing pages.
+webmaster console. The sitemap contains the canonical homepage, the generated hole-atlas index,
+and one page per curated entry. Hash sections, failed-metric pair views, and versioned JSON evidence
+files are not separate search landing pages.
 
 ## Licence
 
