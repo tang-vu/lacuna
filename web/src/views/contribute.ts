@@ -379,6 +379,34 @@ function negativeCard(candidate: NegativeCandidate, selected: boolean): HTMLElem
         el('h4', {}, ['Human review required']),
         el('ol', {}, candidate.review_required.map((item) => el('li', {}, [item]))),
       ]),
+      el('details', { class: 'candidate-context' }, [
+        el('summary', {}, ['Inspect pinned MeSH review context']),
+        el('p', { class: 'candidate-context-warning' }, [
+          'Generated vocabulary context; zero readiness; not human adjudication.',
+        ]),
+        ...(['a', 'c'] as const).map((role) => {
+          const context = candidate.review_context.concepts[role];
+          return el('div', { class: 'candidate-context-concept' }, [
+            el('h4', {}, [`${role.toUpperCase()} · ${context.descriptor_label}`]),
+            ...context.scope_notes.map((note) => el('p', {}, [note])),
+            context.entry_terms.length
+              ? el('p', { class: 'candidate-context-terms' }, [
+                  `Entry terms: ${context.entry_terms.join('; ')}`,
+                ])
+              : null,
+            context.annotations.length
+              ? el('p', { class: 'candidate-context-terms' }, [
+                  `MeSH annotation: ${context.annotations.join(' · ')}`,
+                ])
+              : null,
+          ].filter((node): node is HTMLElement => node !== null));
+        }),
+        candidate.review_context.shared_parent
+          ? el('p', { class: 'candidate-context-parent' }, [
+              `Shared parent: ${candidate.review_context.shared_parent.descriptor_label} · ${candidate.review_context.shared_parent.tree_number}`,
+            ])
+          : null,
+      ].filter((node): node is HTMLElement => node !== null)),
       el('div', { class: 'candidate-decision' }, [
         el('p', {}, [
           el('strong', {}, ['Generated proposal · ']),

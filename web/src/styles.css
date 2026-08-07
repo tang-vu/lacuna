@@ -516,6 +516,28 @@ h1 {
   font: 0.62rem var(--mono);
 }
 .candidate-evidence a { color: inherit; }
+.candidate-context {
+  margin-top: 1.25rem;
+  border: 1px solid color-mix(in srgb, var(--measured) 35%, var(--rule));
+  border-radius: 4px;
+  background: var(--measured-bg);
+}
+.candidate-context summary {
+  padding: 0.75rem 0.9rem;
+  color: var(--measured);
+  font: 0.7rem var(--mono);
+  cursor: pointer;
+}
+.candidate-context[open] { padding-bottom: 0.8rem; }
+.candidate-context[open] summary { border-bottom: 1px solid var(--rule); }
+.candidate-context-warning,
+.candidate-context-concept,
+.candidate-context-parent { margin: 0.8rem 0.9rem 0; }
+.candidate-context-warning,
+.candidate-context-terms,
+.candidate-context-parent { color: var(--muted); font-size: 0.78rem; }
+.candidate-context-concept h4 { margin: 0 0 0.35rem; font-size: 0.88rem; }
+.candidate-context-concept p { margin: 0.35rem 0; font-size: 0.82rem; }
 .candidate-decision {
   margin: 1.25rem -1.25rem -1.25rem;
   padding: 1rem 1.25rem;

@@ -60,6 +60,9 @@ rather than choosing a pair after seeing a metric. The frozen protocol in
 from pinned MeSH vocabularies. A proposal is not an accepted negative and contributes zero to
 readiness. Reviewers should reject or replace generic, polysemous, or substantively related pairs
 without inspecting any lacuna score, then document the rationale publicly in issue #4 or #3.
+The public review desk expands each proposal with checksum-pinned production-year MeSH scope notes,
+entry terms, annotations, and tree context from `artifacts/negative-review-context.json`; this is a
+generated review aid, not a recommendation to accept.
 
 When accepting a negative into `benchmarks/v3/cases.json`, keep its generated
 `selection_candidate_id`, cite the commit-pinned `artifacts/negative-candidates.json` permalink

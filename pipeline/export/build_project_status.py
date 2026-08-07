@@ -18,6 +18,10 @@ from pipeline.benchmark.negative_controls import (
     audit_queue,
     load_protocol,
 )
+from pipeline.benchmark.negative_review_context import (
+    OUTPUT_PATH as NEGATIVE_REVIEW_CONTEXT_PATH,
+    audit_review_context,
+)
 from pipeline.benchmark.mbr_capture import CAPTURE_PATH as MBR_CAPTURE_PATH
 from pipeline.benchmark.validate_candidates import CANDIDATES_PATH, audit_candidates
 from pipeline.benchmark.source_inventories import INVENTORIES_PATH
@@ -46,14 +50,22 @@ def build_project_status() -> dict:
     sources = audit_sources()
     candidates = audit_candidates()
     negative_queue = audit_queue()
+    audit_review_context()
     benchmark = audit_benchmark()
     ready = sources.ready and benchmark.ready
     candidate_payload = json.loads(CANDIDATES_PATH.read_text(encoding="utf-8"))
     negative_payload = json.loads(NEGATIVE_QUEUE_PATH.read_text(encoding="utf-8"))
+    negative_context_payload = json.loads(
+        NEGATIVE_REVIEW_CONTEXT_PATH.read_text(encoding="utf-8")
+    )
+    negative_context = {
+        entry["candidate_id"]: entry
+        for entry in negative_context_payload["entries"]
+    }
     negative_protocol = load_protocol()
 
     return {
-        "schema_version": 5,
+        "schema_version": 6,
         "status": "ready" if ready else "not_ready",
         "inputs": {
             "historical_sources": _input_identity(SOURCES_PATH),
@@ -62,6 +74,7 @@ def build_project_status() -> dict:
             "candidate_intake": _input_identity(CANDIDATES_PATH),
             "negative_selection_protocol": _input_identity(NEGATIVE_PROTOCOL_PATH),
             "negative_candidate_queue": _input_identity(NEGATIVE_QUEUE_PATH),
+            "negative_review_context": _input_identity(NEGATIVE_REVIEW_CONTEXT_PATH),
             "benchmark": _input_identity(BENCHMARK_PATH),
         },
         "historical_sources": {
@@ -104,7 +117,18 @@ def build_project_status() -> dict:
             "readiness_contribution": negative_queue["readiness_contribution"],
             "protocol_status": negative_protocol["status"],
             "warning": negative_payload["warning"],
-            "entries": negative_payload["candidates"],
+            "context_warning": negative_context_payload["warning"],
+            "entries": [
+                {
+                    **candidate,
+                    "review_context": {
+                        key: value
+                        for key, value in negative_context[candidate["id"]].items()
+                        if key != "candidate_id"
+                    },
+                }
+                for candidate in negative_payload["candidates"]
+            ],
         },
         "benchmark": {
             "ready": benchmark.ready,

@@ -185,6 +185,7 @@ export interface ProjectStatus {
     readiness_contribution: 0;
     protocol_status: 'frozen_before_v3_metric';
     warning: string;
+    context_warning: string;
     entries: NegativeCandidate[];
   };
   benchmark: {
@@ -230,6 +231,26 @@ export interface NegativeCandidate {
   };
   negative_rationale: string;
   review_required: string[];
+  review_context: {
+    concepts: {
+      a: NegativeConceptContext;
+      c: NegativeConceptContext;
+    };
+    shared_parent?: {
+      descriptor_ui: string;
+      descriptor_label: string;
+      tree_number: string;
+    };
+  };
+}
+
+export interface NegativeConceptContext {
+  descriptor_ui: string;
+  descriptor_label: string;
+  tree_numbers: string[];
+  entry_terms: string[];
+  scope_notes: string[];
+  annotations: string[];
 }
 
 export interface CandidateEvidence {

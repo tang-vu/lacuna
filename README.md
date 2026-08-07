@@ -238,6 +238,10 @@ direct public issue-comment decision; `validate_v3` audits the commit-pinned fro
 rejects any case whose kind, split, cutoff, or descriptor identity drifts from that proposal.
 Negative controls do not duplicate records in the positive-case intake ledger, so they do not
 inherit its bridge-publication and independent-replication requirements.
+`python -m pipeline.benchmark.negative_review_context --build` derives a separate, checksum-pinned
+review aid from the 2012 and 2013 MeSH archives. It adds official scope notes, entry terms, tree
+paths, and hard-negative parent labels to the public review desk while contributing zero readiness
+and making no adjudication decision.
 The live **Metric-blind review desk** publishes all 14 contract-validated intake records directly
 from that ledger, including their evidence links, mapping limitations, adjudication rationale, and
 unresolved questions. Structural validity is not scientific acceptance: it defaults to the ten

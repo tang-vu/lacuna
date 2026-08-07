@@ -239,3 +239,20 @@ def test_pinned_manifest_must_use_the_fingerprinted_nlm_inventory(tmp_path):
 
     with pytest.raises(SourceContractError, match="differs from the pinned NLM contract"):
         audit_sources(path)
+
+
+def test_public_source_provenance_excludes_personal_support_correspondence():
+    request = (
+        SOURCES_PATH.parents[2] / "plans" / "requests" / "nlm-historical-medline-access.md"
+    ).read_text(encoding="utf-8")
+    report = (
+        SOURCES_PATH.parents[2]
+        / "plans"
+        / "reports"
+        / "source-search-260807-historical-medline.md"
+    ).read_text(encoding="utf-8")
+    public_record = request + report + SOURCES_PATH.read_text(encoding="utf-8")
+
+    assert "@gmail.com" not in public_record
+    assert "CAS-" not in public_record
+    assert "Case #" not in public_record

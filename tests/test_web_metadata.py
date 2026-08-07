@@ -160,6 +160,9 @@ def test_candidate_review_desk_keeps_proposals_curated_and_out_of_readiness():
     assert "candidate.mapping_audit.limitation" in view_source
     assert "candidate.open_questions" in view_source
     assert "candidate.evidence.map" in view_source
+    assert "Inspect pinned MeSH review context" in view_source
+    assert "Generated vocabulary context; zero readiness" in view_source
+    assert "candidate.review_context.shared_parent" in view_source
 
 
 def test_source_recovery_copy_keeps_preservation_metadata_out_of_raw_readiness():

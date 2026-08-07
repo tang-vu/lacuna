@@ -12,7 +12,7 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 5
+    assert status["schema_version"] == 6
     assert status["status"] == "not_ready"
     assert status["historical_sources"] == {
         "ready": False,
@@ -91,6 +91,13 @@ def test_project_status_exposes_validator_results_without_claiming_readiness():
     assert negative_queue["protocol_status"] == "frozen_before_v3_metric"
     assert len(negative_queue["entries"]) == 16
     assert all(entry["status"] == "proposed" for entry in negative_queue["entries"])
+    assert "generated review aid" in negative_queue["context_warning"]
+    assert all(entry["review_context"]["concepts"] for entry in negative_queue["entries"])
+    assert all(
+        entry["review_context"].get("shared_parent")
+        for entry in negative_queue["entries"]
+        if entry["kind"] == "hard_negative"
+    )
     assert status["benchmark"]["ready"] is False
     assert status["benchmark"]["requirements"] == {
         "minimum_per_kind": 8,
@@ -124,6 +131,7 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
         "candidate_intake",
         "negative_selection_protocol",
         "negative_candidate_queue",
+        "negative_review_context",
         "benchmark",
     }
     for source in committed["inputs"].values():

@@ -35,6 +35,19 @@ python -m pipeline.benchmark.negative_controls --build
 python -m pipeline.benchmark.negative_controls
 ```
 
+The separate generated `../../artifacts/negative-review-context.json` makes review less dependent
+on labels alone. It is built only from checksum-verified production-year MeSH archives and the
+frozen queue:
+
+```bash
+python -m pipeline.benchmark.negative_review_context --build
+python -m pipeline.benchmark.negative_review_context
+```
+
+It exposes scope notes, entry terms, all descriptor tree paths, annotations, and hard-negative
+parent labels. It is a generated vocabulary aid with zero readiness—not a judgment that a pair is
+unrelated and not a substitute for public human adjudication.
+
 Human adjudication must happen without metric output. A reviewer may reject or replace a generic,
 polysemous, or substantively related pair; acceptance requires a public negative rationale and an
 explicit move into `cases.json`. Every accepted negative must retain its generated

@@ -32,9 +32,8 @@ record release, checksum, or period-appropriate mapping to metric v3 readiness.
 
 ## Consequence
 
-The prepared support request in `plans/requests/nlm-historical-medline-access.md` remains the next
-external action. The current NCBI README provides a direct public contact in addition to the NLM
-Support Center, but owner contact details and submission are still required. Do not turn a support
-reply, directory listing, title/abstract snapshot, or current PubMed export into
-`available_pinned`; complete release files must pass the pinned inventory and manifest workflow.
-
+The prepared support request in `plans/requests/nlm-historical-medline-access.md` was submitted on
+2026-08-07 and a response is pending. Personal correspondence and identifiers stay outside the
+repository. Do not turn a support reply, directory listing, title/abstract snapshot, or current
+PubMed export into `available_pinned`; complete release files must pass the pinned inventory and
+manifest workflow.

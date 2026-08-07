@@ -1,15 +1,14 @@
 # NLM historical MEDLINE baseline access request
 
-**Status:** prepared, not sent  
+**Status:** submitted; response pending
 **Prepared:** 2026-07-31
+**Submitted:** 2026-08-07
 
 **Public-path follow-up:** 2026-08-07; no raw release found. See
 `plans/reports/source-search-260807-historical-medline.md`. The current NCBI baseline README also
-directs data questions to `info@ncbi.nlm.nih.gov`; submission still requires the owner's contact
-details.
-
-**Owner action required:** add contact details and submit through the
-[NLM Support Center](https://support.nlm.nih.gov/).
+directs data questions to `info@ncbi.nlm.nih.gov`. The request has been submitted; personal contact
+details, the support case identifier, and correspondence are deliberately not committed to
+repository provenance.
 
 ## Why this request is necessary
 
@@ -41,7 +40,7 @@ also says raw FTP and query access were controlled for registered licensees. As 
 No raw record source has therefore been marked available. The project already has the matching
 2007, 2011, 2012, and 2013 production-year MeSH descriptor archives pinned separately.
 
-## Submission draft
+## Submitted request template
 
 **Subject:** Access to static 2007, 2011, 2012, and 2013 MEDLINE/PubMed baseline XML
 

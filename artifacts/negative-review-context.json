@@ -1,0 +1,736 @@
+{
+ "schema_version": 1,
+ "status": "generated_review_aid",
+ "readiness_contribution": 0,
+ "warning": "Pinned vocabulary context is a generated review aid, not human adjudication, evidence that a relationship is absent, or benchmark readiness.",
+ "queue": {
+  "path": "artifacts/negative-candidates.json",
+  "sha256": "459948e23ba3d3cfe800be917ea16ce546e835d883953d42d112da05d970c152",
+  "canonicalisation": "canonical-json-v1"
+ },
+ "sources": [
+  {
+   "year": 2012,
+   "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/2012/xmlmesh/desc2012.gz",
+   "sha256": "381e804c7615e7a5332b2991e659a64b0ad0f216c4481ef6b7e3c614fc45095f",
+   "bytes": 15871262,
+   "descriptor_count": 26581
+  },
+  {
+   "year": 2013,
+   "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/2013/xmlmesh/desc2013.gz",
+   "sha256": "c928973ae228ebd03ceeec8950b31f63a867fc9dc2699ae1578e506f25739740",
+   "bytes": 16103897,
+   "descriptor_count": 26853
+  }
+ ],
+ "entries": [
+  {
+   "candidate_id": "generated-distant-2012-01-d011651-d013783",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D011651",
+     "descriptor_label": "Pulmonary Artery",
+     "tree_numbers": [
+      "A07.231.114.715"
+     ],
+     "entry_terms": [
+      "Arteries, Pulmonary",
+      "Artery, Pulmonary",
+      "Pulmonary Arteries"
+     ],
+     "scope_notes": [
+      "The short wide vessel arising from the conus arteriosus of the right ventricle and conveying unaerated blood to the lungs."
+     ],
+     "annotations": [
+      "DF: PULM ARTERY"
+     ]
+    },
+    "c": {
+     "descriptor_ui": "D013783",
+     "descriptor_label": "Textile Industry",
+     "tree_numbers": [
+      "J01.576.885"
+     ],
+     "entry_terms": [
+      "Industries, Textile",
+      "Industry, Textile",
+      "Textile Industries"
+     ],
+     "scope_notes": [
+      "The aggregate business enterprise of manufacturing textiles. (From Random House Unabridged Dictionary, 2d ed)"
+     ],
+     "annotations": [
+      "SPEC: SPEC qualif; DF: TEXTILE INDUST"
+     ]
+    }
+   }
+  },
+  {
+   "candidate_id": "generated-distant-2012-02-d047229-d011337",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D047229",
+     "descriptor_label": "Plakortis",
+     "tree_numbers": [
+      "B01.050.500.802.670"
+     ],
+     "entry_terms": [
+      "Plakorti"
+     ],
+     "scope_notes": [
+      "A genus of SPONGES in the family Plakinidae, with the skeleton formed by small diactine (and some triactine) needle-like terminations."
+     ],
+     "annotations": []
+    },
+    "c": {
+     "descriptor_ui": "D011337",
+     "descriptor_label": "Probability Learning",
+     "tree_numbers": [
+      "F02.463.425.701"
+     ],
+     "entry_terms": [
+      "Learning, Probability",
+      "Learnings, Probability",
+      "Probability Learnings"
+     ],
+     "scope_notes": [
+      "Usually refers to the use of mathematical models in the prediction of learning to perform tasks based on the theory of probability applied to responses; it may also refer to the frequency of occurrence of the responses observed in the particular study."
+     ],
+     "annotations": [
+      "no qualif"
+     ]
+    }
+   }
+  },
+  {
+   "candidate_id": "generated-distant-2012-03-d009008-d008888",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D009008",
+     "descriptor_label": "Abnormalities, Severe Teratoid",
+     "tree_numbers": [
+      "C16.131.085"
+     ],
+     "entry_terms": [
+      "Abnormality, Severe Teratoid",
+      "Severe Teratoid Abnormalities",
+      "Severe Teratoid Abnormality",
+      "Teratoid Abnormalities, Severe",
+      "Teratoid Abnormality, Severe"
+     ],
+     "scope_notes": [
+      "Marked developmental anomalies of a fetus or infant."
+     ],
+     "annotations": [
+      "fetus in fetu: index under FETUS /abnorm; \"monsters\" in historical literature goes here"
+     ]
+    },
+    "c": {
+     "descriptor_ui": "D008888",
+     "descriptor_label": "Military Nursing",
+     "tree_numbers": [
+      "H02.478.676.458"
+     ],
+     "entry_terms": [
+      "Military Nursings",
+      "Military and Naval Nursing",
+      "Nursing, Military",
+      "Nursing, Military and Naval",
+      "Nursings, Military"
+     ],
+     "scope_notes": [
+      "The practice of nursing in military environments."
+     ],
+     "annotations": [
+      "SPEC: SPEC qualif; specify country"
+     ]
+    }
+   }
+  },
+  {
+   "candidate_id": "generated-distant-2012-04-d008524-d055700",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D008524",
+     "descriptor_label": "Medrogestone",
+     "tree_numbers": [
+      "D04.808.745.432.481"
+     ],
+     "entry_terms": [
+      "Biodim Brand of Medrogestone",
+      "Colpro",
+      "Colprone",
+      "Medrogestone Biodim Brand",
+      "Medrogestone Solvay Brand",
+      "Medrogestone Wyeth Brand",
+      "Prothil",
+      "Solvay Brand of Medrogestone",
+      "Wyeth Brand of Medrogestone"
+     ],
+     "scope_notes": [
+      "6,17-Dimethylpregna-4,6-diene-3,20-dione. A synthetic progestational hormone with actions similar to those of progesterone. It is used in the treatment of menstrual irregularities and has also been employed in the treatment of prostatic hypertrophy and endometrial carcinoma."
+     ],
+     "annotations": [
+      "a synthetic progestational hormone"
+     ]
+    },
+    "c": {
+     "descriptor_ui": "D055700",
+     "descriptor_label": "Cremation",
+     "tree_numbers": [
+      "I01.076.201.450.550.175"
+     ],
+     "entry_terms": [
+      "Cremains",
+      "Cremations"
+     ],
+     "scope_notes": [
+      "Reducing a dead body to ashes by burning or incineration."
+     ],
+     "annotations": []
+    }
+   }
+  },
+  {
+   "candidate_id": "generated-distant-2013-01-d008438-d057141",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D008438",
+     "descriptor_label": "Maxillary Artery",
+     "tree_numbers": [
+      "A07.231.114.523"
+     ],
+     "entry_terms": [
+      "Arteries, Maxillary",
+      "Artery, Maxillary",
+      "Maxillary Arteries"
+     ],
+     "scope_notes": [
+      "A branch of the external carotid artery which distributes to the deep structures of the face (internal maxillary) and to the side of the face and nose (external maxillary)."
+     ],
+     "annotations": []
+    },
+    "c": {
+     "descriptor_ui": "D057141",
+     "descriptor_label": "Food, Preserved",
+     "tree_numbers": [
+      "J02.500.521"
+     ],
+     "entry_terms": [
+      "Canned Food",
+      "Canned Foods",
+      "Dried Food",
+      "Dried Foods",
+      "Food, Canned",
+      "Food, Dried",
+      "Foods, Canned",
+      "Foods, Dried",
+      "Foods, Preserved",
+      "Preserved Food",
+      "Preserved Foods"
+     ],
+     "scope_notes": [
+      "Food that has been prepared and stored in a way to prevent spoilage."
+     ],
+     "annotations": [
+      "FOOD PRESERVATION and FOOD PRESERVATIVES is also available"
+     ]
+    }
+   }
+  },
+  {
+   "candidate_id": "generated-distant-2013-02-d029902-d003887",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D029902",
+     "descriptor_label": "Medicago",
+     "tree_numbers": [
+      "B01.650.940.800.575.100.401.590"
+     ],
+     "entry_terms": [
+      "Clover",
+      "Clovers",
+      "Medicagos"
+     ],
+     "scope_notes": [
+      "A plant genus of the family FABACEAE.  It is distinct from Sweet Clover (MELILOTUS), from Bush Clover (LESPEDEZA), and from Red Clover (TRIFOLIUM)."
+     ],
+     "annotations": [
+      "note X ref CLOVER: BUSH CLOVER see LESPEDEZA; SWEET CLOVER see MELILOTUS; and RED CLOVER see TRIFOLIUM are also available;  coord with specific PLANT STRUCTURES term if pertinent; for use in therapy coord IM with PHYTOTHERAPY (IM) + disease/drug ther (IM) + PLANT PREPARATIONS or its indentations/ther use (IM or NIM) + specific plant chemical /ther use (IM) if pertinent; Manual 26.29"
+     ]
+    },
+    "c": {
+     "descriptor_ui": "D003887",
+     "descriptor_label": "Desensitization, Psychologic",
+     "tree_numbers": [
+      "F04.754.137.506"
+     ],
+     "entry_terms": [
+      "Desensitization (Psychology)",
+      "Desensitization, Psychological",
+      "Desensitizations (Psychology)",
+      "Psychologic Desensitization",
+      "Psychological Desensitization"
+     ],
+     "scope_notes": [
+      "A behavior therapy technique in which deep muscle relaxation is used to inhibit the effects of graded anxiety-evoking stimuli."
+     ],
+     "annotations": [
+      "a behavior ther technique; DF: DESENSITIZATION PSYCHOL"
+     ]
+    }
+   }
+  },
+  {
+   "candidate_id": "generated-distant-2013-03-d004620-d004581",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D004620",
+     "descriptor_label": "Embolism, Fat",
+     "tree_numbers": [
+      "C14.907.355.350.454"
+     ],
+     "entry_terms": [
+      "Embolisms, Fat",
+      "Fat Embolism",
+      "Fat Embolisms"
+     ],
+     "scope_notes": [
+      "Blocking of a blood vessel by fat deposits in the circulation. It is often seen after fractures of large bones or after administration of CORTICOSTEROIDS."
+     ],
+     "annotations": [
+      "do not confuse with EMBOLISM, CHOLESTEROL"
+     ]
+    },
+    "c": {
+     "descriptor_ui": "D004581",
+     "descriptor_label": "Electronics",
+     "tree_numbers": [
+      "H01.671.293"
+     ],
+     "entry_terms": [
+      "Electronic"
+     ],
+     "scope_notes": [
+      "The study, control, and application of the conduction of ELECTRICITY through gases or vacuum, or through semiconducting or conducting materials. (McGraw-Hill Dictionary of Scientific and Technical Terms, 6th ed)"
+     ],
+     "annotations": []
+    }
+   }
+  },
+  {
+   "candidate_id": "generated-distant-2013-04-d011372-d013177",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D011372",
+     "descriptor_label": "Progestins",
+     "tree_numbers": [
+      "D27.505.696.399.472.858"
+     ],
+     "entry_terms": [
+      "Effect, Gestagen",
+      "Effect, Gestagenic",
+      "Effect, Progestin",
+      "Effect, Progestogen",
+      "Effects, Gestagen",
+      "Effects, Gestagenic",
+      "Effects, Progestin",
+      "Effects, Progestogen",
+      "Gestagen Effect",
+      "Gestagen Effects",
+      "Gestagenic Agents",
+      "Gestagenic Effect",
+      "Gestagenic Effects",
+      "Gestagens",
+      "Progestagenic Agents",
+      "Progestagens",
+      "Progestational Agents",
+      "Progestational Compounds",
+      "Progestational Hormones",
+      "Progestin Effect",
+      "Progestin Effects",
+      "Progestogen Effect",
+      "Progestogen Effects",
+      "Progestogens"
+     ],
+     "scope_notes": [
+      "Compounds that interact with PROGESTERONE RECEPTORS in target tissues to bring about the effects similar to those of PROGESTERONE. Primary actions of progestins, including natural and synthetic steroids, are on the UTERUS and the MAMMARY GLAND in preparation for and in maintenance of PREGNANCY."
+     ],
+     "annotations": [
+      "note entry term PROGESTIN EFFECT: use only for the progestin effect of a chemical substance"
+     ]
+    },
+    "c": {
+     "descriptor_ui": "D013177",
+     "descriptor_label": "Sports",
+     "tree_numbers": [
+      "I03.450.642.845"
+     ],
+     "entry_terms": [
+      "Athletic",
+      "Athletics",
+      "Sport"
+     ],
+     "scope_notes": [
+      "Activities or games, usually involving physical effort or skill. Reasons for engagement in sports include pleasure, competition, and/or financial reward."
+     ],
+     "annotations": [
+      "SPORTS is the activity, SPORTS MEDICINE is the specialty"
+     ]
+    }
+   }
+  },
+  {
+   "candidate_id": "generated-hard-2012-01-d001174-d014143",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D001174",
+     "descriptor_label": "Arthrodesis",
+     "tree_numbers": [
+      "E04.555.100"
+     ],
+     "entry_terms": [
+      "Arthrodeses"
+     ],
+     "scope_notes": [
+      "The surgical fixation of a joint by a procedure designed to accomplish fusion of the joint surfaces by promoting the proliferation of bone cells. (Dorland, 28th ed)"
+     ],
+     "annotations": [
+      "a method of joint surg; do not use /util except by MeSH definition; vertebral or spinal arthrodesis = SPINAL FUSION"
+     ]
+    },
+    "c": {
+     "descriptor_ui": "D014143",
+     "descriptor_label": "Traction",
+     "tree_numbers": [
+      "E04.555.720"
+     ],
+     "entry_terms": [
+      "Tractions"
+     ],
+     "scope_notes": [
+      "The pull on a limb or a part thereof. Skin traction (indirect traction) is applied by using a bandage to pull on the skin and fascia where light traction is required. Skeletal traction (direct traction), however, uses pins or wires inserted through bone and is attached to weights, pulleys, and ropes. (From Blauvelt & Nelson, A Manual of Orthopaedic Terminology, 5th ed)"
+     ],
+     "annotations": []
+    }
+   },
+   "shared_parent": {
+    "descriptor_ui": "D019637",
+    "descriptor_label": "Orthopedic Procedures",
+    "tree_number": "E04.555"
+   }
+  },
+  {
+   "candidate_id": "generated-hard-2012-02-d003652-d010169",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D003652",
+     "descriptor_label": "Decanoic Acids",
+     "tree_numbers": [
+      "D10.251.175"
+     ],
+     "entry_terms": [
+      "Acids, Capric",
+      "Acids, Decanoic",
+      "Capric Acids"
+     ],
+     "scope_notes": [
+      "10-carbon saturated monocarboxylic acids."
+     ],
+     "annotations": []
+    },
+    "c": {
+     "descriptor_ui": "D010169",
+     "descriptor_label": "Palmitic Acids",
+     "tree_numbers": [
+      "D10.251.694"
+     ],
+     "entry_terms": [
+      "Acids, Palmitic"
+     ],
+     "scope_notes": [
+      "A group of 16-carbon fatty acids that contain no double bonds."
+     ],
+     "annotations": [
+      "a group of fatty acids; do not confuse with PALMITIC ACID"
+     ]
+    }
+   },
+   "shared_parent": {
+    "descriptor_ui": "D005227",
+    "descriptor_label": "Fatty Acids",
+    "tree_number": "D10.251"
+   }
+  },
+  {
+   "candidate_id": "generated-hard-2012-03-d016496-d041382",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D016496",
+     "descriptor_label": "Incontinence Pads",
+     "tree_numbers": [
+      "E07.325.068.500"
+     ],
+     "entry_terms": [
+      "Incontinence Pad",
+      "Pad, Incontinence",
+      "Pads, Incontinence"
+     ],
+     "scope_notes": [
+      "Absorbent pads used for URINARY INCONTINENCE and usually worn as underpants or pants liners by the ELDERLY."
+     ],
+     "annotations": [
+      "restrict to ELDERLY or adults; for infants use DIAPERS, INFANT see INFANT CARE"
+     ]
+    },
+    "c": {
+     "descriptor_ui": "D041382",
+     "descriptor_label": "Diapers, Adult",
+     "tree_numbers": [
+      "E07.325.068.124"
+     ],
+     "entry_terms": [
+      "Adult Diaper",
+      "Adult Diapers",
+      "Diaper, Adult"
+     ],
+     "scope_notes": [
+      "Absorbent pads designed to be worn as underpants or pants liners by adults."
+     ],
+     "annotations": []
+    }
+   },
+   "shared_parent": {
+    "descriptor_ui": "D041342",
+    "descriptor_label": "Absorbent Pads",
+    "tree_number": "E07.325.068"
+   }
+  },
+  {
+   "candidate_id": "generated-hard-2012-04-d019956-d019960",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D019956",
+     "descriptor_label": "Stereotypic Movement Disorder",
+     "tree_numbers": [
+      "F03.550.787"
+     ],
+     "entry_terms": [
+      "Body Rocking",
+      "Head Banging",
+      "Movement Disorder, Stereotypic",
+      "Stereotypic Movement Disorders"
+     ],
+     "scope_notes": [
+      "Motor behavior that is repetitive, often seemingly driven, and nonfunctional. This behavior markedly interferes with normal activities or results in severe bodily self-injury. The behavior is not due to the direct physiological effects of a substance or a general medical condition. (DSM-IV, 1994)"
+     ],
+     "annotations": []
+    },
+    "c": {
+     "descriptor_ui": "D019960",
+     "descriptor_label": "Elimination Disorders",
+     "tree_numbers": [
+      "F03.550.375"
+     ],
+     "entry_terms": [
+      "Disorder, Elimination",
+      "Disorders, Elimination",
+      "Elimination Disorder"
+     ],
+     "scope_notes": [
+      "Excretory-related psychiatric disorders usually diagnosed in infancy or childhood."
+     ],
+     "annotations": []
+    }
+   },
+   "shared_parent": {
+    "descriptor_ui": "D019952",
+    "descriptor_label": "Mental Disorders Diagnosed in Childhood",
+    "tree_number": "F03.550"
+   }
+  },
+  {
+   "candidate_id": "generated-hard-2013-01-d004309-d007389",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D004309",
+     "descriptor_label": "Double Bind Interaction",
+     "tree_numbers": [
+      "F01.829.131"
+     ],
+     "entry_terms": [
+      "Double Bind Interactions",
+      "Double Bind Theories",
+      "Double Bind Theory",
+      "Interaction, Double Bind",
+      "Interactions, Double Bind",
+      "Theories, Double Bind",
+      "Theory, Double Bind"
+     ],
+     "scope_notes": [
+      "Simultaneous communication of conflicting messages in which the response to either message evokes rejection or disapproval. (APA, Thesaurus of Psychological Index Terms, 8th ed.)"
+     ],
+     "annotations": [
+      "no qualif"
+     ]
+    },
+    "c": {
+     "descriptor_ui": "D007389",
+     "descriptor_label": "Internal-External Control",
+     "tree_numbers": [
+      "F01.829.379"
+     ],
+     "entry_terms": [
+      "Control Locus",
+      "Control, Internal-External",
+      "Controls, Internal-External",
+      "Internal External Control",
+      "Internal-External Controls",
+      "Locus of Control"
+     ],
+     "scope_notes": [
+      "Personality construct referring to an individual's perception of the locus of events as determined internally by his or her own behavior versus fate, luck, or external forces. (ERIC Thesaurus, 1996)."
+     ],
+     "annotations": [
+      "no qualif"
+     ]
+    }
+   },
+   "shared_parent": {
+    "descriptor_ui": "D011593",
+    "descriptor_label": "Psychology, Social",
+    "tree_number": "F01.829"
+   }
+  },
+  {
+   "candidate_id": "generated-hard-2013-02-d004553-d025802",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D004553",
+     "descriptor_label": "Electric Conductivity",
+     "tree_numbers": [
+      "G01.358.500.249.277"
+     ],
+     "entry_terms": [
+      "Conductivity, Electric",
+      "Conductivity, Electrical",
+      "Electrical Conductivity"
+     ],
+     "scope_notes": [
+      "The ability of a substrate to allow the passage of ELECTRONS."
+     ],
+     "annotations": []
+    },
+    "c": {
+     "descriptor_ui": "D025802",
+     "descriptor_label": "Electric Capacitance",
+     "tree_numbers": [
+      "G01.358.500.249.270"
+     ],
+     "entry_terms": [
+      "Capacitance, Electric",
+      "Capacitance, Electrical",
+      "Electrical Capacitance"
+     ],
+     "scope_notes": [
+      "The ability of a substrate to retain an electrical charge."
+     ],
+     "annotations": []
+    }
+   },
+   "shared_parent": {
+    "descriptor_ui": "D004560",
+    "descriptor_label": "Electricity",
+    "tree_number": "G01.358.500.249"
+   }
+  },
+  {
+   "candidate_id": "generated-hard-2013-03-d016082-d055609",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D016082",
+     "descriptor_label": "Solar System",
+     "tree_numbers": [
+      "G01.060.249.730"
+     ],
+     "entry_terms": [
+      "Natural Satellite",
+      "Natural Satellites",
+      "Satellite, Natural",
+      "Satellites, Natural",
+      "Sun",
+      "System, Solar"
+     ],
+     "scope_notes": [
+      "The group of celestial bodies, including the EARTH, orbiting around and gravitationally bound by the sun. It includes eight planets, one minor planet, and 34 natural satellites, more than 1,000 observed comets, and thousands of lesser bodies known as MINOR PLANETS (asteroids) and METEOROIDS. (From Academic American Encyclopedia, 1983)"
+     ],
+     "annotations": [
+      "no qualif; METEOROIDS is available: see MeSH definition there"
+     ]
+    },
+    "c": {
+     "descriptor_ui": "D055609",
+     "descriptor_label": "Stars, Celestial",
+     "tree_numbers": [
+      "G01.060.249.750"
+     ],
+     "entry_terms": [
+      "Celestial Star",
+      "Celestial Stars",
+      "Star, Celestial"
+     ],
+     "scope_notes": [
+      "Large bodies consisting of self-luminous gas held together by their own gravity.  (From McGraw Hill Dictionary of Scientific and Technical Terms, 6th ed)"
+     ],
+     "annotations": []
+    }
+   },
+   "shared_parent": {
+    "descriptor_ui": "D055587",
+    "descriptor_label": "Astronomical Objects",
+    "tree_number": "G01.060.249"
+   }
+  },
+  {
+   "candidate_id": "generated-hard-2013-04-d005685-d009844",
+   "concepts": {
+    "a": {
+     "descriptor_ui": "D005685",
+     "descriptor_label": "Galactans",
+     "tree_numbers": [
+      "D09.698.360"
+     ],
+     "entry_terms": [
+      "Polygalactoses"
+     ],
+     "scope_notes": [
+      "Polysaccharides composed of repeating galactose units. They can consist of branched or unbranched chains in any linkages."
+     ],
+     "annotations": [
+      "polysaccharides"
+     ]
+    },
+    "c": {
+     "descriptor_ui": "D009844",
+     "descriptor_label": "Oligosaccharides",
+     "tree_numbers": [
+      "D09.698.629"
+     ],
+     "entry_terms": [],
+     "scope_notes": [
+      "Carbohydrates consisting of between two (DISACCHARIDES) and ten MONOSACCHARIDES connected by either an alpha- or beta-glycosidic link. They are found throughout nature in both the free and bound form."
+     ],
+     "annotations": [
+      "GEN; prefer specifics"
+     ]
+    }
+   },
+   "shared_parent": {
+    "descriptor_ui": "D011134",
+    "descriptor_label": "Polysaccharides",
+    "tree_number": "D09.698"
+   }
+  }
+ ]
+}
