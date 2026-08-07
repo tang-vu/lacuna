@@ -128,7 +128,7 @@ def _article(pmid: str, date_xml: str, descriptors: list[str]) -> str:
     )
 
 
-def _write_fixture(tmp_path):
+def _write_fixture(tmp_path, filename="baseline.xml.gz"):
     articles = [
         _article("1", "<Year>2010</Year>", [A, B, B]),
         _article("2", "<MedlineDate>2010 Winter</MedlineDate>", [C, B]),
@@ -140,7 +140,7 @@ def _write_fixture(tmp_path):
         _article("8", "", [A, C]),
     ]
     xml = f"<PubmedArticleSet>{''.join(articles)}</PubmedArticleSet>"
-    path = tmp_path / "baseline.xml.gz"
+    path = tmp_path / filename
     with gzip.open(path, "wt", encoding="utf-8") as handle:
         handle.write(xml)
     return path
@@ -244,7 +244,7 @@ def test_production_source_gate_accepts_only_explicit_pinned_status(tmp_path):
 
 
 def test_pinned_release_requires_and_labels_an_exact_complete_file_set(tmp_path):
-    fixture = _write_fixture(tmp_path)
+    fixture = _write_fixture(tmp_path, "medline11n0001.xml.gz")
     payload = json.loads(SOURCES_PATH.read_text(encoding="utf-8"))
     records = next(
         item for item in payload["sources"] if item["kind"] == "historical_records"

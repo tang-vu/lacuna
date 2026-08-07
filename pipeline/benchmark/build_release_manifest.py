@@ -1,18 +1,15 @@
 """Build a checksummed manifest from an already-acquired MEDLINE baseline release.
 
 This command does not download data and does not change ``sources.json``. It reads every supplied
-XML/XML.gz file, fingerprints the transport bytes, counts parsed PubMed citations, creates a new
-manifest without overwriting an existing one, and prints the small reference object that can be
-reviewed for the source contract.
+XML/XML.gz file, fingerprints the transport bytes, counts parsed PubMed citations, reconciles the
+result with the checksum-pinned NLM inventory contract, creates a new manifest without overwriting
+an existing one, and prints the small reference object that can be reviewed for the source
+contract.
 
 Run:
     python -m pipeline.benchmark.build_release_manifest \
       --year 2010 \
       --base-url https://official.example/baseline/2010/ \
-      --inventory-url https://official.example/baseline/2010/inventory \
-      --inventory-file-count INVENTORY_FILE_COUNT \
-      --inventory-total-bytes INVENTORY_TOTAL_BYTES \
-      --inventory-total-record-count INVENTORY_TOTAL_RECORD_COUNT \
       --output benchmarks/v3/manifests/medline-2010.json \
       data/medline-baseline/2010/*.xml.gz
 """
@@ -29,7 +26,13 @@ from pipeline.benchmark.medline_baseline import (
     fingerprint_file,
     iter_medline_records,
 )
+from pipeline.benchmark.source_inventories import (
+    ReleaseInventory,
+    load_inventory_contract,
+)
 from pipeline.paths import BENCHMARKS_DIR
+
+SOURCES_PATH = BENCHMARKS_DIR / "v3" / "sources.json"
 
 
 def _validate_https_url(value: str) -> str:
@@ -43,11 +46,29 @@ def _validate_base_url(value: str) -> str:
     return _validate_https_url(value).rstrip("/") + "/"
 
 
-def _positive_int(value: str) -> int:
-    parsed = int(value)
-    if parsed <= 0:
-        raise argparse.ArgumentTypeError("value must be a positive integer")
-    return parsed
+def load_pinned_inventory(year: int, source_path: Path = SOURCES_PATH) -> ReleaseInventory:
+    """Return one release only after verifying the repository's inventory fingerprint."""
+    payload = json.loads(source_path.read_text(encoding="utf-8"))
+    required_years = set(payload.get("required_baseline_years", []))
+    records = next(
+        (
+            source
+            for source in payload.get("sources", [])
+            if source.get("kind") == "historical_records"
+        ),
+        None,
+    )
+    if records is None:
+        raise ValueError("source contract has no historical-record source")
+    contract = load_inventory_contract(
+        source_path,
+        records.get("inventory_contract", {}),
+        required_years,
+    )
+    matches = [release for release in contract.releases if release.release_year == year]
+    if len(matches) != 1:
+        raise ValueError(f"{year}: release is not present in the pinned inventory contract")
+    return matches[0]
 
 
 def build_manifest(
@@ -120,6 +141,30 @@ def validate_inventory_totals(
             )
 
 
+def validate_pinned_inventory(manifest: dict, inventory: ReleaseInventory) -> None:
+    """Reconcile a generated manifest with independently pinned NLM metadata."""
+    if manifest.get("release_year") != inventory.release_year:
+        raise ValueError("manifest release year differs from the pinned inventory")
+    validate_inventory_totals(
+        manifest,
+        inventory_file_count=inventory.file_count,
+        inventory_total_bytes=inventory.total_compressed_bytes,
+        inventory_total_record_count=inventory.total_record_count,
+    )
+    expected_names = [
+        f"medline{str(inventory.release_year)[-2:]}n{index:04d}.xml"
+        for index in range(1, inventory.file_count + 1)
+    ]
+    actual_names = [
+        item["filename"][:-3]
+        if item["filename"].endswith(".xml.gz")
+        else item["filename"]
+        for item in manifest["files"]
+    ]
+    if actual_names != expected_names:
+        raise ValueError("manifest filenames do not cover the contiguous official release")
+
+
 def manifest_reference(
     output: Path,
     manifest: dict,
@@ -157,14 +202,11 @@ def main() -> None:
     parser.add_argument("--year", required=True, type=int)
     parser.add_argument("--base-url", required=True, type=_validate_base_url)
     parser.add_argument(
-        "--inventory-url",
-        required=True,
-        type=_validate_https_url,
-        help="official file inventory or preservation record used to establish completeness",
+        "--source-contract",
+        type=Path,
+        default=SOURCES_PATH,
+        help="source contract containing the checksum-pinned official inventory reference",
     )
-    parser.add_argument("--inventory-file-count", required=True, type=_positive_int)
-    parser.add_argument("--inventory-total-bytes", required=True, type=_positive_int)
-    parser.add_argument("--inventory-total-record-count", required=True, type=_positive_int)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument(
         "--contract-path",
@@ -182,14 +224,13 @@ def main() -> None:
             raise SystemExit(
                 "--contract-path is required when output is outside benchmarks/v3"
             ) from None
+    try:
+        inventory = load_pinned_inventory(args.year, args.source_contract)
+    except (OSError, ValueError) as exc:
+        raise SystemExit(f"cannot load pinned inventory: {exc}") from None
     manifest = build_manifest(args.files, year=args.year, base_url=args.base_url)
     try:
-        validate_inventory_totals(
-            manifest,
-            inventory_file_count=args.inventory_file_count,
-            inventory_total_bytes=args.inventory_total_bytes,
-            inventory_total_record_count=args.inventory_total_record_count,
-        )
+        validate_pinned_inventory(manifest, inventory)
     except ValueError as exc:
         raise SystemExit(str(exc)) from None
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -204,10 +245,10 @@ def main() -> None:
         args.output,
         manifest,
         relative_path=contract_path,
-        inventory_url=args.inventory_url,
-        inventory_file_count=args.inventory_file_count,
-        inventory_total_bytes=args.inventory_total_bytes,
-        inventory_total_record_count=args.inventory_total_record_count,
+        inventory_url=inventory.inventory_url,
+        inventory_file_count=inventory.file_count,
+        inventory_total_bytes=inventory.total_compressed_bytes,
+        inventory_total_record_count=inventory.total_record_count,
     )
     print(json.dumps(reference, indent=2))
 

@@ -8,14 +8,10 @@ Build a manifest only after acquiring the complete release:
 
 ```bash
 python -m pipeline.benchmark.build_release_manifest \
-  --year 2010 \
-  --base-url https://official-source.example/baseline/2010/ \
-  --inventory-url https://official-source.example/baseline/2010/inventory \
-  --inventory-file-count INVENTORY_FILE_COUNT \
-  --inventory-total-bytes INVENTORY_TOTAL_BYTES \
-  --inventory-total-record-count INVENTORY_TOTAL_RECORD_COUNT \
-  --output benchmarks/v3/manifests/medline-2010.json \
-  data/medline-baseline/2010/*.xml.gz
+  --year 2012 \
+  --base-url https://official-source.example/baseline/2012/ \
+  --output benchmarks/v3/manifests/medline-2012.json \
+  data/medline-baseline/2012/*.xml.gz
 ```
 
 The command:
@@ -24,20 +20,20 @@ The command:
 - sorts unique filenames;
 - hashes the compressed transport bytes with SHA-256;
 - streams every file and records its parsed `PubmedArticle` count;
-- compares the measured file, transport-byte, and record totals with the independently transcribed
-  official inventory totals before creating any output;
+- loads the official inventory metadata through the checksum-pinned reference in `sources.json`;
+- compares the complete contiguous filename sequence plus measured file, transport-byte, and record
+  totals with that pinned inventory before creating any output;
 - creates, but never overwrites, the output manifest;
 - prints a small reference containing the manifest checksum, measured aggregates, and inventory
   aggregates.
 
 Review that reference, then add it to the historical-record source's `manifests` list in
 `../sources.json`. Paths there are relative to `benchmarks/v3`, for example
-`manifests/medline-2010.json`. `--inventory-url` must identify the official inventory or
-preservation record used to decide that the acquired file set is complete. The three
-`--inventory-*` totals must be transcribed from that source, not calculated from the downloaded
-directory. This prevents a locally self-consistent subset that disagrees with the reviewed
-inventory values from certifying itself as a complete release; the command does not fetch or parse
-the remote inventory page.
+`manifests/medline-2012.json`. The inventory URL and totals are not accepted as command-line input:
+they come from the fingerprinted `inventories.json` contract, preventing a locally
+self-consistent subset—or a mistyped total—from certifying itself as a complete release. Use
+`--source-contract` only when testing an independently fingerprinted contract outside the default
+repository path.
 
 `validate_sources` reloads every referenced manifest and reconciles its checksum, release year,
 file count, compressed-byte total, record total, the independently recorded inventory totals,

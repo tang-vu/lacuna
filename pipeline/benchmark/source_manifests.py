@@ -169,6 +169,18 @@ def load_release_manifest(
         len(parsed_files) == reference["inventory_file_count"],
         f"{year}: manifest file count differs from inventory file count",
     )
+    expected_names = [
+        f"medline{str(year)[-2:]}n{index:04d}.xml"
+        for index in range(1, reference["inventory_file_count"] + 1)
+    ]
+    normalised_names = [
+        item.filename[:-3] if item.filename.endswith(".xml.gz") else item.filename
+        for item in parsed_files
+    ]
+    _require(
+        normalised_names == expected_names,
+        f"{year}: manifest filenames do not cover the contiguous official release",
+    )
     total_bytes = sum(item.bytes for item in parsed_files)
     total_records = sum(item.record_count for item in parsed_files)
     _require(
