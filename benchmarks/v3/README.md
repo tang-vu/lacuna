@@ -4,12 +4,18 @@ This directory is a pre-metric selection record, not a validation result. Its cu
 `draft`: it contains two canonical development positives, no hard negatives, no distant
 negatives, and no held-out case with reconstructable period-appropriate indexing.
 
-`candidates.json` is the intake ledger in front of that benchmark. It currently records two
+`candidates.json` is the positive-case intake ledger in front of that benchmark. It currently records two
 accepted development cases, five proposed cases from a published seven-case replication catalog,
 five proposed post-2002 cases from LION's nominal cancer set, and two rejected examples of noisy
 time-sliced labels. Proposed and rejected entries contribute **zero** cases to readiness. The
 separation is deliberate: reuse in an LBD paper is evidence for review, not automatic proof that a
 pair was a meaningful discovery.
+
+Negative controls do not duplicate records in `candidates.json`. Their frozen intake is
+`../../artifacts/negative-candidates.json`, and `validate_v3` reconciles every accepted negative
+directly against that queue and its public metric-blind adjudication. This keeps positive discovery
+evidence requirements—bridge publication and independent replication—from being incorrectly
+applied to controls.
 
 Run its structural audit separately:
 

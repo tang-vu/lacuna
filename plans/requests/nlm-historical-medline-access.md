@@ -3,6 +3,11 @@
 **Status:** prepared, not sent  
 **Prepared:** 2026-07-31
 
+**Public-path follow-up:** 2026-08-07; no raw release found. See
+`plans/reports/source-search-260807-historical-medline.md`. The current NCBI baseline README also
+directs data questions to `info@ncbi.nlm.nih.gov`; submission still requires the owner's contact
+details.
+
 **Owner action required:** add contact details and submit through the
 [NLM Support Center](https://support.nlm.nih.gov/).
 

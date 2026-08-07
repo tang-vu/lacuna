@@ -4,7 +4,7 @@
  "inputs": {
   "historical_sources": {
    "path": "benchmarks/v3/sources.json",
-   "sha256": "acdebe36c1aa3734c5e2de3b2aa9baa2b41a6c5ddf4f66a0068d9d56127355d1",
+   "sha256": "0866f6c4c631d7e6d04d763a2e5a32ab49c4282ddbbda0381652b5fc48fc8d70",
    "canonicalisation": "canonical-json-v1"
   },
   "historical_inventories": {

@@ -1,7 +1,9 @@
-"""Validate the metric-blind v3 candidate intake ledger.
+"""Validate the metric-blind v3 positive-candidate intake ledger.
 
-The candidate ledger is deliberately separate from ``cases.json``. Proposed and rejected entries
-never count toward benchmark readiness, and accepted entries must link to an actual benchmark case.
+The positive-candidate ledger is deliberately separate from ``cases.json``. Proposed and rejected
+entries never count toward benchmark readiness, and accepted entries must link to an actual
+positive benchmark case. Negative controls use their own frozen queue and are reconciled by
+``validate_v3``.
 
 Run:
     python -m pipeline.benchmark.validate_candidates
@@ -46,11 +48,21 @@ def _require_https(url: object, context: str) -> None:
     _require(parts.scheme == "https" and bool(parts.netloc), f"{context}: URL must be HTTPS")
 
 
-def _load_benchmark_cases(path: Path) -> dict[str, dict]:
+def _load_positive_benchmark_cases(path: Path) -> dict[str, dict]:
+    """Load the positive cases governed by this intake ledger.
+
+    Negative controls have a separate, frozen metric-blind queue and are reconciled by
+    ``validate_v3``. Requiring them to also appear here would incorrectly impose the positive-case
+    bridge-publication and replication contract on controls.
+    """
     payload = json.loads(path.read_text(encoding="utf-8"))
     cases = payload.get("cases")
     _require(isinstance(cases, list), "benchmark cases must be a list")
-    return {case["id"]: case for case in cases}
+    return {
+        case["id"]: case
+        for case in cases
+        if isinstance(case, dict) and case.get("kind") == "positive"
+    }
 
 
 def _load_pinned_vocabularies(path: Path) -> dict[int, dict]:
@@ -93,7 +105,7 @@ def audit_candidates(
         "candidate intake contains metric output fields: " + ", ".join(forbidden),
     )
 
-    benchmark_cases = _load_benchmark_cases(benchmark_path)
+    benchmark_cases = _load_positive_benchmark_cases(benchmark_path)
     pinned_vocabularies = _load_pinned_vocabularies(sources_path)
     counts = {status: 0 for status in STATUSES}
     accepted_benchmark_ids: list[str] = []
@@ -244,6 +256,10 @@ def audit_candidates(
         )
 
         if status == "accepted":
+            _require(
+                candidate["proposed_kind"] == "positive",
+                f"{candidate_id}: negative controls must use the frozen negative queue",
+            )
             benchmark_case_id = candidate.get("benchmark_case_id")
             _require(
                 isinstance(benchmark_case_id, str) and benchmark_case_id in benchmark_cases,

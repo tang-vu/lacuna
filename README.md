@@ -219,7 +219,7 @@ third formula on the canonical pair. Its
 `python -m pipeline.benchmark.validate_v3` to see the blockers; only `--require-ready` is a
 shipping gate. `pipeline.pubmed_client` can batch citation/MeSH metadata for mapping audits, but its
 output is explicitly maintained-current and cannot satisfy the historical-indexing gate.
-Potential cases first enter the separate
+Potential positive cases first enter the separate
 [`benchmarks/v3/candidates.json`](benchmarks/v3/candidates.json) ledger. Its five proposed cases
 from the classic replication catalog, five proposed post-2002 cases from LION's nominal cancer
 set, and two rejected noise examples do not count toward readiness; only accepted entries with an
@@ -236,6 +236,8 @@ to readiness, assert no absence of knowledge, and cannot enter `cases.json` with
 metric-blind human adjudication. An accepted negative must preserve its generated proposal ID and
 direct public issue-comment decision; `validate_v3` audits the commit-pinned frozen queue and
 rejects any case whose kind, split, cutoff, or descriptor identity drifts from that proposal.
+Negative controls do not duplicate records in the positive-case intake ledger, so they do not
+inherit its bridge-publication and independent-replication requirements.
 The live **Metric-blind review desk** publishes all 14 contract-validated intake records directly
 from that ledger, including their evidence links, mapping limitations, adjudication rationale, and
 unresolved questions. Structural validity is not scientific acceptance: it defaults to the ten

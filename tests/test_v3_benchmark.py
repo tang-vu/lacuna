@@ -9,6 +9,7 @@ from pipeline.benchmark.validate_v3 import (
     BenchmarkContractError,
     audit_benchmark,
 )
+from pipeline.benchmark.validate_candidates import CANDIDATES_PATH, audit_candidates
 from pipeline.benchmark.negative_controls import OUTPUT_PATH as NEGATIVE_QUEUE_PATH
 
 
@@ -76,6 +77,21 @@ def test_current_v3_benchmark_is_an_explicitly_incomplete_draft():
     assert not audit.ready
     assert "benchmark status is draft" in audit.readiness_blockers
     assert not audit.period_appropriate_heldout_cutoffs
+
+
+def test_reviewed_negative_satisfies_both_separate_intake_contracts(tmp_path):
+    payload, _proposal = _benchmark_with_negative()
+    benchmark_path = tmp_path / "cases.json"
+    benchmark_path.write_text(json.dumps(payload), encoding="utf-8")
+
+    benchmark = audit_benchmark(benchmark_path)
+    positives = audit_candidates(CANDIDATES_PATH, benchmark_path)
+
+    assert benchmark.counts["hard_negative"] == 1
+    assert set(positives.accepted_benchmark_ids) == {
+        "swanson-fish-oil-raynaud",
+        "swanson-magnesium-migraine",
+    }
 
 
 def test_case_selection_rejects_metric_outputs(tmp_path):

@@ -29,6 +29,41 @@ def test_current_candidate_ledger_separates_intake_from_benchmark_readiness():
     assert not benchmark.ready
 
 
+def test_negative_benchmark_cases_are_reconciled_by_their_separate_queue(tmp_path):
+    benchmark = json.loads(BENCHMARK_PATH.read_text(encoding="utf-8"))
+    benchmark["cases"].append(
+        {
+            "id": "reviewed-negative",
+            "kind": "hard_negative",
+            "split": "development",
+            "concepts": {
+                "a": {"label": "A"},
+                "c": {"label": "C"},
+            },
+        }
+    )
+    benchmark_path = tmp_path / "cases.json"
+    benchmark_path.write_text(json.dumps(benchmark), encoding="utf-8")
+
+    audit = audit_candidates(CANDIDATES_PATH, benchmark_path)
+
+    assert set(audit.accepted_benchmark_ids) == {
+        "swanson-fish-oil-raynaud",
+        "swanson-magnesium-migraine",
+    }
+
+
+def test_accepted_negative_candidate_cannot_bypass_the_frozen_queue(tmp_path):
+    payload = json.loads(CANDIDATES_PATH.read_text(encoding="utf-8"))
+    accepted = next(item for item in payload["candidates"] if item["status"] == "accepted")
+    accepted["proposed_kind"] = "hard_negative"
+    path = tmp_path / "candidates.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+
+    with pytest.raises(CandidateContractError, match="frozen negative queue"):
+        audit_candidates(path, BENCHMARK_PATH)
+
+
 def test_proposed_candidate_cannot_link_itself_into_benchmark(tmp_path):
     payload = json.loads(CANDIDATES_PATH.read_text(encoding="utf-8"))
     proposed = next(item for item in payload["candidates"] if item["status"] == "proposed")
