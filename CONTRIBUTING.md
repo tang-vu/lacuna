@@ -68,6 +68,21 @@ with role `metric_blind_adjudication`. The validator reconciles the kind, propos
 and both descriptor labels with the audited queue, so a hand-picked replacement cannot silently
 inherit a pre-metric proposal's provenance.
 
+After publishing the decision, generate the case fragment without retyping proposal identity,
+split, cutoff, or descriptor fields:
+
+```bash
+python -m pipeline.benchmark.build_negative_case \
+  --candidate-id generated-hard-2012-01-d001174-d014143 \
+  --adjudication-url https://github.com/tang-vu/lacuna/issues/4#issuecomment-COMMENT_ID \
+  --negative-rationale "Reviewer-authored rationale"
+```
+
+The command prints JSON and never edits `cases.json`. It verifies the frozen queue and direct issue
+comment shape, but it does not verify the scientific judgment or turn an AI-generated rationale
+into human adjudication. Review the fragment, append it to `cases.json`, and run both candidate and
+v3 validators.
+
 ### 3. Propose a sourced hole
 
 The public [hole atlas](https://lacuna.tangvu.dev/holes/) is generated from `curated/open.json`,

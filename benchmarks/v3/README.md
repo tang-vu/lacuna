@@ -45,6 +45,20 @@ that link, then requires the case kind, split, cutoff, and descriptor labels to 
 Changing any of those fields requires changing and regenerating the pre-metric selection record;
 it cannot be hidden in the accepted case.
 
+After a reviewer publishes the decision, generate a validator-ready case fragment without
+retyping frozen proposal fields:
+
+```bash
+python -m pipeline.benchmark.build_negative_case \
+  --candidate-id generated-hard-2012-01-d001174-d014143 \
+  --adjudication-url https://github.com/tang-vu/lacuna/issues/4#issuecomment-COMMENT_ID \
+  --negative-rationale "Reviewer-authored rationale"
+```
+
+This command prints JSON and never edits `cases.json`. It validates the queue, direct-comment URL
+shape, and a non-trivial rationale, but the cited human decision must still be inspected before the
+fragment is appended.
+
 Historical inputs have their own dated access record:
 
 ```bash
