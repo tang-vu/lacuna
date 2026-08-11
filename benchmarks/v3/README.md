@@ -80,12 +80,41 @@ python -m pipeline.benchmark.validate_sources --require-ready
 ```
 
 The first command validates the record and reports its blockers. The second is intentionally red:
-the legacy MBR download host is unavailable. The public 2007, 2011, 2012, and 2013 production-year
+the legacy MBR download host is unavailable, and NLM Support confirmed on 2026-08-10 that
+previous-year baseline files are not available through the current distribution service. The
+source contract retains a dated public-safe summary without personal case, tracking, or contact
+details. The public 2007, 2011, 2012, and 2013 production-year
 MeSH descriptor archives are now parsed and pinned by SHA-256, but `sources.json` keeps records and
 vocabulary as separate gates because vocabulary files alone cannot reconstruct period-appropriate
-indexing. A support request is prepared at
-`plans/requests/nlm-historical-medline-access.md`; it is explicitly not sent and contains no
-maintainer contact details.
+indexing. The answered request and its provenance policy are documented at
+`plans/requests/nlm-historical-medline-access.md`.
+
+Alternative inputs have a separate zero-readiness contract:
+
+```bash
+python -m pipeline.benchmark.validate_source_alternatives
+```
+
+`source-alternatives.json` identifies BioASQ Task 1a version 2013 as the strongest candidate for a
+redesigned, separately pre-registered snapshot pilot. Its official descriptions report 10,876,004
+post-1949 MEDLINE articles with MeSH 2013 labels under CC BY 2.5, but download requires registration,
+the payload is not yet pinned, and it is not the complete 21,508,439-record NLM baseline. Current
+PubMed is engineering/prospective input only; Persistent PubMed Abstracts lacks historical MeSH
+assignments. None can silently change the original gate.
+
+After acquiring the registered BioASQ raw v2013 payload, audit it without loading the JSON array in
+memory:
+
+```bash
+python -m pipeline.benchmark.bioasq_snapshot \
+  --require-declared-match \
+  --output benchmarks/v3/manifests/bioasq-2013-task-a.json \
+  path/to/raw_training_set.zip
+```
+
+The audit fingerprints the container, validates fields and published aggregate counts, and checks
+every observed label against pinned MeSH 2013. Even an exact aggregate match emits zero readiness
+and retains the unresolved `meshMajor` assignment-semantics limitation.
 
 The retired repository homepage also has a checksum-pinned Common Crawl capture:
 

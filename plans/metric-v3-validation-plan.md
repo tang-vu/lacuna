@@ -33,7 +33,12 @@ A digest-addressed Common Crawl capture of the retired MBR homepage now also pre
 `Download/Baselines/{year}` directory rows for all four required releases. It confirms how the
 repository was organized in 2018 but contains no required XML payload, so it contributes no raw
 record release to readiness.
-This has four consequences:
+On 2026-08-10, NLM Support answered the project's submitted access request: baseline files for
+previous years are not available, and the reply points to the current baseline directory. The
+committed contract keeps only a public-safe summary; personal correspondence and identifiers stay
+outside the repository. This confirms NLM's current distribution position, not the non-existence of
+all third-party preservation copies.
+This has five consequences:
 
 - no pre-2002 experiment may be called period-appropriate unless a separate contemporaneous
   MEDLINE source is acquired and pinned;
@@ -45,7 +50,29 @@ This has four consequences:
   releases that baseline in December after incorporating production-year `Y` updates; using
   baseline `Y` would omit most records published during cutoff year `Y`;
 - the archive's documented existence is not evidence that the raw historical records are currently
-  retrievable; source acquisition is a blocker until NLM supplies or identifies stable files.
+  retrievable; the original source gate stays blocked unless a verifiable preserved copy is found,
+  while any secondary-snapshot experiment requires its own pre-registration and source contract.
+
+## Secondary-snapshot redesign track
+
+The direct NLM request is closed without the four releases, so source recovery and experimental
+redesign are now tracked separately in `benchmarks/v3/source-alternatives.json`. None of those
+alternatives contributes to the original source gate.
+
+BioASQ Task 1a version 2013 is the leading redesign candidate. Its official catalog describes
+10,876,004 PubMed/MEDLINE articles with curator-assigned MeSH 2013 labels and retains the registered
+download under CC BY 2.5. A contemporary project report scopes the corpus to MEDLINE articles
+published after 1949. It is therefore a plausible dated secondary snapshot, but it is not the
+21,508,439-record 2013 NLM baseline, supplies no 2007/2011/2012 release, and exposes assignments in a
+field named `meshMajor` whose exact major-only versus all-descriptor semantics still need payload
+audit.
+
+If acquired and checksum-pinned, BioASQ may support a **new, separately pre-registered 2013-snapshot
+pilot** over its measured corpus. It must not be relabelled as a recovered baseline or inserted into
+the current benchmark contract. Current PubMed remains an engineering/prospective input, and the
+Persistent PubMed Abstracts service remains unsuitable because it lacks historical MeSH
+assignments. Full reasoning and acquisition commands are in
+`plans/reports/source-alternatives-260811.md`.
 
 Primary documentation:
 
@@ -142,11 +169,11 @@ after seeing them.
 2. Build the benchmark contract and mapping audit, explicitly separating maintained-current,
    period-appropriate, ambiguous, and unavailable mappings.
 3. Pre-register candidate formulas and thresholds.
-4. Acquire stable raw baseline files from NLM or another source NLM identifies. The smallest
-   streaming archived-baseline reader and targeted pair/ABC accumulator are implemented and
-   fixture-tested, but their production path stays closed until the full release file set is pinned
-   by filename, byte count, and SHA-256. E-utilities may supply citation metadata but not historical
-   vocabulary state.
+4. Keep watching for independently preserved complete NLM releases, while auditing the BioASQ 2013
+   payload as a separate redesign candidate. The archived-baseline reader and targeted pair/ABC
+   accumulator remain closed until complete release file sets are pinned. The BioASQ streaming
+   auditor likewise emits zero readiness; after a declared-count match and assignment-semantics
+   review, freeze a new 2013-snapshot pre-registration before running any candidate formula.
 5. Run development cases, make at most one documented revision, then freeze.
 6. Run held-out cases and the manual audit.
 7. Only after a pass, design the LLM interpretation schema and pair-detail UI.

@@ -1,10 +1,15 @@
 {
- "schema_version": 6,
+ "schema_version": 7,
  "status": "not_ready",
  "inputs": {
   "historical_sources": {
    "path": "benchmarks/v3/sources.json",
-   "sha256": "1e78c893193b8df07880abecb52656434b91f911d9b705f61bf1fe6edc1f16d8",
+   "sha256": "dd6426dde18c0bddb1cc0b4e41444c1409a02ee4b8d2330e8c2459cdd6439897",
+   "canonicalisation": "canonical-json-v1"
+  },
+  "source_alternatives": {
+   "path": "benchmarks/v3/source-alternatives.json",
+   "sha256": "37cac1a6406c328298d9e01fe4e13eeeae613891c3a18008a62975ba8791ea0e",
    "canonicalisation": "canonical-json-v1"
   },
   "historical_inventories": {
@@ -83,8 +88,121 @@
    "historical_records": "unavailable",
    "historical_vocabulary": "available_pinned"
   },
+  "provider_confirmation": {
+   "provider": "NLM Support",
+   "received_on": "2026-08-10",
+   "scope": "previous annual PubMed baseline availability"
+  },
   "readiness_blockers": [
    "historical_records: unavailable (must be available_pinned)"
+  ]
+ },
+ "source_alternatives": {
+  "status": "no_equivalent_replacement_pinned",
+  "recommended_id": "bioasq-2013-task-a",
+  "counts": {
+   "candidate_requires_acquisition_audit": 1,
+   "engineering_only": 1,
+   "rejected_for_historical_gate": 1
+  },
+  "readiness_contribution": 0,
+  "entries": [
+   {
+    "id": "bioasq-2013-task-a",
+    "label": "BioASQ Task 1a training data, version 2013",
+    "status": "candidate_requires_acquisition_audit",
+    "source_class": "dated_secondary_medline_snapshot",
+    "access": "registration_required",
+    "readiness_contribution": 0,
+    "can_replace_original_gate": false,
+    "declared_snapshot": {
+     "version_year": 2013,
+     "article_count": 10876004,
+     "mesh_label_count": 26563,
+     "average_mesh_labels_per_article": 12.55,
+     "publication_scope": "MEDLINE articles published after 1949",
+     "record_fields": [
+      "pmid",
+      "year",
+      "journal",
+      "title",
+      "abstractText",
+      "meshMajor"
+     ],
+     "compressed_size_gb_as_published": 5.1,
+     "uncompressed_size_gb_as_published": 18.0,
+     "comparison_only_nlm_2013_baseline_record_count": 21508439
+    },
+    "evidence": [
+     {
+      "label": "BioASQ dataset catalog: versioned MeSH assignments, v2013 counts, registered access, and CC BY 2.5 terms",
+      "url": "https://participants-area.bioasq.org/datasets/"
+     },
+     {
+      "label": "BioASQ challenge report: v2013 is a 10,876,004-article MEDLINE collection published after 1949",
+      "url": "https://bioasq.org/sites/default/files/PublicDocuments/BioASQ_D4.4-Report-On-Challenge-operation-and-technical-support-1_final.pdf"
+     },
+     {
+      "label": "BioASQ announcement dating initial Task 1a training-data availability to 18 March 2013",
+      "url": "https://www.bioasq.org/news/bioasq-1st-official-announcement"
+     }
+    ],
+    "potential_role": "A separately pre-registered 2013-snapshot pilot over the corpus BioASQ actually contains, after acquisition and audit. It may support post-snapshot discovery cases but is not an NLM baseline substitute.",
+    "blockers": [
+     "The registered-download payload has not been acquired, checksummed, or parsed in this repository.",
+     "The official descriptions define a post-1949 MEDLINE article corpus rather than the complete 21,508,439-record 2013 NLM baseline; the two published counts are not a measured coverage fraction.",
+     "The JSON field is named meshMajor while the catalog describes assigned MeSH terms generally; payload inspection must establish the exact assignment semantics before scoring.",
+     "Only a 2013 snapshot is relevant here, so it cannot supply the missing 2007, 2011, and 2012 releases.",
+     "Using it changes the experimental population and therefore requires a new pre-registration rather than a source-status flip."
+    ],
+    "next_action": "Register with BioASQ, download the raw v2013 Task 1a training set, and run pipeline.benchmark.bioasq_snapshot with --require-declared-match. Commit only the generated manifest and aggregate audit, not the multi-gigabyte payload."
+   },
+   {
+    "id": "current-pubmed-frozen-surrogate",
+    "label": "Locally frozen current PubMed baseline",
+    "status": "engineering_only",
+    "source_class": "maintained_current_snapshot",
+    "access": "public",
+    "readiness_contribution": 0,
+    "can_replace_original_gate": false,
+    "evidence": [
+     {
+      "label": "NCBI current annual PubMed baseline directory",
+      "url": "https://ftp.ncbi.nlm.nih.gov/pubmed/baseline/"
+     },
+     {
+      "label": "NLM annual baseline maintenance overview",
+      "url": "https://www.nlm.nih.gov/bsd/licensee/baseline.html"
+     }
+    ],
+    "potential_role": "Schema, performance, and prospective-freeze engineering; a new frozen snapshot can become an as-of-now input for future observations.",
+    "blockers": [
+     "Current records have been maintained to newer vocabularies and do not reconstruct citation-to-MeSH assignments from 2007, 2011, 2012, or 2013.",
+     "A prospective benchmark needs a future observation window and cannot validate historical discovery cases immediately."
+    ],
+    "next_action": "Keep using small current files for parser smoke tests. If a prospective track is approved, freeze a complete current release with manifests before selecting future evaluation outcomes."
+   },
+   {
+    "id": "persistent-pubmed-abstracts",
+    "label": "NLM Persistent PubMed Abstracts snapshots",
+    "status": "rejected_for_historical_gate",
+    "source_class": "dated_title_abstract_snapshot",
+    "access": "public_documentation_only",
+    "readiness_contribution": 0,
+    "can_replace_original_gate": false,
+    "evidence": [
+     {
+      "label": "NLM Persistent PubMed Abstracts documentation",
+      "url": "https://bionlp.nlm.nih.gov/persistentAbstracts.html"
+     }
+    ],
+    "potential_role": "Title and abstract text research where a dated text snapshot is sufficient.",
+    "blockers": [
+     "The documented citation files contain titles and abstracts, not the historical citation-to-MeSH assignments required by metric v3.",
+     "Previously probed documented-style record paths were not reachable on 2026-08-07."
+    ],
+    "next_action": "Do not spend source-recovery effort here for metric v3 unless NLM documents a separate historical MeSH-assignment payload."
+   }
   ]
  },
  "candidate_intake": {

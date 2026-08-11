@@ -22,6 +22,7 @@ description: Run lacuna's complete validation workflow and report metric drift, 
    python -m pipeline.benchmark.mbr_capture
    python -m pipeline.benchmark.validate_sources
    python -m pipeline.benchmark.validate_sources --require-ready
+   python -m pipeline.benchmark.validate_source_alternatives
    python -m pipeline.benchmark.validate_candidates
    python -m pipeline.benchmark.validate_v3
    python -m pipeline.benchmark.validate_v3 --require-ready
@@ -66,8 +67,9 @@ description: Run lacuna's complete validation workflow and report metric drift, 
 
 7. Compare the Swanson target percentile, negative controls, sweep coverage, artifact version,
    input fingerprints, and excluded-topic list with the committed report and manifest.
-8. Report historical source statuses, candidate counts by status, then v3 case counts by kind,
-   held-out counts, mapping statuses, and every readiness blocker.
+8. Report historical source statuses, alternative-source counts and their zero-or-nonzero readiness
+   contribution, candidate counts by status, then v3 case counts by kind, held-out counts, mapping
+   statuses, and every readiness blocker.
 9. Report every skipped test or unavailable dependency. Never summarize a skipped validation as a
    pass.
 10. Treat a suddenly improved target rank as drift requiring investigation, not proof of success.

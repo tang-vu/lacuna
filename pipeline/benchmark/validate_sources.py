@@ -47,6 +47,7 @@ class SourceAudit:
     inventory_years: tuple[int, ...]
     preservation_capture_years: tuple[int, ...]
     pinned_record_years: tuple[int, ...]
+    provider_confirmation_received_on: str | None
     readiness_blockers: tuple[str, ...]
 
     @property
@@ -94,6 +95,7 @@ def audit_sources(path: Path = SOURCES_PATH) -> SourceAudit:
     inventory_years: set[int] = set()
     preservation_capture_years: set[int] = set()
     pinned_record_years: set[int] = set()
+    provider_confirmation_received_on: str | None = None
     inventories_by_year = {}
 
     for source in sources:
@@ -126,6 +128,38 @@ def audit_sources(path: Path = SOURCES_PATH) -> SourceAudit:
         if source["required_for_shipping"]:
             required_kinds.add(kind)
         if kind == "historical_records":
+            confirmation = source.get("provider_confirmation")
+            _require(
+                isinstance(confirmation, dict),
+                f"{source_id}: missing provider confirmation",
+            )
+            _require(
+                confirmation.get("provider") == "NLM Support",
+                f"{source_id}: provider confirmation must identify NLM Support",
+            )
+            try:
+                provider_confirmation_received_on = date.fromisoformat(
+                    str(confirmation.get("received_on"))
+                ).isoformat()
+            except ValueError as exc:
+                raise SourceContractError(
+                    f"{source_id}: provider confirmation date must be YYYY-MM-DD"
+                ) from exc
+            for field in ("scope", "summary", "provenance_limitation"):
+                _require(
+                    isinstance(confirmation.get(field), str)
+                    and bool(confirmation[field].strip()),
+                    f"{source_id}: provider confirmation missing {field}",
+                )
+            _require_https(
+                confirmation.get("public_reference_url"),
+                f"{source_id}.provider_confirmation.public_reference_url",
+            )
+            public_confirmation = json.dumps(confirmation, ensure_ascii=False)
+            _require(
+                "CAS-" not in public_confirmation and "@gmail.com" not in public_confirmation,
+                f"{source_id}: provider confirmation contains personal identifiers",
+            )
             inventory_reference = source.get("inventory_contract")
             _require(
                 isinstance(inventory_reference, dict),
@@ -268,6 +302,7 @@ def audit_sources(path: Path = SOURCES_PATH) -> SourceAudit:
         inventory_years=tuple(sorted(inventory_years)),
         preservation_capture_years=tuple(sorted(preservation_capture_years)),
         pinned_record_years=tuple(sorted(pinned_record_years)),
+        provider_confirmation_received_on=provider_confirmation_received_on,
         readiness_blockers=tuple(blockers),
     )
 
@@ -292,6 +327,11 @@ def main() -> None:
         "preserved MBR directory metadata: "
         f"{len(audit.preservation_capture_years)}/{len(audit.required_years)} releases"
     )
+    if audit.provider_confirmation_received_on:
+        print(
+            "NLM previous-baseline availability confirmation: "
+            f"received {audit.provider_confirmation_received_on}"
+        )
     for kind in sorted(audit.statuses):
         print(f"{kind}: {audit.statuses[kind]}")
     if audit.ready:

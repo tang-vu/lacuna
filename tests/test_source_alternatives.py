@@ -1,0 +1,70 @@
+from __future__ import annotations
+
+import json
+
+import pytest
+
+from pipeline.benchmark.validate_source_alternatives import (
+    ALTERNATIVES_PATH,
+    SourceAlternativeContractError,
+    audit_source_alternatives,
+)
+
+
+def _write_payload(tmp_path, payload):
+    path = tmp_path / "source-alternatives.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    return path
+
+
+def test_current_alternatives_keep_original_readiness_at_zero():
+    audit = audit_source_alternatives()
+
+    assert audit.status == "no_equivalent_replacement_pinned"
+    assert audit.recommended_id == "bioasq-2013-task-a"
+    assert audit.counts == {
+        "candidate_requires_acquisition_audit": 1,
+        "engineering_only": 1,
+        "rejected_for_historical_gate": 1,
+    }
+    assert audit.readiness_contribution == 0
+    bioasq = next(entry for entry in audit.entries if entry["id"] == audit.recommended_id)
+    assert bioasq["declared_snapshot"]["article_count"] == 10_876_004
+    assert bioasq["declared_snapshot"]["mesh_label_count"] == 26_563
+    assert bioasq["declared_snapshot"]["comparison_only_nlm_2013_baseline_record_count"] == (
+        21_508_439
+    )
+    assert bioasq["can_replace_original_gate"] is False
+
+
+def test_alternative_cannot_claim_original_gate_readiness(tmp_path):
+    payload = json.loads(ALTERNATIVES_PATH.read_text(encoding="utf-8"))
+    payload["alternatives"][0]["readiness_contribution"] = 1
+    payload["alternatives"][0]["can_replace_original_gate"] = True
+
+    with pytest.raises(SourceAlternativeContractError, match="cannot contribute readiness"):
+        audit_source_alternatives(_write_payload(tmp_path, payload))
+
+
+def test_recommended_alternative_must_be_an_acquisition_candidate(tmp_path):
+    payload = json.loads(ALTERNATIVES_PATH.read_text(encoding="utf-8"))
+    payload["recommended_alternative_id"] = "current-pubmed-frozen-surrogate"
+
+    with pytest.raises(SourceAlternativeContractError, match="must still require"):
+        audit_source_alternatives(_write_payload(tmp_path, payload))
+
+
+def test_alternative_needs_public_evidence_and_explicit_blockers(tmp_path):
+    payload = json.loads(ALTERNATIVES_PATH.read_text(encoding="utf-8"))
+    payload["alternatives"][0]["blockers"] = []
+
+    with pytest.raises(SourceAlternativeContractError, match="needs a non-empty list"):
+        audit_source_alternatives(_write_payload(tmp_path, payload))
+
+
+def test_alternative_contract_rejects_personal_support_identifiers(tmp_path):
+    payload = json.loads(ALTERNATIVES_PATH.read_text(encoding="utf-8"))
+    payload["purpose"] += " CAS-private"
+
+    with pytest.raises(SourceAlternativeContractError, match="case identifiers"):
+        audit_source_alternatives(_write_payload(tmp_path, payload))

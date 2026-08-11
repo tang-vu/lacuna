@@ -527,6 +527,9 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
     Object.keys(status.benchmark.heldout_counts).length;
   const currentHeldout = total(status.benchmark.heldout_counts);
   const proposed = status.candidate_intake.counts.proposed;
+  const recommendedAlternative = status.source_alternatives.entries.find(
+    (entry) => entry.id === status.source_alternatives.recommended_id,
+  );
 
   return el('section', { class: 'contribution-missions', id: 'contribute' }, [
     el('div', { class: 'section-kicker' }, ['THE OPEN WORK']),
@@ -543,20 +546,25 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
     el('div', { class: 'mission-grid' }, [
       mission(
         '01',
-        'BLOCKED',
-        'Recover the records',
-        `${status.historical_sources.inventory_metadata.available} of ` +
+        'OPEN',
+        'Audit the dated snapshot',
+        `NLM confirmed on ${status.historical_sources.provider_confirmation.received_on} that ` +
+          'previous annual baselines are unavailable. ' +
+          `${status.historical_sources.inventory_metadata.available} of ` +
           `${status.historical_sources.inventory_metadata.required} official file inventories are ` +
           `pinned; ${status.historical_sources.raw_record_releases.pinned} of ` +
           `${status.historical_sources.raw_record_releases.required} raw citation releases are. ` +
           `${status.historical_sources.preservation_metadata.available} historical MBR directory ` +
-          'rows are preserved; metadata is a target, not the records.',
+          'rows are preserved; metadata is a target, not the records. ' +
+          `${recommendedAlternative?.label ?? 'The recommended secondary snapshot'} is the ` +
+          'strongest redesign candidate, but contributes zero until its registered payload and ' +
+          'scope are audited.',
         progress(
           pinnedSources,
           sourceStatuses.length,
           'Required historical source gates pinned',
         ),
-        'Join source recovery issue #6',
+        'Join source redesign issue #6',
         `${REPOSITORY}/issues/6`,
       ),
       mission(

@@ -165,7 +165,36 @@ export interface ProjectStatus {
       scope: 'preserved repository directory metadata only';
     };
     statuses: Record<string, string>;
+    provider_confirmation: {
+      provider: 'NLM Support';
+      received_on: string;
+      scope: string;
+    };
     readiness_blockers: string[];
+  };
+  source_alternatives: {
+    status: 'no_equivalent_replacement_pinned';
+    recommended_id: string;
+    counts: Record<string, number>;
+    readiness_contribution: 0;
+    entries: Array<{
+      id: string;
+      label: string;
+      status:
+        | 'candidate_requires_acquisition_audit'
+        | 'engineering_only'
+        | 'rejected_for_historical_gate';
+      readiness_contribution: 0;
+      can_replace_original_gate: false;
+      potential_role: string;
+      blockers: string[];
+      next_action: string;
+      declared_snapshot?: {
+        version_year: number;
+        article_count: number;
+        mesh_label_count: number;
+      };
+    }>;
   };
   candidate_intake: {
     counts: { accepted: number; proposed: number; rejected: number };

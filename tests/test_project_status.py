@@ -12,7 +12,7 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 6
+    assert status["schema_version"] == 7
     assert status["status"] == "not_ready"
     assert status["historical_sources"] == {
         "ready": False,
@@ -39,10 +39,24 @@ def test_project_status_exposes_validator_results_without_claiming_readiness():
             "historical_records": "unavailable",
             "historical_vocabulary": "available_pinned",
         },
+        "provider_confirmation": {
+            "provider": "NLM Support",
+            "received_on": "2026-08-10",
+            "scope": "previous annual PubMed baseline availability",
+        },
         "readiness_blockers": [
             "historical_records: unavailable (must be available_pinned)"
         ],
     }
+    assert status["source_alternatives"]["status"] == "no_equivalent_replacement_pinned"
+    assert status["source_alternatives"]["recommended_id"] == "bioasq-2013-task-a"
+    assert status["source_alternatives"]["counts"] == {
+        "candidate_requires_acquisition_audit": 1,
+        "engineering_only": 1,
+        "rejected_for_historical_gate": 1,
+    }
+    assert status["source_alternatives"]["readiness_contribution"] == 0
+    assert len(status["source_alternatives"]["entries"]) == 3
     assert status["candidate_intake"]["counts"] == {
         "accepted": 2,
         "proposed": 10,
@@ -126,6 +140,7 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
     assert verify_project_status() == committed
     assert set(committed["inputs"]) == {
         "historical_sources",
+        "source_alternatives",
         "historical_inventories",
         "mbr_preservation_capture",
         "candidate_intake",

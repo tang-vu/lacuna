@@ -24,6 +24,10 @@ from pipeline.benchmark.negative_review_context import (
 )
 from pipeline.benchmark.mbr_capture import CAPTURE_PATH as MBR_CAPTURE_PATH
 from pipeline.benchmark.validate_candidates import CANDIDATES_PATH, audit_candidates
+from pipeline.benchmark.validate_source_alternatives import (
+    ALTERNATIVES_PATH,
+    audit_source_alternatives,
+)
 from pipeline.benchmark.source_inventories import INVENTORIES_PATH
 from pipeline.benchmark.validate_sources import SOURCES_PATH, audit_sources
 from pipeline.benchmark.validate_v3 import (
@@ -48,6 +52,7 @@ def _input_identity(path: Path) -> dict[str, str]:
 
 def build_project_status() -> dict:
     sources = audit_sources()
+    alternatives = audit_source_alternatives()
     candidates = audit_candidates()
     negative_queue = audit_queue()
     audit_review_context()
@@ -65,10 +70,11 @@ def build_project_status() -> dict:
     negative_protocol = load_protocol()
 
     return {
-        "schema_version": 6,
+        "schema_version": 7,
         "status": "ready" if ready else "not_ready",
         "inputs": {
             "historical_sources": _input_identity(SOURCES_PATH),
+            "source_alternatives": _input_identity(ALTERNATIVES_PATH),
             "historical_inventories": _input_identity(INVENTORIES_PATH),
             "mbr_preservation_capture": _input_identity(MBR_CAPTURE_PATH),
             "candidate_intake": _input_identity(CANDIDATES_PATH),
@@ -98,7 +104,19 @@ def build_project_status() -> dict:
                 "scope": "preserved repository directory metadata only",
             },
             "statuses": dict(sorted(sources.statuses.items())),
+            "provider_confirmation": {
+                "provider": "NLM Support",
+                "received_on": sources.provider_confirmation_received_on,
+                "scope": "previous annual PubMed baseline availability",
+            },
             "readiness_blockers": list(sources.readiness_blockers),
+        },
+        "source_alternatives": {
+            "status": alternatives.status,
+            "recommended_id": alternatives.recommended_id,
+            "counts": alternatives.counts,
+            "readiness_contribution": alternatives.readiness_contribution,
+            "entries": list(alternatives.entries),
         },
         "candidate_intake": {
             "counts": dict(candidates.counts),

@@ -1,14 +1,17 @@
 # NLM historical MEDLINE baseline access request
 
-**Status:** submitted; response pending
+**Status:** answered; NLM says previous-year baseline files are not available
 **Prepared:** 2026-07-31
 **Submitted:** 2026-08-07
+**Response received:** 2026-08-10
 
 **Public-path follow-up:** 2026-08-07; no raw release found. See
-`plans/reports/source-search-260807-historical-medline.md`. The current NCBI baseline README also
-directs data questions to `info@ncbi.nlm.nih.gov`. The request has been submitted; personal contact
-details, the support case identifier, and correspondence are deliberately not committed to
-repository provenance.
+`plans/reports/source-search-260807-historical-medline.md`. NLM Support replied that previous-year
+baseline files are not available and pointed to the current PubMed baseline directory. This closes
+the NLM-distribution question but does not prove that no independently preserved copy exists.
+Personal contact details, support and tracking identifiers, and the message body are deliberately
+not committed to repository provenance; `benchmarks/v3/sources.json` retains a dated public-safe
+summary and its provenance limitation.
 
 ## Why this request is necessary
 

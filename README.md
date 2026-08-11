@@ -248,8 +248,12 @@ unresolved questions. Structural validity is not scientific acceptance: it defau
 proposed records and labels each one as contributing zero to readiness; accepted and rejected
 records remain visible as the audit trail. Deep links let reviewers discuss one stable candidate
 identity in issue #7 without duplicating the source data.
-The historical-input gate is also red: NLM's legacy MBR download endpoint no longer resolves. The
-official NLM file inventories are now recovered for all four required releases—archived snapshots
+The historical-input gate is also red: NLM's legacy MBR download endpoint no longer resolves, and
+NLM Support confirmed on 2026-08-10 that previous-year baseline files are not available through its
+present distribution service. The repository records a dated public-safe summary without personal
+case or tracking identifiers. This establishes NLM's distribution position, not that no third-party
+preservation copy exists. The official NLM file inventories are now recovered for all four required
+releases—archived snapshots
 for 2007 and 2011, plus the live 2012 and 2013 pages—and pinned in
 [`benchmarks/v3/inventories.json`](benchmarks/v3/inventories.json). Run
 `python -m pipeline.benchmark.source_inventories --probe --require-match` to fetch every page, sum
@@ -274,6 +278,18 @@ matches the complete pinned release by filename, byte count, and SHA-256. Releas
 generation also requires measured file, byte, and record totals to match independently recorded
 official-inventory totals, so a local subset that disagrees with the reviewed inventory values
 cannot self-certify.
+
+Source redesign is explicit rather than hidden inside that failed recovery path.
+[`benchmarks/v3/source-alternatives.json`](benchmarks/v3/source-alternatives.json) records three
+reviewed routes and gives all of them zero readiness contribution. BioASQ Task 1a version 2013 is
+the leading candidate for a separately pre-registered snapshot experiment: its official catalog
+describes 10,876,004 post-1949 MEDLINE articles with MeSH 2013 labels, but the registered-download
+payload is not yet acquired or checksummed, its `meshMajor` semantics need audit, and it is not the
+complete 21,508,439-record NLM baseline. Run
+`python -m pipeline.benchmark.validate_source_alternatives` to audit that boundary. After a
+registered download, `python -m pipeline.benchmark.bioasq_snapshot --require-declared-match ...`
+streams the multi-gigabyte JSON, fingerprints it, checks labels against pinned MeSH 2013, and emits
+an aggregate manifest that still contributes zero until a new experiment is pre-registered.
 
 ## Deployment
 

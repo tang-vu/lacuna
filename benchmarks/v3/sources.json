@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "observed_on": "2026-08-07",
+  "observed_on": "2026-08-11",
   "required_baseline_years": [
     2007,
     2011,
@@ -21,6 +21,14 @@
       "preservation_capture_contract": {
         "path": "mbr-capture.json",
         "sha256": "b5ee117a42861e457e91bc94cefd47c3792fcec924a68690782ddb763115ca9c"
+      },
+      "provider_confirmation": {
+        "provider": "NLM Support",
+        "received_on": "2026-08-10",
+        "scope": "previous annual PubMed baseline files",
+        "summary": "NLM Support confirmed that baseline files for previous years are not available and directed the requester to the current PubMed baseline directory.",
+        "public_reference_url": "https://ftp.ncbi.nlm.nih.gov/pubmed/baseline/",
+        "provenance_limitation": "This is a public-safe summary of non-public support correspondence. Personal contact details, case identifiers, tracking identifiers, and the message body are not committed."
       },
       "evidence": [
         {
@@ -64,8 +72,8 @@
           "url": "https://ftp.ncbi.nlm.nih.gov/pubmed/baseline/README.txt"
         }
       ],
-      "observation": "NLM documents that a baseline labelled year R is released in December after records are maintained to year R's MeSH and contains the preceding production year's updates. The source contract therefore requires releases 2007, 2011, 2012, and 2013 to cover publication-year cutoffs 2006, 2010, 2011, and 2012. Official NLM inventory pages are pinned for all four releases. A digest-addressed Common Crawl WARC capture of the MBR homepage also preserves the historical Download/Baselines/{year} directory links and matching release totals. This metadata establishes directory and completeness targets only: the mbr.nlm.nih.gov host no longer resolves, and no required XML payload or per-file checksum has been recovered. A 2026-08-07 follow-up checked plausible public NCBI archive paths, the preserved directory URL, and the title/abstract-only BioNLP snapshot service without acquiring a suitable payload; the dated negative search is recorded in plans/reports/source-search-260807-historical-medline.md. An NLM Support request was submitted on 2026-08-07 and a response is pending; personal correspondence and identifiers are not committed. NLM's launch notice says the raw FTP and query tool were originally controlled for registered licensees.",
-      "next_action": "Await the NLM Support response to the submitted request documented in plans/requests/nlm-historical-medline-access.md. The capture can be replayed with pipeline.benchmark.mbr_capture but does not contain the baseline XML. If NLM identifies a raw access path, pin every file by URL, compressed byte count, SHA-256, and parsed record count, then reconcile each release with inventories.json before changing this status."
+      "observation": "NLM documents that a baseline labelled year R is released in December after records are maintained to year R's MeSH and contains the preceding production year's updates. The source contract therefore requires releases 2007, 2011, 2012, and 2013 to cover publication-year cutoffs 2006, 2010, 2011, and 2012. Official NLM inventory pages are pinned for all four releases. A digest-addressed Common Crawl WARC capture of the MBR homepage also preserves the historical Download/Baselines/{year} directory links and matching release totals. This metadata establishes directory and completeness targets only: the mbr.nlm.nih.gov host no longer resolves, and no required XML payload or per-file checksum has been recovered. A 2026-08-07 follow-up checked plausible public NCBI archive paths, the preserved directory URL, and the title/abstract-only BioNLP snapshot service without acquiring a suitable payload; the dated negative search is recorded in plans/reports/source-search-260807-historical-medline.md. On 2026-08-10, NLM Support confirmed in a private reply that baseline files for previous years are not available and directed the requester to the current baseline directory. The repository retains only the public-safe summary above, not personal correspondence or identifiers. NLM's launch notice says the raw FTP and query tool were originally controlled for registered licensees.",
+      "next_action": "Keep the original four-release source gate unavailable unless a separately verifiable preserved copy is recovered. Audit the dated BioASQ 2013 secondary snapshot under source-alternatives.json as a possible input to a separately pre-registered 2013-snapshot pilot; it cannot silently replace the original NLM-baseline contract. If any raw source is acquired, pin its payload, declared corpus scope, byte count, SHA-256, parsed record count, and citation-to-MeSH coverage before changing a readiness status."
     },
     {
       "id": "historical-mesh-vocabularies",

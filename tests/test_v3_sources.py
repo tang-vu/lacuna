@@ -111,6 +111,7 @@ def test_current_historical_sources_are_explicitly_not_ready():
     assert audit.inventory_years == (2007, 2011, 2012, 2013)
     assert audit.preservation_capture_years == (2007, 2011, 2012, 2013)
     assert audit.pinned_record_years == ()
+    assert audit.provider_confirmation_received_on == "2026-08-10"
     assert audit.statuses["historical_records"] == "unavailable"
     assert audit.statuses["historical_vocabulary"] == "available_pinned"
     assert audit.statuses["current_records"] == "available_unsuitable"
@@ -256,3 +257,19 @@ def test_public_source_provenance_excludes_personal_support_correspondence():
     assert "@gmail.com" not in public_record
     assert "CAS-" not in public_record
     assert "Case #" not in public_record
+
+
+def test_provider_confirmation_is_public_safe_and_dated(tmp_path):
+    payload = json.loads(SOURCES_PATH.read_text(encoding="utf-8"))
+    records = next(
+        source for source in payload["sources"] if source["kind"] == "historical_records"
+    )
+    records["provider_confirmation"]["received_on"] = "not-a-date"
+
+    with pytest.raises(SourceContractError, match="confirmation date"):
+        audit_sources(_write_sources(tmp_path, payload))
+
+    records["provider_confirmation"]["received_on"] = "2026-08-10"
+    records["provider_confirmation"]["summary"] += " CAS-private"
+    with pytest.raises(SourceContractError, match="personal identifiers"):
+        audit_sources(_write_sources(tmp_path, payload))

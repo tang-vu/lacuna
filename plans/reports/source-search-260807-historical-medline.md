@@ -4,6 +4,12 @@
 **Scope:** public-path discovery only  
 **Historical-record source gate:** unchanged, `unavailable`
 
+**2026-08-10 provider follow-up:** NLM Support replied that previous-year baseline files are not
+available and directed the requester to the current PubMed baseline directory. The committed source
+contract records a sanitized summary, date, scope, and limitation without personal contact, case, or
+tracking identifiers. This confirms NLM's present distribution position; it is not evidence that no
+third-party preservation copy exists.
+
 ## Result
 
 No raw 2007, 2011, 2012, or 2013 MEDLINE/PubMed baseline release was acquired. These checks add no
@@ -32,8 +38,10 @@ record release, checksum, or period-appropriate mapping to metric v3 readiness.
 
 ## Consequence
 
-The prepared support request in `plans/requests/nlm-historical-medline-access.md` was submitted on
-2026-08-07 and a response is pending. Personal correspondence and identifiers stay outside the
-repository. Do not turn a support reply, directory listing, title/abstract snapshot, or current
-PubMed export into `available_pinned`; complete release files must pass the pinned inventory and
-manifest workflow.
+The support request in `plans/requests/nlm-historical-medline-access.md` was submitted on 2026-08-07
+and answered on 2026-08-10. Personal correspondence and identifiers stay outside the repository.
+The reply does not add a record release, checksum, or period-appropriate mapping. Do not turn it, a
+directory listing, title/abstract snapshot, or current PubMed export into `available_pinned`;
+complete release files must pass the pinned inventory and manifest workflow. The separately scoped
+BioASQ 2013 candidate is evaluated in `plans/reports/source-alternatives-260811.md` and
+`benchmarks/v3/source-alternatives.json`.

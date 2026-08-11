@@ -24,6 +24,11 @@ After acquiring a complete release, use `pipeline.benchmark.build_release_manife
 and count its files. XML stays here; the generated manifest is reviewed and committed under
 `benchmarks/v3/manifests/`.
 
+A registered BioASQ Task 1a v2013 download may also be stored under
+`data/medline-baseline/bioasq/`. Audit it with `pipeline.benchmark.bioasq_snapshot`; only the
+generated aggregate manifest belongs in Git. This secondary corpus contributes zero readiness and
+must not be named or referenced as one of the four complete historical NLM releases.
+
 The committed manifest pins canonical SHA-256 digests of the exact taxonomy and row content used
 to build each artifact. Canonicalisation excludes fetch timestamps and strips `mailto` and
 `api_key` query parameters; neither personal identifiers nor credentials are part of a published
