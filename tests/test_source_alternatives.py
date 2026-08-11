@@ -23,7 +23,7 @@ def test_current_alternatives_keep_original_readiness_at_zero():
     assert audit.status == "no_equivalent_replacement_pinned"
     assert audit.recommended_id == "bioasq-2013-task-a"
     assert audit.counts == {
-        "candidate_requires_acquisition_audit": 1,
+        "audited_scope_mismatch": 1,
         "engineering_only": 1,
         "rejected_for_historical_gate": 1,
     }
@@ -36,6 +36,7 @@ def test_current_alternatives_keep_original_readiness_at_zero():
     )
     assert bioasq["can_replace_original_gate"] is False
     assert bioasq["public_sample_audit"]["path"].endswith("bioasq-2013-public-sample.json")
+    assert bioasq["snapshot_audit"]["path"].endswith("bioasq-2013-task-a.json")
     assert bioasq["semantics_protocol"]["path"].endswith("bioasq-semantics-protocol.json")
 
 
@@ -48,11 +49,11 @@ def test_alternative_cannot_claim_original_gate_readiness(tmp_path):
         audit_source_alternatives(_write_payload(tmp_path, payload))
 
 
-def test_recommended_alternative_must_be_an_acquisition_candidate(tmp_path):
+def test_recommended_alternative_must_be_an_actionable_redesign_route(tmp_path):
     payload = json.loads(ALTERNATIVES_PATH.read_text(encoding="utf-8"))
     payload["recommended_alternative_id"] = "current-pubmed-frozen-surrogate"
 
-    with pytest.raises(SourceAlternativeContractError, match="must still require"):
+    with pytest.raises(SourceAlternativeContractError, match="actionable redesign route"):
         audit_source_alternatives(_write_payload(tmp_path, payload))
 
 
@@ -85,4 +86,12 @@ def test_bioasq_semantics_protocol_is_frozen_and_checksum_pinned(tmp_path):
     payload["alternatives"][0]["semantics_protocol"]["sha256"] = "0" * 64
 
     with pytest.raises(SourceAlternativeContractError, match="protocol checksum mismatch"):
+        audit_source_alternatives(_write_payload(tmp_path, payload))
+
+
+def test_bioasq_full_snapshot_audit_is_checksum_pinned(tmp_path):
+    payload = json.loads(ALTERNATIVES_PATH.read_text(encoding="utf-8"))
+    payload["alternatives"][0]["snapshot_audit"]["sha256"] = "0" * 64
+
+    with pytest.raises(SourceAlternativeContractError, match="snapshot audit checksum mismatch"):
         audit_source_alternatives(_write_payload(tmp_path, payload))

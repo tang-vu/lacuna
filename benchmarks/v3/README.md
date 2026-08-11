@@ -95,11 +95,14 @@ Alternative inputs have a separate zero-readiness contract:
 python -m pipeline.benchmark.validate_source_alternatives
 ```
 
-`source-alternatives.json` identifies BioASQ Task 1a version 2013 as the strongest candidate for a
-redesigned, separately pre-registered snapshot pilot. Its official descriptions report 10,876,004
-post-1949 MEDLINE articles with MeSH 2013 labels under CC BY 2.5, but download requires registration,
-the full payload is not yet pinned, and it is not the complete 21,508,439-record NLM baseline. The
-generated `manifests/bioasq-2013-public-sample.json` audit measures all five public sample records,
+`source-alternatives.json` identifies BioASQ Task 1a version 2013 as the strongest redesign route
+and records its status as `audited_scope_mismatch`. The full registered payload is pinned by
+`manifests/bioasq-2013-task-a.json`. Its 10,876,004 articles, 26,563 distinct labels, and average
+12.55 labels per article match the catalog aggregates, but 280 records date to 1946-1949,
+contradicting the reported post-1949 publication scope. All years are parseable; 751,238 use a
+non-`YYYY` shape that the audit normalizes explicitly.
+It is not the complete 21,508,439-record NLM baseline. The generated
+`manifests/bioasq-2013-public-sample.json` audit measures all five public sample records,
 but remains explicitly bounded and contributes zero readiness. The checksum-pinned
 `bioasq-semantics-protocol.json` was frozen before access to the registered payload: it selects 416
 records by SHA-256 bottom-k across eight publication-year strata and predeclares the comparison and
@@ -114,31 +117,25 @@ python -m pipeline.benchmark.bioasq_download sample
 python -m pipeline.benchmark.bioasq_sample_audit --output path/to/rebuilt-sample-audit.json
 ```
 
-After acquiring the registered BioASQ raw v2013 payload, audit it without loading the JSON array in
-memory:
+The measured full-payload audit can be rebuilt without loading the JSON array in memory. Write to a
+review path because generated manifests refuse overwrite:
 
 ```bash
 python -m pipeline.benchmark.bioasq_download full
 python -m pipeline.benchmark.bioasq_snapshot \
-  --require-declared-match \
-  --output benchmarks/v3/manifests/bioasq-2013-task-a.json \
+  --output path/to/rebuilt-bioasq-2013-task-a.json \
   path/to/raw_training_set.zip
-python -m pipeline.benchmark.bioasq_semantics sample \
-  path/to/raw_training_set.zip \
-  --output data/medline-baseline/bioasq/semantics-sample.json
-python -m pipeline.benchmark.bioasq_semantics audit \
-  data/medline-baseline/bioasq/semantics-sample.json \
-  --snapshot path/to/raw_training_set.zip \
-  --output benchmarks/v3/manifests/bioasq-2013-semantics.json
+python -m pipeline.benchmark.bioasq_snapshot \
+  --require-declared-match \
+  path/to/raw_training_set.zip
 ```
 
-The audit fingerprints the container, validates fields and published aggregate counts, and checks
-every observed label against pinned MeSH 2013. Even an exact aggregate match emits zero readiness
-and retains the historical-indexing limitation. The semantics audit compares only the predeclared
-sample with maintained-current PubMed, pins every public batch query and response digest, and stays
-`semantics_unresolved` if any sampled PMID is missing. Before making those requests it replays the
-selection against the full snapshot and rejects a hand-edited sample. Set `NCBI_EMAIL` for EFetch;
-the email and optional API key are stripped from all stored provenance.
+The second command is expected to exit non-zero because the publication scope is measured as a
+mismatch. The audit fingerprints the container, validates fields and published aggregates, records
+the complete parseable year histogram, and checks every observed label against pinned MeSH 2013.
+The frozen semantics protocol must not be edited or run around its outside-strata rejection. Freeze
+a separately named successor protocol before selecting any full-corpus records or making EFetch
+requests.
 
 The retired repository homepage also has a checksum-pinned Common Crawl capture:
 

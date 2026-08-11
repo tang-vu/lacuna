@@ -2,7 +2,8 @@
 
 This contract is a research-routing aid, not a second path around the metric-v3 source gate. Every
 current entry contributes zero readiness. A dated secondary snapshot can support a redesigned,
-separately pre-registered experiment only after acquisition and payload-level audit.
+separately pre-registered experiment only after payload-level audit and a protocol scoped to the
+measured input.
 
 Run: ``python -m pipeline.benchmark.validate_source_alternatives``
 """
@@ -22,6 +23,7 @@ from pipeline.paths import REPO_ROOT
 
 ALTERNATIVES_PATH = REPO_ROOT / "benchmarks" / "v3" / "source-alternatives.json"
 STATUSES = {
+    "audited_scope_mismatch",
     "candidate_requires_acquisition_audit",
     "engineering_only",
     "rejected_for_historical_gate",
@@ -146,6 +148,97 @@ def _audit_semantics_protocol_reference(value: object, context: str) -> None:
     )
 
 
+def _audit_snapshot_reference(value: object, context: str) -> dict:
+    _require(isinstance(value, dict), f"{context}: missing full snapshot audit")
+    _require(set(value) == {"path", "sha256"}, f"{context}: malformed snapshot reference")
+    relative = Path(str(value["path"]))
+    _require(not relative.is_absolute() and ".." not in relative.parts, f"{context}: unsafe path")
+    path = REPO_ROOT / relative
+    _require(path.is_file(), f"{context}: referenced full snapshot audit is missing")
+    _require(
+        isinstance(value.get("sha256"), str)
+        and len(value["sha256"]) == 64
+        and _sha256_file(path) == value["sha256"],
+        f"{context}: full snapshot audit checksum mismatch",
+    )
+    audit = json.loads(path.read_text(encoding="utf-8"))
+    _require(audit.get("schema_version") == 1, f"{context}: unsupported snapshot schema")
+    _require(
+        audit.get("status") == "measured_unmatched_input",
+        f"{context}: snapshot must retain its measured scope mismatch",
+    )
+    _require(audit.get("readiness_contribution") == 0, f"{context}: snapshot cannot add readiness")
+    _require(
+        audit.get("source_alternative_id") == "bioasq-2013-task-a",
+        f"{context}: wrong source alternative",
+    )
+    source = audit.get("input")
+    container = source.get("container") if isinstance(source, dict) else None
+    _require(
+        isinstance(source, dict)
+        and isinstance(source.get("sha256"), str)
+        and len(source["sha256"]) == 64
+        and isinstance(source.get("bytes"), int)
+        and source["bytes"] > 0
+        and isinstance(container, dict)
+        and container.get("envelope") == "bioasq_single_quote_assignment",
+        f"{context}: snapshot input identity is incomplete",
+    )
+    measured = audit.get("measured")
+    _require(isinstance(measured, dict), f"{context}: missing measured snapshot")
+    year_counts = measured.get("publication_year_counts")
+    _require(isinstance(year_counts, dict) and year_counts, f"{context}: missing year histogram")
+    try:
+        parsed_year_counts = {int(year): int(count) for year, count in year_counts.items()}
+    except (TypeError, ValueError) as exc:
+        raise SourceAlternativeContractError(f"{context}: malformed year histogram") from exc
+    _require(
+        all(count > 0 for count in parsed_year_counts.values()),
+        f"{context}: year histogram counts must be positive",
+    )
+    _require(
+        sum(parsed_year_counts.values()) + measured.get("unparseable_year_count", -1)
+        == measured.get("article_count"),
+        f"{context}: year histogram does not reconcile with article count",
+    )
+    _require(
+        min(parsed_year_counts) == measured.get("publication_year_min")
+        and max(parsed_year_counts) == measured.get("publication_year_max"),
+        f"{context}: year histogram bounds do not reconcile",
+    )
+    _require(
+        measured.get("noncanonical_year_count") == 751_238
+        and measured.get("unparseable_year_count") == 0,
+        f"{context}: measured year-shape counts drifted",
+    )
+    comparison = audit.get("declared_comparison")
+    _require(
+        isinstance(comparison, dict)
+        and comparison.get("matches_published_aggregate_counts") is True
+        and comparison.get("matches_published_publication_scope") is False
+        and comparison.get("passes_declared_snapshot_gate") is False
+        and comparison.get("articles_before_declared_publication_scope", 0) > 0
+        and comparison.get("articles_after_snapshot_version") == 0,
+        f"{context}: declared comparison no longer records the bounded scope mismatch",
+    )
+    _require(
+        sum(count for year, count in parsed_year_counts.items() if year < 1950)
+        == comparison["articles_before_declared_publication_scope"],
+        f"{context}: pre-1950 count does not reconcile with year histogram",
+    )
+    _require(
+        measured.get("unknown_mesh_labels") == []
+        and measured.get("duplicate_mesh_assignment_count") == 0,
+        f"{context}: unexpected label-integrity anomaly",
+    )
+    _require(
+        measured.get("articles_without_mesh_labels") == 0,
+        f"{context}: unexpected label-integrity anomaly",
+    )
+    _require_text_list(audit.get("limitations"), f"{context}.limitations")
+    return audit
+
+
 def audit_source_alternatives(
     path: Path = ALTERNATIVES_PATH,
 ) -> SourceAlternativeAudit:
@@ -187,7 +280,7 @@ def audit_source_alternatives(
         _require(entry.get("access") in ACCESS_MODES, f"{entry_id}: unsupported access mode")
         _require(
             entry.get("readiness_contribution") == 0,
-            f"{entry_id}: an unaudited alternative cannot contribute readiness",
+            f"{entry_id}: a source alternative cannot contribute readiness",
         )
         _require(
             entry.get("can_replace_original_gate") is False,
@@ -203,7 +296,7 @@ def audit_source_alternatives(
             _require(bool(item.get("label")), f"{entry_id}: evidence missing label")
             _require_https(item.get("url"), f"{entry_id}.evidence[{evidence_index}]")
 
-        if status == "candidate_requires_acquisition_audit":
+        if status in {"candidate_requires_acquisition_audit", "audited_scope_mismatch"}:
             declared = entry.get("declared_snapshot")
             _require(isinstance(declared, dict), f"{entry_id}: missing declared snapshot")
             for field in ("version_year", "article_count", "mesh_label_count"):
@@ -224,13 +317,26 @@ def audit_source_alternatives(
                 _audit_semantics_protocol_reference(
                     entry.get("semantics_protocol"), f"{entry_id}.semantics_protocol"
                 )
+                if status == "audited_scope_mismatch":
+                    snapshot = _audit_snapshot_reference(
+                        entry.get("snapshot_audit"), f"{entry_id}.snapshot_audit"
+                    )
+                    _require(
+                        snapshot["measured"]["article_count"] == declared["article_count"]
+                        and snapshot["measured"]["distinct_mesh_label_count"]
+                        == declared["mesh_label_count"]
+                        and round(snapshot["measured"]["average_mesh_labels_per_article"], 2)
+                        == declared["average_mesh_labels_per_article"],
+                        f"{entry_id}: measured aggregates do not reconcile with declaration",
+                    )
 
     recommended_id = payload.get("recommended_alternative_id")
     _require(recommended_id in seen, "recommended alternative does not exist")
     recommended = next(entry for entry in alternatives if entry["id"] == recommended_id)
     _require(
-        recommended["status"] == "candidate_requires_acquisition_audit",
-        "recommended alternative must still require acquisition audit",
+        recommended["status"]
+        in {"candidate_requires_acquisition_audit", "audited_scope_mismatch"},
+        "recommended alternative must remain an actionable redesign route",
     )
 
     serialized = json.dumps(payload, ensure_ascii=False)
@@ -249,7 +355,7 @@ def main() -> None:
     audit = audit_source_alternatives()
     print("source alternatives contract: structurally valid")
     print(f"status: {audit.status}")
-    print(f"recommended audit: {audit.recommended_id}")
+    print(f"recommended redesign route: {audit.recommended_id}")
     for status, count in audit.counts.items():
         print(f"{status}: {count}")
     print(f"readiness contribution: {audit.readiness_contribution}")

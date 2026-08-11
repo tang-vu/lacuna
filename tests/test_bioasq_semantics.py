@@ -79,6 +79,23 @@ def test_sampler_keeps_predeclared_bottom_hashes_independent_of_input_order(tmp_
     assert sample["readiness_contribution"] == 0
 
 
+@pytest.mark.parametrize("outside_year", ["1999", "undated"])
+def test_sampler_rejects_records_outside_frozen_year_strata(
+    tmp_path: Path, outside_year: str
+):
+    protocol_path, _protocol = _small_protocol(tmp_path)
+    outside = _article("3")
+    outside["year"] = outside_year
+    snapshot = tmp_path / "snapshot.json"
+    snapshot.write_text(
+        json.dumps({"articles": [_article("1"), _article("2"), outside]}),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(BioasqSemanticsError, match="outside frozen strata"):
+        select_semantics_sample(snapshot, protocol_path=protocol_path)
+
+
 def _pubmed_payload(pmids: list[str], *, omit_last: bool = False) -> dict:
     returned = pmids[:-1] if omit_last else pmids
     records = [

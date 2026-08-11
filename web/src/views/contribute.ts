@@ -530,6 +530,7 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
   const recommendedAlternative = status.source_alternatives.entries.find(
     (entry) => entry.id === status.source_alternatives.recommended_id,
   );
+  const snapshot = status.source_alternatives.bioasq_snapshot;
 
   return el('section', { class: 'contribution-missions', id: 'contribute' }, [
     el('div', { class: 'section-kicker' }, ['THE OPEN WORK']),
@@ -547,7 +548,7 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
       mission(
         '01',
         'OPEN',
-        'Audit the dated snapshot',
+        'Resolve the dated snapshot',
         `NLM confirmed on ${status.historical_sources.provider_confirmation.received_on} that ` +
           'previous annual baselines are unavailable. ' +
           `${status.historical_sources.inventory_metadata.available} of ` +
@@ -556,9 +557,15 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
           `${status.historical_sources.raw_record_releases.required} raw citation releases are. ` +
           `${status.historical_sources.preservation_metadata.available} historical MBR directory ` +
           'rows are preserved; metadata is a target, not the records. ' +
-          `${recommendedAlternative?.label ?? 'The recommended secondary snapshot'} is the ` +
-          'strongest redesign candidate, but contributes zero until its registered payload and ' +
-          'scope are audited.',
+          `${recommendedAlternative?.label ?? 'The recommended secondary snapshot'} is pinned ` +
+          `at ${snapshot.measured.article_count.toLocaleString()} records. Its three published ` +
+          'aggregate counts match, but ' +
+          `${snapshot.declared_comparison.articles_before_declared_publication_scope.toLocaleString()} ` +
+          'records predate the reported post-1949 scope and ' +
+          `${snapshot.measured.noncanonical_year_count.toLocaleString()} year values use an ` +
+          'explicit non-YYYY normalization rule. ' +
+          'The frozen semantics protocol stays immutable; a separately named successor is needed. ' +
+          'This measured secondary snapshot still contributes zero readiness.',
         progress(
           pinnedSources,
           sourceStatuses.length,

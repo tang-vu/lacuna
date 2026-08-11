@@ -6,11 +6,14 @@ memory. This module streams one article at a time, validates its published field
 manifest. The output always contributes zero metric-v3 readiness: BioASQ is a secondary, scoped
 snapshot, not one of the missing complete NLM baselines.
 
-After downloading the raw v2013 set through a registered BioASQ account, run:
+Rebuild the measured audit to a review path after downloading the raw v2013 set:
 
     python -m pipeline.benchmark.bioasq_snapshot \
-      --require-declared-match --output benchmarks/v3/manifests/bioasq-2013-task-a.json \
+      --output path/to/rebuilt-bioasq-2013-task-a.json \
       path/to/raw_training_set.zip
+
+The pinned payload fails ``--require-declared-match`` because its publication-year scope differs
+from the published description. That strict failure is an audit result, not an error to bypass.
 """
 
 from __future__ import annotations
@@ -22,10 +25,10 @@ import io
 import json
 import re
 import zipfile
+from collections import Counter
 from collections.abc import Iterator
 from contextlib import contextmanager
 from dataclasses import asdict, dataclass
-from itertools import chain
 from pathlib import Path
 from typing import TextIO
 from xml.etree import ElementTree
@@ -35,10 +38,14 @@ from pipeline.benchmark.pin_mesh import inspect_descriptor_archive
 from pipeline.paths import MESH_CACHE_DIR, REPO_ROOT
 
 CHUNK_SIZE = 1024 * 1024
-HEADER = re.compile(r'^\ufeff?\s*\{\s*"articles"\s*:\s*\[')
+MAX_ARTICLE_CHARS = 64 * 1024 * 1024
+JSON_HEADER = re.compile(r'^\ufeff?\s*\{\s*"articles"\s*:\s*\[')
+LEGACY_ASSIGNMENT_HEADER = re.compile(r"^\ufeff?\s*\{\s*'articles'\s*=\s*\[")
+YEAR_TOKEN = re.compile(r"(?<!\d)(?:18|19|20)\d{2}(?!\d)")
 TRAILER = re.compile(r"^\s*\}\s*$")
 REQUIRED_FIELDS = {"abstractText", "journal", "meshMajor", "pmid", "title", "year"}
 ALTERNATIVES_PATH = REPO_ROOT / "benchmarks" / "v3" / "source-alternatives.json"
+MANIFEST_PATH = REPO_ROOT / "benchmarks" / "v3" / "manifests" / "bioasq-2013-task-a.json"
 
 
 class BioasqSnapshotError(ValueError):
@@ -52,7 +59,14 @@ class BioasqMeasurement:
     distinct_mesh_label_count: int
     publication_year_min: int
     publication_year_max: int
+    publication_year_counts: dict[int, int]
     articles_without_mesh_labels: int
+    noncanonical_year_count: int
+    noncanonical_year_examples: tuple[str, ...]
+    unparseable_year_count: int
+    unparseable_year_examples: tuple[str, ...]
+    articles_with_duplicate_mesh_labels: int
+    duplicate_mesh_assignment_count: int
     unknown_mesh_labels: tuple[str, ...]
 
 
@@ -89,6 +103,16 @@ def _zip_json_member(path: Path) -> str:
     return members[0]
 
 
+def _match_header(prefix: str) -> tuple[re.Match[str] | None, str | None]:
+    match = JSON_HEADER.match(prefix)
+    if match is not None:
+        return match, "json_articles_colon"
+    match = LEGACY_ASSIGNMENT_HEADER.match(prefix)
+    if match is not None:
+        return match, "bioasq_single_quote_assignment"
+    return None, None
+
+
 @contextmanager
 def open_snapshot_text(path: Path) -> Iterator[tuple[TextIO, dict]]:
     """Open plain, gzip, or single-JSON-member ZIP input without extracting it."""
@@ -118,78 +142,87 @@ def open_snapshot_text(path: Path) -> Iterator[tuple[TextIO, dict]]:
 def iter_articles(stream: TextIO) -> Iterator[dict]:
     """Yield objects from the top-level ``articles`` array with bounded memory."""
     prefix = stream.read(CHUNK_SIZE)
-    match = HEADER.match(prefix)
-    _require(match is not None, 'snapshot must start with a top-level "articles" array')
-    chunks = chain(
-        (prefix[match.end() :],),
-        iter(lambda: stream.read(CHUNK_SIZE), ""),
+    match, _envelope = _match_header(prefix)
+    _require(
+        match is not None,
+        'snapshot must start with a supported top-level "articles" envelope',
     )
-    object_chars: list[str] = []
-    depth = 0
-    in_string = False
-    escaped = False
+    decoder = json.JSONDecoder()
+    buffer = prefix[match.end() :]
+    index = 0
     need_comma = False
+    after_comma = False
 
-    for chunk in chunks:
-        if not chunk:
-            break
-        index = 0
-        while index < len(chunk):
-            char = chunk[index]
-            if depth:
-                object_chars.append(char)
-                if in_string:
-                    if escaped:
-                        escaped = False
-                    elif char == "\\":
-                        escaped = True
-                    elif char == '"':
-                        in_string = False
-                elif char == '"':
-                    in_string = True
-                elif char == "{":
-                    depth += 1
-                elif char == "}":
-                    depth -= 1
-                    if depth == 0:
-                        try:
-                            article = json.loads("".join(object_chars))
-                        except json.JSONDecodeError as exc:
-                            raise BioasqSnapshotError("invalid article JSON") from exc
-                        _require(isinstance(article, dict), "article entry must be an object")
-                        yield article
-                        object_chars.clear()
-                        need_comma = True
-                index += 1
-                continue
+    while True:
+        while index < len(buffer) and buffer[index].isspace():
+            index += 1
+        if index == len(buffer):
+            buffer = stream.read(CHUNK_SIZE)
+            index = 0
+            if not buffer:
+                raise BioasqSnapshotError("snapshot ended before the articles array closed")
+            continue
 
-            if char.isspace():
-                index += 1
-                continue
-            if need_comma:
-                if char == ",":
-                    need_comma = False
-                    index += 1
-                    continue
-                if char == "]":
-                    trailer = chunk[index + 1 :] + stream.read()
-                    _require(TRAILER.fullmatch(trailer) is not None, "unexpected data after articles")
-                    return
-                raise BioasqSnapshotError("articles must be comma-separated")
-            if char == "{":
-                depth = 1
-                object_chars = [char]
+        char = buffer[index]
+        if need_comma:
+            if char == ",":
+                need_comma = False
+                after_comma = True
                 index += 1
                 continue
             if char == "]":
-                trailer = chunk[index + 1 :] + stream.read()
-                _require(TRAILER.fullmatch(trailer) is not None, "unexpected data after articles")
+                trailer = buffer[index + 1 :] + stream.read()
+                _require(
+                    TRAILER.fullmatch(trailer) is not None,
+                    "unexpected data after articles",
+                )
                 return
+            raise BioasqSnapshotError("articles must be comma-separated")
+
+        if char == "]":
+            _require(not after_comma, "articles array must not end after a comma")
+            trailer = buffer[index + 1 :] + stream.read()
+            _require(
+                TRAILER.fullmatch(trailer) is not None,
+                "unexpected data after articles",
+            )
+            return
+        if char != "{":
             raise BioasqSnapshotError("articles array contains a non-object entry")
 
-    if depth:
-        raise BioasqSnapshotError("snapshot ended inside an article object")
-    raise BioasqSnapshotError("snapshot ended before the articles array closed")
+        while True:
+            try:
+                article, end = decoder.raw_decode(buffer, index)
+                _require(
+                    end - index <= MAX_ARTICLE_CHARS,
+                    "article JSON exceeds streaming safety limit",
+                )
+                break
+            except json.JSONDecodeError as exc:
+                _require(
+                    len(buffer) - index <= MAX_ARTICLE_CHARS,
+                    "article JSON exceeds streaming safety limit",
+                )
+                chunk = stream.read(CHUNK_SIZE)
+                if not chunk:
+                    raise BioasqSnapshotError("invalid or truncated article JSON") from exc
+                buffer = buffer[index:] + chunk
+                index = 0
+
+        _require(isinstance(article, dict), "article entry must be an object")
+        yield article
+        index = end
+        need_comma = True
+        after_comma = False
+
+
+def snapshot_envelope(path: Path) -> str:
+    """Identify the exact bounded envelope dialect without parsing the corpus."""
+    with open_snapshot_text(path) as (stream, _):
+        prefix = stream.read(CHUNK_SIZE)
+    match, envelope = _match_header(prefix)
+    _require(match is not None and envelope is not None, "unsupported snapshot envelope")
+    return envelope
 
 
 def descriptor_label_index(mesh_path: Path) -> dict[str, str]:
@@ -213,7 +246,9 @@ def descriptor_label_index(mesh_path: Path) -> dict[str, str]:
     return labels
 
 
-def validate_article(article: dict, article_number: int) -> tuple[str, int, tuple[str, ...]]:
+def validate_article(
+    article: dict, article_number: int
+) -> tuple[str, int | None, tuple[str, ...], bool, str]:
     """Validate one documented BioASQ record and return its sampling fields.
 
     Keeping this check shared prevents the aggregate snapshot audit and the separately frozen
@@ -232,8 +267,16 @@ def validate_article(article: dict, article_number: int) -> tuple[str, int, tupl
         )
     year = article["year"]
     _require(
-        isinstance(year, (str, int)) and str(year).isdigit(),
-        f"article {article_number}: publication year must be numeric",
+        isinstance(year, (str, int)),
+        f"article {article_number}: publication year must be text or integer",
+    )
+    raw_year = str(year).strip()
+    canonical_year = raw_year.isdigit()
+    year_match = YEAR_TOKEN.search(raw_year)
+    numeric_year = (
+        int(raw_year)
+        if canonical_year
+        else (int(year_match.group()) if year_match else None)
     )
     assigned = article["meshMajor"]
     _require(
@@ -241,12 +284,7 @@ def validate_article(article: dict, article_number: int) -> tuple[str, int, tupl
         and all(isinstance(label, str) and label.strip() for label in assigned),
         f"article {article_number}: meshMajor must be a list of labels",
     )
-    normalised_labels = [_normalise(label) for label in assigned]
-    _require(
-        len(normalised_labels) == len(set(normalised_labels)),
-        f"article {article_number}: meshMajor contains duplicate labels",
-    )
-    return str(pmid), int(year), tuple(assigned)
+    return str(pmid), numeric_year, tuple(assigned), canonical_year, raw_year
 
 
 def measure_snapshot(path: Path, *, mesh_path: Path) -> BioasqMeasurement:
@@ -256,39 +294,77 @@ def measure_snapshot(path: Path, *, mesh_path: Path) -> BioasqMeasurement:
     empty_mesh_count = 0
     publication_year_min: int | None = None
     publication_year_max: int | None = None
+    publication_year_counts: Counter[int] = Counter()
     mesh_labels: set[str] = set()
     unknown_mesh_labels: set[str] = set()
+    noncanonical_year_count = 0
+    noncanonical_year_examples: list[str] = []
+    unparseable_year_count = 0
+    unparseable_year_examples: list[str] = []
+    duplicate_mesh_article_count = 0
+    duplicate_mesh_assignment_count = 0
 
     with open_snapshot_text(path) as (stream, _):
         for article in iter_articles(stream):
             article_count += 1
-            _pmid, numeric_year, assigned = validate_article(article, article_count)
-            publication_year_min = (
-                numeric_year
-                if publication_year_min is None
-                else min(publication_year_min, numeric_year)
+            _pmid, numeric_year, assigned, canonical_year, raw_year = validate_article(
+                article, article_count
             )
-            publication_year_max = (
-                numeric_year
-                if publication_year_max is None
-                else max(publication_year_max, numeric_year)
-            )
+            if numeric_year is None:
+                unparseable_year_count += 1
+                if (
+                    raw_year not in unparseable_year_examples
+                    and len(unparseable_year_examples) < 20
+                ):
+                    unparseable_year_examples.append(raw_year)
+            else:
+                publication_year_counts[numeric_year] += 1
+                publication_year_min = (
+                    numeric_year
+                    if publication_year_min is None
+                    else min(publication_year_min, numeric_year)
+                )
+                publication_year_max = (
+                    numeric_year
+                    if publication_year_max is None
+                    else max(publication_year_max, numeric_year)
+                )
+                if not canonical_year:
+                    noncanonical_year_count += 1
+                    if (
+                        raw_year not in noncanonical_year_examples
+                        and len(noncanonical_year_examples) < 20
+                    ):
+                        noncanonical_year_examples.append(raw_year)
             if not assigned:
                 empty_mesh_count += 1
             assignment_count += len(assigned)
+            normalised_labels = [_normalise(label) for label in assigned]
+            duplicate_count = len(normalised_labels) - len(set(normalised_labels))
+            if duplicate_count:
+                duplicate_mesh_article_count += 1
+                duplicate_mesh_assignment_count += duplicate_count
             for label in assigned:
                 mesh_labels.add(label)
                 if _normalise(label) not in descriptor_labels:
                     unknown_mesh_labels.add(label)
 
     _require(article_count > 0, "snapshot contains no articles")
+    _require(publication_year_min is not None, "snapshot contains no parseable publication year")
     return BioasqMeasurement(
         article_count=article_count,
         mesh_assignment_count=assignment_count,
         distinct_mesh_label_count=len(mesh_labels),
         publication_year_min=int(publication_year_min),
         publication_year_max=int(publication_year_max),
+        publication_year_counts=dict(sorted(publication_year_counts.items())),
         articles_without_mesh_labels=empty_mesh_count,
+        noncanonical_year_count=noncanonical_year_count,
+        noncanonical_year_examples=tuple(noncanonical_year_examples),
+        unparseable_year_count=unparseable_year_count,
+        unparseable_year_examples=tuple(unparseable_year_examples),
+        articles_with_duplicate_mesh_labels=duplicate_mesh_article_count,
+        duplicate_mesh_assignment_count=duplicate_mesh_assignment_count,
         unknown_mesh_labels=tuple(sorted(unknown_mesh_labels)),
     )
 
@@ -320,17 +396,36 @@ def audit_snapshot(
     )
     payload_sha256, payload_bytes = _sha256_file(path)
     with open_snapshot_text(path) as (_, container):
-        container_metadata = container
+        container_metadata = {**container, "envelope": snapshot_envelope(path)}
     measured = measure_snapshot(path, mesh_path=mesh_path)
     declared = _declared_snapshot()
     measured_average = measured.mesh_assignment_count / measured.article_count
-    declared_match = (
+    aggregate_counts_match = (
         measured.article_count == declared["article_count"]
         and measured.distinct_mesh_label_count == declared["mesh_label_count"]
         and round(measured_average, 2) == declared["average_mesh_labels_per_article"]
-        and measured.publication_year_min >= 1950
-        and measured.publication_year_max <= declared["version_year"]
+    )
+    articles_before_declared_scope = sum(
+        count
+        for year, count in measured.publication_year_counts.items()
+        if year < 1950
+    )
+    articles_after_snapshot_version = sum(
+        count
+        for year, count in measured.publication_year_counts.items()
+        if year > declared["version_year"]
+    )
+    publication_scope_match = (
+        articles_before_declared_scope == 0
+        and articles_after_snapshot_version == 0
+        and measured.unparseable_year_count == 0
+    )
+    declared_match = (
+        aggregate_counts_match
+        and publication_scope_match
         and measured.articles_without_mesh_labels == 0
+        and measured.noncanonical_year_count == 0
+        and measured.articles_with_duplicate_mesh_labels == 0
         and not measured.unknown_mesh_labels
     )
     if require_declared_match:
@@ -356,12 +451,17 @@ def audit_snapshot(
             "mesh_label_count": declared["mesh_label_count"],
             "average_mesh_labels_per_article": declared["average_mesh_labels_per_article"],
             "publication_scope": declared["publication_scope"],
-            "matches_published_aggregate_scope": declared_match,
+            "articles_before_declared_publication_scope": articles_before_declared_scope,
+            "articles_after_snapshot_version": articles_after_snapshot_version,
+            "matches_published_aggregate_counts": aggregate_counts_match,
+            "matches_published_publication_scope": publication_scope_match,
+            "passes_declared_snapshot_gate": declared_match,
         },
         "mesh_vocabulary": expected_mesh,
         "limitations": [
             "This secondary BioASQ corpus is not the complete 2013 NLM baseline and cannot satisfy the original four-release source gate.",
             "Matching published aggregate counts does not establish PMID-by-PMID completeness or whether meshMajor contains only major headings versus all assigned descriptors.",
+            "Non-YYYY publication-year values are parsed only for aggregate year bounds and are reported separately rather than silently treated as schema-conforming years.",
             "Any metric experiment using this input needs a separately frozen pre-registration scoped to the measured BioASQ corpus.",
         ],
     }

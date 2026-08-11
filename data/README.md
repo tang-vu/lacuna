@@ -42,24 +42,37 @@ $env:BIOASQ_USERNAME = Read-Host "BioASQ username"
 $env:BIOASQ_PASSWORD = Read-Host -MaskInput "BioASQ password"
 python -m pipeline.benchmark.bioasq_download full
 python -m pipeline.benchmark.bioasq_snapshot \
-  --require-declared-match \
-  --output benchmarks/v3/manifests/bioasq-2013-task-a.json \
+  --output path/to/rebuilt-bioasq-2013-task-a.json \
   data/medline-baseline/bioasq/PubMedWithMeSH.zip
-python -m pipeline.benchmark.bioasq_semantics sample \
+python -m pipeline.benchmark.bioasq_snapshot \
+  --require-declared-match \
+  data/medline-baseline/bioasq/PubMedWithMeSH.zip
+```
+
+The strict command is expected to fail: the pinned audit measures 280 records before the reported
+post-1949 scope. All years are parseable, with 751,238 explicitly normalized non-`YYYY` values. Do
+not run the frozen semantics protocol
+against this mismatched sampling frame. A separately named successor protocol must be committed
+before running commands of the following shape:
+
+```bash
+python -m pipeline.benchmark.bioasq_semantics \
+  --protocol path/to/reviewed-successor-protocol.json sample \
   data/medline-baseline/bioasq/PubMedWithMeSH.zip \
   --output data/medline-baseline/bioasq/semantics-sample.json
 $env:NCBI_EMAIL = Read-Host "NCBI registered email"
-python -m pipeline.benchmark.bioasq_semantics audit \
+python -m pipeline.benchmark.bioasq_semantics \
+  --protocol path/to/reviewed-successor-protocol.json audit \
   data/medline-baseline/bioasq/semantics-sample.json \
   --snapshot data/medline-baseline/bioasq/PubMedWithMeSH.zip \
   --output benchmarks/v3/manifests/bioasq-2013-semantics.json
 ```
 
 Do not put the variables in a repository `.env` file or pass secrets on the command line. Only the
-generated aggregate and bounded semantics manifests belong in Git. The 416-record sample stays in
-ignored local state; its output can be regenerated from the source snapshot and frozen protocol.
-This secondary corpus contributes zero readiness and must not be named or referenced as one of the
-four complete historical NLM releases.
+generated aggregate and bounded semantics manifests belong in Git. Any future selection stays in
+ignored local state and must be reproducible from the source snapshot and its separately pinned
+successor protocol. This secondary corpus contributes zero readiness and must not be named or
+referenced as one of the four complete historical NLM releases.
 
 The committed manifest pins canonical SHA-256 digests of the exact taxonomy and row content used
 to build each artifact. Canonicalisation excludes fetch timestamps and strips `mailto` and

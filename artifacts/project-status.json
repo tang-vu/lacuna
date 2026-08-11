@@ -1,15 +1,20 @@
 {
- "schema_version": 8,
+ "schema_version": 9,
  "status": "not_ready",
  "inputs": {
   "historical_sources": {
    "path": "benchmarks/v3/sources.json",
-   "sha256": "dd6426dde18c0bddb1cc0b4e41444c1409a02ee4b8d2330e8c2459cdd6439897",
+   "sha256": "58c879dcb170b026deb6ce8c7e6197058c6b443369973b7f39ef2455705f64ba",
    "canonicalisation": "canonical-json-v1"
   },
   "source_alternatives": {
    "path": "benchmarks/v3/source-alternatives.json",
-   "sha256": "e4f68110c230cfa4544a9422b227db589e0d97de2c805c547345637fadceb6e5",
+   "sha256": "d5d0a095b77fdd3c8c522b97a1e86d932610503ccfeed5718f13ae4292bd38fc",
+   "canonicalisation": "canonical-json-v1"
+  },
+  "bioasq_snapshot_audit": {
+   "path": "benchmarks/v3/manifests/bioasq-2013-task-a.json",
+   "sha256": "f7e335ff7bc71524dfce862c739c5f0b1ee06c2f3bed3011a86621844b38ba50",
    "canonicalisation": "canonical-json-v1"
   },
   "bioasq_semantics_protocol": {
@@ -106,16 +111,166 @@
   "status": "no_equivalent_replacement_pinned",
   "recommended_id": "bioasq-2013-task-a",
   "counts": {
-   "candidate_requires_acquisition_audit": 1,
+   "audited_scope_mismatch": 1,
    "engineering_only": 1,
    "rejected_for_historical_gate": 1
   },
   "readiness_contribution": 0,
+  "bioasq_snapshot": {
+   "schema_version": 1,
+   "status": "measured_unmatched_input",
+   "readiness_contribution": 0,
+   "source_alternative_id": "bioasq-2013-task-a",
+   "input": {
+    "local_name": "PubMedWithMeSH.zip",
+    "sha256": "c4f738af8835b9fc300488d484efd633fd4137b149cd852b66a839651e328f68",
+    "bytes": 5471741580,
+    "container": {
+     "format": "zip",
+     "member": "allMeSH.json",
+     "member_bytes": 18383359066,
+     "member_compressed_bytes": 5471741342,
+     "member_crc32": "fc9f9a75",
+     "envelope": "bioasq_single_quote_assignment"
+    }
+   },
+   "measured": {
+    "article_count": 10876004,
+    "mesh_assignment_count": 136439656,
+    "distinct_mesh_label_count": 26563,
+    "publication_year_min": 1946,
+    "publication_year_max": 2013,
+    "publication_year_counts": {
+     "1946": 7,
+     "1947": 43,
+     "1948": 58,
+     "1949": 172,
+     "1950": 268,
+     "1951": 231,
+     "1952": 212,
+     "1953": 271,
+     "1954": 273,
+     "1955": 314,
+     "1956": 357,
+     "1957": 384,
+     "1958": 431,
+     "1959": 671,
+     "1960": 823,
+     "1961": 1064,
+     "1962": 1521,
+     "1963": 2030,
+     "1964": 2365,
+     "1965": 2717,
+     "1966": 3374,
+     "1967": 3840,
+     "1968": 4250,
+     "1969": 5659,
+     "1970": 6240,
+     "1971": 6811,
+     "1972": 7719,
+     "1973": 8212,
+     "1974": 9944,
+     "1975": 96361,
+     "1976": 104785,
+     "1977": 102067,
+     "1978": 105336,
+     "1979": 113169,
+     "1980": 122219,
+     "1981": 121327,
+     "1982": 127170,
+     "1983": 157847,
+     "1984": 172701,
+     "1985": 180233,
+     "1986": 185868,
+     "1987": 190212,
+     "1988": 194523,
+     "1989": 247241,
+     "1990": 252510,
+     "1991": 252608,
+     "1992": 256608,
+     "1993": 260726,
+     "1994": 266709,
+     "1995": 273602,
+     "1996": 277315,
+     "1997": 284684,
+     "1998": 296614,
+     "1999": 304658,
+     "2000": 325119,
+     "2001": 342055,
+     "2002": 353913,
+     "2003": 374725,
+     "2004": 398333,
+     "2005": 427726,
+     "2006": 449998,
+     "2007": 473319,
+     "2008": 499465,
+     "2009": 521026,
+     "2010": 545103,
+     "2011": 593681,
+     "2012": 542828,
+     "2013": 11359
+    },
+    "articles_without_mesh_labels": 0,
+    "noncanonical_year_count": 751238,
+    "noncanonical_year_examples": [
+     "1964 Nov-Dec",
+     "1965 Sep-Oct",
+     "1965 Nov-Dec",
+     "1965 Oct-Dec",
+     "1965 Jan-Jun",
+     "1966 Jan-Feb",
+     "1966 Mar-Apr",
+     "1966 Sep-Oct",
+     "1966 Jul-Sep",
+     "1966 Oct-Dec",
+     "1967 Sep-Oct",
+     "1967 Mar-Apr",
+     "1967 May-Jun",
+     "1967 Jan-Feb",
+     "1967 Nov-Dec",
+     "1968 Mar-Apr",
+     "1968 Apr-Jun",
+     "1968 May-Jun",
+     "1968 Sep-Oct",
+     "1968 Oct-Dec"
+    ],
+    "unparseable_year_count": 0,
+    "unparseable_year_examples": [],
+    "articles_with_duplicate_mesh_labels": 0,
+    "duplicate_mesh_assignment_count": 0,
+    "unknown_mesh_labels": [],
+    "average_mesh_labels_per_article": 12.54501709
+   },
+   "declared_comparison": {
+    "article_count": 10876004,
+    "mesh_label_count": 26563,
+    "average_mesh_labels_per_article": 12.55,
+    "publication_scope": "MEDLINE articles published after 1949",
+    "articles_before_declared_publication_scope": 280,
+    "articles_after_snapshot_version": 0,
+    "matches_published_aggregate_counts": true,
+    "matches_published_publication_scope": false,
+    "passes_declared_snapshot_gate": false
+   },
+   "mesh_vocabulary": {
+    "year": 2013,
+    "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/2013/xmlmesh/desc2013.gz",
+    "sha256": "c928973ae228ebd03ceeec8950b31f63a867fc9dc2699ae1578e506f25739740",
+    "bytes": 16103897,
+    "descriptor_count": 26853
+   },
+   "limitations": [
+    "This secondary BioASQ corpus is not the complete 2013 NLM baseline and cannot satisfy the original four-release source gate.",
+    "Matching published aggregate counts does not establish PMID-by-PMID completeness or whether meshMajor contains only major headings versus all assigned descriptors.",
+    "Non-YYYY publication-year values are parsed only for aggregate year bounds and are reported separately rather than silently treated as schema-conforming years.",
+    "Any metric experiment using this input needs a separately frozen pre-registration scoped to the measured BioASQ corpus."
+   ]
+  },
   "entries": [
    {
     "id": "bioasq-2013-task-a",
     "label": "BioASQ Task 1a training data, version 2013",
-    "status": "candidate_requires_acquisition_audit",
+    "status": "audited_scope_mismatch",
     "source_class": "dated_secondary_medline_snapshot",
     "access": "registration_required",
     "readiness_contribution": 0,
@@ -164,19 +319,24 @@
      "path": "benchmarks/v3/manifests/bioasq-2013-public-sample.json",
      "sha256": "1f0f5dab81faef5e8765133d4f58616291e6d4af247bc6da33254ffe7767bf95"
     },
+    "snapshot_audit": {
+     "path": "benchmarks/v3/manifests/bioasq-2013-task-a.json",
+     "sha256": "7545ce6b2062315244af3d71fa4b476ff26277d36b6377dd3e210c23c53e1f6c"
+    },
     "semantics_protocol": {
      "path": "benchmarks/v3/bioasq-semantics-protocol.json",
      "sha256": "70f69a6d7c722cd0aa2620b0ac83b015409dca8c3c95d25ad8b3ab3fc41b6176"
     },
-    "potential_role": "A separately pre-registered 2013-snapshot pilot over the corpus BioASQ actually contains, after acquisition and audit. It may support post-snapshot discovery cases but is not an NLM baseline substitute.",
+    "potential_role": "A separately pre-registered pilot over the measured secondary corpus after a successor semantics protocol explicitly handles its observed publication-year scope. It may support post-snapshot discovery cases but is not an NLM baseline substitute.",
     "blockers": [
-     "The registered-download payload has not been acquired, checksummed, or parsed in this repository.",
-     "The official descriptions define a post-1949 MEDLINE article corpus rather than the complete 21,508,439-record 2013 NLM baseline; the two published counts are not a measured coverage fraction.",
-     "The official five-record sample is consistent with meshMajor containing all assigned descriptors rather than only major-topic headings. A 416-record, hash-selected, year-stratified semantics protocol is frozen before full-payload access, but it cannot run until the registered corpus is acquired.",
+     "The acquired payload matches all three published aggregate counts, but its measured publication-year scope does not match the reported post-1949 scope: 280 records are dated 1946-1949. All years are parseable, although 751,238 values are not plain YYYY.",
+     "The misleading meshMajor field remains resolved only on the bounded five-record public sample. Corpus-wide assignment semantics have not been audited.",
+     "The 416-record semantics protocol was frozen before payload access and deliberately rejects records outside its declared 1950-2013 strata. It must remain immutable; a separately named successor protocol is required before any full-corpus semantics sample is selected.",
+     "The measured secondary corpus is not the complete 21,508,439-record 2013 NLM baseline, and the two totals are not a measured coverage fraction.",
      "Only a 2013 snapshot is relevant here, so it cannot supply the missing 2007, 2011, and 2012 releases.",
      "Using it changes the experimental population and therefore requires a new pre-registration rather than a source-status flip."
     ],
-    "next_action": "Activate a BioASQ account, expose its credentials only as BIOASQ_USERNAME and BIOASQ_PASSWORD, run pipeline.benchmark.bioasq_download full, then run pipeline.benchmark.bioasq_snapshot with --require-declared-match and pipeline.benchmark.bioasq_semantics under the checksum-pinned protocol. Commit only generated manifests and bounded audit records, not credentials or the multi-gigabyte payload."
+    "next_action": "Keep the acquired payload in ignored local state and the measured audit immutable. In a separate update, freeze a successor semantics protocol that explicitly handles the 280 pre-1950 records before selecting records or making any new PubMed requests."
    },
    {
     "id": "current-pubmed-frozen-surrogate",

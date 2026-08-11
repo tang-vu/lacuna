@@ -59,10 +59,12 @@ The direct NLM request is closed without the four releases, so source recovery a
 redesign are now tracked separately in `benchmarks/v3/source-alternatives.json`. None of those
 alternatives contributes to the original source gate.
 
-BioASQ Task 1a version 2013 is the leading redesign candidate. Its official catalog describes
-10,876,004 PubMed/MEDLINE articles with curator-assigned MeSH 2013 labels and retains the registered
-download under CC BY 2.5. A contemporary project report scopes the corpus to MEDLINE articles
-published after 1949. It is therefore a plausible dated secondary snapshot, but it is not the
+BioASQ Task 1a version 2013 is the leading redesign route. Its acquired registered payload is pinned
+by a generated full-corpus manifest. All three catalog aggregates match: 10,876,004 articles,
+26,563 distinct labels, and 136,439,656 assignments, whose average rounds to the published 12.55.
+The reported post-1949 publication scope does not match the payload: 280 parseable records date to
+1946-1949. All year strings are parseable, although 751,238 are not plain `YYYY`. The corpus remains
+a plausible dated secondary snapshot, but it is not the
 21,508,439-record 2013 NLM baseline and supplies no 2007/2011/2012 release. A checksum-pinned audit
 of the five-record public sample found 72 assignments, all present in pinned MeSH 2013. Of those,
 71 remain among maintained-current PubMed descriptors and nine carry a current `MajorTopicYN=Y`
@@ -76,12 +78,16 @@ post-2002 candidate cutoffs their own coverage, requires every sampled PMID to r
 and compares assignment overlap with all maintained-current descriptors versus current
 `MajorTopicYN=Y` headings. The protocol was written after the five public records were measured, so
 it discloses that evidence; it was written before the full-corpus sample or any v3 metric output.
-Even a passing result remains bounded evidence from maintained-current comparison records and adds
-zero readiness.
+Even a passing result would remain bounded evidence from maintained-current comparison records and
+add zero readiness. The measured payload invalidates this protocol's sampling frame because its
+strict selector rejects records outside the frozen 1950-2013 strata. The protocol remains
+immutable and no full-corpus semantics sample has been
+selected under it.
 
-If acquired and checksum-pinned, BioASQ may support a **new, separately pre-registered 2013-snapshot
-pilot** over its measured corpus. It must not be relabelled as a recovered baseline or inserted into
-the current benchmark contract. Current PubMed remains an engineering/prospective input, and the
+BioASQ may support a **new, separately pre-registered secondary-snapshot pilot** over its measured
+corpus only after a separately named successor semantics protocol explicitly handles the observed
+year scope. It must not be relabelled as a recovered baseline or inserted into the current benchmark
+contract. Current PubMed remains an engineering/prospective input, and the
 Persistent PubMed Abstracts service remains unsuitable because it lacks historical MeSH
 assignments. Full reasoning and acquisition commands are in
 `plans/reports/source-alternatives-260811.md`.
@@ -181,12 +187,13 @@ after seeing them.
 2. Build the benchmark contract and mapping audit, explicitly separating maintained-current,
    period-appropriate, ambiguous, and unavailable mappings.
 3. Pre-register candidate formulas and thresholds.
-4. Keep watching for independently preserved complete NLM releases, while auditing the BioASQ 2013
-   payload as a separate redesign candidate. The archived-baseline reader and targeted pair/ABC
-   accumulator remain closed until complete release file sets are pinned. The BioASQ streaming
-   auditor and bounded public-sample audit likewise emit zero readiness; after the registered full
-   payload matches declared counts, run the already-frozen balanced assignment-semantics protocol.
-   Only then may a new 2013-snapshot pre-registration be frozen before any candidate formula runs.
+4. Keep watching for independently preserved complete NLM releases. The archived-baseline reader
+   and targeted pair/ABC accumulator remain closed until complete release file sets are pinned. The
+   BioASQ full-payload audit matches published aggregate counts but fails the reported publication
+   scope, so it emits zero readiness and the first frozen semantics protocol remains unrun. Freeze a
+   separately named successor protocol that handles the measured 280 pre-1950 records before
+   selecting any full-corpus semantics sample. Only after that bounded audit may a
+   new secondary-snapshot experiment be pre-registered before any candidate formula runs.
 5. Run development cases, make at most one documented revision, then freeze.
 6. Run held-out cases and the manual audit.
 7. Only after a pass, design the LLM interpretation schema and pair-detail UI.

@@ -281,24 +281,27 @@ cannot self-certify.
 
 Source redesign is explicit rather than hidden inside that failed recovery path.
 [`benchmarks/v3/source-alternatives.json`](benchmarks/v3/source-alternatives.json) records three
-reviewed routes and gives all of them zero readiness contribution. BioASQ Task 1a version 2013 is
-the leading candidate for a separately pre-registered snapshot experiment: its official catalog
-describes 10,876,004 post-1949 MEDLINE articles with MeSH 2013 labels, but the registered-download
-payload is not yet acquired or checksummed and it is not the complete 21,508,439-record NLM
-baseline. A checksum-pinned five-record public sample now gives bounded evidence that `meshMajor`
+reviewed routes and gives all of them zero readiness contribution. The registered BioASQ Task 1a
+version 2013 payload is now acquired locally and pinned by the generated
+[`bioasq-2013-task-a.json`](benchmarks/v3/manifests/bioasq-2013-task-a.json) audit. All three catalog
+aggregates match: 10,876,004 articles, 26,563 distinct labels, and 136,439,656 assignments or
+12.54501709 per article, which rounds to the published 12.55. The declared publication scope does
+not match: 280 records date to 1946-1949. All publication years are parseable, although 751,238
+values require an explicit non-`YYYY` normalization rule. This secondary
+corpus is not the complete 21,508,439-record NLM baseline. A checksum-pinned five-record public
+sample gives bounded evidence that `meshMajor`
 behaves like all assigned descriptors rather than only major-topic headings: 71/72 assignments
 match maintained-current PubMed descriptors, while 9/72 match current `MajorTopicYN=Y` headings.
 That is a schema observation, not a corpus-wide or period-appropriate validation. Before seeing the
 registered payload, the repository froze a 416-record SHA-256 bottom-k protocol across eight
 publication-year strata, including the 2006/2010/2011/2012 candidate cutoffs. It requires every
 sampled PMID to return and never inspects a gap score. Run
-`python -m pipeline.benchmark.validate_source_alternatives` to audit that boundary. After a
-registered account is activated, `python -m pipeline.benchmark.bioasq_download full` acquires the
-ZIP without putting credentials on the command line, and
-`python -m pipeline.benchmark.bioasq_snapshot --require-declared-match ...` streams the
-multi-gigabyte JSON, fingerprints it, checks labels against pinned MeSH 2013, and emits an aggregate
-manifest. `python -m pipeline.benchmark.bioasq_semantics sample ...` then applies the frozen
-semantics protocol. Both outputs still contribute zero until a new experiment is pre-registered.
+`python -m pipeline.benchmark.validate_source_alternatives` to audit that boundary. Because the
+measured payload contains records outside the protocol's 1950-2013 strata, the strict selector
+cannot run it unchanged. That protocol remains immutable. A separately named
+successor must explicitly handle the measured sampling frame before any full-corpus semantics
+selection or PubMed request. The full audit status is `measured_unmatched_input`; the
+`--require-declared-match` command is expected to fail. Readiness remains zero.
 
 ## Deployment
 

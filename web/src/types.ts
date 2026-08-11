@@ -181,6 +181,7 @@ export interface ProjectStatus {
       id: string;
       label: string;
       status:
+        | 'audited_scope_mismatch'
         | 'candidate_requires_acquisition_audit'
         | 'engineering_only'
         | 'rejected_for_historical_gate';
@@ -198,7 +199,36 @@ export interface ProjectStatus {
         path: string;
         sha256: string;
       };
+      snapshot_audit?: {
+        path: string;
+        sha256: string;
+      };
     }>;
+    bioasq_snapshot: {
+      status: 'measured_unmatched_input';
+      readiness_contribution: 0;
+      input: {
+        sha256: string;
+        bytes: number;
+      };
+      measured: {
+        article_count: number;
+        mesh_assignment_count: number;
+        distinct_mesh_label_count: number;
+        publication_year_min: number;
+        publication_year_max: number;
+        publication_year_counts: Record<string, number>;
+        noncanonical_year_count: number;
+        unparseable_year_count: number;
+      };
+      declared_comparison: {
+        articles_before_declared_publication_scope: number;
+        articles_after_snapshot_version: number;
+        matches_published_aggregate_counts: boolean;
+        matches_published_publication_scope: boolean;
+        passes_declared_snapshot_gate: boolean;
+      };
+    };
   };
   candidate_intake: {
     counts: { accepted: number; proposed: number; rejected: number };

@@ -3,10 +3,11 @@
 This directory contains generated source audits, not hand-edited measurements. One generated JSON
 manifest belongs here for each acquired input. The bounded `bioasq-2013-public-sample.json` audit
 pins the five-record public sample and a maintained-current PubMed comparison; it contributes zero
-readiness and does not certify the registered corpus. A separately named full BioASQ audit may be
-added after the v2013 payload matches its published aggregate scope. Neither BioASQ manifest enters
-`sources.json` as a historical NLM release. Multi-gigabyte payloads stay in ignored local pipeline
-state; their identities do not.
+readiness and does not certify the registered corpus. The full `bioasq-2013-task-a.json` audit pins
+the acquired payload and records `measured_unmatched_input`: catalog aggregate counts match, while
+280 records precede the declared post-1949 scope; all years are parseable. Neither
+BioASQ manifest enters `sources.json` as a historical NLM release. Multi-gigabyte payloads stay in
+ignored local pipeline state; their identities do not.
 
 Build a manifest only after acquiring the complete release:
 
@@ -49,19 +50,18 @@ Generated manifests are committed provenance, not hand-edited source data. If a 
 fix the acquisition input and rebuild to a new reviewed file rather than editing a count until the
 validator passes.
 
-For the distinct zero-readiness BioASQ route, use
-`python -m pipeline.benchmark.bioasq_snapshot --require-declared-match`. Its generated manifest
-belongs at `bioasq-2013-task-a.json`, remains governed by `../source-alternatives.json`, and cannot
-be referenced as one of the four complete NLM release manifests.
+For the distinct zero-readiness BioASQ route, use `python -m pipeline.benchmark.bioasq_snapshot`
+without the strict flag and write to a review path. Its generated manifest remains governed by
+`../source-alternatives.json` and cannot be referenced as one of the four complete NLM release
+manifests. Running with `--require-declared-match` is now a negative gate check and must fail for the
+pinned payload.
 
 The separate `../bioasq-semantics-protocol.json` was frozen before the registered payload was
-available. After the aggregate snapshot audit matches, use `pipeline.benchmark.bioasq_semantics`
-to select its deterministic 416-record sample into ignored local state and then write
-`bioasq-2013-semantics.json`. The generated audit records the source snapshot and protocol digests,
-every public EFetch query and response checksum, assignment-level overlaps, stratum summaries, and
-the predeclared decision checks. Before EFetch it regenerates the sample from the full snapshot and
-rejects any hand-edited selection. It remains a bounded maintained-current comparison with zero
-readiness contribution.
+available. The measured payload violates its declared 1950-2013 sampling frame, so its strict
+selector rejects the source and the protocol remains an immutable failed pre-registration. Do not
+write `bioasq-2013-semantics.json` from a modified copy. A separately named successor protocol must
+first disclose and handle the 280 pre-1950 records; only then may a new
+selection be generated before any EFetch comparison.
 
 Reproduce the committed public-sample audit with:
 

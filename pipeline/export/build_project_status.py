@@ -23,6 +23,7 @@ from pipeline.benchmark.negative_review_context import (
     audit_review_context,
 )
 from pipeline.benchmark.bioasq_semantics import PROTOCOL_PATH as BIOASQ_SEMANTICS_PROTOCOL_PATH
+from pipeline.benchmark.bioasq_snapshot import MANIFEST_PATH as BIOASQ_SNAPSHOT_MANIFEST_PATH
 from pipeline.benchmark.mbr_capture import CAPTURE_PATH as MBR_CAPTURE_PATH
 from pipeline.benchmark.validate_candidates import CANDIDATES_PATH, audit_candidates
 from pipeline.benchmark.validate_source_alternatives import (
@@ -54,6 +55,7 @@ def _input_identity(path: Path) -> dict[str, str]:
 def build_project_status() -> dict:
     sources = audit_sources()
     alternatives = audit_source_alternatives()
+    bioasq_snapshot = json.loads(BIOASQ_SNAPSHOT_MANIFEST_PATH.read_text(encoding="utf-8"))
     candidates = audit_candidates()
     negative_queue = audit_queue()
     audit_review_context()
@@ -71,11 +73,12 @@ def build_project_status() -> dict:
     negative_protocol = load_protocol()
 
     return {
-        "schema_version": 8,
+        "schema_version": 9,
         "status": "ready" if ready else "not_ready",
         "inputs": {
             "historical_sources": _input_identity(SOURCES_PATH),
             "source_alternatives": _input_identity(ALTERNATIVES_PATH),
+            "bioasq_snapshot_audit": _input_identity(BIOASQ_SNAPSHOT_MANIFEST_PATH),
             "bioasq_semantics_protocol": _input_identity(BIOASQ_SEMANTICS_PROTOCOL_PATH),
             "historical_inventories": _input_identity(INVENTORIES_PATH),
             "mbr_preservation_capture": _input_identity(MBR_CAPTURE_PATH),
@@ -118,6 +121,7 @@ def build_project_status() -> dict:
             "recommended_id": alternatives.recommended_id,
             "counts": alternatives.counts,
             "readiness_contribution": alternatives.readiness_contribution,
+            "bioasq_snapshot": bioasq_snapshot,
             "entries": list(alternatives.entries),
         },
         "candidate_intake": {

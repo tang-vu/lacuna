@@ -6,18 +6,12 @@ public sample is suggestive but too small to settle the question.  This module s
 deterministic, publication-year-stratified sample from the registered v2013 payload and compares it
 with maintained-current PubMed records in bounded EFetch batches.
 
-The sampling protocol was committed before the full payload was available.  Its result always
-contributes zero metric-v3 readiness because current PubMed is not period-appropriate indexing.
-
-Run after acquiring and auditing the registered snapshot::
-
-    python -m pipeline.benchmark.bioasq_semantics sample \
-      data/medline-baseline/bioasq/PubMedWithMeSH.zip \
-      --output data/medline-baseline/bioasq/semantics-sample.json
-    python -m pipeline.benchmark.bioasq_semantics audit \
-      data/medline-baseline/bioasq/semantics-sample.json \
-      --snapshot data/medline-baseline/bioasq/PubMedWithMeSH.zip \
-      --output benchmarks/v3/manifests/bioasq-2013-semantics.json
+The default sampling protocol was committed before the full payload was available. The measured
+payload includes records outside its frozen 1950-2013 strata, so the default protocol intentionally
+rejects it and must not be edited in place. This CLI remains available for
+fixture validation and for a separately named successor passed through ``--protocol``. Any result
+always contributes zero metric-v3 readiness because current PubMed is not period-appropriate
+indexing.
 """
 
 from __future__ import annotations
@@ -217,7 +211,12 @@ def select_semantics_sample(
     with open_snapshot_text(snapshot_path) as (stream, container):
         for article in iter_articles(stream):
             total_records += 1
-            pmid, year, mesh_labels = validate_article(article, total_records)
+            pmid, year, mesh_labels, _canonical_year, _raw_year = validate_article(
+                article, total_records
+            )
+            if year is None:
+                outside_strata += 1
+                continue
             stratum = _stratum_for_year(protocol, year)
             if stratum is None:
                 outside_strata += 1

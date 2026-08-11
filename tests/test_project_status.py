@@ -12,7 +12,7 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 8
+    assert status["schema_version"] == 9
     assert status["status"] == "not_ready"
     assert status["historical_sources"] == {
         "ready": False,
@@ -51,11 +51,28 @@ def test_project_status_exposes_validator_results_without_claiming_readiness():
     assert status["source_alternatives"]["status"] == "no_equivalent_replacement_pinned"
     assert status["source_alternatives"]["recommended_id"] == "bioasq-2013-task-a"
     assert status["source_alternatives"]["counts"] == {
-        "candidate_requires_acquisition_audit": 1,
+        "audited_scope_mismatch": 1,
         "engineering_only": 1,
         "rejected_for_historical_gate": 1,
     }
     assert status["source_alternatives"]["readiness_contribution"] == 0
+    snapshot = status["source_alternatives"]["bioasq_snapshot"]
+    assert snapshot["status"] == "measured_unmatched_input"
+    assert snapshot["readiness_contribution"] == 0
+    assert snapshot["measured"]["article_count"] == 10_876_004
+    assert snapshot["measured"]["noncanonical_year_count"] == 751_238
+    assert snapshot["measured"]["unparseable_year_count"] == 0
+    assert snapshot["declared_comparison"] == {
+        "article_count": 10_876_004,
+        "mesh_label_count": 26_563,
+        "average_mesh_labels_per_article": 12.55,
+        "publication_scope": "MEDLINE articles published after 1949",
+        "articles_before_declared_publication_scope": 280,
+        "articles_after_snapshot_version": 0,
+        "matches_published_aggregate_counts": True,
+        "matches_published_publication_scope": False,
+        "passes_declared_snapshot_gate": False,
+    }
     assert len(status["source_alternatives"]["entries"]) == 3
     assert status["candidate_intake"]["counts"] == {
         "accepted": 2,
@@ -141,6 +158,7 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
     assert set(committed["inputs"]) == {
         "historical_sources",
         "source_alternatives",
+        "bioasq_snapshot_audit",
         "bioasq_semantics_protocol",
         "historical_inventories",
         "mbr_preservation_capture",

@@ -14,24 +14,24 @@ from its present distribution service. That closes the direct NLM request; it do
 that no third party preserved a copy.
 
 The strongest actionable alternative is the registered-download **BioASQ Task 1a training set,
-version 2013**. It can be considered for a separately pre-registered 2013-snapshot pilot after the
-payload is acquired and audited. It cannot change `historical_records` to `available_pinned` and
-cannot be mixed into the existing four-release benchmark without changing the experimental
-population.
+version 2013**. Its full payload has now been acquired, fingerprinted, and audited. The catalog
+aggregate counts match, but the measured publication scope does not. It cannot change
+`historical_records` to `available_pinned` and cannot be mixed into the existing four-release
+benchmark without changing the experimental population.
 
 ## Candidate comparison
 
 | Candidate | Dated citation-to-MeSH state | Fixed declared corpus | Current decision |
 |---|---|---|---|
-| BioASQ Task 1a v2013 | Yes, described with MeSH 2013 labels | 10,876,004 post-1949 MEDLINE articles; registered download | Audit for a redesigned 2013-snapshot pilot |
+| BioASQ Task 1a v2013 | Yes, described with MeSH 2013 labels | 10,876,004 articles measured; reported post-1949 scope does not match | Freeze a successor semantics protocol for the measured corpus |
 | Current PubMed baseline frozen locally | No historical state; indexing is maintained-current | A complete current release can be pinned | Engineering and future prospective work only |
 | Persistent PubMed Abstracts | Dated titles and abstracts, but no historical MeSH assignments | Dated text snapshots are documented | Rejected for metric-v3 historical indexing |
 | Europe PMC current bulk services | Current literature metadata and selected full-text bulk sets | Current collections, not the required old MEDLINE baselines | Not a historical-baseline replacement |
 
 The BioASQ count and NLM's 2013 baseline total of 21,508,439 are both published counts for different
 declared populations. Their quotient is deliberately not reported as coverage: PMID overlap has not
-been measured, BioASQ is scoped to articles published after 1949, and the NLM total includes older
-and non-equivalent record categories.
+been measured, the BioASQ payload contains 280 parseable pre-1950 records despite the reported
+post-1949 scope, and the NLM total includes non-equivalent record categories.
 
 ## Why BioASQ is worth auditing
 
@@ -49,7 +49,8 @@ Those points establish a plausible dated secondary snapshot. They do not establi
 baseline coverage. A peer-reviewed BioASQ overview further states that the initial corpus included
 all MEDLINE articles with title, abstract, and MeSH labels indexed before 1 March 2013, and that the
 training data was released on 18 March 2013. This pins the intended cutoff more precisely than the
-version label alone, but does not substitute for acquiring the payload.
+version label alone. The acquired payload now shows that this description is not an exact record
+scope contract.
 
 ## Public sample audit completed
 
@@ -90,18 +91,47 @@ sample, not by the unavailable full-payload sample. Passing would be bounded evi
 field behaves like all assigned descriptors in the selected records. It would not recover 2013
 major-topic flags, estimate population coverage, or add metric-v3 readiness.
 
-## Implemented acquisition audit
+## Full-payload audit completed
+
+The generated `benchmarks/v3/manifests/bioasq-2013-task-a.json` pins the 5,471,741,580-byte ZIP at
+SHA-256 `c4f738af8835b9fc300488d484efd633fd4137b149cd852b66a839651e328f68`. Its single
+`allMeSH.json` member is 18,383,359,066 bytes and uses the observed legacy envelope
+`{'articles'=[`, rather than the public sample's standard JSON envelope.
+
+| Full-corpus measurement | Result |
+|---|---:|
+| Articles | 10,876,004 |
+| MeSH assignments | 136,439,656 |
+| Distinct labels | 26,563 |
+| Average assignments per article | 12.54501709 |
+| Articles with no labels | 0 |
+| Labels absent from pinned MeSH 2013 | 0 |
+| Duplicate normalized assignments | 0 |
+| Parseable publication-year range | 1946-2013 |
+| Parseable records before 1950 | 280 |
+| Parseable non-`YYYY` year values | 751,238 |
+| Unparseable year values | 0 |
+
+The parseable year histogram reconciles exactly with the article count. The 280 pre-1950 records
+comprise 7 from 1946, 43 from 1947, 58 from 1948, and 172 from 1949.
+Thus the three published aggregates match, while the reported publication scope and the declared
+snapshot gate do not. The manifest status is `measured_unmatched_input` and contributes zero
+readiness.
+
+## Implemented streaming audit
 
 `python -m pipeline.benchmark.bioasq_snapshot` now reads plain JSON, gzip, or a ZIP containing one
 JSON member without loading the multi-gigabyte array into memory. It:
 
 - fingerprints the downloaded container with SHA-256 and byte count;
 - records ZIP member identity, sizes, CRC32 when applicable;
-- validates the documented article fields and numeric PMID/year shapes;
-- counts articles, assignments, distinct labels, empty-label articles, and publication-year bounds;
+- validates the documented article fields and numeric PMID shape;
+- reports canonical, parseable noncanonical, and unparseable year values separately;
+- counts articles, assignments, distinct labels, empty-label articles, and the full parseable-year
+  histogram;
 - checks every observed label against the checksum-pinned 2013 MeSH descriptor archive;
 - compares measured aggregates with BioASQ's published 2013 counts; and
-- emits zero readiness plus limitations even when every declared aggregate matches.
+- emits zero readiness plus limitations even though every declared aggregate count matches.
 
 `python -m pipeline.benchmark.bioasq_download` now covers both acquisition paths. `sample` verifies
 the public sample checksum and fetches the exact current-PubMed comparison. `full` logs in with
@@ -109,29 +139,21 @@ credentials read only from `BIOASQ_USERNAME` and `BIOASQ_PASSWORD`, rejects logi
 file, checks free disk space, and writes atomically through a `.part` file. No credential or session
 cookie enters an artifact, cache identity, command-line argument, or error message.
 
-Run after the BioASQ account has been activated:
+Rebuild the completed audit to a review path; the strict gate is expected to fail:
 
 ```bash
-python -m pipeline.benchmark.bioasq_download full
+python -m pipeline.benchmark.bioasq_snapshot \
+  --output path/to/rebuilt-bioasq-2013-task-a.json \
+  path/to/raw_training_set.zip
 python -m pipeline.benchmark.bioasq_snapshot \
   --require-declared-match \
-  --output benchmarks/v3/manifests/bioasq-2013-task-a.json \
   path/to/raw_training_set.zip
-python -m pipeline.benchmark.bioasq_semantics sample \
-  path/to/raw_training_set.zip \
-  --output data/medline-baseline/bioasq/semantics-sample.json
-python -m pipeline.benchmark.bioasq_semantics audit \
-  data/medline-baseline/bioasq/semantics-sample.json \
-  --snapshot path/to/raw_training_set.zip \
-  --output benchmarks/v3/manifests/bioasq-2013-semantics.json
 ```
 
-The audit command replays the selection from the full snapshot before any network call, so a
-hand-edited sample cannot inherit the source digest. It requires `NCBI_EMAIL`; stored queries omit
-the email and optional API key, while each exact response is pinned by byte count and SHA-256.
-After reviewing the aggregate and bounded semantics results, write and freeze a new
-pre-registration whose population is the measured BioASQ corpus. The original NLM-baseline gate
-remains visible and red.
+The first semantics protocol must remain unchanged: its strict sampler correctly rejects the 280
+records outside its 1950-2013 strata. In a separate update, freeze a
+successor protocol that discloses and handles this measured sampling frame before selecting any
+record or issuing any new PubMed request. The original NLM-baseline gate remains visible and red.
 
 ## Primary documentation
 
