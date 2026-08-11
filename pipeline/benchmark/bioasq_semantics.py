@@ -350,6 +350,37 @@ def selection_hash(namespace: str, pmid: str) -> str:
     return hashlib.sha256(value).hexdigest()
 
 
+def _selected_record(
+    pmid: str,
+    year: int,
+    stratum_id: str,
+    digest: str,
+    mesh_labels: tuple[str, ...],
+) -> dict:
+    return {
+        "pmid": pmid,
+        "publication_year": year,
+        "stratum": stratum_id,
+        "selection_hash": digest,
+        "mesh_labels": sorted(mesh_labels, key=lambda label: (_normalise(label), label)),
+    }
+
+
+def _same_selected_observation(
+    selected: dict,
+    *,
+    year: int | None,
+    stratum_id: str | None,
+    mesh_labels: tuple[str, ...],
+) -> bool:
+    return (
+        selected["publication_year"] == year
+        and selected["stratum"] == stratum_id
+        and selected["mesh_labels"]
+        == sorted(mesh_labels, key=lambda label: (_normalise(label), label))
+    )
+
+
 def select_semantics_sample(
     snapshot_path: Path,
     *,
@@ -359,6 +390,9 @@ def select_semantics_sample(
     namespace = protocol["sampling"]["hash_namespace"]
     strata = protocol["sampling"]["strata"]
     heaps: dict[str, list[tuple[int, int, int, dict]]] = {item["id"]: [] for item in strata}
+    retained_by_stratum: dict[str, dict[str, dict]] = {
+        item["id"]: {} for item in strata
+    }
     eligible_counts = {item["id"]: 0 for item in strata}
     total_records = 0
     outside_strata = 0
@@ -380,21 +414,32 @@ def select_semantics_sample(
             eligible_counts[stratum_id] += 1
             digest = selection_hash(namespace, pmid)
             rank = int(digest, 16)
-            record = {
-                "pmid": pmid,
-                "publication_year": year,
-                "stratum": stratum_id,
-                "selection_hash": digest,
-                "mesh_labels": list(mesh_labels),
-            }
+            record = _selected_record(pmid, year, stratum_id, digest, mesh_labels)
+            retained = retained_by_stratum[stratum_id]
+            if pmid in retained:
+                _require(
+                    _same_selected_observation(
+                        retained[pmid],
+                        year=year,
+                        stratum_id=stratum_id,
+                        mesh_labels=mesh_labels,
+                    ),
+                    f"PMID {pmid}: conflicting duplicate source records",
+                )
+                continue
             # A min-heap over negative ranks keeps the largest retained rank at index zero.  A
             # smaller hash (then smaller numeric PMID) deterministically replaces that boundary.
+            # The retained PMID map makes the protocol's record_key explicit: repeated source
+            # rows cannot consume multiple bottom-k slots.
             heap_entry = (-rank, -int(pmid), total_records, record)
             heap = heaps[stratum_id]
             if len(heap) < stratum["sample_size"]:
                 heapq.heappush(heap, heap_entry)
+                retained[pmid] = record
             elif heap_entry > heap[0]:
-                heapq.heapreplace(heap, heap_entry)
+                removed = heapq.heapreplace(heap, heap_entry)
+                del retained[removed[3]["pmid"]]
+                retained[pmid] = record
 
     _require(outside_strata == 0, "snapshot contains publication years outside frozen strata")
     records: list[dict] = []
@@ -412,6 +457,50 @@ def select_semantics_sample(
     pmids = [record["pmid"] for record in records]
     _require(len(pmids) == len(set(pmids)), "selected sample contains duplicate PMIDs")
 
+    # Re-read the source before emitting a sample. This bounds duplicate-state memory to the
+    # selected PMIDs while proving that every occurrence of a retained key has the same year,
+    # stratum, and MeSH assignments. A conflicting source row is never silently collapsed.
+    selected_by_pmid = {record["pmid"]: record for record in records}
+    selected_occurrences = {pmid: 0 for pmid in pmids}
+    verification_records_scanned = 0
+    with open_snapshot_text(snapshot_path) as (stream, verification_container):
+        for article in iter_articles(stream):
+            verification_records_scanned += 1
+            pmid, year, mesh_labels, _canonical_year, _raw_year = validate_article(
+                article, verification_records_scanned
+            )
+            selected = selected_by_pmid.get(pmid)
+            if selected is None:
+                continue
+            stratum = _stratum_for_year(protocol, year) if year is not None else None
+            stratum_id = stratum["id"] if stratum is not None else None
+            _require(
+                _same_selected_observation(
+                    selected,
+                    year=year,
+                    stratum_id=stratum_id,
+                    mesh_labels=mesh_labels,
+                ),
+                f"PMID {pmid}: conflicting duplicate source records",
+            )
+            selected_occurrences[pmid] += 1
+    _require(verification_container == container, "snapshot container changed during replay")
+    _require(
+        verification_records_scanned == total_records,
+        "snapshot record count changed during replay",
+    )
+    _require(
+        all(count > 0 for count in selected_occurrences.values()),
+        "selected PMID disappeared during source replay",
+    )
+    duplicate_selected_pmids = sorted(
+        (pmid for pmid, count in selected_occurrences.items() if count > 1),
+        key=int,
+    )
+    duplicate_selected_source_records = sum(
+        count - 1 for count in selected_occurrences.values()
+    )
+
     protocol_reference = _file_reference(protocol_path)
     input_reference = _file_reference(snapshot_path)
     return {
@@ -425,10 +514,13 @@ def select_semantics_sample(
             "algorithm": protocol["sampling"]["algorithm"],
             "hash_namespace": namespace,
             "records_scanned": total_records,
+            "verification_records_scanned": verification_records_scanned,
             "records_outside_strata": outside_strata,
             "eligible_counts": eligible_counts,
             "selected_counts": selected_counts,
             "selected_total": len(records),
+            "duplicate_selected_source_records": duplicate_selected_source_records,
+            "selected_pmids_with_duplicate_source_records": duplicate_selected_pmids,
         },
         "records": records,
         "limitations": list(protocol["limitations"]),

@@ -72,12 +72,45 @@ def test_sampler_keeps_predeclared_bottom_hashes_independent_of_input_order(tmp_
         "algorithm": "sha256_bottom_k_per_publication_year_stratum",
         "hash_namespace": "lacuna-bioasq-2013-semantics-v1",
         "records_scanned": 4,
+        "verification_records_scanned": 4,
         "records_outside_strata": 0,
         "eligible_counts": {"y2000": 4},
         "selected_counts": {"y2000": 2},
         "selected_total": 2,
+        "duplicate_selected_source_records": 0,
+        "selected_pmids_with_duplicate_source_records": [],
     }
     assert sample["readiness_contribution"] == 0
+
+
+def test_sampler_collapses_identical_source_rows_by_frozen_record_key(tmp_path: Path):
+    protocol_path, _protocol = _small_protocol(tmp_path)
+    snapshot = tmp_path / "snapshot.json"
+    snapshot.write_text(
+        json.dumps({"articles": [_article("1"), _article("1"), _article("2")]}),
+        encoding="utf-8",
+    )
+
+    sample = select_semantics_sample(snapshot, protocol_path=protocol_path)
+
+    assert {record["pmid"] for record in sample["records"]} == {"1", "2"}
+    assert sample["selection"]["eligible_counts"] == {"y2000": 3}
+    assert sample["selection"]["duplicate_selected_source_records"] == 1
+    assert sample["selection"]["selected_pmids_with_duplicate_source_records"] == ["1"]
+
+
+def test_sampler_rejects_conflicting_rows_for_a_selected_pmid(tmp_path: Path):
+    protocol_path, _protocol = _small_protocol(tmp_path)
+    conflicting = _article("1")
+    conflicting["meshMajor"] = ["Alpha", "Gamma"]
+    snapshot = tmp_path / "snapshot.json"
+    snapshot.write_text(
+        json.dumps({"articles": [_article("1"), conflicting, _article("2")]}),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(BioasqSemanticsError, match="conflicting duplicate source records"):
+        select_semantics_sample(snapshot, protocol_path=protocol_path)
 
 
 def test_successor_protocol_adds_only_the_measured_pre_1950_stratum():

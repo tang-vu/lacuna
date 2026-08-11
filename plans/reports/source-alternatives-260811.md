@@ -134,6 +134,14 @@ comparison, 90% all-descriptor minimum, 50% major-topic maximum, every-stratum s
 classification labels, and zero-readiness rule are also unchanged. The validator rejects any
 successor that tunes those parent fields. No semantics result was observed at freeze time.
 
+The first post-freeze selection attempt stopped before writing a sample or making a PubMed request:
+repeated source rows with the same PMID could occupy more than one heap slot even though the frozen
+protocol declares `pmid` as its record key. The selector now applies bottom-k to unique retained
+PMIDs, replays the full source before emitting the sample, collapses only repeated selected rows
+with identical normalized year, stratum, and MeSH assignments, and rejects any conflict. This is an
+implementation correction to the frozen record-key rule; the protocol checksum, strata, and
+thresholds did not change.
+
 ## Implemented streaming audit
 
 `python -m pipeline.benchmark.bioasq_snapshot` now reads plain JSON, gzip, or a ZIP containing one
