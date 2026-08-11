@@ -1,0 +1,4356 @@
+{
+ "schema_version": 1,
+ "status": "bounded_corpus_semantics_audit",
+ "readiness_contribution": 0,
+ "source_alternative_id": "bioasq-2013-task-a",
+ "classification": "sample_consistent_with_all_assigned_descriptors",
+ "sample": {
+  "selected_records": 448,
+  "source_snapshot_sha256": "c4f738af8835b9fc300488d484efd633fd4137b149cd852b66a839651e328f68",
+  "source_snapshot_bytes": 5471741580,
+  "sampling_protocol_sha256": "2f6a43323327daf1ecc59c5ab71858b0ec516895d1162b16bc6f47dbfb133313",
+  "selection_file": {
+   "path": "data\\medline-baseline\\bioasq\\semantics-sample.json",
+   "sha256": "536f448266a1f7b8c0453782696188cf13fc7c4e1ab246b537b86fdac2e3a0f3",
+   "bytes": 219806
+  }
+ },
+ "maintained_current_pubmed_comparison": {
+  "basis": "maintained_current_pubmed",
+  "records_requested": 448,
+  "records_returned": 448,
+  "record_return_fraction": 1.0,
+  "missing_pmids": [],
+  "batches": [
+   {
+    "source_url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=35355%2C35916%2C325516%2C477430%2C877814%2C898794%2C1222129%2C1403899%2C1419889%2C1695569%2C1760528%2C1773460%2C1830069%2C1903632%2C2038312%2C2050965%2C2083100%2C2299798%2C2494862%2C2577432%2C2988652%2C3198353%2C3342922%2C3375912%2C3519244%2C3536970%2C3568470%2C3583721%2C3776944%2C3919724%2C3921124%2C4072450%2C4289808%2C4307709%2C4860991%2C4877660%2C4891720%2C4972255%2C5294923%2C5370663%2C5928521%2C6034749%2C6041830%2C6249591%2C6355391%2C6435814%2C6576216%2C7132582%2C7311489%2C7379822%2C7411663%2C7440970%2C7693508%2C7750656%2C8000167%2C8028590%2C8117617%2C8268160%2C8303624%2C8336968%2C8632420%2C8632797%2C9224614%2C9521822%2C10072303%2C10073768%2C10091145%2C10179907%2C10198552%2C10228241%2C10247078%2C10275835%2C10404766%2C10452383%2C10536698%2C10673128%2C10759185%2C10833474%2C10843326%2C10851025%2C10883824%2C10939665%2C11009298%2C11076538%2C11123594%2C11211450%2C11277202%2C11414045%2C11427892%2C11449995%2C11504769%2C11509486%2C11708603%2C11779010%2C11850965%2C11862734%2C11894161%2C11928891%2C11978731%2C12034477%2C12050357%2C12113832%2C12116036%2C12244775%2C12887397%2C12927783%2C12952663%2C12963744%2C13271723%2C13276819%2C13426810%2C13475624%2C13858799%2C13961143%2C13996943%2C14012518%2C14021692%2C14228518%2C14234802%2C14243849%2C14268731%2C14304256%2C14404541%2C14412759%2C14493355%2C14496718%2C14528890%2C14564718%2C14687526%2C14732362%2C14832435%2C14974165%2C15273966%2C15306183%2C15390572%2C15397537%2C15397539%2C15509112%2C15549053%2C15623697%2C15837797%2C15871379%2C15877152%2C15987638%2C16013490%2C16103328%2C16104830%2C16269824%2C16289646%2C16470736%2C16615747%2C16698894%2C16749641%2C16770059%2C16818873%2C16839815%2C16946582%2C16950427%2C16977305%2C17028204%2C17084256%2C17196438%2C17445078%2C17853482%2C18104713%2C18104716%2C18107971%2C18108502%2C18112452%2C18113913%2C18116225%2C18120860%2C18129864%2C18134894%2C18137213%2C18140665%2C18143481%2C18152337%2C18770823%2C18871880%2C18884905%2C18891145%2C18891146%2C18891150%2C18904212%2C18904214%2C18904219%2C18917023%2C19187784%2C19687167%2C19785184%2C19871586%2C19871603%2C19871635%2C19871669%2C19873519%2C19873521%2C20084038%2C20302295%2C20941961&retmode=xml&tool=lacuna",
+    "requested_pmids": 200,
+    "records_returned": 200,
+    "response_sha256": "5b0d9887911e8e6f66112e378909c36038933401aea1bf1f76072ee0ab9ad987",
+    "response_bytes": 1380335,
+    "parsed_records_sha256": "33000e3b11c83f9c67bb0c4950ee4bda7045b283f5b35bbe9591ad48125664b8"
+   },
+   {
+    "source_url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=17109949%2C17235552%2C17275684%2C17403556%2C17434538%2C17611603%2C17652266%2C17895605%2C17905267%2C18165175%2C18187295%2C18221376%2C18221508%2C18273820%2C18328763%2C18330154%2C18339977%2C18366816%2C18404714%2C18421276%2C18443226%2C18522041%2C18522299%2C18611048%2C18644890%2C18664194%2C18719831%2C18846951%2C18937813%2C19085687%2C19157682%2C19162672%2C19221005%2C19237919%2C19271523%2C19465103%2C19495539%2C19528476%2C19565298%2C19592894%2C19640007%2C19646552%2C19655333%2C19699283%2C19861493%2C19923047%2C19963901%2C20036188%2C20126349%2C20153750%2C20221586%2C20333789%2C20334806%2C20497998%2C20634228%2C20671335%2C20730510%2C20731623%2C20802166%2C20882325%2C20883996%2C20958906%2C20976460%2C21078367%2C21091090%2C21097681%2C21152698%2C21187084%2C21198854%2C21216355%2C21234733%2C21236369%2C21245712%2C21271381%2C21280962%2C21299943%2C21310927%2C21328119%2C21357878%2C21367935%2C21375242%2C21396426%2C21406448%2C21418054%2C21418876%2C21435019%2C21447399%2C21455110%2C21513268%2C21516903%2C21534871%2C21542377%2C21586340%2C21613819%2C21621621%2C21628657%2C21649899%2C21689829%2C21747215%2C21767580%2C21769621%2C21786270%2C21804026%2C21828052%2C21844833%2C21845771%2C21877614%2C21896189%2C21907460%2C21924947%2C21934517%2C21943911%2C21957297%2C21964960%2C21970137%2C21972621%2C22003227%2C22013377%2C22059649%2C22093011%2C22098874%2C22114044%2C22143003%2C22154754%2C22160097%2C22177331%2C22210919%2C22241038%2C22259053%2C22268980%2C22278798%2C22306176%2C22323029%2C22326107%2C22330859%2C22333118%2C22362917%2C22367322%2C22367653%2C22374226%2C22395369%2C22425669%2C22429360%2C22502755%2C22506505%2C22512792%2C22527813%2C22548357%2C22551239%2C22552763%2C22588733%2C22607812%2C22615353%2C22649042%2C22653871%2C22665578%2C22668650%2C22669912%2C22713308%2C22723260%2C22726559%2C22729892%2C22740080%2C22750078%2C22759902%2C22773635%2C22787045%2C22791533%2C22799741%2C22828884%2C22833680%2C22842521%2C22843525%2C22853822%2C22856631%2C22885849%2C22901539%2C22904262%2C22908970%2C22919350%2C22975226%2C22981309%2C22984743%2C22984886%2C22987343%2C22995006%2C23022152%2C23024770%2C23129637%2C23135712%2C23177741%2C23204494%2C23218949%2C23261302%2C23298423%2C23306917%2C23379101%2C23397745%2C23409655%2C23431653&retmode=xml&tool=lacuna",
+    "requested_pmids": 200,
+    "records_returned": 200,
+    "response_sha256": "ef947ec387a8e7e907b4057c8d644cbc966616666735fe4b4b3ae843465e9120",
+    "response_bytes": 2180502,
+    "parsed_records_sha256": "ce2cbecd115ca7166a0219a8ded42a934dc5165b8386c06279ff131ce014a9be"
+   },
+   {
+    "source_url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=22623069%2C22623168%2C22767159%2C22770481%2C22778072%2C22841446%2C22856587%2C22878140%2C22879030%2C22962004%2C22982376%2C22982548%2C22999187%2C23018576%2C23032353%2C23035753%2C23043524%2C23061387%2C23062313%2C23062378%2C23066084%2C23076388%2C23078765%2C23087181%2C23112267%2C23114999%2C23117884%2C23149620%2C23165293%2C23168287%2C23169651%2C23182954%2C23185037%2C23187103%2C23197186%2C23204059%2C23211558%2C23241411%2C23250131%2C23261732%2C23279579%2C23299525%2C23306267%2C23332748%2C23367705%2C23372014%2C23386765%2C23437442&retmode=xml&tool=lacuna",
+    "requested_pmids": 48,
+    "records_returned": 48,
+    "response_sha256": "7fa19dbd2e1f4765621967add26c814a053cb681c9506405d0fbdbef80e22eee",
+    "response_bytes": 565384,
+    "parsed_records_sha256": "2d1471ce7260de4419224d9453187c12c7884680de92b3df1359ef40be12082d"
+   }
+  ],
+  "overall": {
+   "records": 448,
+   "bioasq_assignments": 5296,
+   "matched_current_all_descriptor_assignments": 5201,
+   "matched_current_major_topic_assignments": 455,
+   "all_descriptor_assignment_match_fraction": 0.98206193,
+   "major_topic_assignment_match_fraction": 0.0859139
+  },
+  "by_stratum": {
+   "y1946_1949": {
+    "records": 32,
+    "bioasq_assignments": 55,
+    "matched_current_all_descriptor_assignments": 55,
+    "matched_current_major_topic_assignments": 42,
+    "all_descriptor_assignment_match_fraction": 1.0,
+    "major_topic_assignment_match_fraction": 0.76363636
+   },
+   "y1950_1969": {
+    "records": 32,
+    "bioasq_assignments": 189,
+    "matched_current_all_descriptor_assignments": 189,
+    "matched_current_major_topic_assignments": 59,
+    "all_descriptor_assignment_match_fraction": 1.0,
+    "major_topic_assignment_match_fraction": 0.31216931
+   },
+   "y1970_1989": {
+    "records": 32,
+    "bioasq_assignments": 344,
+    "matched_current_all_descriptor_assignments": 339,
+    "matched_current_major_topic_assignments": 30,
+    "all_descriptor_assignment_match_fraction": 0.98546512,
+    "major_topic_assignment_match_fraction": 0.0872093
+   },
+   "y1990_1999": {
+    "records": 32,
+    "bioasq_assignments": 400,
+    "matched_current_all_descriptor_assignments": 398,
+    "matched_current_major_topic_assignments": 24,
+    "all_descriptor_assignment_match_fraction": 0.995,
+    "major_topic_assignment_match_fraction": 0.06
+   },
+   "y2000_2006": {
+    "records": 64,
+    "bioasq_assignments": 831,
+    "matched_current_all_descriptor_assignments": 812,
+    "matched_current_major_topic_assignments": 45,
+    "all_descriptor_assignment_match_fraction": 0.97713598,
+    "major_topic_assignment_match_fraction": 0.05415162
+   },
+   "y2007_2010": {
+    "records": 64,
+    "bioasq_assignments": 835,
+    "matched_current_all_descriptor_assignments": 824,
+    "matched_current_major_topic_assignments": 61,
+    "all_descriptor_assignment_match_fraction": 0.98682635,
+    "major_topic_assignment_match_fraction": 0.07305389
+   },
+   "y2011": {
+    "records": 64,
+    "bioasq_assignments": 925,
+    "matched_current_all_descriptor_assignments": 900,
+    "matched_current_major_topic_assignments": 66,
+    "all_descriptor_assignment_match_fraction": 0.97297297,
+    "major_topic_assignment_match_fraction": 0.07135135
+   },
+   "y2012": {
+    "records": 64,
+    "bioasq_assignments": 881,
+    "matched_current_all_descriptor_assignments": 864,
+    "matched_current_major_topic_assignments": 65,
+    "all_descriptor_assignment_match_fraction": 0.98070375,
+    "major_topic_assignment_match_fraction": 0.0737798
+   },
+   "y2013": {
+    "records": 64,
+    "bioasq_assignments": 836,
+    "matched_current_all_descriptor_assignments": 820,
+    "matched_current_major_topic_assignments": 63,
+    "all_descriptor_assignment_match_fraction": 0.98086124,
+    "major_topic_assignment_match_fraction": 0.07535885
+   }
+  },
+  "records": [
+   {
+    "pmid": "18108502",
+    "publication_year": 1949,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 2,
+    "matched_current_all_descriptor_assignments": 2,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18143481",
+    "publication_year": 1949,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18134894",
+    "publication_year": 1949,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 2,
+    "matched_current_all_descriptor_assignments": 2,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18113913",
+    "publication_year": 1949,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18129864",
+    "publication_year": 1949,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 2,
+    "matched_current_all_descriptor_assignments": 2,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "15397539",
+    "publication_year": 1949,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 3,
+    "matched_current_all_descriptor_assignments": 3,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18917023",
+    "publication_year": 1948,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19873519",
+    "publication_year": 1947,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18107971",
+    "publication_year": 1949,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18904219",
+    "publication_year": 1948,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19873521",
+    "publication_year": 1947,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 2,
+    "matched_current_all_descriptor_assignments": 2,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18152337",
+    "publication_year": 1949,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 4,
+    "matched_current_all_descriptor_assignments": 4,
+    "matched_current_major_topic_assignments": 4,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19871669",
+    "publication_year": 1947,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 2,
+    "matched_current_all_descriptor_assignments": 2,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18871880",
+    "publication_year": 1948,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18891150",
+    "publication_year": 1948,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18884905",
+    "publication_year": 1948,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19871603",
+    "publication_year": 1947,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 4,
+    "matched_current_all_descriptor_assignments": 4,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "15397537",
+    "publication_year": 1949,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 2,
+    "matched_current_all_descriptor_assignments": 2,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18904212",
+    "publication_year": 1948,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18104713",
+    "publication_year": 1949,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18137213",
+    "publication_year": 1949,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18104716",
+    "publication_year": 1949,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 2,
+    "matched_current_all_descriptor_assignments": 2,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18891145",
+    "publication_year": 1948,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18116225",
+    "publication_year": 1949,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18120860",
+    "publication_year": 1949,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 2,
+    "matched_current_all_descriptor_assignments": 2,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19871635",
+    "publication_year": 1947,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 5,
+    "matched_current_all_descriptor_assignments": 5,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "15390572",
+    "publication_year": 1949,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 2,
+    "matched_current_all_descriptor_assignments": 2,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18904214",
+    "publication_year": 1948,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19871586",
+    "publication_year": 1946,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18891146",
+    "publication_year": 1948,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 3,
+    "matched_current_all_descriptor_assignments": 3,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18140665",
+    "publication_year": 1949,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18112452",
+    "publication_year": 1949,
+    "stratum": "y1946_1949",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "14496718",
+    "publication_year": 1962,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 2,
+    "matched_current_all_descriptor_assignments": 2,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "14012518",
+    "publication_year": 1963,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 4,
+    "matched_current_all_descriptor_assignments": 4,
+    "matched_current_major_topic_assignments": 4,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "4860991",
+    "publication_year": 1967,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "14234802",
+    "publication_year": 1964,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 3,
+    "matched_current_all_descriptor_assignments": 3,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "4307709",
+    "publication_year": 1969,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "14412759",
+    "publication_year": 1960,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 2,
+    "matched_current_all_descriptor_assignments": 2,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "14564718",
+    "publication_year": 1967,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "6034749",
+    "publication_year": 1967,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 19,
+    "matched_current_all_descriptor_assignments": 19,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "14304256",
+    "publication_year": 1965,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 7,
+    "matched_current_all_descriptor_assignments": 7,
+    "matched_current_major_topic_assignments": 7,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "14493355",
+    "publication_year": 1961,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "6041830",
+    "publication_year": 1967,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 3,
+    "matched_current_all_descriptor_assignments": 3,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "13271723",
+    "publication_year": 1955,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 2,
+    "matched_current_all_descriptor_assignments": 2,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "14404541",
+    "publication_year": 1960,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "13961143",
+    "publication_year": 1962,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 4,
+    "matched_current_all_descriptor_assignments": 4,
+    "matched_current_major_topic_assignments": 4,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "5294923",
+    "publication_year": 1965,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 3,
+    "matched_current_all_descriptor_assignments": 3,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "11850965",
+    "publication_year": 1965,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "13276819",
+    "publication_year": 1955,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "4972255",
+    "publication_year": 1968,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "14021692",
+    "publication_year": 1963,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 4,
+    "matched_current_all_descriptor_assignments": 4,
+    "matched_current_major_topic_assignments": 4,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "4877660",
+    "publication_year": 1968,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 8,
+    "matched_current_all_descriptor_assignments": 8,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "14832435",
+    "publication_year": 1951,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "13996943",
+    "publication_year": 1962,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 2,
+    "matched_current_all_descriptor_assignments": 2,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "14228518",
+    "publication_year": 1964,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 5,
+    "matched_current_all_descriptor_assignments": 5,
+    "matched_current_major_topic_assignments": 4,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "14243849",
+    "publication_year": 1965,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 5,
+    "matched_current_all_descriptor_assignments": 5,
+    "matched_current_major_topic_assignments": 5,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "13426810",
+    "publication_year": 1957,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 4,
+    "matched_current_all_descriptor_assignments": 4,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "5928521",
+    "publication_year": 1966,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "14268731",
+    "publication_year": 1965,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 5,
+    "matched_current_all_descriptor_assignments": 5,
+    "matched_current_major_topic_assignments": 4,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "13475624",
+    "publication_year": 1957,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 1,
+    "matched_current_all_descriptor_assignments": 1,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "13858799",
+    "publication_year": 1961,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 2,
+    "matched_current_all_descriptor_assignments": 2,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "5370663",
+    "publication_year": 1969,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 2,
+    "matched_current_all_descriptor_assignments": 2,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "4891720",
+    "publication_year": 1969,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "4289808",
+    "publication_year": 1967,
+    "stratum": "y1950_1969",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "7440970",
+    "publication_year": 1980,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "3375912",
+    "publication_year": 1988,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 5,
+    "matched_current_all_descriptor_assignments": 4,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Wegener Granulomatosis"
+    ]
+   },
+   {
+    "pmid": "3583721",
+    "publication_year": 1987,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "3921124",
+    "publication_year": 1985,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "3919724",
+    "publication_year": 1985,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "877814",
+    "publication_year": 1977,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 17,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "African Americans",
+     "African Continental Ancestry Group",
+     "Ethnic Groups"
+    ]
+   },
+   {
+    "pmid": "3198353",
+    "publication_year": 1988,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 5,
+    "matched_current_all_descriptor_assignments": 5,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "3536970",
+    "publication_year": 1986,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "7311489",
+    "publication_year": 1981,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 6,
+    "matched_current_all_descriptor_assignments": 6,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "7411663",
+    "publication_year": 1980,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "6576216",
+    "publication_year": 1983,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 17,
+    "matched_current_all_descriptor_assignments": 17,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "477430",
+    "publication_year": 1979,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 6,
+    "matched_current_all_descriptor_assignments": 6,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "2494862",
+    "publication_year": 1989,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "6249591",
+    "publication_year": 1980,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "6435814",
+    "publication_year": 1984,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "3776944",
+    "publication_year": 1986,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "7132582",
+    "publication_year": 1982,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "3568470",
+    "publication_year": 1987,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "325516",
+    "publication_year": 1977,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "RNA Replicase"
+    ]
+   },
+   {
+    "pmid": "898794",
+    "publication_year": 1977,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "3519244",
+    "publication_year": 1986,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "4072450",
+    "publication_year": 1985,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "3342922",
+    "publication_year": 1988,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "35355",
+    "publication_year": 1979,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "10275835",
+    "publication_year": 1986,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 7,
+    "matched_current_all_descriptor_assignments": 7,
+    "matched_current_major_topic_assignments": 5,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "2988652",
+    "publication_year": 1985,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 7,
+    "matched_current_all_descriptor_assignments": 7,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "2577432",
+    "publication_year": 1989,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "7379822",
+    "publication_year": 1980,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 7,
+    "matched_current_all_descriptor_assignments": 7,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "1222129",
+    "publication_year": 1975,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "35916",
+    "publication_year": 1979,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 6,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "10247078",
+    "publication_year": 1980,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 2,
+    "matched_current_all_descriptor_assignments": 2,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "6355391",
+    "publication_year": 1983,
+    "stratum": "y1970_1989",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "8303624",
+    "publication_year": 1993,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "8117617",
+    "publication_year": 1993,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "2083100",
+    "publication_year": 1990,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 8,
+    "matched_current_all_descriptor_assignments": 8,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "1903632",
+    "publication_year": 1991,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 7,
+    "matched_current_all_descriptor_assignments": 7,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "10404766",
+    "publication_year": 1999,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "7693508",
+    "publication_year": 1993,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "2038312",
+    "publication_year": 1991,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 22,
+    "matched_current_all_descriptor_assignments": 22,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "1773460",
+    "publication_year": 1991,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 7,
+    "matched_current_all_descriptor_assignments": 7,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "8028590",
+    "publication_year": 1994,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "1695569",
+    "publication_year": 1990,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "8632420",
+    "publication_year": 1996,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "2299798",
+    "publication_year": 1990,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "8268160",
+    "publication_year": 1993,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "10536698",
+    "publication_year": 1999,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "8000167",
+    "publication_year": 1994,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "1760528",
+    "publication_year": 1991,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "10198552",
+    "publication_year": 1999,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 3,
+    "matched_current_all_descriptor_assignments": 3,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "8632797",
+    "publication_year": 1996,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "10179907",
+    "publication_year": 1998,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": [
+     "Outcome Assessment (Health Care)"
+    ]
+   },
+   {
+    "pmid": "9224614",
+    "publication_year": 1997,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "7750656",
+    "publication_year": 1995,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 18,
+    "matched_current_all_descriptor_assignments": 18,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "1830069",
+    "publication_year": 1991,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "2050965",
+    "publication_year": 1991,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 3,
+    "matched_current_all_descriptor_assignments": 3,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "10091145",
+    "publication_year": 1998,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 17,
+    "matched_current_all_descriptor_assignments": 17,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "9521822",
+    "publication_year": 1998,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Hemocyanin"
+    ]
+   },
+   {
+    "pmid": "1419889",
+    "publication_year": 1992,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 7,
+    "matched_current_all_descriptor_assignments": 7,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "10072303",
+    "publication_year": 1999,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "8336968",
+    "publication_year": 1993,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "10228241",
+    "publication_year": 1999,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 19,
+    "matched_current_all_descriptor_assignments": 19,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "1403899",
+    "publication_year": 1992,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "10073768",
+    "publication_year": 1999,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "10452383",
+    "publication_year": 1999,
+    "stratum": "y1990_1999",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "15837797",
+    "publication_year": 2005,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 23,
+    "matched_current_all_descriptor_assignments": 23,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "17028204",
+    "publication_year": 2006,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "16950427",
+    "publication_year": 2006,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 7,
+    "matched_current_all_descriptor_assignments": 7,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "12113832",
+    "publication_year": 2002,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "11123594",
+    "publication_year": 2001,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 7,
+    "matched_current_all_descriptor_assignments": 6,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Great Britain"
+    ]
+   },
+   {
+    "pmid": "16269824",
+    "publication_year": 2005,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "11978731",
+    "publication_year": 2002,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 17,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": [
+     "Biomechanics"
+    ]
+   },
+   {
+    "pmid": "15987638",
+    "publication_year": 2005,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 19,
+    "matched_current_all_descriptor_assignments": 19,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "11414045",
+    "publication_year": 2001,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 7,
+    "matched_current_all_descriptor_assignments": 7,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "15306183",
+    "publication_year": 2004,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 17,
+    "matched_current_all_descriptor_assignments": 17,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "10759185",
+    "publication_year": 2000,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 17,
+    "matched_current_all_descriptor_assignments": 17,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "10939665",
+    "publication_year": 2000,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 17,
+    "matched_current_all_descriptor_assignments": 17,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "12050357",
+    "publication_year": 2002,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "16839815",
+    "publication_year": 2006,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 5,
+    "matched_current_all_descriptor_assignments": 5,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "12116036",
+    "publication_year": 2002,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "15273966",
+    "publication_year": 2004,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 5,
+    "matched_current_all_descriptor_assignments": 4,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": [
+     "Questionnaires"
+    ]
+   },
+   {
+    "pmid": "11076538",
+    "publication_year": 2000,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "12034477",
+    "publication_year": 2002,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 23,
+    "matched_current_all_descriptor_assignments": 23,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "16615747",
+    "publication_year": 2006,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18770823",
+    "publication_year": 2005,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19785184",
+    "publication_year": 2005,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "12963744",
+    "publication_year": 2003,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 19,
+    "matched_current_all_descriptor_assignments": 19,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "16946582",
+    "publication_year": 2006,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "16770059",
+    "publication_year": 2006,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 7,
+    "matched_current_all_descriptor_assignments": 7,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "16013490",
+    "publication_year": 2005,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 8,
+    "matched_current_all_descriptor_assignments": 8,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "10833474",
+    "publication_year": 2000,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 20,
+    "matched_current_all_descriptor_assignments": 20,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "16103328",
+    "publication_year": 2005,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 21,
+    "matched_current_all_descriptor_assignments": 19,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": [
+     "Carcinoma, Basal Cell",
+     "Immunosuppression"
+    ]
+   },
+   {
+    "pmid": "16104830",
+    "publication_year": 2005,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": [
+     "Conditioning (Psychology)"
+    ]
+   },
+   {
+    "pmid": "15549053",
+    "publication_year": 2005,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "11862734",
+    "publication_year": 2002,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 7,
+    "matched_current_all_descriptor_assignments": 7,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "16749641",
+    "publication_year": 2006,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": [
+     "African Americans",
+     "European Continental Ancestry Group"
+    ]
+   },
+   {
+    "pmid": "16289646",
+    "publication_year": 2005,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "16977305",
+    "publication_year": 2006,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Aneurysm, Dissecting"
+    ]
+   },
+   {
+    "pmid": "11009298",
+    "publication_year": 2000,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "14528890",
+    "publication_year": 2003,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "15623697",
+    "publication_year": 2004,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 20,
+    "matched_current_all_descriptor_assignments": 19,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": [
+     "Confounding Factors (Epidemiology)"
+    ]
+   },
+   {
+    "pmid": "11427892",
+    "publication_year": 2001,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 23,
+    "matched_current_all_descriptor_assignments": 23,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "11504769",
+    "publication_year": 2001,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 20,
+    "matched_current_all_descriptor_assignments": 18,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": [
+     "Bridged Compounds",
+     "P-Glycoprotein"
+    ]
+   },
+   {
+    "pmid": "16470736",
+    "publication_year": 2006,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "14974165",
+    "publication_year": 2004,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 6,
+    "matched_current_all_descriptor_assignments": 5,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": [
+     "Dentist's Practice Patterns"
+    ]
+   },
+   {
+    "pmid": "11708603",
+    "publication_year": 2001,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 18,
+    "matched_current_all_descriptor_assignments": 17,
+    "matched_current_major_topic_assignments": 4,
+    "sample_only_labels": [
+     "Questionnaires"
+    ]
+   },
+   {
+    "pmid": "11211450",
+    "publication_year": 2000,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 6,
+    "matched_current_all_descriptor_assignments": 6,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "16698894",
+    "publication_year": 2006,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "12244775",
+    "publication_year": 2002,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "12887397",
+    "publication_year": 2003,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 21,
+    "matched_current_all_descriptor_assignments": 20,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": [
+     "Food Habits"
+    ]
+   },
+   {
+    "pmid": "12952663",
+    "publication_year": 2003,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 6,
+    "matched_current_all_descriptor_assignments": 6,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "17084256",
+    "publication_year": 2006,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "11928891",
+    "publication_year": 2002,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 4,
+    "matched_current_all_descriptor_assignments": 4,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "10673128",
+    "publication_year": 2000,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "16818873",
+    "publication_year": 2006,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 6,
+    "matched_current_all_descriptor_assignments": 6,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "14732362",
+    "publication_year": 2004,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "10851025",
+    "publication_year": 2000,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 17,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": [
+     "Antigens, CD9"
+    ]
+   },
+   {
+    "pmid": "14687526",
+    "publication_year": 2003,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Anoxia"
+    ]
+   },
+   {
+    "pmid": "15871379",
+    "publication_year": 2005,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 18,
+    "matched_current_all_descriptor_assignments": 18,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "11779010",
+    "publication_year": 2001,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 17,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": [
+     "Surgical Procedures, Minimally Invasive"
+    ]
+   },
+   {
+    "pmid": "11894161",
+    "publication_year": 2001,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "10843326",
+    "publication_year": 2000,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 6,
+    "matched_current_all_descriptor_assignments": 6,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "11277202",
+    "publication_year": 2001,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 19,
+    "matched_current_all_descriptor_assignments": 19,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "10883824",
+    "publication_year": 2000,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "12927783",
+    "publication_year": 2003,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "15877152",
+    "publication_year": 2005,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "11449995",
+    "publication_year": 2000,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "15509112",
+    "publication_year": 2004,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "11509486",
+    "publication_year": 2001,
+    "stratum": "y2000_2006",
+    "bioasq_assignments": 18,
+    "matched_current_all_descriptor_assignments": 17,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Protein-Serine-Threonine Kinases"
+    ]
+   },
+   {
+    "pmid": "17445078",
+    "publication_year": 2007,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Records as Topic"
+    ]
+   },
+   {
+    "pmid": "19687167",
+    "publication_year": 2009,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "20302295",
+    "publication_year": 2010,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 8,
+    "matched_current_all_descriptor_assignments": 8,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "20941961",
+    "publication_year": 2010,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "17853482",
+    "publication_year": 2007,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "20084038",
+    "publication_year": 2010,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19187784",
+    "publication_year": 2009,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Anoxia",
+     "Antigens, CD40"
+    ]
+   },
+   {
+    "pmid": "17196438",
+    "publication_year": 2007,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18273820",
+    "publication_year": 2008,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 17,
+    "matched_current_all_descriptor_assignments": 17,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19640007",
+    "publication_year": 2009,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "20334806",
+    "publication_year": 2010,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19495539",
+    "publication_year": 2009,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Questionnaires"
+    ]
+   },
+   {
+    "pmid": "18644890",
+    "publication_year": 2008,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "17403556",
+    "publication_year": 2008,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "20153750",
+    "publication_year": 2010,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 18,
+    "matched_current_all_descriptor_assignments": 18,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18719831",
+    "publication_year": 2008,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 19,
+    "matched_current_all_descriptor_assignments": 18,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Aneurysm, Dissecting"
+    ]
+   },
+   {
+    "pmid": "20882325",
+    "publication_year": 2010,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 8,
+    "matched_current_all_descriptor_assignments": 8,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19699283",
+    "publication_year": 2009,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 22,
+    "matched_current_all_descriptor_assignments": 22,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18937813",
+    "publication_year": 2009,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18221376",
+    "publication_year": 2008,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18664194",
+    "publication_year": 2008,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "20671335",
+    "publication_year": 2009,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 4,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19565298",
+    "publication_year": 2010,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 22,
+    "matched_current_all_descriptor_assignments": 22,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "17611603",
+    "publication_year": 2007,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "20497998",
+    "publication_year": 2010,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 8,
+    "matched_current_all_descriptor_assignments": 8,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18366816",
+    "publication_year": 2008,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19085687",
+    "publication_year": 2009,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 19,
+    "matched_current_all_descriptor_assignments": 19,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18421276",
+    "publication_year": 2008,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18165175",
+    "publication_year": 2007,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 17,
+    "matched_current_all_descriptor_assignments": 17,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18522041",
+    "publication_year": 2008,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 19,
+    "matched_current_all_descriptor_assignments": 19,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19528476",
+    "publication_year": 2009,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 18,
+    "matched_current_all_descriptor_assignments": 18,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "20126349",
+    "publication_year": 2010,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 6,
+    "matched_current_all_descriptor_assignments": 6,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "17275684",
+    "publication_year": 2007,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "20221586",
+    "publication_year": 2010,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18611048",
+    "publication_year": 2008,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19162672",
+    "publication_year": 2008,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19592894",
+    "publication_year": 2009,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 6,
+    "matched_current_all_descriptor_assignments": 6,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "17652266",
+    "publication_year": 2007,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 17,
+    "matched_current_all_descriptor_assignments": 17,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "17905267",
+    "publication_year": 2007,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19271523",
+    "publication_year": 2008,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "17895605",
+    "publication_year": 2007,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18339977",
+    "publication_year": 2008,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 18,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": [
+     "Hemoglobin A, Glycosylated",
+     "Questionnaires"
+    ]
+   },
+   {
+    "pmid": "17109949",
+    "publication_year": 2007,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "20036188",
+    "publication_year": 2010,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 8,
+    "matched_current_all_descriptor_assignments": 8,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19157682",
+    "publication_year": 2009,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18443226",
+    "publication_year": 2008,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "17235552",
+    "publication_year": 2007,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19465103",
+    "publication_year": 2009,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18187295",
+    "publication_year": 2008,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 18,
+    "matched_current_all_descriptor_assignments": 18,
+    "matched_current_major_topic_assignments": 4,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18221508",
+    "publication_year": 2008,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "20333789",
+    "publication_year": 2010,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 20,
+    "matched_current_all_descriptor_assignments": 19,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Biological Markers"
+    ]
+   },
+   {
+    "pmid": "18404714",
+    "publication_year": 2009,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 21,
+    "matched_current_all_descriptor_assignments": 20,
+    "matched_current_major_topic_assignments": 5,
+    "sample_only_labels": [
+     "Reconstructive Surgical Procedures"
+    ]
+   },
+   {
+    "pmid": "18330154",
+    "publication_year": 2007,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19237919",
+    "publication_year": 2009,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 6,
+    "matched_current_all_descriptor_assignments": 6,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19646552",
+    "publication_year": 2009,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Hemocyanin"
+    ]
+   },
+   {
+    "pmid": "18328763",
+    "publication_year": 2008,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 4,
+    "sample_only_labels": [
+     "Ethnic Groups"
+    ]
+   },
+   {
+    "pmid": "19861493",
+    "publication_year": 2009,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 18,
+    "matched_current_all_descriptor_assignments": 18,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19221005",
+    "publication_year": 2009,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 22,
+    "matched_current_all_descriptor_assignments": 22,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18522299",
+    "publication_year": 2008,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 6,
+    "matched_current_all_descriptor_assignments": 6,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19655333",
+    "publication_year": 2009,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "17434538",
+    "publication_year": 2007,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19923047",
+    "publication_year": 2009,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 8,
+    "matched_current_all_descriptor_assignments": 8,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "19963901",
+    "publication_year": 2009,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 4,
+    "matched_current_all_descriptor_assignments": 4,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "18846951",
+    "publication_year": 2008,
+    "stratum": "y2007_2010",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "20802166",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 17,
+    "matched_current_all_descriptor_assignments": 17,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21767580",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21877614",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": [
+     "Great Britain"
+    ]
+   },
+   {
+    "pmid": "21216355",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21271381",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21649899",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21091090",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 19,
+    "matched_current_all_descriptor_assignments": 18,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Biological Markers"
+    ]
+   },
+   {
+    "pmid": "21187084",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Forskolin"
+    ]
+   },
+   {
+    "pmid": "21328119",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 4,
+    "sample_only_labels": [
+     "Questionnaires"
+    ]
+   },
+   {
+    "pmid": "21152698",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 27,
+    "matched_current_all_descriptor_assignments": 27,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "20634228",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21972621",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21406448",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Mitotic Spindle Apparatus"
+    ]
+   },
+   {
+    "pmid": "21435019",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21689829",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 8,
+    "matched_current_all_descriptor_assignments": 8,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21896189",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 18,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "African Continental Ancestry Group",
+     "Asian Continental Ancestry Group",
+     "Ethnic Groups",
+     "European Continental Ancestry Group"
+    ]
+   },
+   {
+    "pmid": "22013377",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21970137",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 20,
+    "matched_current_all_descriptor_assignments": 20,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21299943",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21367935",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 19,
+    "matched_current_all_descriptor_assignments": 19,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21375242",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21516903",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 5,
+    "matched_current_all_descriptor_assignments": 5,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21455110",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 17,
+    "matched_current_all_descriptor_assignments": 17,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21586340",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 20,
+    "matched_current_all_descriptor_assignments": 20,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21234733",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 17,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Tumor Markers, Biological"
+    ]
+   },
+   {
+    "pmid": "21280962",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21418054",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 6,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21924947",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22241038",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21310927",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 19,
+    "matched_current_all_descriptor_assignments": 19,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22093011",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21078367",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21828052",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21943911",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 8,
+    "matched_current_all_descriptor_assignments": 8,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21621621",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21747215",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "20976460",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Reconstructive Surgical Procedures"
+    ]
+   },
+   {
+    "pmid": "22278798",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 7,
+    "matched_current_all_descriptor_assignments": 7,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21418876",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Anoxia"
+    ]
+   },
+   {
+    "pmid": "22828884",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21534871",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": [
+     "Outcome Assessment (Health Care)",
+     "Questionnaires"
+    ]
+   },
+   {
+    "pmid": "20958906",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 19,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": [
+     "Physician's Practice Patterns",
+     "Questionnaires",
+     "Surgical Procedures, Elective"
+    ]
+   },
+   {
+    "pmid": "22323029",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21613819",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21513268",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 7,
+    "matched_current_all_descriptor_assignments": 7,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21542377",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 7,
+    "matched_current_all_descriptor_assignments": 7,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21628657",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22098874",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 7,
+    "matched_current_all_descriptor_assignments": 7,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21957297",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 20,
+    "matched_current_all_descriptor_assignments": 20,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21447399",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "20883996",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Biomechanics"
+    ]
+   },
+   {
+    "pmid": "22003227",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 27,
+    "matched_current_all_descriptor_assignments": 27,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22114044",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Questionnaires"
+    ]
+   },
+   {
+    "pmid": "21245712",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21097681",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 8,
+    "matched_current_all_descriptor_assignments": 7,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": [
+     "Soybeans"
+    ]
+   },
+   {
+    "pmid": "20730510",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 8,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": [
+     "Polygonum cuspidatum"
+    ]
+   },
+   {
+    "pmid": "21804026",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 19,
+    "matched_current_all_descriptor_assignments": 19,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21396426",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 25,
+    "matched_current_all_descriptor_assignments": 24,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Calcium-Binding Protein, Vitamin D-Dependent"
+    ]
+   },
+   {
+    "pmid": "21357878",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 20,
+    "matched_current_all_descriptor_assignments": 20,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21198854",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 20,
+    "matched_current_all_descriptor_assignments": 20,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21845771",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 5,
+    "sample_only_labels": [
+     "Questionnaires"
+    ]
+   },
+   {
+    "pmid": "21236369",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 17,
+    "matched_current_all_descriptor_assignments": 17,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21844833",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 21,
+    "matched_current_all_descriptor_assignments": 20,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Street Drugs"
+    ]
+   },
+   {
+    "pmid": "21964960",
+    "publication_year": 2011,
+    "stratum": "y2011",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Questionnaires"
+    ]
+   },
+   {
+    "pmid": "22306176",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 25,
+    "matched_current_all_descriptor_assignments": 24,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": [
+     "Questionnaires"
+    ]
+   },
+   {
+    "pmid": "22653871",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": [
+     "Nuclear Reprogramming"
+    ]
+   },
+   {
+    "pmid": "22607812",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 28,
+    "matched_current_all_descriptor_assignments": 28,
+    "matched_current_major_topic_assignments": 5,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22908970",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22160097",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 20,
+    "matched_current_all_descriptor_assignments": 18,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Asian Continental Ancestry Group",
+     "Questionnaires"
+    ]
+   },
+   {
+    "pmid": "22154754",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22791533",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 19,
+    "matched_current_all_descriptor_assignments": 19,
+    "matched_current_major_topic_assignments": 4,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22856631",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 6,
+    "matched_current_all_descriptor_assignments": 6,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22177331",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23397745",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22326107",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23024770",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23129637",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22773635",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22853822",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": [
+     "Anoxia"
+    ]
+   },
+   {
+    "pmid": "22367653",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22374226",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 7,
+    "matched_current_all_descriptor_assignments": 7,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21934517",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22506505",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22548357",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22885849",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 25,
+    "matched_current_all_descriptor_assignments": 24,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Conditioning (Psychology)"
+    ]
+   },
+   {
+    "pmid": "22723260",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23022152",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 17,
+    "matched_current_all_descriptor_assignments": 17,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22984743",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 5,
+    "matched_current_all_descriptor_assignments": 4,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": [
+     "Great Britain"
+    ]
+   },
+   {
+    "pmid": "22740080",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22665578",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": [
+     "Tumor Markers, Biological"
+    ]
+   },
+   {
+    "pmid": "22143003",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": [
+     "Questionnaires",
+     "Reinforcement (Psychology)"
+    ]
+   },
+   {
+    "pmid": "22669912",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22268980",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 4,
+    "sample_only_labels": [
+     "Questionnaires"
+    ]
+   },
+   {
+    "pmid": "22395369",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22799741",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22527813",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22210919",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 4,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22615353",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22726559",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 22,
+    "matched_current_all_descriptor_assignments": 22,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22259053",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 21,
+    "matched_current_all_descriptor_assignments": 21,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22588733",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22429360",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22668650",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22981309",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": [
+     "Questionnaires"
+    ]
+   },
+   {
+    "pmid": "22759902",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22552763",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22787045",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 30,
+    "matched_current_all_descriptor_assignments": 30,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21769621",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 4,
+    "matched_current_all_descriptor_assignments": 3,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": [
+     "Biomechanics"
+    ]
+   },
+   {
+    "pmid": "21786270",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 18,
+    "matched_current_all_descriptor_assignments": 18,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22425669",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "21907460",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22649042",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 23,
+    "matched_current_all_descriptor_assignments": 23,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22362917",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": [
+     "Process Assessment (Health Care)"
+    ]
+   },
+   {
+    "pmid": "22729892",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22995006",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 7,
+    "matched_current_all_descriptor_assignments": 7,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "20731623",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 21,
+    "matched_current_all_descriptor_assignments": 21,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22512792",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22333118",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 8,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Reconstructive Surgical Procedures"
+    ]
+   },
+   {
+    "pmid": "22367322",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22919350",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 7,
+    "matched_current_all_descriptor_assignments": 7,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22059649",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Depressive Disorder, Major"
+    ]
+   },
+   {
+    "pmid": "22901539",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22551239",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22843525",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22502755",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22330859",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22833680",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 20,
+    "matched_current_all_descriptor_assignments": 19,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Anoxia"
+    ]
+   },
+   {
+    "pmid": "22713308",
+    "publication_year": 2012,
+    "stratum": "y2012",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23218949",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23409655",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 5,
+    "matched_current_all_descriptor_assignments": 5,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22904262",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22750078",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 24,
+    "matched_current_all_descriptor_assignments": 24,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23298423",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 17,
+    "matched_current_all_descriptor_assignments": 17,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22975226",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22984886",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 7,
+    "matched_current_all_descriptor_assignments": 7,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23135712",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22842521",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 5,
+    "matched_current_all_descriptor_assignments": 5,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23261302",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23431653",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 4,
+    "matched_current_all_descriptor_assignments": 3,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Great Britain"
+    ]
+   },
+   {
+    "pmid": "23204494",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": [
+     "Mesenchymal Stromal Cells"
+    ]
+   },
+   {
+    "pmid": "23306917",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 6,
+    "matched_current_all_descriptor_assignments": 6,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23177741",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22987343",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 5,
+    "matched_current_all_descriptor_assignments": 5,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23379101",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 4,
+    "matched_current_all_descriptor_assignments": 4,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23114999",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 20,
+    "matched_current_all_descriptor_assignments": 20,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23043524",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 18,
+    "matched_current_all_descriptor_assignments": 17,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": [
+     "Centers for Disease Control and Prevention (U.S.)"
+    ]
+   },
+   {
+    "pmid": "23211558",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23078765",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22623069",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Food Habits"
+    ]
+   },
+   {
+    "pmid": "22962004",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 7,
+    "matched_current_all_descriptor_assignments": 7,
+    "matched_current_major_topic_assignments": 4,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23197186",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23165293",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 18,
+    "matched_current_all_descriptor_assignments": 18,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23241411",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 20,
+    "matched_current_all_descriptor_assignments": 20,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22982548",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23066084",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 8,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "African Continental Ancestry Group"
+    ]
+   },
+   {
+    "pmid": "23204059",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 18,
+    "matched_current_all_descriptor_assignments": 18,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23279579",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 8,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": [
+     "Great Britain"
+    ]
+   },
+   {
+    "pmid": "23149620",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22879030",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23299525",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22999187",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 17,
+    "matched_current_all_descriptor_assignments": 17,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22982376",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23182954",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 21,
+    "matched_current_all_descriptor_assignments": 20,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Biological Markers"
+    ]
+   },
+   {
+    "pmid": "22878140",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23185037",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23061387",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 13,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22856587",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Translational Medical Research"
+    ]
+   },
+   {
+    "pmid": "22778072",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 19,
+    "matched_current_all_descriptor_assignments": 18,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Biomechanics"
+    ]
+   },
+   {
+    "pmid": "23112267",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 15,
+    "matched_current_all_descriptor_assignments": 15,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23169651",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 17,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": [
+     "Protein-Serine-Threonine Kinases"
+    ]
+   },
+   {
+    "pmid": "23261732",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23367705",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": [
+     "Questionnaires",
+     "Sedentary Lifestyle"
+    ]
+   },
+   {
+    "pmid": "23168287",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 13,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": [
+     "Biological Markers"
+    ]
+   },
+   {
+    "pmid": "23437442",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 7,
+    "matched_current_all_descriptor_assignments": 6,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": [
+     "Disabled Persons"
+    ]
+   },
+   {
+    "pmid": "23076388",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 24,
+    "matched_current_all_descriptor_assignments": 23,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": [
+     "Great Britain"
+    ]
+   },
+   {
+    "pmid": "22841446",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 8,
+    "matched_current_all_descriptor_assignments": 8,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22767159",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 8,
+    "matched_current_all_descriptor_assignments": 8,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23035753",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 22,
+    "matched_current_all_descriptor_assignments": 22,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23062378",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 12,
+    "matched_current_all_descriptor_assignments": 12,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23386765",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 17,
+    "matched_current_all_descriptor_assignments": 17,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23250131",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23306267",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 6,
+    "matched_current_all_descriptor_assignments": 6,
+    "matched_current_major_topic_assignments": 4,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23372014",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 17,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": [
+     "Tumor Markers, Biological"
+    ]
+   },
+   {
+    "pmid": "23117884",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 8,
+    "matched_current_all_descriptor_assignments": 8,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23187103",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 14,
+    "matched_current_all_descriptor_assignments": 14,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23062313",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 3,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23087181",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 9,
+    "matched_current_all_descriptor_assignments": 9,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23032353",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 22,
+    "matched_current_all_descriptor_assignments": 22,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23332748",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 10,
+    "matched_current_all_descriptor_assignments": 10,
+    "matched_current_major_topic_assignments": 2,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "23018576",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 11,
+    "matched_current_all_descriptor_assignments": 11,
+    "matched_current_major_topic_assignments": 1,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22623168",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 8,
+    "matched_current_all_descriptor_assignments": 8,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   },
+   {
+    "pmid": "22770481",
+    "publication_year": 2013,
+    "stratum": "y2013",
+    "bioasq_assignments": 16,
+    "matched_current_all_descriptor_assignments": 16,
+    "matched_current_major_topic_assignments": 0,
+    "sample_only_labels": []
+   }
+  ]
+ },
+ "decision_checks": {
+  "required_record_return_fraction": 1.0,
+  "minimum_all_descriptor_assignment_match_fraction": 0.9,
+  "maximum_major_topic_assignment_match_fraction": 0.5,
+  "all_descriptor_match_exceeds_major_topic_match_in_every_stratum": true,
+  "passed": true
+ },
+ "interpretation": "The predeclared balanced sample is consistent with meshMajor containing all assigned descriptors rather than only MajorTopicYN=Y headings.",
+ "limitations": [
+  "The strata are deliberately balanced around source anomalies and scientific cutoffs and are not weighted to estimate a corpus-wide population fraction.",
+  "PubMed EFetch exposes maintained-current records, not the MeSH assignments or major-topic flags frozen on 1 March 2013.",
+  "A passing result is bounded evidence about field semantics in 448 predeclared records; it is not proof of PMID-level corpus completeness or an original historical-baseline substitute.",
+  "Sampling 32 of the 280 pre-1950 records measures their field semantics but does not repair or explain the mismatch with the reported post-1949 corpus scope.",
+  "This protocol cannot contribute metric-v3 readiness and no gap score, rank, bridge, or candidate formula may enter sampling or interpretation."
+ ]
+}

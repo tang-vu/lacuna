@@ -62,8 +62,11 @@ selector rejects the source and the protocol remains an immutable failed pre-reg
 write `bioasq-2013-semantics.json` from a modified copy. The separately named
 `../bioasq-semantics-protocol-v2.json` now handles the 280 pre-1950 records with a predeclared
 32-record stratum. It was frozen before selection and keeps the prior comparison and decision
-thresholds unchanged. Generate the 448-record selection only under that checksum-pinned protocol,
-then replay it from the full snapshot before any EFetch comparison.
+thresholds unchanged. The committed `bioasq-2013-semantics.json` records the completed 448-record
+comparison: 448/448 PubMed records returned, with 5,201/5,296 assignments matching all descriptors
+and 455/5,296 matching major-topic headings. The classification follows the frozen rule and
+contributes zero readiness. Generate any reproduction only under that checksum-pinned protocol,
+then replay it from the full snapshot before EFetch and write the result to a review path.
 
 Reproduce the committed public-sample audit with:
 

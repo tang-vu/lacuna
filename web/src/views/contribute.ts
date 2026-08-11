@@ -532,6 +532,8 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
   );
   const snapshot = status.source_alternatives.bioasq_snapshot;
   const successorProtocol = status.source_alternatives.bioasq_successor_protocol;
+  const semanticsAudit = status.source_alternatives.bioasq_semantics_audit;
+  const semanticsOverall = semanticsAudit.maintained_current_pubmed_comparison.overall;
 
   return el('section', { class: 'contribution-missions', id: 'contribute' }, [
     el('div', { class: 'section-kicker' }, ['THE OPEN WORK']),
@@ -566,8 +568,15 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
           `${snapshot.measured.noncanonical_year_count.toLocaleString()} year values use an ` +
           'explicit non-YYYY normalization rule. ' +
           `A separately named ${successorProtocol.sampling.total_sample_size.toLocaleString()}-record ` +
-          'successor protocol is now frozen without changing the original thresholds; its bounded ' +
-          'maintained-current comparison has not run. This secondary snapshot still contributes ' +
+          'successor protocol retained the original thresholds. Its bounded maintained-current ' +
+          `comparison returned ${semanticsAudit.maintained_current_pubmed_comparison.records_returned} of ` +
+          `${semanticsAudit.maintained_current_pubmed_comparison.records_requested} records: ` +
+          `${semanticsOverall.matched_current_all_descriptor_assignments.toLocaleString()} of ` +
+          `${semanticsOverall.bioasq_assignments.toLocaleString()} assignments matched all ` +
+          'descriptors, versus ' +
+          `${semanticsOverall.matched_current_major_topic_assignments.toLocaleString()} major-topic ` +
+          `matches. The frozen sample rule ${semanticsAudit.decision_checks.passed ? 'passed' : 'did not pass'}, ` +
+          'but this is neither population-weighted nor period-appropriate and still contributes ' +
           'zero readiness.',
         progress(
           pinnedSources,

@@ -68,8 +68,9 @@ python -m pipeline.benchmark.bioasq_semantics \
 ```
 
 The sampler makes a second streaming pass before it writes output. That replay verifies every
-occurrence of the 448 retained PMID keys: identical repeated source rows are collapsed, while a
-different normalized year, stratum, or MeSH assignment for the same retained PMID is a hard error.
+occurrence of the 448 retained PMID keys: repeated occurrences with the same normalized year,
+stratum, and MeSH assignments are collapsed, while a difference in any of those compared fields for
+the same retained PMID is a hard error. Other source fields are outside this duplicate check.
 
 Do not put the variables in a repository `.env` file or pass secrets on the command line. Only the
 generated aggregate and bounded semantics manifests belong in Git. Any future selection stays in

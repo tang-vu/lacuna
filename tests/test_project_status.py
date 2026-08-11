@@ -12,7 +12,7 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 10
+    assert status["schema_version"] == 11
     assert status["status"] == "not_ready"
     assert status["historical_sources"] == {
         "ready": False,
@@ -77,6 +77,20 @@ def test_project_status_exposes_validator_results_without_claiming_readiness():
     assert successor["status"] == "frozen_after_source_audit_before_semantics_selection"
     assert successor["sampling"]["total_sample_size"] == 448
     assert successor["decision_rule"]["readiness_contribution"] == 0
+    semantics = status["source_alternatives"]["bioasq_semantics_audit"]
+    assert semantics["status"] == "bounded_corpus_semantics_audit"
+    assert semantics["classification"] == "sample_consistent_with_all_assigned_descriptors"
+    assert semantics["readiness_contribution"] == 0
+    assert semantics["maintained_current_pubmed_comparison"]["records_returned"] == 448
+    assert semantics["maintained_current_pubmed_comparison"]["overall"] == {
+        "records": 448,
+        "bioasq_assignments": 5_296,
+        "matched_current_all_descriptor_assignments": 5_201,
+        "matched_current_major_topic_assignments": 455,
+        "all_descriptor_assignment_match_fraction": 0.98206193,
+        "major_topic_assignment_match_fraction": 0.0859139,
+    }
+    assert semantics["decision_checks"]["passed"] is True
     assert len(status["source_alternatives"]["entries"]) == 3
     assert status["candidate_intake"]["counts"] == {
         "accepted": 2,
@@ -165,6 +179,7 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
         "bioasq_snapshot_audit",
         "bioasq_semantics_protocol",
         "bioasq_successor_semantics_protocol",
+        "bioasq_semantics_audit",
         "historical_inventories",
         "mbr_preservation_capture",
         "candidate_intake",

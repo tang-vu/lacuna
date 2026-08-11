@@ -22,8 +22,10 @@ import heapq
 import json
 from collections.abc import Callable
 from pathlib import Path
+from urllib.parse import parse_qs, urlsplit
 
 from pipeline.benchmark.bioasq_snapshot import (
+    MANIFEST_PATH as SNAPSHOT_MANIFEST_PATH,
     YEAR_NORMALISATION_RULE,
     _sha256_file,
     open_snapshot_text,
@@ -54,6 +56,16 @@ class BioasqSemanticsError(ValueError):
 def _require(condition: bool, message: str) -> None:
     if not condition:
         raise BioasqSemanticsError(message)
+
+
+def _is_sha256(value: object) -> bool:
+    if not isinstance(value, str) or len(value) != 64:
+        return False
+    try:
+        int(value, 16)
+    except ValueError:
+        return False
+    return True
 
 
 def _normalise(label: str) -> str:
@@ -738,6 +750,345 @@ def compare_semantics_sample(
         "interpretation": interpretation,
         "limitations": list(protocol["limitations"]),
     }
+
+
+def audit_semantics_manifest(
+    path: Path = DEFAULT_AUDIT_PATH,
+    *,
+    protocol_path: Path = SUCCESSOR_PROTOCOL_PATH,
+    snapshot_manifest_path: Path = SNAPSHOT_MANIFEST_PATH,
+) -> dict:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    protocol = audit_semantics_protocol(protocol_path)
+    snapshot = json.loads(snapshot_manifest_path.read_text(encoding="utf-8"))
+    _require(
+        set(payload)
+        == {
+            "schema_version",
+            "status",
+            "readiness_contribution",
+            "source_alternative_id",
+            "classification",
+            "sample",
+            "maintained_current_pubmed_comparison",
+            "decision_checks",
+            "interpretation",
+            "limitations",
+        },
+        "semantics manifest fields drifted",
+    )
+    _require(payload.get("schema_version") == 1, "unsupported semantics manifest schema")
+    _require(
+        payload.get("status") == "bounded_corpus_semantics_audit",
+        "semantics result must remain explicitly bounded",
+    )
+    _require(payload.get("readiness_contribution") == 0, "semantics result cannot add readiness")
+    _require(payload.get("source_alternative_id") == "bioasq-2013-task-a", "wrong source")
+    _require(
+        snapshot.get("status") == "measured_unmatched_input"
+        and snapshot.get("readiness_contribution") == 0,
+        "semantics result must retain the snapshot scope mismatch",
+    )
+
+    sample = payload.get("sample")
+    _require(isinstance(sample, dict), "semantics manifest is missing its sample identity")
+    _require(
+        set(sample)
+        == {
+            "selected_records",
+            "source_snapshot_sha256",
+            "source_snapshot_bytes",
+            "sampling_protocol_sha256",
+            "selection_file",
+        },
+        "semantics sample identity fields drifted",
+    )
+    protocol_sha256, _protocol_bytes = _sha256_file(protocol_path)
+    snapshot_input = snapshot.get("input")
+    _require(isinstance(snapshot_input, dict), "snapshot audit is missing its input identity")
+    _require(
+        sample["selected_records"] == protocol["sampling"]["total_sample_size"],
+        "semantics sample size differs from the frozen protocol",
+    )
+    _require(
+        sample["sampling_protocol_sha256"] == protocol_sha256,
+        "semantics manifest references a different sampling protocol",
+    )
+    _require(
+        sample["source_snapshot_sha256"] == snapshot_input.get("sha256")
+        and sample["source_snapshot_bytes"] == snapshot_input.get("bytes"),
+        "semantics manifest references a different source snapshot",
+    )
+    selection_file = sample.get("selection_file")
+    _require(
+        isinstance(selection_file, dict)
+        and set(selection_file) == {"path", "sha256", "bytes"},
+        "semantics selection identity is malformed",
+    )
+    selection_path = str(selection_file.get("path", "")).replace("\\", "/")
+    _require(
+        selection_path == "data/medline-baseline/bioasq/semantics-sample.json",
+        "semantics selection path drifted",
+    )
+    _require(_is_sha256(selection_file.get("sha256")), "invalid semantics selection checksum")
+    _require(
+        type(selection_file.get("bytes")) is int and selection_file["bytes"] > 0,
+        "invalid semantics selection byte count",
+    )
+
+    comparison = payload.get("maintained_current_pubmed_comparison")
+    _require(isinstance(comparison, dict), "semantics manifest is missing its comparison")
+    _require(
+        set(comparison)
+        == {
+            "basis",
+            "records_requested",
+            "records_returned",
+            "record_return_fraction",
+            "missing_pmids",
+            "batches",
+            "overall",
+            "by_stratum",
+            "records",
+        },
+        "semantics comparison fields drifted",
+    )
+    _require(
+        comparison.get("basis") == "maintained_current_pubmed",
+        "semantics comparison is not labelled maintained-current",
+    )
+    requested = comparison.get("records_requested")
+    returned = comparison.get("records_returned")
+    _require(
+        type(requested) is int
+        and requested == protocol["sampling"]["total_sample_size"],
+        "semantics requested-record count drifted",
+    )
+    _require(
+        type(returned) is int and 0 <= returned <= requested,
+        "invalid semantics returned-record count",
+    )
+    _require(
+        comparison.get("record_return_fraction") == _fraction(returned, requested),
+        "semantics record-return fraction does not reconcile",
+    )
+
+    batches = comparison.get("batches")
+    _require(isinstance(batches, list) and batches, "semantics manifest has no PubMed batches")
+    requested_pmids: list[str] = []
+    returned_from_batches = 0
+    remaining = requested
+    for index, batch in enumerate(batches):
+        context = f"PubMed batch {index + 1}"
+        _require(
+            isinstance(batch, dict)
+            and set(batch)
+            == {
+                "source_url",
+                "requested_pmids",
+                "records_returned",
+                "response_sha256",
+                "response_bytes",
+                "parsed_records_sha256",
+            },
+            f"{context} fields drifted",
+        )
+        source_url = batch.get("source_url")
+        _require(isinstance(source_url, str), f"{context} is missing its source URL")
+        parsed = urlsplit(source_url)
+        query = parse_qs(parsed.query, keep_blank_values=True)
+        _require(
+            parsed.scheme == "https"
+            and parsed.hostname == "eutils.ncbi.nlm.nih.gov"
+            and parsed.path == "/entrez/eutils/efetch.fcgi"
+            and parsed.username is None
+            and parsed.password is None
+            and parsed.port is None
+            and not parsed.fragment,
+            f"{context} source is not NCBI EFetch",
+        )
+        _require(
+            set(query) == {"db", "id", "retmode", "tool"}
+            and query.get("db") == ["pubmed"]
+            and len(query.get("id", [])) == 1
+            and query.get("retmode") == ["xml"]
+            and query.get("tool") == ["lacuna"],
+            f"{context} query contains unpinned or identifying parameters",
+        )
+        batch_pmids = query["id"][0].split(",")
+        _require(
+            batch_pmids
+            and all(pmid.isdigit() for pmid in batch_pmids)
+            and batch_pmids == sorted(batch_pmids, key=int)
+            and len(batch_pmids) == len(set(batch_pmids)),
+            f"{context} has invalid PMID keys",
+        )
+        expected_batch_size = min(protocol["comparison"]["batch_size"], remaining)
+        _require(
+            batch.get("requested_pmids") == len(batch_pmids) == expected_batch_size,
+            f"{context} requested-record count drifted",
+        )
+        batch_returned = batch.get("records_returned")
+        _require(
+            type(batch_returned) is int and 0 <= batch_returned <= len(batch_pmids),
+            f"{context} returned-record count is invalid",
+        )
+        _require(
+            _is_sha256(batch.get("response_sha256")),
+            f"{context} response checksum is invalid",
+        )
+        _require(
+            type(batch.get("response_bytes")) is int and batch["response_bytes"] > 0,
+            f"{context} response byte count is invalid",
+        )
+        _require(
+            _is_sha256(batch.get("parsed_records_sha256")),
+            f"{context} parsed-record checksum is invalid",
+        )
+        requested_pmids.extend(batch_pmids)
+        returned_from_batches += batch_returned
+        remaining -= len(batch_pmids)
+    _require(remaining == 0, "PubMed batches do not cover the requested sample")
+    _require(
+        len(requested_pmids) == len(set(requested_pmids)),
+        "PubMed batches contain duplicate PMID requests",
+    )
+    _require(
+        returned_from_batches == returned,
+        "PubMed batch return counts do not reconcile",
+    )
+
+    records = comparison.get("records")
+    _require(isinstance(records, list), "semantics comparison records are missing")
+    _require(len(records) == returned, "semantics comparison record count does not reconcile")
+    compared_pmids: list[str] = []
+    for record in records:
+        _require(
+            isinstance(record, dict)
+            and set(record)
+            == {
+                "pmid",
+                "publication_year",
+                "stratum",
+                "bioasq_assignments",
+                "matched_current_all_descriptor_assignments",
+                "matched_current_major_topic_assignments",
+                "sample_only_labels",
+            },
+            "semantics comparison record fields drifted",
+        )
+        pmid = str(record.get("pmid", ""))
+        year = record.get("publication_year")
+        _require(pmid.isdigit(), "semantics comparison contains an invalid PMID")
+        _require(type(year) is int, f"PMID {pmid}: invalid publication year")
+        stratum = _stratum_for_year(protocol, year)
+        _require(
+            stratum is not None and record.get("stratum") == stratum["id"],
+            f"PMID {pmid}: wrong comparison stratum",
+        )
+        assignments = record.get("bioasq_assignments")
+        matched_all = record.get("matched_current_all_descriptor_assignments")
+        matched_major = record.get("matched_current_major_topic_assignments")
+        _require(
+            type(assignments) is int
+            and type(matched_all) is int
+            and type(matched_major) is int
+            and 0 <= matched_major <= matched_all <= assignments
+            and assignments > 0,
+            f"PMID {pmid}: assignment counts do not reconcile",
+        )
+        sample_only = record.get("sample_only_labels")
+        _require(
+            isinstance(sample_only, list)
+            and all(isinstance(label, str) and label for label in sample_only)
+            and len(sample_only) == assignments - matched_all,
+            f"PMID {pmid}: unmatched labels do not reconcile",
+        )
+        compared_pmids.append(pmid)
+    _require(
+        len(compared_pmids) == len(set(compared_pmids)),
+        "semantics comparison contains duplicate PMIDs",
+    )
+    requested_set = set(requested_pmids)
+    compared_set = set(compared_pmids)
+    _require(compared_set <= requested_set, "PubMed returned an unrequested PMID")
+    missing_pmids = comparison.get("missing_pmids")
+    _require(
+        isinstance(missing_pmids, list)
+        and all(isinstance(pmid, str) and pmid.isdigit() for pmid in missing_pmids)
+        and missing_pmids == sorted(missing_pmids, key=int)
+        and len(missing_pmids) == len(set(missing_pmids)),
+        "semantics missing-PMID list is invalid",
+    )
+    _require(
+        set(missing_pmids) == requested_set - compared_set,
+        "semantics missing-PMID list does not reconcile",
+    )
+
+    overall = comparison.get("overall")
+    by_stratum = comparison.get("by_stratum")
+    _require(overall == _summarise_records(records), "semantics overall counts drifted")
+    expected_by_stratum = {
+        stratum["id"]: _summarise_records(
+            [record for record in records if record["stratum"] == stratum["id"]]
+        )
+        for stratum in protocol["sampling"]["strata"]
+    }
+    _require(by_stratum == expected_by_stratum, "semantics stratum counts drifted")
+
+    thresholds = protocol["decision_rule"]["consistent_with_all_assigned_descriptors_if"]
+    every_stratum_separates = all(
+        result["all_descriptor_assignment_match_fraction"]
+        > result["major_topic_assignment_match_fraction"]
+        for result in expected_by_stratum.values()
+    )
+    passes = (
+        comparison["record_return_fraction"]
+        >= protocol["comparison"]["required_record_return_fraction"]
+        and overall["all_descriptor_assignment_match_fraction"]
+        >= thresholds["minimum_all_descriptor_assignment_match_fraction"]
+        and overall["major_topic_assignment_match_fraction"]
+        <= thresholds["maximum_major_topic_assignment_match_fraction"]
+        and (
+            every_stratum_separates
+            or not thresholds[
+                "all_descriptor_match_must_exceed_major_topic_match_in_every_stratum"
+            ]
+        )
+    )
+    expected_checks = {
+        "required_record_return_fraction": protocol["comparison"][
+            "required_record_return_fraction"
+        ],
+        "minimum_all_descriptor_assignment_match_fraction": thresholds[
+            "minimum_all_descriptor_assignment_match_fraction"
+        ],
+        "maximum_major_topic_assignment_match_fraction": thresholds[
+            "maximum_major_topic_assignment_match_fraction"
+        ],
+        "all_descriptor_match_exceeds_major_topic_match_in_every_stratum": (
+            every_stratum_separates
+        ),
+        "passed": passes,
+    }
+    _require(payload.get("decision_checks") == expected_checks, "semantics decision checks drifted")
+    expected_classification = protocol["decision_rule"][
+        "passing_label" if passes else "nonpassing_label"
+    ]
+    _require(
+        payload.get("classification") == expected_classification,
+        "semantics classification does not follow the frozen rule",
+    )
+    expected_interpretation = (
+        "The predeclared balanced sample is consistent with meshMajor containing all assigned "
+        "descriptors rather than only MajorTopicYN=Y headings."
+        if passes
+        else "The predeclared balanced sample does not resolve whether meshMajor contains all "
+        "assigned descriptors rather than only MajorTopicYN=Y headings."
+    )
+    _require(payload.get("interpretation") == expected_interpretation, "interpretation drifted")
+    _require(payload.get("limitations") == protocol["limitations"], "semantics limitations drifted")
+    return payload
 
 
 def audit_semantics_sample(

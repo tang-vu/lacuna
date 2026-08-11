@@ -8,8 +8,10 @@ import pytest
 
 from pipeline.benchmark.bioasq_semantics import (
     BioasqSemanticsError,
+    DEFAULT_AUDIT_PATH,
     PROTOCOL_PATH,
     SUCCESSOR_PROTOCOL_PATH,
+    audit_semantics_manifest,
     audit_semantics_sample,
     audit_semantics_protocol,
     compare_semantics_sample,
@@ -134,6 +136,44 @@ def test_successor_protocol_cannot_tune_a_parent_threshold(tmp_path: Path):
 
     with pytest.raises(BioasqSemanticsError, match="decision thresholds changed"):
         audit_semantics_protocol(path)
+
+
+def test_committed_semantics_manifest_reconciles_with_the_frozen_rule():
+    result = audit_semantics_manifest()
+
+    comparison = result["maintained_current_pubmed_comparison"]
+    assert result["classification"] == "sample_consistent_with_all_assigned_descriptors"
+    assert result["decision_checks"]["passed"] is True
+    assert result["readiness_contribution"] == 0
+    assert comparison["records_requested"] == 448
+    assert comparison["records_returned"] == 448
+    assert comparison["overall"]["bioasq_assignments"] == 5_296
+    assert comparison["overall"]["matched_current_all_descriptor_assignments"] == 5_201
+    assert comparison["overall"]["matched_current_major_topic_assignments"] == 455
+
+
+def test_semantics_manifest_cannot_overstate_its_reconciled_counts(tmp_path: Path):
+    result = json.loads(DEFAULT_AUDIT_PATH.read_text(encoding="utf-8"))
+    result["maintained_current_pubmed_comparison"]["overall"][
+        "matched_current_all_descriptor_assignments"
+    ] += 1
+    path = tmp_path / "semantics-audit.json"
+    path.write_text(json.dumps(result), encoding="utf-8")
+
+    with pytest.raises(BioasqSemanticsError, match="overall counts drifted"):
+        audit_semantics_manifest(path)
+
+
+def test_semantics_manifest_rejects_identifying_query_parameters(tmp_path: Path):
+    result = json.loads(DEFAULT_AUDIT_PATH.read_text(encoding="utf-8"))
+    result["maintained_current_pubmed_comparison"]["batches"][0][
+        "source_url"
+    ] += "&email="
+    path = tmp_path / "semantics-audit.json"
+    path.write_text(json.dumps(result), encoding="utf-8")
+
+    with pytest.raises(BioasqSemanticsError, match="identifying parameters"):
+        audit_semantics_manifest(path)
 
 
 @pytest.mark.parametrize("outside_year", ["1999", "undated"])

@@ -301,8 +301,14 @@ measured payload contains records outside the protocol's 1950-2013 strata, the s
 cannot run it unchanged. That protocol remains immutable. A separately named
 `bioasq-semantics-protocol-v2.json` is now frozen after source audit and before semantics selection.
 It adds a 32-record 1946-1949 stratum, preserves all 416 allocations and thresholds from v1, and
-raises the total to 448 without inspecting a PMID selection or new PubMed response. The bounded
-comparison has not yet run. The full audit status is `measured_unmatched_input`; the
+raises the total to 448 without inspecting a PMID selection or new PubMed response. The subsequently
+checksum-pinned bounded audit returned all 448 records: 5,201 of 5,296 assignments match
+maintained-current PubMed descriptors, while 455 match current `MajorTopicYN=Y` headings. The
+all-descriptor fraction is 0.98206193, the major-topic fraction is 0.0859139, and all-descriptor
+matching exceeds major-topic matching in all nine strata, so the sample follows the frozen
+`sample_consistent_with_all_assigned_descriptors` classification. This balanced sample is not a
+population estimate, historical indexing reconstruction, or completeness result. The full source
+audit status remains `measured_unmatched_input`; the
 `--require-declared-match` command is expected to fail. Readiness remains zero.
 
 ## Deployment

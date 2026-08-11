@@ -18,7 +18,10 @@ from datetime import date
 from pathlib import Path
 from urllib.parse import urlsplit
 
-from pipeline.benchmark.bioasq_semantics import audit_semantics_protocol
+from pipeline.benchmark.bioasq_semantics import (
+    audit_semantics_manifest,
+    audit_semantics_protocol,
+)
 from pipeline.paths import REPO_ROOT
 
 ALTERNATIVES_PATH = REPO_ROOT / "benchmarks" / "v3" / "source-alternatives.json"
@@ -185,6 +188,44 @@ def _audit_successor_semantics_protocol_reference(value: object, context: str) -
             "y2013",
         ],
         f"{context}: successor year strata drifted",
+    )
+
+
+def _audit_semantics_manifest_reference(
+    value: object,
+    context: str,
+    *,
+    protocol_reference: object,
+    snapshot_reference: object,
+) -> None:
+    _require(isinstance(value, dict), f"{context}: missing semantics audit")
+    _require(set(value) == {"path", "sha256"}, f"{context}: malformed audit reference")
+    relative = Path(str(value["path"]))
+    _require(not relative.is_absolute() and ".." not in relative.parts, f"{context}: unsafe path")
+    path = REPO_ROOT / relative
+    _require(path.is_file(), f"{context}: referenced semantics audit is missing")
+    _require(
+        isinstance(value.get("sha256"), str)
+        and len(value["sha256"]) == 64
+        and _sha256_file(path) == value["sha256"],
+        f"{context}: semantics audit checksum mismatch",
+    )
+    _require(
+        isinstance(protocol_reference, dict) and isinstance(snapshot_reference, dict),
+        f"{context}: missing protocol or snapshot dependency",
+    )
+    protocol_path = REPO_ROOT / Path(str(protocol_reference.get("path", "")))
+    snapshot_path = REPO_ROOT / Path(str(snapshot_reference.get("path", "")))
+    result = audit_semantics_manifest(
+        path,
+        protocol_path=protocol_path,
+        snapshot_manifest_path=snapshot_path,
+    )
+    _require(
+        result["classification"] == "sample_consistent_with_all_assigned_descriptors"
+        and result["decision_checks"]["passed"] is True
+        and result["readiness_contribution"] == 0,
+        f"{context}: bounded semantics result drifted",
     )
 
 
@@ -364,6 +405,12 @@ def audit_source_alternatives(
                     )
                     snapshot = _audit_snapshot_reference(
                         entry.get("snapshot_audit"), f"{entry_id}.snapshot_audit"
+                    )
+                    _audit_semantics_manifest_reference(
+                        entry.get("semantics_audit"),
+                        f"{entry_id}.semantics_audit",
+                        protocol_reference=entry.get("successor_semantics_protocol"),
+                        snapshot_reference=entry.get("snapshot_audit"),
                     )
                     _require(
                         snapshot["measured"]["article_count"] == declared["article_count"]

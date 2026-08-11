@@ -203,6 +203,10 @@ export interface ProjectStatus {
         path: string;
         sha256: string;
       };
+      semantics_audit?: {
+        path: string;
+        sha256: string;
+      };
       snapshot_audit?: {
         path: string;
         sha256: string;
@@ -246,6 +250,32 @@ export interface ProjectStatus {
       };
       decision_rule: {
         readiness_contribution: 0;
+      };
+    };
+    bioasq_semantics_audit: {
+      status: 'bounded_corpus_semantics_audit';
+      classification:
+        | 'sample_consistent_with_all_assigned_descriptors'
+        | 'semantics_unresolved';
+      readiness_contribution: 0;
+      sample: {
+        selected_records: number;
+      };
+      maintained_current_pubmed_comparison: {
+        records_requested: number;
+        records_returned: number;
+        record_return_fraction: number;
+        overall: {
+          records: number;
+          bioasq_assignments: number;
+          matched_current_all_descriptor_assignments: number;
+          matched_current_major_topic_assignments: number;
+          all_descriptor_assignment_match_fraction: number;
+          major_topic_assignment_match_fraction: number;
+        };
+      };
+      decision_checks: {
+        passed: boolean;
       };
     };
   };

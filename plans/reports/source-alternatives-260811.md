@@ -23,7 +23,7 @@ benchmark without changing the experimental population.
 
 | Candidate | Dated citation-to-MeSH state | Fixed declared corpus | Current decision |
 |---|---|---|---|
-| BioASQ Task 1a v2013 | Yes, described with MeSH 2013 labels | 10,876,004 articles measured; reported post-1949 scope does not match | Run the frozen 448-record bounded semantics audit |
+| BioASQ Task 1a v2013 | Yes, described with MeSH 2013 labels | 10,876,004 articles measured; reported post-1949 scope does not match | Pre-register a separate secondary-snapshot pilot; keep the original gate red |
 | Current PubMed baseline frozen locally | No historical state; indexing is maintained-current | A complete current release can be pinned | Engineering and future prospective work only |
 | Persistent PubMed Abstracts | Dated titles and abstracts, but no historical MeSH assignments | Dated text snapshots are documented | Rejected for metric-v3 historical indexing |
 | Europe PMC current bulk services | Current literature metadata and selected full-text bulk sets | Current collections, not the required old MEDLINE baselines | Not a historical-baseline replacement |
@@ -142,6 +142,28 @@ with identical normalized year, stratum, and MeSH assignments, and rejects any c
 implementation correction to the frozen record-key rule; the protocol checksum, strata, and
 thresholds did not change.
 
+## Bounded semantics result
+
+The deterministic selection and full-source replay completed under the pinned successor. Both
+passes scanned 10,876,004 source rows and selected 448 unique PMIDs in the exact nine declared
+strata. Within those selected keys, the replay measured 13 extra source occurrences across nine
+PMIDs; their normalized year, stratum, and MeSH assignments match, but other source fields were not
+compared and this is not a corpus-wide duplicate count. The ignored selection file is pinned in
+the result by SHA-256 `536f448266a1f7b8c0453782696188cf13fc7c4e1ab246b537b86fdac2e3a0f3`.
+
+Maintained-current PubMed returned all 448 requested records in the predeclared 200, 200, and 48
+record batches. The committed result pins each raw response and parsed-record digest. Across 5,296
+BioASQ assignments, 5,201 match maintained-current all-descriptor headings and 455 match
+`MajorTopicYN=Y` headings, yielding fractions 0.98206193 and 0.0859139. All-descriptor matching
+exceeds major-topic matching in every stratum. The manifest therefore has the predeclared
+`sample_consistent_with_all_assigned_descriptors` classification.
+
+This result is deliberately narrower than “the field has been proven corpus-wide.” The strata are
+balanced around anomalies and candidate cutoffs rather than weighted to the source population;
+PubMed is maintained-current rather than frozen in 2013; 95 assignments do not match a current
+descriptor; and the source still fails its reported publication-scope gate. The result contributes
+zero readiness and does not replace any missing NLM historical release.
+
 ## Implemented streaming audit
 
 `python -m pipeline.benchmark.bioasq_snapshot` now reads plain JSON, gzip, or a ZIP containing one
@@ -175,9 +197,10 @@ python -m pipeline.benchmark.bioasq_snapshot \
 ```
 
 The first semantics protocol remains unchanged: its strict sampler correctly rejects the 280
-records outside its 1950-2013 strata. Use only the pinned successor for the next selection, and
-replay that selection from the full snapshot before issuing any new PubMed request. The original
-NLM-baseline gate remains visible and red.
+records outside its 1950-2013 strata. Reproduce the completed bounded audit only with the pinned
+successor, replay the selection before network access, and write outputs to review paths. The next
+scientific action is a separate pre-registration for a secondary-snapshot pilot, not a status flip
+for the original NLM-baseline gate, which remains visible and red.
 
 ## Primary documentation
 

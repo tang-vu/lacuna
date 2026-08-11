@@ -87,10 +87,12 @@ selected under it.
 BioASQ may support a **new, separately pre-registered secondary-snapshot pilot** over its measured
 corpus. A separately named successor semantics protocol is now frozen after source audit and before
 semantics selection. It adds a 32-record 1946-1949 stratum while retaining the prior 416-record
-allocation, hash namespace, comparison, and decision thresholds unchanged; the resulting
-448-record bounded audit has not run. BioASQ must not be relabelled as a recovered baseline or
-inserted into the current benchmark contract. Current PubMed remains an engineering/prospective
-input, and the
+allocation, hash namespace, comparison, and decision thresholds unchanged. The resulting bounded
+audit returned 448/448 maintained-current PubMed records. Of 5,296 BioASQ assignments, 5,201 match
+all descriptors and 455 match major-topic headings; all-descriptor matching exceeds major-topic
+matching in every stratum, so the frozen sample rule passes. This is not a population-weighted or
+period-appropriate result. BioASQ must not be relabelled as a recovered baseline or inserted into
+the current benchmark contract. Current PubMed remains an engineering/prospective input, and the
 Persistent PubMed Abstracts service remains unsuitable because it lacks historical MeSH
 assignments. Full reasoning and acquisition commands are in
 `plans/reports/source-alternatives-260811.md`.
@@ -195,9 +197,10 @@ after seeing them.
    BioASQ full-payload audit matches published aggregate counts but fails the reported publication
    scope, so it emits zero readiness and the first frozen semantics protocol remains unrun. A
    separately named 448-record successor protocol is now frozen to handle the measured 280
-   pre-1950 records without changing the prior thresholds. Generate and replay its deterministic
-   sample before any maintained-current PubMed request. Only after that bounded audit may a
-   new secondary-snapshot experiment be pre-registered before any candidate formula runs.
+   pre-1950 records without changing the prior thresholds. Its deterministic sample has been
+   replayed and the bounded maintained-current audit follows the frozen passing rule while adding
+   zero readiness. Pre-register the new secondary-snapshot experiment, case population, and success
+   criteria before any candidate formula runs.
 5. Run development cases, make at most one documented revision, then freeze.
 6. Run held-out cases and the manual audit.
 7. Only after a pass, design the LLM interpretation schema and pair-detail UI.

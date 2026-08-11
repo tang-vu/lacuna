@@ -23,8 +23,10 @@ from pipeline.benchmark.negative_review_context import (
     audit_review_context,
 )
 from pipeline.benchmark.bioasq_semantics import (
+    DEFAULT_AUDIT_PATH as BIOASQ_SEMANTICS_AUDIT_PATH,
     PROTOCOL_PATH as BIOASQ_SEMANTICS_PROTOCOL_PATH,
     SUCCESSOR_PROTOCOL_PATH as BIOASQ_SUCCESSOR_PROTOCOL_PATH,
+    audit_semantics_manifest,
 )
 from pipeline.benchmark.bioasq_snapshot import MANIFEST_PATH as BIOASQ_SNAPSHOT_MANIFEST_PATH
 from pipeline.benchmark.mbr_capture import CAPTURE_PATH as MBR_CAPTURE_PATH
@@ -62,6 +64,7 @@ def build_project_status() -> dict:
     bioasq_successor_protocol = json.loads(
         BIOASQ_SUCCESSOR_PROTOCOL_PATH.read_text(encoding="utf-8")
     )
+    bioasq_semantics_audit = audit_semantics_manifest()
     candidates = audit_candidates()
     negative_queue = audit_queue()
     audit_review_context()
@@ -79,7 +82,7 @@ def build_project_status() -> dict:
     negative_protocol = load_protocol()
 
     return {
-        "schema_version": 10,
+        "schema_version": 11,
         "status": "ready" if ready else "not_ready",
         "inputs": {
             "historical_sources": _input_identity(SOURCES_PATH),
@@ -89,6 +92,7 @@ def build_project_status() -> dict:
             "bioasq_successor_semantics_protocol": _input_identity(
                 BIOASQ_SUCCESSOR_PROTOCOL_PATH
             ),
+            "bioasq_semantics_audit": _input_identity(BIOASQ_SEMANTICS_AUDIT_PATH),
             "historical_inventories": _input_identity(INVENTORIES_PATH),
             "mbr_preservation_capture": _input_identity(MBR_CAPTURE_PATH),
             "candidate_intake": _input_identity(CANDIDATES_PATH),
@@ -132,6 +136,7 @@ def build_project_status() -> dict:
             "readiness_contribution": alternatives.readiness_contribution,
             "bioasq_snapshot": bioasq_snapshot,
             "bioasq_successor_protocol": bioasq_successor_protocol,
+            "bioasq_semantics_audit": bioasq_semantics_audit,
             "entries": list(alternatives.entries),
         },
         "candidate_intake": {

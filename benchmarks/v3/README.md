@@ -110,9 +110,13 @@ decision rule without using any metric output. It remains immutable. The success
 `bioasq-semantics-protocol-v2.json` was frozen after the source audit but before any full-corpus
 selection or new PubMed response. It adds only a 32-record 1946-1949 stratum, keeps the hash
 namespace, prior strata, comparison, and thresholds unchanged, and predeclares a 448-record bounded
-audit. Current PubMed is
-engineering/prospective input only; Persistent PubMed Abstracts lacks historical MeSH assignments.
-None can silently change the original gate.
+audit. `manifests/bioasq-2013-semantics.json` pins the later maintained-current comparison: PubMed
+returned 448/448 records; 5,201/5,296 assignments match all descriptors and 455/5,296 match
+major-topic headings. The frozen sample rule passes, including all-descriptor separation in every
+stratum. The result remains a balanced-sample field-semantics measurement with zero readiness, not
+a population-weighted or period-appropriate audit. Current PubMed is engineering/prospective input
+only; Persistent PubMed Abstracts lacks historical MeSH assignments. None can silently change the
+original gate.
 
 Acquire and verify the public audit inputs with:
 
@@ -138,8 +142,9 @@ The second command is expected to exit non-zero because the publication scope is
 mismatch. The audit fingerprints the container, validates fields and published aggregates, records
 the complete parseable year histogram, and checks every observed label against pinned MeSH 2013.
 The original semantics protocol must not be edited or run around its outside-strata rejection. Use
-the checksum-pinned successor for the next deterministic selection. Its output remains an ignored
-local intermediate until replayed against the full snapshot before any EFetch request.
+the checksum-pinned successor to reproduce the deterministic selection into an ignored local
+intermediate. The production audit replays that selection against the full snapshot before any
+EFetch request; write reproductions to review paths rather than overwriting the committed manifest.
 
 The retired repository homepage also has a checksum-pinned Common Crawl capture:
 

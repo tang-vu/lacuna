@@ -41,6 +41,9 @@ def test_current_alternatives_keep_original_readiness_at_zero():
     assert bioasq["successor_semantics_protocol"]["path"].endswith(
         "bioasq-semantics-protocol-v2.json"
     )
+    assert bioasq["semantics_audit"]["path"].endswith(
+        "bioasq-2013-semantics.json"
+    )
 
 
 def test_alternative_cannot_claim_original_gate_readiness(tmp_path):
@@ -99,6 +102,17 @@ def test_bioasq_successor_semantics_protocol_is_checksum_pinned(tmp_path):
     with pytest.raises(
         SourceAlternativeContractError,
         match="successor protocol checksum mismatch",
+    ):
+        audit_source_alternatives(_write_payload(tmp_path, payload))
+
+
+def test_bioasq_semantics_audit_is_checksum_pinned(tmp_path):
+    payload = json.loads(ALTERNATIVES_PATH.read_text(encoding="utf-8"))
+    payload["alternatives"][0]["semantics_audit"]["sha256"] = "0" * 64
+
+    with pytest.raises(
+        SourceAlternativeContractError,
+        match="semantics audit checksum mismatch",
     ):
         audit_source_alternatives(_write_payload(tmp_path, payload))
 
