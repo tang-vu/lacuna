@@ -9,6 +9,7 @@ Run: ``python -m pipeline.benchmark.validate_source_alternatives``
 
 from __future__ import annotations
 
+import hashlib
 import json
 from collections import Counter
 from dataclasses import dataclass
@@ -57,6 +58,59 @@ def _require_text_list(value: object, context: str) -> None:
         all(isinstance(item, str) and item.strip() for item in value),
         f"{context}: entries must be non-empty strings",
     )
+
+
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _audit_public_sample_reference(value: object, context: str) -> None:
+    _require(isinstance(value, dict), f"{context}: missing public sample audit")
+    _require(set(value) == {"path", "sha256"}, f"{context}: malformed public sample reference")
+    relative = Path(str(value["path"]))
+    _require(not relative.is_absolute() and ".." not in relative.parts, f"{context}: unsafe path")
+    path = REPO_ROOT / relative
+    _require(path.is_file(), f"{context}: referenced public sample audit is missing")
+    expected_sha256 = value.get("sha256")
+    _require(
+        isinstance(expected_sha256, str)
+        and len(expected_sha256) == 64
+        and _sha256_file(path) == expected_sha256,
+        f"{context}: public sample audit checksum mismatch",
+    )
+    audit = json.loads(path.read_text(encoding="utf-8"))
+    _require(audit.get("schema_version") == 1, f"{context}: unsupported sample audit schema")
+    _require(
+        audit.get("status") == "bounded_public_sample_audit",
+        f"{context}: sample result must remain explicitly bounded",
+    )
+    _require(audit.get("readiness_contribution") == 0, f"{context}: sample cannot add readiness")
+    _require(
+        audit.get("source_alternative_id") == "bioasq-2013-task-a",
+        f"{context}: wrong source alternative",
+    )
+    sample = audit.get("bioasq_public_sample")
+    mesh = audit.get("mesh_vocabulary")
+    comparison = audit.get("maintained_current_pubmed_comparison")
+    _require(isinstance(sample, dict) and sample.get("article_count") == 5, f"{context}: wrong sample")
+    _require(
+        isinstance(mesh, dict)
+        and mesh.get("year") == 2013
+        and isinstance(mesh.get("sha256"), str)
+        and len(mesh["sha256"]) == 64,
+        f"{context}: sample audit does not identify pinned MeSH 2013",
+    )
+    _require(
+        isinstance(comparison, dict)
+        and comparison.get("records_returned") == sample["article_count"]
+        and comparison.get("sample_assignments") == sample.get("mesh_assignment_count"),
+        f"{context}: PubMed comparison does not reconcile with sample",
+    )
+    _require_text_list(audit.get("limitations"), f"{context}.limitations")
 
 
 def audit_source_alternatives(
@@ -130,6 +184,10 @@ def audit_source_alternatives(
                 f"{entry_id}: average MeSH labels must be positive",
             )
             _require_text_list(declared.get("record_fields"), f"{entry_id}.record_fields")
+            if entry_id == "bioasq-2013-task-a":
+                _audit_public_sample_reference(
+                    entry.get("public_sample_audit"), f"{entry_id}.public_sample_audit"
+                )
 
     recommended_id = payload.get("recommended_alternative_id")
     _require(recommended_id in seen, "recommended alternative does not exist")

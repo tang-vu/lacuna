@@ -98,14 +98,24 @@ python -m pipeline.benchmark.validate_source_alternatives
 `source-alternatives.json` identifies BioASQ Task 1a version 2013 as the strongest candidate for a
 redesigned, separately pre-registered snapshot pilot. Its official descriptions report 10,876,004
 post-1949 MEDLINE articles with MeSH 2013 labels under CC BY 2.5, but download requires registration,
-the payload is not yet pinned, and it is not the complete 21,508,439-record NLM baseline. Current
-PubMed is engineering/prospective input only; Persistent PubMed Abstracts lacks historical MeSH
-assignments. None can silently change the original gate.
+the full payload is not yet pinned, and it is not the complete 21,508,439-record NLM baseline. The
+generated `manifests/bioasq-2013-public-sample.json` audit measures all five public sample records,
+but remains explicitly bounded and contributes zero readiness. Current PubMed is
+engineering/prospective input only; Persistent PubMed Abstracts lacks historical MeSH assignments.
+None can silently change the original gate.
+
+Acquire and verify the public audit inputs with:
+
+```bash
+python -m pipeline.benchmark.bioasq_download sample
+python -m pipeline.benchmark.bioasq_sample_audit --output path/to/rebuilt-sample-audit.json
+```
 
 After acquiring the registered BioASQ raw v2013 payload, audit it without loading the JSON array in
 memory:
 
 ```bash
+python -m pipeline.benchmark.bioasq_download full
 python -m pipeline.benchmark.bioasq_snapshot \
   --require-declared-match \
   --output benchmarks/v3/manifests/bioasq-2013-task-a.json \

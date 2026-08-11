@@ -284,12 +284,17 @@ Source redesign is explicit rather than hidden inside that failed recovery path.
 reviewed routes and gives all of them zero readiness contribution. BioASQ Task 1a version 2013 is
 the leading candidate for a separately pre-registered snapshot experiment: its official catalog
 describes 10,876,004 post-1949 MEDLINE articles with MeSH 2013 labels, but the registered-download
-payload is not yet acquired or checksummed, its `meshMajor` semantics need audit, and it is not the
-complete 21,508,439-record NLM baseline. Run
+payload is not yet acquired or checksummed and it is not the complete 21,508,439-record NLM
+baseline. A checksum-pinned five-record public sample now gives bounded evidence that `meshMajor`
+behaves like all assigned descriptors rather than only major-topic headings: 71/72 assignments
+match maintained-current PubMed descriptors, while 9/72 match current `MajorTopicYN=Y` headings.
+That is a schema observation, not a corpus-wide or period-appropriate validation. Run
 `python -m pipeline.benchmark.validate_source_alternatives` to audit that boundary. After a
-registered download, `python -m pipeline.benchmark.bioasq_snapshot --require-declared-match ...`
-streams the multi-gigabyte JSON, fingerprints it, checks labels against pinned MeSH 2013, and emits
-an aggregate manifest that still contributes zero until a new experiment is pre-registered.
+registered account is activated, `python -m pipeline.benchmark.bioasq_download full` acquires the
+ZIP without putting credentials on the command line, and
+`python -m pipeline.benchmark.bioasq_snapshot --require-declared-match ...` streams the
+multi-gigabyte JSON, fingerprints it, checks labels against pinned MeSH 2013, and emits an aggregate
+manifest that still contributes zero until a new experiment is pre-registered.
 
 ## Deployment
 

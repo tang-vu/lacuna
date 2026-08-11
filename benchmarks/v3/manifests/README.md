@@ -1,11 +1,12 @@
 # Benchmark input manifests
 
-This directory is intentionally empty until a reviewed raw source is acquired. One generated JSON
-manifest belongs here for each required historical baseline year. A separately named BioASQ audit
-manifest may also belong here after the registered v2013 payload matches its published aggregate
-scope; that secondary manifest contributes zero readiness and does not enter `sources.json` as a
-historical MEDLINE release. Multi-gigabyte payloads stay in ignored local pipeline state; their
-identities do not.
+This directory contains generated source audits, not hand-edited measurements. One generated JSON
+manifest belongs here for each acquired input. The bounded `bioasq-2013-public-sample.json` audit
+pins the five-record public sample and a maintained-current PubMed comparison; it contributes zero
+readiness and does not certify the registered corpus. A separately named full BioASQ audit may be
+added after the v2013 payload matches its published aggregate scope. Neither BioASQ manifest enters
+`sources.json` as a historical NLM release. Multi-gigabyte payloads stay in ignored local pipeline
+state; their identities do not.
 
 Build a manifest only after acquiring the complete release:
 
@@ -52,3 +53,14 @@ For the distinct zero-readiness BioASQ route, use
 `python -m pipeline.benchmark.bioasq_snapshot --require-declared-match`. Its generated manifest
 belongs at `bioasq-2013-task-a.json`, remains governed by `../source-alternatives.json`, and cannot
 be referenced as one of the four complete NLM release manifests.
+
+Reproduce the committed public-sample audit with:
+
+```bash
+python -m pipeline.benchmark.bioasq_download sample
+python -m pipeline.benchmark.bioasq_sample_audit
+```
+
+The second command refuses to overwrite the committed manifest. Generate into a clean temporary
+checkout or provide a different `--output`, compare the byte-identical JSON, then review any live
+PubMed response drift rather than silently replacing the pinned observation.

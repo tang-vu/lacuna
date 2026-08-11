@@ -35,6 +35,7 @@ def test_current_alternatives_keep_original_readiness_at_zero():
         21_508_439
     )
     assert bioasq["can_replace_original_gate"] is False
+    assert bioasq["public_sample_audit"]["path"].endswith("bioasq-2013-public-sample.json")
 
 
 def test_alternative_cannot_claim_original_gate_readiness(tmp_path):
@@ -67,4 +68,12 @@ def test_alternative_contract_rejects_personal_support_identifiers(tmp_path):
     payload["purpose"] += " CAS-private"
 
     with pytest.raises(SourceAlternativeContractError, match="case identifiers"):
+        audit_source_alternatives(_write_payload(tmp_path, payload))
+
+
+def test_bioasq_public_sample_audit_is_checksum_pinned(tmp_path):
+    payload = json.loads(ALTERNATIVES_PATH.read_text(encoding="utf-8"))
+    payload["alternatives"][0]["public_sample_audit"]["sha256"] = "0" * 64
+
+    with pytest.raises(SourceAlternativeContractError, match="checksum mismatch"):
         audit_source_alternatives(_write_payload(tmp_path, payload))

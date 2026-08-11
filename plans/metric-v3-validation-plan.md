@@ -63,9 +63,12 @@ BioASQ Task 1a version 2013 is the leading redesign candidate. Its official cata
 10,876,004 PubMed/MEDLINE articles with curator-assigned MeSH 2013 labels and retains the registered
 download under CC BY 2.5. A contemporary project report scopes the corpus to MEDLINE articles
 published after 1949. It is therefore a plausible dated secondary snapshot, but it is not the
-21,508,439-record 2013 NLM baseline, supplies no 2007/2011/2012 release, and exposes assignments in a
-field named `meshMajor` whose exact major-only versus all-descriptor semantics still need payload
-audit.
+21,508,439-record 2013 NLM baseline and supplies no 2007/2011/2012 release. A checksum-pinned audit
+of the five-record public sample found 72 assignments, all present in pinned MeSH 2013. Of those,
+71 remain among maintained-current PubMed descriptors and nine carry a current `MajorTopicYN=Y`
+flag, so the sample is consistent with `meshMajor` holding all assigned descriptors rather than
+only major headings. The sample was not designed or sized to prove corpus-wide semantics, and the
+current comparison is not period-appropriate historical indexing.
 
 If acquired and checksum-pinned, BioASQ may support a **new, separately pre-registered 2013-snapshot
 pilot** over its measured corpus. It must not be relabelled as a recovered baseline or inserted into
@@ -172,8 +175,9 @@ after seeing them.
 4. Keep watching for independently preserved complete NLM releases, while auditing the BioASQ 2013
    payload as a separate redesign candidate. The archived-baseline reader and targeted pair/ABC
    accumulator remain closed until complete release file sets are pinned. The BioASQ streaming
-   auditor likewise emits zero readiness; after a declared-count match and assignment-semantics
-   review, freeze a new 2013-snapshot pre-registration before running any candidate formula.
+   auditor and bounded public-sample audit likewise emit zero readiness; after the registered full
+   payload matches declared counts and receives a corpus-level assignment-semantics review, freeze
+   a new 2013-snapshot pre-registration before running any candidate formula.
 5. Run development cases, make at most one documented revision, then freeze.
 6. Run held-out cases and the manual audit.
 7. Only after a pass, design the LLM interpretation schema and pair-detail UI.

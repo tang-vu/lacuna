@@ -1,0 +1,54 @@
+{
+ "schema_version": 1,
+ "status": "bounded_public_sample_audit",
+ "readiness_contribution": 0,
+ "source_alternative_id": "bioasq-2013-task-a",
+ "observed_on": "2026-08-11",
+ "bioasq_public_sample": {
+  "source_url": "https://participants-area.bioasq.org/download/sampleData/task1a/",
+  "sha256": "85ea207918e3d09189d4fa23ab8cd1bac3b27ab02be8dbd9f67d73e541ccccc8",
+  "bytes": 14104,
+  "article_count": 5,
+  "mesh_assignment_count": 72,
+  "distinct_mesh_label_count": 56,
+  "publication_year_min": 1983,
+  "publication_year_max": 2013,
+  "articles_without_mesh_labels": 0,
+  "labels_absent_from_pinned_mesh_2013": []
+ },
+ "mesh_vocabulary": {
+  "year": 2013,
+  "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/2013/xmlmesh/desc2013.gz",
+  "sha256": "c928973ae228ebd03ceeec8950b31f63a867fc9dc2699ae1578e506f25739740",
+  "bytes": 16103897,
+  "descriptor_count": 26853
+ },
+ "maintained_current_pubmed_comparison": {
+  "query_url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=23479819,23483174,23483175,23483176,23483177&retmode=xml",
+  "response_sha256": "b282ba4809d4b3aed947b30a19d73feaeb5ac71aaeeef5ffb90c6abfa1a708d9",
+  "response_bytes": 66475,
+  "pmids": [
+   "23479819",
+   "23483174",
+   "23483175",
+   "23483176",
+   "23483177"
+  ],
+  "records_returned": 5,
+  "sample_assignments": 72,
+  "matched_current_all_descriptor_assignments": 71,
+  "matched_current_major_topic_assignments": 9,
+  "sample_only_labels_by_pmid": {
+   "23483175": [
+    "Intervention Studies"
+   ]
+  }
+ },
+ "interpretation": "In this five-record sample, meshMajor behaves like an all-assigned-descriptor field, not a major-topic-only field: 71 of 72 sample assignments match maintained-current PubMed descriptors, while 9 match maintained-current MajorTopicYN=Y descriptors.",
+ "limitations": [
+  "This is an exhaustive measurement of five public sample records, not a sample selected or sized to establish corpus-wide semantics.",
+  "The PubMed comparison is maintained-current indexing observed on the audit date, not period-appropriate 2013 indexing; label and major-topic flags may have changed.",
+  "The one sample-only label is evidence of a difference from current PubMed, not proof of why or when the assignment changed.",
+  "The registered full payload remains unacquired and this audit contributes zero readiness to both the original baseline gate and any redesigned experiment."
+ ]
+}

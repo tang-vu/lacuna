@@ -25,7 +25,29 @@ and count its files. XML stays here; the generated manifest is reviewed and comm
 `benchmarks/v3/manifests/`.
 
 A registered BioASQ Task 1a v2013 download may also be stored under
-`data/medline-baseline/bioasq/`. Audit it with `pipeline.benchmark.bioasq_snapshot`; only the
+`data/medline-baseline/bioasq/`. The public sample and maintained-current PubMed comparison can be
+downloaded and audited reproducibly without an account:
+
+```bash
+python -m pipeline.benchmark.bioasq_download sample
+python -m pipeline.benchmark.bioasq_sample_audit
+```
+
+The full corpus downloader reads credentials only from the process environment and writes through
+a `.part` file so failed login, checksum drift, or an interrupted transfer cannot masquerade as a
+complete ZIP:
+
+```bash
+$env:BIOASQ_USERNAME = Read-Host "BioASQ username"
+$env:BIOASQ_PASSWORD = Read-Host -MaskInput "BioASQ password"
+python -m pipeline.benchmark.bioasq_download full
+python -m pipeline.benchmark.bioasq_snapshot \
+  --require-declared-match \
+  --output benchmarks/v3/manifests/bioasq-2013-task-a.json \
+  data/medline-baseline/bioasq/PubMedWithMeSH.zip
+```
+
+Do not put the variables in a repository `.env` file or pass secrets on the command line. Only the
 generated aggregate manifest belongs in Git. This secondary corpus contributes zero readiness and
 must not be named or referenced as one of the four complete historical NLM releases.
 

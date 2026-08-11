@@ -42,6 +42,14 @@
           "url": "https://participants-area.bioasq.org/datasets/"
         },
         {
+          "label": "BioASQ public Task 1a sample used for the bounded field-semantics audit",
+          "url": "https://participants-area.bioasq.org/download/sampleData/task1a/"
+        },
+        {
+          "label": "Peer-reviewed BioASQ overview: all MEDLINE articles with title, abstract, and MeSH labels indexed before 1 March 2013",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4450488/"
+        },
+        {
           "label": "BioASQ challenge report: v2013 is a 10,876,004-article MEDLINE collection published after 1949",
           "url": "https://bioasq.org/sites/default/files/PublicDocuments/BioASQ_D4.4-Report-On-Challenge-operation-and-technical-support-1_final.pdf"
         },
@@ -50,15 +58,19 @@
           "url": "https://www.bioasq.org/news/bioasq-1st-official-announcement"
         }
       ],
+      "public_sample_audit": {
+        "path": "benchmarks/v3/manifests/bioasq-2013-public-sample.json",
+        "sha256": "1f0f5dab81faef5e8765133d4f58616291e6d4af247bc6da33254ffe7767bf95"
+      },
       "potential_role": "A separately pre-registered 2013-snapshot pilot over the corpus BioASQ actually contains, after acquisition and audit. It may support post-snapshot discovery cases but is not an NLM baseline substitute.",
       "blockers": [
         "The registered-download payload has not been acquired, checksummed, or parsed in this repository.",
         "The official descriptions define a post-1949 MEDLINE article corpus rather than the complete 21,508,439-record 2013 NLM baseline; the two published counts are not a measured coverage fraction.",
-        "The JSON field is named meshMajor while the catalog describes assigned MeSH terms generally; payload inspection must establish the exact assignment semantics before scoring.",
+        "The official five-record sample is consistent with meshMajor containing all assigned descriptors rather than only major-topic headings, but five records compared with maintained-current PubMed cannot establish corpus-wide 2013 field semantics.",
         "Only a 2013 snapshot is relevant here, so it cannot supply the missing 2007, 2011, and 2012 releases.",
         "Using it changes the experimental population and therefore requires a new pre-registration rather than a source-status flip."
       ],
-      "next_action": "Register with BioASQ, download the raw v2013 Task 1a training set, and run pipeline.benchmark.bioasq_snapshot with --require-declared-match. Commit only the generated manifest and aggregate audit, not the multi-gigabyte payload."
+      "next_action": "Activate a BioASQ account, expose its credentials only as BIOASQ_USERNAME and BIOASQ_PASSWORD, run pipeline.benchmark.bioasq_download full, then run pipeline.benchmark.bioasq_snapshot with --require-declared-match. Commit only the generated manifest and aggregate audit, not credentials or the multi-gigabyte payload."
     },
     {
       "id": "current-pubmed-frozen-surrogate",

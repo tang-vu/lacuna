@@ -46,8 +46,33 @@ and non-equivalent record categories.
   BioASQ account.
 
 Those points establish a plausible dated secondary snapshot. They do not establish complete NLM
-baseline coverage or settle whether the JSON field named `meshMajor` contains major headings only
-or all assigned descriptor labels. Both questions remain explicit acquisition-audit blockers.
+baseline coverage. A peer-reviewed BioASQ overview further states that the initial corpus included
+all MEDLINE articles with title, abstract, and MeSH labels indexed before 1 March 2013, and that the
+training data was released on 18 March 2013. This pins the intended cutoff more precisely than the
+version label alone, but does not substitute for acquiring the payload.
+
+## Public sample audit completed
+
+The official five-record Task 1a sample was downloaded, SHA-256 pinned, checked against the pinned
+2013 descriptor vocabulary, and compared with an exact five-PMID maintained-current PubMed EFetch
+response. The generated audit is
+`benchmarks/v3/manifests/bioasq-2013-public-sample.json`.
+
+| Bounded measurement | Result |
+|---|---:|
+| Public sample records | 5 |
+| `meshMajor` assignments | 72 |
+| Distinct labels | 56 |
+| Labels absent from pinned MeSH 2013 | 0 |
+| Assignments matching current PubMed descriptors | 71/72 |
+| Assignments matching current `MajorTopicYN=Y` descriptors | 9/72 |
+
+The single sample assignment absent from the current record is `Intervention Studies` on PMID
+23483175. This demonstrates a measured difference from current indexing, not why or when it
+changed. The 71-versus-9 comparison is consistent with the misleadingly named `meshMajor` field
+containing all assigned descriptors rather than only major-topic headings. Because the public
+sample has only five records and the comparison XML is maintained-current, it does not settle the
+field semantics across 10,876,004 records or reconstruct 2013 major-topic flags.
 
 ## Implemented acquisition audit
 
@@ -62,23 +87,32 @@ JSON member without loading the multi-gigabyte array into memory. It:
 - compares measured aggregates with BioASQ's published 2013 counts; and
 - emits zero readiness plus limitations even when every declared aggregate matches.
 
-Run after registered download:
+`python -m pipeline.benchmark.bioasq_download` now covers both acquisition paths. `sample` verifies
+the public sample checksum and fetches the exact current-PubMed comparison. `full` logs in with
+credentials read only from `BIOASQ_USERNAME` and `BIOASQ_PASSWORD`, rejects login HTML in place of a
+file, checks free disk space, and writes atomically through a `.part` file. No credential or session
+cookie enters an artifact, cache identity, command-line argument, or error message.
+
+Run after the BioASQ account has been activated:
 
 ```bash
+python -m pipeline.benchmark.bioasq_download full
 python -m pipeline.benchmark.bioasq_snapshot \
   --require-declared-match \
   --output benchmarks/v3/manifests/bioasq-2013-task-a.json \
   path/to/raw_training_set.zip
 ```
 
-Before adopting the result, compare a deterministic PMID sample and its `meshMajor` labels with a
-dated reference that distinguishes major-topic flags from the complete assigned descriptor set.
-Then write and freeze a new pre-registration whose population is the measured BioASQ corpus. The
-original NLM-baseline gate remains visible and red.
+Before adopting the result, perform a corpus-level semantics check against a dated reference that
+distinguishes major-topic flags from the complete assigned descriptor set. Then write and freeze a
+new pre-registration whose population is the measured BioASQ corpus. The original NLM-baseline gate
+remains visible and red.
 
 ## Primary documentation
 
 - [BioASQ dataset catalog, version table, access rule, and data terms](https://participants-area.bioasq.org/datasets/)
+- [BioASQ peer-reviewed overview and initial-corpus cutoff](https://pmc.ncbi.nlm.nih.gov/articles/PMC4450488/)
+- [BioASQ public Task 1a sample](https://participants-area.bioasq.org/download/sampleData/task1a/)
 - [BioASQ 2013 challenge operation report](https://bioasq.org/sites/default/files/PublicDocuments/BioASQ_D4.4-Report-On-Challenge-operation-and-technical-support-1_final.pdf)
 - [BioASQ first challenge announcement](https://www.bioasq.org/news/bioasq-1st-official-announcement)
 - [NLM 2013 baseline inventory](https://www.nlm.nih.gov/bsd/licensee/2013_stats/baseline_med_filecount.html)
