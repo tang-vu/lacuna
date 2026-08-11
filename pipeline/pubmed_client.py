@@ -198,11 +198,14 @@ class PubMedClient:
             # Do not include response text: upstream error bodies may echo the request URL.
             raise RuntimeError(f"PubMed EFetch returned HTTP {response.status_code} for {public_url}")
 
+        response_bytes = response.content
         payload = {
             "schema_version": 1,
             "mesh_basis": "maintained_current_pubmed",
             "retrieved_at": datetime.now(timezone.utc).isoformat(),
             "source_url": public_url,
+            "response_sha256": hashlib.sha256(response_bytes).hexdigest(),
+            "response_bytes": len(response_bytes),
             "records": parse_pubmed_xml(response.text),
         }
         cache_path.write_text(json.dumps(payload, indent=1), encoding="utf-8")

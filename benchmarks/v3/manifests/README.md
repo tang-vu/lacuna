@@ -54,6 +54,15 @@ For the distinct zero-readiness BioASQ route, use
 belongs at `bioasq-2013-task-a.json`, remains governed by `../source-alternatives.json`, and cannot
 be referenced as one of the four complete NLM release manifests.
 
+The separate `../bioasq-semantics-protocol.json` was frozen before the registered payload was
+available. After the aggregate snapshot audit matches, use `pipeline.benchmark.bioasq_semantics`
+to select its deterministic 416-record sample into ignored local state and then write
+`bioasq-2013-semantics.json`. The generated audit records the source snapshot and protocol digests,
+every public EFetch query and response checksum, assignment-level overlaps, stratum summaries, and
+the predeclared decision checks. Before EFetch it regenerates the sample from the full snapshot and
+rejects any hand-edited selection. It remains a bounded maintained-current comparison with zero
+readiness contribution.
+
 Reproduce the committed public-sample audit with:
 
 ```bash

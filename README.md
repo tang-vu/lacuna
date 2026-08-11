@@ -288,13 +288,17 @@ payload is not yet acquired or checksummed and it is not the complete 21,508,439
 baseline. A checksum-pinned five-record public sample now gives bounded evidence that `meshMajor`
 behaves like all assigned descriptors rather than only major-topic headings: 71/72 assignments
 match maintained-current PubMed descriptors, while 9/72 match current `MajorTopicYN=Y` headings.
-That is a schema observation, not a corpus-wide or period-appropriate validation. Run
+That is a schema observation, not a corpus-wide or period-appropriate validation. Before seeing the
+registered payload, the repository froze a 416-record SHA-256 bottom-k protocol across eight
+publication-year strata, including the 2006/2010/2011/2012 candidate cutoffs. It requires every
+sampled PMID to return and never inspects a gap score. Run
 `python -m pipeline.benchmark.validate_source_alternatives` to audit that boundary. After a
 registered account is activated, `python -m pipeline.benchmark.bioasq_download full` acquires the
 ZIP without putting credentials on the command line, and
 `python -m pipeline.benchmark.bioasq_snapshot --require-declared-match ...` streams the
 multi-gigabyte JSON, fingerprints it, checks labels against pinned MeSH 2013, and emits an aggregate
-manifest that still contributes zero until a new experiment is pre-registered.
+manifest. `python -m pipeline.benchmark.bioasq_semantics sample ...` then applies the frozen
+semantics protocol. Both outputs still contribute zero until a new experiment is pre-registered.
 
 ## Deployment
 

@@ -100,7 +100,10 @@ redesigned, separately pre-registered snapshot pilot. Its official descriptions 
 post-1949 MEDLINE articles with MeSH 2013 labels under CC BY 2.5, but download requires registration,
 the full payload is not yet pinned, and it is not the complete 21,508,439-record NLM baseline. The
 generated `manifests/bioasq-2013-public-sample.json` audit measures all five public sample records,
-but remains explicitly bounded and contributes zero readiness. Current PubMed is
+but remains explicitly bounded and contributes zero readiness. The checksum-pinned
+`bioasq-semantics-protocol.json` was frozen before access to the registered payload: it selects 416
+records by SHA-256 bottom-k across eight publication-year strata and predeclares the comparison and
+decision rule without using any metric output. Current PubMed is
 engineering/prospective input only; Persistent PubMed Abstracts lacks historical MeSH assignments.
 None can silently change the original gate.
 
@@ -120,11 +123,22 @@ python -m pipeline.benchmark.bioasq_snapshot \
   --require-declared-match \
   --output benchmarks/v3/manifests/bioasq-2013-task-a.json \
   path/to/raw_training_set.zip
+python -m pipeline.benchmark.bioasq_semantics sample \
+  path/to/raw_training_set.zip \
+  --output data/medline-baseline/bioasq/semantics-sample.json
+python -m pipeline.benchmark.bioasq_semantics audit \
+  data/medline-baseline/bioasq/semantics-sample.json \
+  --snapshot path/to/raw_training_set.zip \
+  --output benchmarks/v3/manifests/bioasq-2013-semantics.json
 ```
 
 The audit fingerprints the container, validates fields and published aggregate counts, and checks
 every observed label against pinned MeSH 2013. Even an exact aggregate match emits zero readiness
-and retains the unresolved `meshMajor` assignment-semantics limitation.
+and retains the historical-indexing limitation. The semantics audit compares only the predeclared
+sample with maintained-current PubMed, pins every public batch query and response digest, and stays
+`semantics_unresolved` if any sampled PMID is missing. Before making those requests it replays the
+selection against the full snapshot and rejects a hand-edited sample. Set `NCBI_EMAIL` for EFetch;
+the email and optional API key are stripped from all stored provenance.
 
 The retired repository homepage also has a checksum-pinned Common Crawl capture:
 

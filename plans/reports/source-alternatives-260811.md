@@ -74,6 +74,22 @@ containing all assigned descriptors rather than only major-topic headings. Becau
 sample has only five records and the comparison XML is maintained-current, it does not settle the
 field semantics across 10,876,004 records or reconstruct 2013 major-topic flags.
 
+## Full-payload semantics protocol frozen
+
+`benchmarks/v3/bioasq-semantics-protocol.json` was frozen after the bounded public-sample result but
+before access to the registered corpus. It selects the 416 lowest SHA-256 record keys within eight
+fixed publication-year strata. Separate strata cover 2006, 2010, 2011, and 2012 because those are
+the source-defined cutoffs in the post-2002 positive-candidate queue; selection never reads a gap
+score, rank, bridge, or candidate metric output.
+
+The decision rule requires all 416 PMIDs to return from maintained-current PubMed, at least 90% of
+BioASQ assignments to match current descriptor headings, at most 50% to match current
+`MajorTopicYN=Y` headings, and all-descriptor overlap to exceed major-topic overlap in every
+stratum. These deliberately separated thresholds were informed by the disclosed five-record
+sample, not by the unavailable full-payload sample. Passing would be bounded evidence that the
+field behaves like all assigned descriptors in the selected records. It would not recover 2013
+major-topic flags, estimate population coverage, or add metric-v3 readiness.
+
 ## Implemented acquisition audit
 
 `python -m pipeline.benchmark.bioasq_snapshot` now reads plain JSON, gzip, or a ZIP containing one
@@ -101,11 +117,20 @@ python -m pipeline.benchmark.bioasq_snapshot \
   --require-declared-match \
   --output benchmarks/v3/manifests/bioasq-2013-task-a.json \
   path/to/raw_training_set.zip
+python -m pipeline.benchmark.bioasq_semantics sample \
+  path/to/raw_training_set.zip \
+  --output data/medline-baseline/bioasq/semantics-sample.json
+python -m pipeline.benchmark.bioasq_semantics audit \
+  data/medline-baseline/bioasq/semantics-sample.json \
+  --snapshot path/to/raw_training_set.zip \
+  --output benchmarks/v3/manifests/bioasq-2013-semantics.json
 ```
 
-Before adopting the result, perform a corpus-level semantics check against a dated reference that
-distinguishes major-topic flags from the complete assigned descriptor set. Then write and freeze a
-new pre-registration whose population is the measured BioASQ corpus. The original NLM-baseline gate
+The audit command replays the selection from the full snapshot before any network call, so a
+hand-edited sample cannot inherit the source digest. It requires `NCBI_EMAIL`; stored queries omit
+the email and optional API key, while each exact response is pinned by byte count and SHA-256.
+After reviewing the aggregate and bounded semantics results, write and freeze a new
+pre-registration whose population is the measured BioASQ corpus. The original NLM-baseline gate
 remains visible and red.
 
 ## Primary documentation

@@ -12,7 +12,7 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 7
+    assert status["schema_version"] == 8
     assert status["status"] == "not_ready"
     assert status["historical_sources"] == {
         "ready": False,
@@ -141,6 +141,7 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
     assert set(committed["inputs"]) == {
         "historical_sources",
         "source_alternatives",
+        "bioasq_semantics_protocol",
         "historical_inventories",
         "mbr_preservation_capture",
         "candidate_intake",

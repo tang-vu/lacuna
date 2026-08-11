@@ -45,11 +45,21 @@ python -m pipeline.benchmark.bioasq_snapshot \
   --require-declared-match \
   --output benchmarks/v3/manifests/bioasq-2013-task-a.json \
   data/medline-baseline/bioasq/PubMedWithMeSH.zip
+python -m pipeline.benchmark.bioasq_semantics sample \
+  data/medline-baseline/bioasq/PubMedWithMeSH.zip \
+  --output data/medline-baseline/bioasq/semantics-sample.json
+$env:NCBI_EMAIL = Read-Host "NCBI registered email"
+python -m pipeline.benchmark.bioasq_semantics audit \
+  data/medline-baseline/bioasq/semantics-sample.json \
+  --snapshot data/medline-baseline/bioasq/PubMedWithMeSH.zip \
+  --output benchmarks/v3/manifests/bioasq-2013-semantics.json
 ```
 
 Do not put the variables in a repository `.env` file or pass secrets on the command line. Only the
-generated aggregate manifest belongs in Git. This secondary corpus contributes zero readiness and
-must not be named or referenced as one of the four complete historical NLM releases.
+generated aggregate and bounded semantics manifests belong in Git. The 416-record sample stays in
+ignored local state; its output can be regenerated from the source snapshot and frozen protocol.
+This secondary corpus contributes zero readiness and must not be named or referenced as one of the
+four complete historical NLM releases.
 
 The committed manifest pins canonical SHA-256 digests of the exact taxonomy and row content used
 to build each artifact. Canonicalisation excludes fetch timestamps and strips `mailto` and

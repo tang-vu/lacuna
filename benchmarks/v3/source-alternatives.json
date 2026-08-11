@@ -62,15 +62,19 @@
         "path": "benchmarks/v3/manifests/bioasq-2013-public-sample.json",
         "sha256": "1f0f5dab81faef5e8765133d4f58616291e6d4af247bc6da33254ffe7767bf95"
       },
+      "semantics_protocol": {
+        "path": "benchmarks/v3/bioasq-semantics-protocol.json",
+        "sha256": "70f69a6d7c722cd0aa2620b0ac83b015409dca8c3c95d25ad8b3ab3fc41b6176"
+      },
       "potential_role": "A separately pre-registered 2013-snapshot pilot over the corpus BioASQ actually contains, after acquisition and audit. It may support post-snapshot discovery cases but is not an NLM baseline substitute.",
       "blockers": [
         "The registered-download payload has not been acquired, checksummed, or parsed in this repository.",
         "The official descriptions define a post-1949 MEDLINE article corpus rather than the complete 21,508,439-record 2013 NLM baseline; the two published counts are not a measured coverage fraction.",
-        "The official five-record sample is consistent with meshMajor containing all assigned descriptors rather than only major-topic headings, but five records compared with maintained-current PubMed cannot establish corpus-wide 2013 field semantics.",
+        "The official five-record sample is consistent with meshMajor containing all assigned descriptors rather than only major-topic headings. A 416-record, hash-selected, year-stratified semantics protocol is frozen before full-payload access, but it cannot run until the registered corpus is acquired.",
         "Only a 2013 snapshot is relevant here, so it cannot supply the missing 2007, 2011, and 2012 releases.",
         "Using it changes the experimental population and therefore requires a new pre-registration rather than a source-status flip."
       ],
-      "next_action": "Activate a BioASQ account, expose its credentials only as BIOASQ_USERNAME and BIOASQ_PASSWORD, run pipeline.benchmark.bioasq_download full, then run pipeline.benchmark.bioasq_snapshot with --require-declared-match. Commit only the generated manifest and aggregate audit, not credentials or the multi-gigabyte payload."
+      "next_action": "Activate a BioASQ account, expose its credentials only as BIOASQ_USERNAME and BIOASQ_PASSWORD, run pipeline.benchmark.bioasq_download full, then run pipeline.benchmark.bioasq_snapshot with --require-declared-match and pipeline.benchmark.bioasq_semantics under the checksum-pinned protocol. Commit only generated manifests and bounded audit records, not credentials or the multi-gigabyte payload."
     },
     {
       "id": "current-pubmed-frozen-surrogate",

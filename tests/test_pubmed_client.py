@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 from urllib.parse import parse_qs, urlsplit
 
@@ -38,6 +39,7 @@ SAMPLE_XML = """\
 class FakeResponse:
     status_code = 200
     text = SAMPLE_XML
+    content = SAMPLE_XML.encode("utf-8")
 
 
 class FakeSession:
@@ -128,6 +130,8 @@ def test_cache_contains_trimmed_payload_and_public_url_only(tmp_path):
 
     assert payload["mesh_basis"] == "maintained_current_pubmed"
     assert payload["records"][0]["pmid"] == "3797213"
+    assert payload["response_sha256"] == hashlib.sha256(FakeResponse.content).hexdigest()
+    assert payload["response_bytes"] == len(FakeResponse.content)
     assert "maintainer@example.test" not in cache_text
     assert "secret" not in cache_text
     assert json.loads(cache_text)["source_url"] == client.build_public_url(["3797213"])

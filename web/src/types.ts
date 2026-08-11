@@ -194,6 +194,10 @@ export interface ProjectStatus {
         article_count: number;
         mesh_label_count: number;
       };
+      semantics_protocol?: {
+        path: string;
+        sha256: string;
+      };
     }>;
   };
   candidate_intake: {

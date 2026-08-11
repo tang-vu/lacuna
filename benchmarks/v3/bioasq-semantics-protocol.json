@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "status": "frozen_before_full_payload",
+  "written_on": "2026-08-11",
+  "source_alternative_id": "bioasq-2013-task-a",
+  "purpose": "Determine whether the misleadingly named BioASQ meshMajor field behaves like all assigned MeSH descriptors or only MajorTopicYN=Y headings in a deterministic sample of the registered 2013 corpus.",
+  "metric_blind": true,
+  "candidate_metric_seen": false,
+  "full_payload_seen_before_freeze": false,
+  "evidence_seen_before_freeze": {
+    "public_sample_audit_path": "benchmarks/v3/manifests/bioasq-2013-public-sample.json",
+    "public_sample_audit_sha256": "1f0f5dab81faef5e8765133d4f58616291e6d4af247bc6da33254ffe7767bf95",
+    "bounded_result": "The five public records contain 72 BioASQ assignments: 71 match maintained-current PubMed descriptors and 9 match maintained-current MajorTopicYN=Y headings."
+  },
+  "sampling": {
+    "algorithm": "sha256_bottom_k_per_publication_year_stratum",
+    "hash_namespace": "lacuna-bioasq-2013-semantics-v1",
+    "hash_input": "utf8(hash_namespace + NUL + decimal_pmid)",
+    "record_key": "pmid",
+    "tie_breaker": "numeric_pmid_ascending",
+    "total_sample_size": 416,
+    "strata": [
+      {
+        "id": "y1950_1969",
+        "year_min": 1950,
+        "year_max": 1969,
+        "sample_size": 32,
+        "rationale": "Older records are most exposed to maintained-current indexing drift."
+      },
+      {
+        "id": "y1970_1989",
+        "year_min": 1970,
+        "year_max": 1989,
+        "sample_size": 32,
+        "rationale": "Covers the era of the canonical Swanson development diagnostics without treating it as period-appropriate."
+      },
+      {
+        "id": "y1990_1999",
+        "year_min": 1990,
+        "year_max": 1999,
+        "sample_size": 32,
+        "rationale": "Separates late twentieth-century records from the post-2002 candidate window."
+      },
+      {
+        "id": "y2000_2006",
+        "year_min": 2000,
+        "year_max": 2006,
+        "sample_size": 64,
+        "rationale": "Contains the frozen 2006 publication cutoff used by one proposed post-2002 positive case."
+      },
+      {
+        "id": "y2007_2010",
+        "year_min": 2007,
+        "year_max": 2010,
+        "sample_size": 64,
+        "rationale": "Contains the frozen 2010 publication cutoff used by one proposed post-2002 positive case."
+      },
+      {
+        "id": "y2011",
+        "year_min": 2011,
+        "year_max": 2011,
+        "sample_size": 64,
+        "rationale": "Directly audits the source-defined 2011 cutoff used by two proposed post-2002 positive cases."
+      },
+      {
+        "id": "y2012",
+        "year_min": 2012,
+        "year_max": 2012,
+        "sample_size": 64,
+        "rationale": "Directly audits the source-defined 2012 cutoff used by one proposed post-2002 positive case."
+      },
+      {
+        "id": "y2013",
+        "year_min": 2013,
+        "year_max": 2013,
+        "sample_size": 64,
+        "rationale": "Checks records nearest the declared 1 March 2013 indexing cutoff."
+      }
+    ]
+  },
+  "comparison": {
+    "basis": "maintained_current_pubmed",
+    "batch_size": 200,
+    "match_unit": "BioASQ descriptor assignment",
+    "label_normalisation": "unicode_casefold_then_collapse_whitespace",
+    "required_record_return_fraction": 1.0
+  },
+  "decision_rule": {
+    "consistent_with_all_assigned_descriptors_if": {
+      "minimum_all_descriptor_assignment_match_fraction": 0.9,
+      "maximum_major_topic_assignment_match_fraction": 0.5,
+      "all_descriptor_match_must_exceed_major_topic_match_in_every_stratum": true
+    },
+    "passing_label": "sample_consistent_with_all_assigned_descriptors",
+    "nonpassing_label": "semantics_unresolved",
+    "readiness_contribution": 0
+  },
+  "limitations": [
+    "The strata are deliberately balanced around scientific cutoffs and are not weighted to estimate a corpus-wide population fraction.",
+    "PubMed EFetch exposes maintained-current records, not the MeSH assignments or major-topic flags frozen on 1 March 2013.",
+    "A passing result is bounded evidence about field semantics in 416 predeclared records; it is not proof of PMID-level corpus completeness or an original historical-baseline substitute.",
+    "This protocol cannot contribute metric-v3 readiness and no gap score, rank, bridge, or candidate formula may enter sampling or interpretation."
+  ]
+}

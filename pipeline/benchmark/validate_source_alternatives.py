@@ -17,6 +17,7 @@ from datetime import date
 from pathlib import Path
 from urllib.parse import urlsplit
 
+from pipeline.benchmark.bioasq_semantics import audit_semantics_protocol
 from pipeline.paths import REPO_ROOT
 
 ALTERNATIVES_PATH = REPO_ROOT / "benchmarks" / "v3" / "source-alternatives.json"
@@ -113,6 +114,38 @@ def _audit_public_sample_reference(value: object, context: str) -> None:
     _require_text_list(audit.get("limitations"), f"{context}.limitations")
 
 
+def _audit_semantics_protocol_reference(value: object, context: str) -> None:
+    _require(isinstance(value, dict), f"{context}: missing semantics protocol")
+    _require(set(value) == {"path", "sha256"}, f"{context}: malformed protocol reference")
+    relative = Path(str(value["path"]))
+    _require(not relative.is_absolute() and ".." not in relative.parts, f"{context}: unsafe path")
+    path = REPO_ROOT / relative
+    _require(path.is_file(), f"{context}: referenced semantics protocol is missing")
+    _require(
+        isinstance(value.get("sha256"), str)
+        and len(value["sha256"]) == 64
+        and _sha256_file(path) == value["sha256"],
+        f"{context}: semantics protocol checksum mismatch",
+    )
+    protocol = audit_semantics_protocol(path)
+    sampling = protocol["sampling"]
+    _require(sampling["total_sample_size"] == 416, f"{context}: frozen sample size drifted")
+    _require(
+        [item["id"] for item in sampling["strata"]]
+        == [
+            "y1950_1969",
+            "y1970_1989",
+            "y1990_1999",
+            "y2000_2006",
+            "y2007_2010",
+            "y2011",
+            "y2012",
+            "y2013",
+        ],
+        f"{context}: frozen year strata drifted",
+    )
+
+
 def audit_source_alternatives(
     path: Path = ALTERNATIVES_PATH,
 ) -> SourceAlternativeAudit:
@@ -187,6 +220,9 @@ def audit_source_alternatives(
             if entry_id == "bioasq-2013-task-a":
                 _audit_public_sample_reference(
                     entry.get("public_sample_audit"), f"{entry_id}.public_sample_audit"
+                )
+                _audit_semantics_protocol_reference(
+                    entry.get("semantics_protocol"), f"{entry_id}.semantics_protocol"
                 )
 
     recommended_id = payload.get("recommended_alternative_id")

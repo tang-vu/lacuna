@@ -1,0 +1,569 @@
+"""Run the frozen, metric-blind BioASQ ``meshMajor`` semantics audit.
+
+The official field name is ambiguous: BioASQ documentation describes all assigned MeSH labels,
+while ``meshMajor`` sounds like PubMed's much narrower ``MajorTopicYN=Y`` subset.  The five-record
+public sample is suggestive but too small to settle the question.  This module selects a
+deterministic, publication-year-stratified sample from the registered v2013 payload and compares it
+with maintained-current PubMed records in bounded EFetch batches.
+
+The sampling protocol was committed before the full payload was available.  Its result always
+contributes zero metric-v3 readiness because current PubMed is not period-appropriate indexing.
+
+Run after acquiring and auditing the registered snapshot::
+
+    python -m pipeline.benchmark.bioasq_semantics sample \
+      data/medline-baseline/bioasq/PubMedWithMeSH.zip \
+      --output data/medline-baseline/bioasq/semantics-sample.json
+    python -m pipeline.benchmark.bioasq_semantics audit \
+      data/medline-baseline/bioasq/semantics-sample.json \
+      --snapshot data/medline-baseline/bioasq/PubMedWithMeSH.zip \
+      --output benchmarks/v3/manifests/bioasq-2013-semantics.json
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import heapq
+import json
+from collections.abc import Callable
+from pathlib import Path
+
+from pipeline.benchmark.bioasq_snapshot import (
+    _sha256_file,
+    open_snapshot_text,
+    iter_articles,
+    validate_article,
+)
+from pipeline.benchmark.metric_blind import find_forbidden_fields
+from pipeline.paths import REPO_ROOT
+from pipeline.provenance import sha256_payload
+from pipeline.pubmed_client import MAX_EFETCH_IDS, PubMedClient
+
+PROTOCOL_PATH = REPO_ROOT / "benchmarks" / "v3" / "bioasq-semantics-protocol.json"
+DEFAULT_SAMPLE_PATH = (
+    REPO_ROOT / "data" / "medline-baseline" / "bioasq" / "semantics-sample.json"
+)
+DEFAULT_AUDIT_PATH = (
+    REPO_ROOT / "benchmarks" / "v3" / "manifests" / "bioasq-2013-semantics.json"
+)
+
+
+class BioasqSemanticsError(ValueError):
+    pass
+
+
+def _require(condition: bool, message: str) -> None:
+    if not condition:
+        raise BioasqSemanticsError(message)
+
+
+def _normalise(label: str) -> str:
+    return " ".join(label.casefold().split())
+
+
+def _file_reference(path: Path) -> dict[str, object]:
+    sha256, size = _sha256_file(path)
+    try:
+        relative = path.relative_to(REPO_ROOT).as_posix()
+    except ValueError:
+        relative = str(path)
+    return {"path": relative, "sha256": sha256, "bytes": size}
+
+
+def audit_semantics_protocol(path: Path = PROTOCOL_PATH) -> dict:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    _require(payload.get("schema_version") == 1, "unsupported BioASQ semantics protocol")
+    _require(
+        payload.get("status") == "frozen_before_full_payload",
+        "semantics protocol must remain frozen before the full payload",
+    )
+    _require(payload.get("source_alternative_id") == "bioasq-2013-task-a", "wrong source")
+    _require(payload.get("metric_blind") is True, "semantics sampling must be metric-blind")
+    _require(
+        payload.get("candidate_metric_seen") is False,
+        "semantics protocol cannot be informed by a candidate metric",
+    )
+    _require(
+        payload.get("full_payload_seen_before_freeze") is False,
+        "semantics protocol must disclose if the full payload was seen",
+    )
+    _require(not find_forbidden_fields(payload), "metric output fields are forbidden")
+
+    evidence = payload.get("evidence_seen_before_freeze")
+    _require(isinstance(evidence, dict), "protocol must disclose evidence seen before freeze")
+    sample_reference = REPO_ROOT / str(evidence.get("public_sample_audit_path", ""))
+    _require(sample_reference.is_file(), "referenced public sample audit is missing")
+    measured_sha256, _ = _sha256_file(sample_reference)
+    _require(
+        measured_sha256 == evidence.get("public_sample_audit_sha256"),
+        "public sample audit checksum drifted",
+    )
+
+    sampling = payload.get("sampling")
+    _require(isinstance(sampling, dict), "protocol is missing sampling rules")
+    _require(
+        sampling.get("algorithm") == "sha256_bottom_k_per_publication_year_stratum",
+        "unsupported semantics sampling algorithm",
+    )
+    _require(isinstance(sampling.get("hash_namespace"), str), "missing hash namespace")
+    strata = sampling.get("strata")
+    _require(isinstance(strata, list) and strata, "sampling strata are required")
+    seen_ids: set[str] = set()
+    ranges: list[tuple[int, int]] = []
+    total_sample_size = 0
+    for index, stratum in enumerate(strata):
+        _require(isinstance(stratum, dict), f"stratum {index}: expected an object")
+        stratum_id = stratum.get("id")
+        _require(
+            isinstance(stratum_id, str) and stratum_id and stratum_id not in seen_ids,
+            f"stratum {index}: invalid or duplicate id",
+        )
+        seen_ids.add(stratum_id)
+        year_min = stratum.get("year_min")
+        year_max = stratum.get("year_max")
+        sample_size = stratum.get("sample_size")
+        _require(
+            isinstance(year_min, int)
+            and isinstance(year_max, int)
+            and 1800 <= year_min <= year_max <= 2100,
+            f"{stratum_id}: invalid year range",
+        )
+        _require(
+            isinstance(sample_size, int) and sample_size > 0,
+            f"{stratum_id}: invalid sample size",
+        )
+        _require(bool(stratum.get("rationale")), f"{stratum_id}: missing rationale")
+        ranges.append((year_min, year_max))
+        total_sample_size += sample_size
+    for left_index, (left_min, left_max) in enumerate(ranges):
+        for right_min, right_max in ranges[left_index + 1 :]:
+            _require(
+                left_max < right_min or right_max < left_min,
+                "semantics sampling year strata overlap",
+            )
+    _require(
+        sampling.get("total_sample_size") == total_sample_size,
+        "declared semantics sample size does not equal stratum sizes",
+    )
+
+    comparison = payload.get("comparison")
+    _require(isinstance(comparison, dict), "protocol is missing comparison rules")
+    _require(
+        comparison.get("basis") == "maintained_current_pubmed",
+        "comparison must remain explicitly maintained-current",
+    )
+    batch_size = comparison.get("batch_size")
+    _require(
+        isinstance(batch_size, int) and 0 < batch_size <= MAX_EFETCH_IDS,
+        "comparison batch size exceeds the PubMed EFetch limit",
+    )
+    _require(
+        comparison.get("required_record_return_fraction") == 1.0,
+        "the predeclared sample requires every PubMed record",
+    )
+
+    decision = payload.get("decision_rule")
+    _require(isinstance(decision, dict), "protocol is missing a decision rule")
+    thresholds = decision.get("consistent_with_all_assigned_descriptors_if")
+    _require(isinstance(thresholds, dict), "protocol is missing semantics thresholds")
+    minimum_all = thresholds.get("minimum_all_descriptor_assignment_match_fraction")
+    maximum_major = thresholds.get("maximum_major_topic_assignment_match_fraction")
+    _require(
+        isinstance(minimum_all, (int, float))
+        and isinstance(maximum_major, (int, float))
+        and 0 <= maximum_major < minimum_all <= 1,
+        "semantics thresholds must separate all-descriptor and major-topic matches",
+    )
+    _require(decision.get("readiness_contribution") == 0, "semantics cannot add readiness")
+    limitations = payload.get("limitations")
+    _require(
+        isinstance(limitations, list)
+        and limitations
+        and all(isinstance(item, str) and item for item in limitations),
+        "protocol needs explicit limitations",
+    )
+    return payload
+
+
+def _stratum_for_year(protocol: dict, year: int) -> dict | None:
+    matches = [
+        item
+        for item in protocol["sampling"]["strata"]
+        if item["year_min"] <= year <= item["year_max"]
+    ]
+    _require(len(matches) <= 1, f"publication year {year} matches overlapping strata")
+    return matches[0] if matches else None
+
+
+def selection_hash(namespace: str, pmid: str) -> str:
+    value = f"{namespace}\0{pmid}".encode("utf-8")
+    return hashlib.sha256(value).hexdigest()
+
+
+def select_semantics_sample(
+    snapshot_path: Path,
+    *,
+    protocol_path: Path = PROTOCOL_PATH,
+) -> dict:
+    protocol = audit_semantics_protocol(protocol_path)
+    namespace = protocol["sampling"]["hash_namespace"]
+    strata = protocol["sampling"]["strata"]
+    heaps: dict[str, list[tuple[int, int, int, dict]]] = {item["id"]: [] for item in strata}
+    eligible_counts = {item["id"]: 0 for item in strata}
+    total_records = 0
+    outside_strata = 0
+
+    with open_snapshot_text(snapshot_path) as (stream, container):
+        for article in iter_articles(stream):
+            total_records += 1
+            pmid, year, mesh_labels = validate_article(article, total_records)
+            stratum = _stratum_for_year(protocol, year)
+            if stratum is None:
+                outside_strata += 1
+                continue
+            stratum_id = stratum["id"]
+            eligible_counts[stratum_id] += 1
+            digest = selection_hash(namespace, pmid)
+            rank = int(digest, 16)
+            record = {
+                "pmid": pmid,
+                "publication_year": year,
+                "stratum": stratum_id,
+                "selection_hash": digest,
+                "mesh_labels": list(mesh_labels),
+            }
+            # A min-heap over negative ranks keeps the largest retained rank at index zero.  A
+            # smaller hash (then smaller numeric PMID) deterministically replaces that boundary.
+            heap_entry = (-rank, -int(pmid), total_records, record)
+            heap = heaps[stratum_id]
+            if len(heap) < stratum["sample_size"]:
+                heapq.heappush(heap, heap_entry)
+            elif heap_entry > heap[0]:
+                heapq.heapreplace(heap, heap_entry)
+
+    _require(outside_strata == 0, "snapshot contains publication years outside frozen strata")
+    records: list[dict] = []
+    selected_counts: dict[str, int] = {}
+    for stratum in strata:
+        stratum_id = stratum["id"]
+        selected = [entry[3] for entry in heaps[stratum_id]]
+        selected.sort(key=lambda item: (item["selection_hash"], int(item["pmid"])))
+        _require(
+            len(selected) == stratum["sample_size"],
+            f"{stratum_id}: too few eligible records for the frozen sample",
+        )
+        records.extend(selected)
+        selected_counts[stratum_id] = len(selected)
+    pmids = [record["pmid"] for record in records]
+    _require(len(pmids) == len(set(pmids)), "selected sample contains duplicate PMIDs")
+
+    protocol_reference = _file_reference(protocol_path)
+    input_reference = _file_reference(snapshot_path)
+    return {
+        "schema_version": 1,
+        "status": "predeclared_bioasq_semantics_sample",
+        "readiness_contribution": 0,
+        "source_alternative_id": "bioasq-2013-task-a",
+        "protocol": protocol_reference,
+        "input": {**input_reference, "local_name": snapshot_path.name, "container": container},
+        "selection": {
+            "algorithm": protocol["sampling"]["algorithm"],
+            "hash_namespace": namespace,
+            "records_scanned": total_records,
+            "records_outside_strata": outside_strata,
+            "eligible_counts": eligible_counts,
+            "selected_counts": selected_counts,
+            "selected_total": len(records),
+        },
+        "records": records,
+        "limitations": list(protocol["limitations"]),
+    }
+
+
+def _fraction(numerator: int, denominator: int) -> float:
+    return round(numerator / denominator, 8) if denominator else 0.0
+
+
+def _comparison_counts(sample_record: dict, pubmed_record: dict) -> dict:
+    all_labels = {
+        _normalise(item["descriptor_label"])
+        for item in pubmed_record.get("mesh_headings", [])
+        if item.get("descriptor_label")
+    }
+    major_labels = {
+        _normalise(item["descriptor_label"])
+        for item in pubmed_record.get("mesh_headings", [])
+        if item.get("descriptor_label") and item.get("major_topic") is True
+    }
+    sample_labels = sample_record["mesh_labels"]
+    matched_all = [label for label in sample_labels if _normalise(label) in all_labels]
+    matched_major = [label for label in sample_labels if _normalise(label) in major_labels]
+    sample_only = [label for label in sample_labels if _normalise(label) not in all_labels]
+    return {
+        "pmid": sample_record["pmid"],
+        "publication_year": sample_record["publication_year"],
+        "stratum": sample_record["stratum"],
+        "bioasq_assignments": len(sample_labels),
+        "matched_current_all_descriptor_assignments": len(matched_all),
+        "matched_current_major_topic_assignments": len(matched_major),
+        "sample_only_labels": sample_only,
+    }
+
+
+def _summarise_records(records: list[dict]) -> dict:
+    assignments = sum(item["bioasq_assignments"] for item in records)
+    matched_all = sum(item["matched_current_all_descriptor_assignments"] for item in records)
+    matched_major = sum(item["matched_current_major_topic_assignments"] for item in records)
+    return {
+        "records": len(records),
+        "bioasq_assignments": assignments,
+        "matched_current_all_descriptor_assignments": matched_all,
+        "matched_current_major_topic_assignments": matched_major,
+        "all_descriptor_assignment_match_fraction": _fraction(matched_all, assignments),
+        "major_topic_assignment_match_fraction": _fraction(matched_major, assignments),
+    }
+
+
+def compare_semantics_sample(
+    sample: dict,
+    protocol: dict,
+    fetch_batch: Callable[[list[str]], dict],
+) -> dict:
+    _require(sample.get("schema_version") == 1, "unsupported semantics sample schema")
+    _require(
+        sample.get("status") == "predeclared_bioasq_semantics_sample",
+        "input is not a predeclared semantics sample",
+    )
+    _require(sample.get("readiness_contribution") == 0, "sample cannot add readiness")
+    records = sample.get("records")
+    _require(isinstance(records, list) and records, "semantics sample contains no records")
+    pmids = [str(item.get("pmid", "")) for item in records]
+    _require(all(pmid.isdigit() for pmid in pmids), "semantics sample contains invalid PMIDs")
+    _require(len(pmids) == len(set(pmids)), "semantics sample contains duplicate PMIDs")
+    _require(
+        len(records) == protocol["sampling"]["total_sample_size"],
+        "semantics sample size differs from the frozen protocol",
+    )
+    protocol_counts = {
+        item["id"]: item["sample_size"] for item in protocol["sampling"]["strata"]
+    }
+    actual_counts = {stratum_id: 0 for stratum_id in protocol_counts}
+    namespace = protocol["sampling"]["hash_namespace"]
+    for record in records:
+        stratum = _stratum_for_year(protocol, int(record["publication_year"]))
+        _require(stratum is not None, f"PMID {record['pmid']}: year is outside frozen strata")
+        _require(record.get("stratum") == stratum["id"], f"PMID {record['pmid']}: wrong stratum")
+        _require(
+            record.get("selection_hash") == selection_hash(namespace, record["pmid"]),
+            f"PMID {record['pmid']}: selection hash drifted",
+        )
+        _require(
+            isinstance(record.get("mesh_labels"), list)
+            and all(isinstance(label, str) and label for label in record["mesh_labels"]),
+            f"PMID {record['pmid']}: invalid BioASQ labels",
+        )
+        actual_counts[stratum["id"]] += 1
+    _require(actual_counts == protocol_counts, "semantics sample stratum counts drifted")
+
+    batch_size = protocol["comparison"]["batch_size"]
+    batches: list[dict] = []
+    pubmed_by_pmid: dict[str, dict] = {}
+    for start in range(0, len(pmids), batch_size):
+        batch_pmids = sorted(pmids[start : start + batch_size], key=int)
+        payload = fetch_batch(batch_pmids)
+        _require(
+            payload.get("mesh_basis") == "maintained_current_pubmed",
+            "PubMed comparison is not labelled maintained-current",
+        )
+        fetched = payload.get("records")
+        _require(isinstance(fetched, list), "PubMed comparison has no records")
+        for record in fetched:
+            pmid = str(record.get("pmid", ""))
+            _require(pmid in batch_pmids, f"PubMed returned unexpected PMID {pmid}")
+            _require(pmid not in pubmed_by_pmid, f"PubMed returned duplicate PMID {pmid}")
+            pubmed_by_pmid[pmid] = record
+        response_sha256 = payload.get("response_sha256")
+        response_bytes = payload.get("response_bytes")
+        _require(
+            isinstance(response_sha256, str) and len(response_sha256) == 64,
+            "PubMed batch lacks an exact response checksum",
+        )
+        _require(
+            isinstance(response_bytes, int) and response_bytes > 0,
+            "PubMed batch lacks an exact response byte count",
+        )
+        source_url = payload.get("source_url")
+        _require(
+            isinstance(source_url, str)
+            and source_url.startswith("https://eutils.ncbi.nlm.nih.gov/"),
+            "PubMed batch lacks a public EFetch query URL",
+        )
+        batches.append(
+            {
+                "source_url": source_url,
+                "requested_pmids": len(batch_pmids),
+                "records_returned": len(fetched),
+                "response_sha256": response_sha256,
+                "response_bytes": response_bytes,
+                "parsed_records_sha256": sha256_payload(fetched),
+            }
+        )
+
+    missing_pmids = sorted(set(pmids) - set(pubmed_by_pmid), key=int)
+    returned_fraction = _fraction(len(pubmed_by_pmid), len(pmids))
+    comparisons = [
+        _comparison_counts(record, pubmed_by_pmid[record["pmid"]])
+        for record in records
+        if record["pmid"] in pubmed_by_pmid
+    ]
+    overall = _summarise_records(comparisons)
+    by_stratum = {
+        stratum["id"]: _summarise_records(
+            [item for item in comparisons if item["stratum"] == stratum["id"]]
+        )
+        for stratum in protocol["sampling"]["strata"]
+    }
+    thresholds = protocol["decision_rule"]["consistent_with_all_assigned_descriptors_if"]
+    every_stratum_separates = all(
+        item["all_descriptor_assignment_match_fraction"]
+        > item["major_topic_assignment_match_fraction"]
+        for item in by_stratum.values()
+    )
+    passes = (
+        returned_fraction >= protocol["comparison"]["required_record_return_fraction"]
+        and overall["all_descriptor_assignment_match_fraction"]
+        >= thresholds["minimum_all_descriptor_assignment_match_fraction"]
+        and overall["major_topic_assignment_match_fraction"]
+        <= thresholds["maximum_major_topic_assignment_match_fraction"]
+        and (
+            every_stratum_separates
+            or not thresholds["all_descriptor_match_must_exceed_major_topic_match_in_every_stratum"]
+        )
+    )
+    classification = protocol["decision_rule"][
+        "passing_label" if passes else "nonpassing_label"
+    ]
+    interpretation = (
+        "The predeclared balanced sample is consistent with meshMajor containing all assigned "
+        "descriptors rather than only MajorTopicYN=Y headings."
+        if passes
+        else "The predeclared balanced sample does not resolve whether meshMajor contains all "
+        "assigned descriptors rather than only MajorTopicYN=Y headings."
+    )
+    return {
+        "schema_version": 1,
+        "status": "bounded_corpus_semantics_audit",
+        "readiness_contribution": 0,
+        "source_alternative_id": "bioasq-2013-task-a",
+        "classification": classification,
+        "sample": {
+            "selected_records": len(records),
+            "source_snapshot_sha256": sample["input"]["sha256"],
+            "source_snapshot_bytes": sample["input"]["bytes"],
+            "sampling_protocol_sha256": sample["protocol"]["sha256"],
+        },
+        "maintained_current_pubmed_comparison": {
+            "basis": "maintained_current_pubmed",
+            "records_requested": len(pmids),
+            "records_returned": len(pubmed_by_pmid),
+            "record_return_fraction": returned_fraction,
+            "missing_pmids": missing_pmids,
+            "batches": batches,
+            "overall": overall,
+            "by_stratum": by_stratum,
+            "records": comparisons,
+        },
+        "decision_checks": {
+            "required_record_return_fraction": protocol["comparison"][
+                "required_record_return_fraction"
+            ],
+            "minimum_all_descriptor_assignment_match_fraction": thresholds[
+                "minimum_all_descriptor_assignment_match_fraction"
+            ],
+            "maximum_major_topic_assignment_match_fraction": thresholds[
+                "maximum_major_topic_assignment_match_fraction"
+            ],
+            "all_descriptor_match_exceeds_major_topic_match_in_every_stratum": (
+                every_stratum_separates
+            ),
+            "passed": passes,
+        },
+        "interpretation": interpretation,
+        "limitations": list(protocol["limitations"]),
+    }
+
+
+def audit_semantics_sample(
+    sample_path: Path,
+    snapshot_path: Path,
+    *,
+    protocol_path: Path = PROTOCOL_PATH,
+    client: PubMedClient | None = None,
+) -> dict:
+    protocol = audit_semantics_protocol(protocol_path)
+    sample = json.loads(sample_path.read_text(encoding="utf-8"))
+    regenerated_sample = select_semantics_sample(snapshot_path, protocol_path=protocol_path)
+    _require(
+        sample == regenerated_sample,
+        "semantics sample does not match a fresh selection from the pinned snapshot",
+    )
+    expected_protocol = _file_reference(protocol_path)
+    _require(
+        sample.get("protocol", {}).get("sha256") == expected_protocol["sha256"],
+        "semantics sample was selected under a different protocol",
+    )
+    client = client or PubMedClient()
+    result = compare_semantics_sample(sample, protocol, client.fetch_records)
+    result["sample"]["selection_file"] = _file_reference(sample_path)
+    return result
+
+
+def _write_new(path: Path, payload: dict) -> None:
+    if path.exists():
+        raise SystemExit(f"refusing to overwrite existing output: {path}")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, indent=1) + "\n", encoding="utf-8")
+    try:
+        relative = path.relative_to(REPO_ROOT).as_posix()
+    except ValueError:
+        relative = str(path)
+    print(f"wrote {relative}")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--protocol", type=Path, default=PROTOCOL_PATH)
+    subparsers = parser.add_subparsers(dest="command", required=True)
+    sample = subparsers.add_parser("sample", help="select the frozen sample from the full snapshot")
+    sample.add_argument("snapshot", type=Path)
+    sample.add_argument("--output", type=Path, default=DEFAULT_SAMPLE_PATH)
+    audit = subparsers.add_parser("audit", help="compare the selected sample with current PubMed")
+    audit.add_argument("sample", type=Path)
+    audit.add_argument(
+        "--snapshot",
+        type=Path,
+        required=True,
+        help="recompute and verify the sample from this full snapshot before EFetch",
+    )
+    audit.add_argument("--output", type=Path, default=DEFAULT_AUDIT_PATH)
+    audit.add_argument(
+        "--refresh-pubmed",
+        action="store_true",
+        help="ignore matching PubMed caches (required if a legacy cache lacks response digests)",
+    )
+    args = parser.parse_args()
+    if args.command == "sample":
+        payload = select_semantics_sample(args.snapshot, protocol_path=args.protocol)
+    else:
+        payload = audit_semantics_sample(
+            args.sample,
+            args.snapshot,
+            protocol_path=args.protocol,
+            client=PubMedClient(use_cache=not args.refresh_pubmed),
+        )
+    _write_new(args.output, payload)
+
+
+if __name__ == "__main__":
+    main()

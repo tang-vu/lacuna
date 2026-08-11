@@ -111,3 +111,14 @@ def test_measurement_reports_labels_absent_from_pinned_vocabulary(tmp_path):
     measured = measure_snapshot(snapshot, mesh_path=mesh)
 
     assert measured.unknown_mesh_labels == ("Not a 2013 descriptor",)
+
+
+def test_measurement_rejects_duplicate_labels_within_an_article(tmp_path):
+    payload = _articles()
+    payload[0]["meshMajor"].append(" calcimycin ")
+    snapshot = tmp_path / "training.json"
+    snapshot.write_text(json.dumps({"articles": payload}), encoding="utf-8")
+    mesh = _write_mesh(tmp_path / "desc2013.gz")
+
+    with pytest.raises(BioasqSnapshotError, match="duplicate labels"):
+        measure_snapshot(snapshot, mesh_path=mesh)

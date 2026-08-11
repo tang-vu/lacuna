@@ -22,6 +22,7 @@ from pipeline.benchmark.negative_review_context import (
     OUTPUT_PATH as NEGATIVE_REVIEW_CONTEXT_PATH,
     audit_review_context,
 )
+from pipeline.benchmark.bioasq_semantics import PROTOCOL_PATH as BIOASQ_SEMANTICS_PROTOCOL_PATH
 from pipeline.benchmark.mbr_capture import CAPTURE_PATH as MBR_CAPTURE_PATH
 from pipeline.benchmark.validate_candidates import CANDIDATES_PATH, audit_candidates
 from pipeline.benchmark.validate_source_alternatives import (
@@ -70,11 +71,12 @@ def build_project_status() -> dict:
     negative_protocol = load_protocol()
 
     return {
-        "schema_version": 7,
+        "schema_version": 8,
         "status": "ready" if ready else "not_ready",
         "inputs": {
             "historical_sources": _input_identity(SOURCES_PATH),
             "source_alternatives": _input_identity(ALTERNATIVES_PATH),
+            "bioasq_semantics_protocol": _input_identity(BIOASQ_SEMANTICS_PROTOCOL_PATH),
             "historical_inventories": _input_identity(INVENTORIES_PATH),
             "mbr_preservation_capture": _input_identity(MBR_CAPTURE_PATH),
             "candidate_intake": _input_identity(CANDIDATES_PATH),

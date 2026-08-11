@@ -1,0 +1,155 @@
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+
+import pytest
+
+from pipeline.benchmark.bioasq_semantics import (
+    BioasqSemanticsError,
+    PROTOCOL_PATH,
+    audit_semantics_sample,
+    audit_semantics_protocol,
+    compare_semantics_sample,
+    select_semantics_sample,
+    selection_hash,
+)
+
+
+def _small_protocol(tmp_path: Path) -> tuple[Path, dict]:
+    protocol = json.loads(PROTOCOL_PATH.read_text(encoding="utf-8"))
+    protocol["sampling"]["strata"] = [
+        {
+            "id": "y2000",
+            "year_min": 2000,
+            "year_max": 2000,
+            "sample_size": 2,
+            "rationale": "Test fixture stratum.",
+        }
+    ]
+    protocol["sampling"]["total_sample_size"] = 2
+    path = tmp_path / "protocol.json"
+    path.write_text(json.dumps(protocol), encoding="utf-8")
+    return path, audit_semantics_protocol(path)
+
+
+def _article(pmid: str) -> dict:
+    return {
+        "abstractText": "abstract",
+        "journal": "journal",
+        "meshMajor": ["Alpha", "Beta"],
+        "pmid": pmid,
+        "title": "title",
+        "year": "2000",
+    }
+
+
+def test_sampler_keeps_predeclared_bottom_hashes_independent_of_input_order(tmp_path: Path):
+    protocol_path, protocol = _small_protocol(tmp_path)
+    snapshot = tmp_path / "snapshot.json"
+    snapshot.write_text(
+        json.dumps({"articles": [_article(pmid) for pmid in ("4", "1", "3", "2")]}),
+        encoding="utf-8",
+    )
+    reversed_snapshot = tmp_path / "snapshot-reversed.json"
+    reversed_snapshot.write_text(
+        json.dumps({"articles": [_article(pmid) for pmid in ("2", "3", "1", "4")]}),
+        encoding="utf-8",
+    )
+
+    sample = select_semantics_sample(snapshot, protocol_path=protocol_path)
+    reversed_sample = select_semantics_sample(reversed_snapshot, protocol_path=protocol_path)
+
+    expected = sorted(
+        ("1", "2", "3", "4"),
+        key=lambda pmid: (selection_hash(protocol["sampling"]["hash_namespace"], pmid), int(pmid)),
+    )[:2]
+    assert [record["pmid"] for record in sample["records"]] == expected
+    assert [record["pmid"] for record in reversed_sample["records"]] == expected
+    assert sample["selection"] == {
+        "algorithm": "sha256_bottom_k_per_publication_year_stratum",
+        "hash_namespace": "lacuna-bioasq-2013-semantics-v1",
+        "records_scanned": 4,
+        "records_outside_strata": 0,
+        "eligible_counts": {"y2000": 4},
+        "selected_counts": {"y2000": 2},
+        "selected_total": 2,
+    }
+    assert sample["readiness_contribution"] == 0
+
+
+def _pubmed_payload(pmids: list[str], *, omit_last: bool = False) -> dict:
+    returned = pmids[:-1] if omit_last else pmids
+    records = [
+        {
+            "pmid": pmid,
+            "mesh_headings": [
+                {"descriptor_label": "Alpha", "major_topic": True},
+                {"descriptor_label": "Beta", "major_topic": False},
+            ],
+        }
+        for pmid in returned
+    ]
+    response = json.dumps(records, sort_keys=True).encode("utf-8")
+    return {
+        "mesh_basis": "maintained_current_pubmed",
+        "source_url": f"https://eutils.ncbi.nlm.nih.gov/efetch?ids={','.join(pmids)}",
+        "response_sha256": hashlib.sha256(response).hexdigest(),
+        "response_bytes": len(response),
+        "records": records,
+    }
+
+
+def test_semantics_decision_uses_assignment_counts_and_stays_bounded(tmp_path: Path):
+    protocol_path, protocol = _small_protocol(tmp_path)
+    snapshot = tmp_path / "snapshot.json"
+    snapshot.write_text(
+        json.dumps({"articles": [_article("1"), _article("2")]}), encoding="utf-8"
+    )
+    sample = select_semantics_sample(snapshot, protocol_path=protocol_path)
+
+    audit = compare_semantics_sample(sample, protocol, _pubmed_payload)
+
+    overall = audit["maintained_current_pubmed_comparison"]["overall"]
+    assert audit["classification"] == "sample_consistent_with_all_assigned_descriptors"
+    assert audit["readiness_contribution"] == 0
+    assert overall["bioasq_assignments"] == 4
+    assert overall["matched_current_all_descriptor_assignments"] == 4
+    assert overall["matched_current_major_topic_assignments"] == 2
+    assert audit["decision_checks"]["passed"] is True
+    assert "maintained-current" in " ".join(audit["limitations"])
+
+
+def test_missing_pubmed_record_keeps_semantics_unresolved(tmp_path: Path):
+    protocol_path, protocol = _small_protocol(tmp_path)
+    snapshot = tmp_path / "snapshot.json"
+    snapshot.write_text(
+        json.dumps({"articles": [_article("1"), _article("2")]}), encoding="utf-8"
+    )
+    sample = select_semantics_sample(snapshot, protocol_path=protocol_path)
+
+    audit = compare_semantics_sample(
+        sample,
+        protocol,
+        lambda pmids: _pubmed_payload(pmids, omit_last=True),
+    )
+
+    assert audit["classification"] == "semantics_unresolved"
+    assert audit["decision_checks"]["passed"] is False
+    assert len(audit["maintained_current_pubmed_comparison"]["missing_pmids"]) == 1
+
+
+def test_production_audit_replays_selection_before_any_network_call(tmp_path: Path):
+    protocol_path, _protocol = _small_protocol(tmp_path)
+    snapshot = tmp_path / "snapshot.json"
+    snapshot.write_text(
+        json.dumps({"articles": [_article("1"), _article("2")]}), encoding="utf-8"
+    )
+    sample = select_semantics_sample(snapshot, protocol_path=protocol_path)
+    sample["records"][0]["mesh_labels"] = ["Cherry-picked label"]
+    sample_path = tmp_path / "sample.json"
+    sample_path.write_text(json.dumps(sample), encoding="utf-8")
+
+    with pytest.raises(BioasqSemanticsError, match="fresh selection"):
+        audit_semantics_sample(sample_path, snapshot, protocol_path=protocol_path)

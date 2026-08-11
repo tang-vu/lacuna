@@ -70,6 +70,15 @@ flag, so the sample is consistent with `meshMajor` holding all assigned descript
 only major headings. The sample was not designed or sized to prove corpus-wide semantics, and the
 current comparison is not period-appropriate historical indexing.
 
+Before access to the registered payload, a separate checksum-pinned semantics protocol froze 416
+SHA-256 bottom-k selections across eight publication-year strata. It gives the four source-defined
+post-2002 candidate cutoffs their own coverage, requires every sampled PMID to return from EFetch,
+and compares assignment overlap with all maintained-current descriptors versus current
+`MajorTopicYN=Y` headings. The protocol was written after the five public records were measured, so
+it discloses that evidence; it was written before the full-corpus sample or any v3 metric output.
+Even a passing result remains bounded evidence from maintained-current comparison records and adds
+zero readiness.
+
 If acquired and checksum-pinned, BioASQ may support a **new, separately pre-registered 2013-snapshot
 pilot** over its measured corpus. It must not be relabelled as a recovered baseline or inserted into
 the current benchmark contract. Current PubMed remains an engineering/prospective input, and the
@@ -176,8 +185,8 @@ after seeing them.
    payload as a separate redesign candidate. The archived-baseline reader and targeted pair/ABC
    accumulator remain closed until complete release file sets are pinned. The BioASQ streaming
    auditor and bounded public-sample audit likewise emit zero readiness; after the registered full
-   payload matches declared counts and receives a corpus-level assignment-semantics review, freeze
-   a new 2013-snapshot pre-registration before running any candidate formula.
+   payload matches declared counts, run the already-frozen balanced assignment-semantics protocol.
+   Only then may a new 2013-snapshot pre-registration be frozen before any candidate formula runs.
 5. Run development cases, make at most one documented revision, then freeze.
 6. Run held-out cases and the manual audit.
 7. Only after a pass, design the LLM interpretation schema and pair-detail UI.

@@ -32,13 +32,13 @@ from xml.etree import ElementTree
 
 from pipeline.benchmark.audit_mesh import pinned_file
 from pipeline.benchmark.pin_mesh import inspect_descriptor_archive
-from pipeline.benchmark.validate_source_alternatives import ALTERNATIVES_PATH
 from pipeline.paths import MESH_CACHE_DIR, REPO_ROOT
 
 CHUNK_SIZE = 1024 * 1024
 HEADER = re.compile(r'^\ufeff?\s*\{\s*"articles"\s*:\s*\[')
 TRAILER = re.compile(r"^\s*\}\s*$")
 REQUIRED_FIELDS = {"abstractText", "journal", "meshMajor", "pmid", "title", "year"}
+ALTERNATIVES_PATH = REPO_ROOT / "benchmarks" / "v3" / "source-alternatives.json"
 
 
 class BioasqSnapshotError(ValueError):
@@ -213,6 +213,42 @@ def descriptor_label_index(mesh_path: Path) -> dict[str, str]:
     return labels
 
 
+def validate_article(article: dict, article_number: int) -> tuple[str, int, tuple[str, ...]]:
+    """Validate one documented BioASQ record and return its sampling fields.
+
+    Keeping this check shared prevents the aggregate snapshot audit and the separately frozen
+    semantics sampler from accepting different record shapes.
+    """
+    _require(REQUIRED_FIELDS.issubset(article), f"article {article_number}: missing fields")
+    pmid = article["pmid"]
+    _require(
+        isinstance(pmid, (str, int)) and str(pmid).isdigit(),
+        f"article {article_number}: PMID must be numeric",
+    )
+    for field in ("abstractText", "journal", "title"):
+        _require(
+            isinstance(article[field], str),
+            f"article {article_number}: {field} must be text",
+        )
+    year = article["year"]
+    _require(
+        isinstance(year, (str, int)) and str(year).isdigit(),
+        f"article {article_number}: publication year must be numeric",
+    )
+    assigned = article["meshMajor"]
+    _require(
+        isinstance(assigned, list)
+        and all(isinstance(label, str) and label.strip() for label in assigned),
+        f"article {article_number}: meshMajor must be a list of labels",
+    )
+    normalised_labels = [_normalise(label) for label in assigned]
+    _require(
+        len(normalised_labels) == len(set(normalised_labels)),
+        f"article {article_number}: meshMajor contains duplicate labels",
+    )
+    return str(pmid), int(year), tuple(assigned)
+
+
 def measure_snapshot(path: Path, *, mesh_path: Path) -> BioasqMeasurement:
     descriptor_labels = descriptor_label_index(mesh_path)
     article_count = 0
@@ -226,23 +262,7 @@ def measure_snapshot(path: Path, *, mesh_path: Path) -> BioasqMeasurement:
     with open_snapshot_text(path) as (stream, _):
         for article in iter_articles(stream):
             article_count += 1
-            _require(REQUIRED_FIELDS.issubset(article), f"article {article_count}: missing fields")
-            pmid = article["pmid"]
-            _require(
-                isinstance(pmid, (str, int)) and str(pmid).isdigit(),
-                f"article {article_count}: PMID must be numeric",
-            )
-            for field in ("abstractText", "journal", "title"):
-                _require(
-                    isinstance(article[field], str),
-                    f"article {article_count}: {field} must be text",
-                )
-            year = article["year"]
-            _require(
-                isinstance(year, (str, int)) and str(year).isdigit(),
-                f"article {article_count}: publication year must be numeric",
-            )
-            numeric_year = int(year)
+            _pmid, numeric_year, assigned = validate_article(article, article_count)
             publication_year_min = (
                 numeric_year
                 if publication_year_min is None
@@ -252,12 +272,6 @@ def measure_snapshot(path: Path, *, mesh_path: Path) -> BioasqMeasurement:
                 numeric_year
                 if publication_year_max is None
                 else max(publication_year_max, numeric_year)
-            )
-            assigned = article["meshMajor"]
-            _require(
-                isinstance(assigned, list)
-                and all(isinstance(label, str) and label.strip() for label in assigned),
-                f"article {article_count}: meshMajor must be a list of labels",
             )
             if not assigned:
                 empty_mesh_count += 1
@@ -309,11 +323,14 @@ def audit_snapshot(
         container_metadata = container
     measured = measure_snapshot(path, mesh_path=mesh_path)
     declared = _declared_snapshot()
+    measured_average = measured.mesh_assignment_count / measured.article_count
     declared_match = (
         measured.article_count == declared["article_count"]
         and measured.distinct_mesh_label_count == declared["mesh_label_count"]
+        and round(measured_average, 2) == declared["average_mesh_labels_per_article"]
         and measured.publication_year_min >= 1950
         and measured.publication_year_max <= declared["version_year"]
+        and measured.articles_without_mesh_labels == 0
         and not measured.unknown_mesh_labels
     )
     if require_declared_match:
@@ -330,10 +347,14 @@ def audit_snapshot(
             "bytes": payload_bytes,
             "container": container_metadata,
         },
-        "measured": asdict(measured),
+        "measured": {
+            **asdict(measured),
+            "average_mesh_labels_per_article": round(measured_average, 8),
+        },
         "declared_comparison": {
             "article_count": declared["article_count"],
             "mesh_label_count": declared["mesh_label_count"],
+            "average_mesh_labels_per_article": declared["average_mesh_labels_per_article"],
             "publication_scope": declared["publication_scope"],
             "matches_published_aggregate_scope": declared_match,
         },
