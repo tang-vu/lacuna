@@ -106,7 +106,11 @@ It is not the complete 21,508,439-record NLM baseline. The generated
 but remains explicitly bounded and contributes zero readiness. The checksum-pinned
 `bioasq-semantics-protocol.json` was frozen before access to the registered payload: it selects 416
 records by SHA-256 bottom-k across eight publication-year strata and predeclares the comparison and
-decision rule without using any metric output. Current PubMed is
+decision rule without using any metric output. It remains immutable. The successor
+`bioasq-semantics-protocol-v2.json` was frozen after the source audit but before any full-corpus
+selection or new PubMed response. It adds only a 32-record 1946-1949 stratum, keeps the hash
+namespace, prior strata, comparison, and thresholds unchanged, and predeclares a 448-record bounded
+audit. Current PubMed is
 engineering/prospective input only; Persistent PubMed Abstracts lacks historical MeSH assignments.
 None can silently change the original gate.
 
@@ -133,9 +137,9 @@ python -m pipeline.benchmark.bioasq_snapshot \
 The second command is expected to exit non-zero because the publication scope is measured as a
 mismatch. The audit fingerprints the container, validates fields and published aggregates, records
 the complete parseable year histogram, and checks every observed label against pinned MeSH 2013.
-The frozen semantics protocol must not be edited or run around its outside-strata rejection. Freeze
-a separately named successor protocol before selecting any full-corpus records or making EFetch
-requests.
+The original semantics protocol must not be edited or run around its outside-strata rejection. Use
+the checksum-pinned successor for the next deterministic selection. Its output remains an ignored
+local intermediate until replayed against the full snapshot before any EFetch request.
 
 The retired repository homepage also has a checksum-pinned Common Crawl capture:
 

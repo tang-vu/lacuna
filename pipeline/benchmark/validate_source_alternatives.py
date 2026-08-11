@@ -148,6 +148,46 @@ def _audit_semantics_protocol_reference(value: object, context: str) -> None:
     )
 
 
+def _audit_successor_semantics_protocol_reference(value: object, context: str) -> None:
+    _require(isinstance(value, dict), f"{context}: missing successor semantics protocol")
+    _require(set(value) == {"path", "sha256"}, f"{context}: malformed protocol reference")
+    relative = Path(str(value["path"]))
+    _require(not relative.is_absolute() and ".." not in relative.parts, f"{context}: unsafe path")
+    path = REPO_ROOT / relative
+    _require(path.is_file(), f"{context}: referenced successor protocol is missing")
+    _require(
+        isinstance(value.get("sha256"), str)
+        and len(value["sha256"]) == 64
+        and _sha256_file(path) == value["sha256"],
+        f"{context}: successor protocol checksum mismatch",
+    )
+    protocol = audit_semantics_protocol(path)
+    sampling = protocol["sampling"]
+    _require(
+        protocol["status"] == "frozen_after_source_audit_before_semantics_selection",
+        f"{context}: wrong successor freeze stage",
+    )
+    _require(
+        sampling["total_sample_size"] == 448,
+        f"{context}: successor sample size drifted",
+    )
+    _require(
+        [item["id"] for item in sampling["strata"]]
+        == [
+            "y1946_1949",
+            "y1950_1969",
+            "y1970_1989",
+            "y1990_1999",
+            "y2000_2006",
+            "y2007_2010",
+            "y2011",
+            "y2012",
+            "y2013",
+        ],
+        f"{context}: successor year strata drifted",
+    )
+
+
 def _audit_snapshot_reference(value: object, context: str) -> dict:
     _require(isinstance(value, dict), f"{context}: missing full snapshot audit")
     _require(set(value) == {"path", "sha256"}, f"{context}: malformed snapshot reference")
@@ -318,6 +358,10 @@ def audit_source_alternatives(
                     entry.get("semantics_protocol"), f"{entry_id}.semantics_protocol"
                 )
                 if status == "audited_scope_mismatch":
+                    _audit_successor_semantics_protocol_reference(
+                        entry.get("successor_semantics_protocol"),
+                        f"{entry_id}.successor_semantics_protocol",
+                    )
                     snapshot = _audit_snapshot_reference(
                         entry.get("snapshot_audit"), f"{entry_id}.snapshot_audit"
                     )

@@ -299,8 +299,10 @@ sampled PMID to return and never inspects a gap score. Run
 `python -m pipeline.benchmark.validate_source_alternatives` to audit that boundary. Because the
 measured payload contains records outside the protocol's 1950-2013 strata, the strict selector
 cannot run it unchanged. That protocol remains immutable. A separately named
-successor must explicitly handle the measured sampling frame before any full-corpus semantics
-selection or PubMed request. The full audit status is `measured_unmatched_input`; the
+`bioasq-semantics-protocol-v2.json` is now frozen after source audit and before semantics selection.
+It adds a 32-record 1946-1949 stratum, preserves all 416 allocations and thresholds from v1, and
+raises the total to 448 without inspecting a PMID selection or new PubMed response. The bounded
+comparison has not yet run. The full audit status is `measured_unmatched_input`; the
 `--require-declared-match` command is expected to fail. Readiness remains zero.
 
 ## Deployment

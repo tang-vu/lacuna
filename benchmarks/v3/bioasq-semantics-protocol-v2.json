@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "status": "frozen_after_source_audit_before_semantics_selection",
+  "written_on": "2026-08-11",
+  "source_alternative_id": "bioasq-2013-task-a",
+  "purpose": "Determine whether the misleadingly named BioASQ meshMajor field behaves like all assigned MeSH descriptors or only MajorTopicYN=Y headings in a deterministic sample spanning the measured 1946-2013 corpus.",
+  "metric_blind": true,
+  "candidate_metric_seen": false,
+  "full_payload_seen_before_freeze": true,
+  "semantics_sample_seen_before_freeze": false,
+  "evidence_seen_before_freeze": {
+    "public_sample_audit_path": "benchmarks/v3/manifests/bioasq-2013-public-sample.json",
+    "public_sample_audit_sha256": "1f0f5dab81faef5e8765133d4f58616291e6d4af247bc6da33254ffe7767bf95",
+    "prior_protocol_path": "benchmarks/v3/bioasq-semantics-protocol.json",
+    "prior_protocol_sha256": "70f69a6d7c722cd0aa2620b0ac83b015409dca8c3c95d25ad8b3ab3fc41b6176",
+    "full_snapshot_audit_path": "benchmarks/v3/manifests/bioasq-2013-task-a.json",
+    "full_snapshot_audit_sha256": "7545ce6b2062315244af3d71fa4b476ff26277d36b6377dd3e210c23c53e1f6c",
+    "bounded_public_sample_result": "The five public records contain 72 BioASQ assignments: 71 match maintained-current PubMed descriptors and 9 match maintained-current MajorTopicYN=Y headings.",
+    "measured_source_result": "The registered payload has 10,876,004 records spanning parseable years 1946-2013. The 280 records from 1946-1949 fall outside the prior protocol; all publication years are parseable."
+  },
+  "revision_from_prior_protocol": {
+    "reason": "The prior protocol correctly rejects the measured payload because 280 records fall outside its frozen 1950-2013 strata.",
+    "changed": [
+      "Add one 32-record SHA-256 bottom-k stratum covering all 280 measured records from 1946-1949.",
+      "Increase total sample size from 416 to 448.",
+      "Disclose the full-payload audit and the year-normalisation rule seen before this freeze."
+    ],
+    "unchanged": [
+      "Hash namespace, hash input, record key, and tie breaker.",
+      "All eight prior strata, their sample sizes, and their rationales.",
+      "Maintained-current PubMed comparison rules and batch size.",
+      "All decision thresholds, labels, and zero-readiness rule."
+    ]
+  },
+  "source_population": {
+    "snapshot_input_sha256": "c4f738af8835b9fc300488d484efd633fd4137b149cd852b66a839651e328f68",
+    "article_count": 10876004,
+    "parseable_publication_year_min": 1946,
+    "parseable_publication_year_max": 2013,
+    "noncanonical_year_count": 751238,
+    "unparseable_year_count": 0,
+    "records_before_1950": 280,
+    "records_before_1950_by_year": {
+      "1946": 7,
+      "1947": 43,
+      "1948": 58,
+      "1949": 172
+    }
+  },
+  "sampling": {
+    "algorithm": "sha256_bottom_k_per_publication_year_stratum",
+    "hash_namespace": "lacuna-bioasq-2013-semantics-v1",
+    "hash_input": "utf8(hash_namespace + NUL + decimal_pmid)",
+    "record_key": "pmid",
+    "tie_breaker": "numeric_pmid_ascending",
+    "publication_year_normalisation": "strip_text_then_parse_full_digits_else_first_four_digit_token_not_adjacent_to_a_digit",
+    "outside_strata_policy": "reject_entire_selection",
+    "total_sample_size": 448,
+    "strata": [
+      {
+        "id": "y1946_1949",
+        "year_min": 1946,
+        "year_max": 1949,
+        "sample_size": 32,
+        "rationale": "Covers the 280 measured records that contradict the reported post-1949 scope; 32 matches the allocation for each other broad historical stratum without treating this small anomalous group as population-representative."
+      },
+      {
+        "id": "y1950_1969",
+        "year_min": 1950,
+        "year_max": 1969,
+        "sample_size": 32,
+        "rationale": "Older records are most exposed to maintained-current indexing drift."
+      },
+      {
+        "id": "y1970_1989",
+        "year_min": 1970,
+        "year_max": 1989,
+        "sample_size": 32,
+        "rationale": "Covers the era of the canonical Swanson development diagnostics without treating it as period-appropriate."
+      },
+      {
+        "id": "y1990_1999",
+        "year_min": 1990,
+        "year_max": 1999,
+        "sample_size": 32,
+        "rationale": "Separates late twentieth-century records from the post-2002 candidate window."
+      },
+      {
+        "id": "y2000_2006",
+        "year_min": 2000,
+        "year_max": 2006,
+        "sample_size": 64,
+        "rationale": "Contains the frozen 2006 publication cutoff used by one proposed post-2002 positive case."
+      },
+      {
+        "id": "y2007_2010",
+        "year_min": 2007,
+        "year_max": 2010,
+        "sample_size": 64,
+        "rationale": "Contains the frozen 2010 publication cutoff used by one proposed post-2002 positive case."
+      },
+      {
+        "id": "y2011",
+        "year_min": 2011,
+        "year_max": 2011,
+        "sample_size": 64,
+        "rationale": "Directly audits the source-defined 2011 cutoff used by two proposed post-2002 positive cases."
+      },
+      {
+        "id": "y2012",
+        "year_min": 2012,
+        "year_max": 2012,
+        "sample_size": 64,
+        "rationale": "Directly audits the source-defined 2012 cutoff used by one proposed post-2002 positive case."
+      },
+      {
+        "id": "y2013",
+        "year_min": 2013,
+        "year_max": 2013,
+        "sample_size": 64,
+        "rationale": "Checks records nearest the declared 1 March 2013 indexing cutoff."
+      }
+    ]
+  },
+  "comparison": {
+    "basis": "maintained_current_pubmed",
+    "batch_size": 200,
+    "match_unit": "BioASQ descriptor assignment",
+    "label_normalisation": "unicode_casefold_then_collapse_whitespace",
+    "required_record_return_fraction": 1.0
+  },
+  "decision_rule": {
+    "consistent_with_all_assigned_descriptors_if": {
+      "minimum_all_descriptor_assignment_match_fraction": 0.9,
+      "maximum_major_topic_assignment_match_fraction": 0.5,
+      "all_descriptor_match_must_exceed_major_topic_match_in_every_stratum": true
+    },
+    "passing_label": "sample_consistent_with_all_assigned_descriptors",
+    "nonpassing_label": "semantics_unresolved",
+    "readiness_contribution": 0
+  },
+  "limitations": [
+    "The strata are deliberately balanced around source anomalies and scientific cutoffs and are not weighted to estimate a corpus-wide population fraction.",
+    "PubMed EFetch exposes maintained-current records, not the MeSH assignments or major-topic flags frozen on 1 March 2013.",
+    "A passing result is bounded evidence about field semantics in 448 predeclared records; it is not proof of PMID-level corpus completeness or an original historical-baseline substitute.",
+    "Sampling 32 of the 280 pre-1950 records measures their field semantics but does not repair or explain the mismatch with the reported post-1949 corpus scope.",
+    "This protocol cannot contribute metric-v3 readiness and no gap score, rank, bridge, or candidate formula may enter sampling or interpretation."
+  ]
+}

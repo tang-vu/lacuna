@@ -85,9 +85,12 @@ immutable and no full-corpus semantics sample has been
 selected under it.
 
 BioASQ may support a **new, separately pre-registered secondary-snapshot pilot** over its measured
-corpus only after a separately named successor semantics protocol explicitly handles the observed
-year scope. It must not be relabelled as a recovered baseline or inserted into the current benchmark
-contract. Current PubMed remains an engineering/prospective input, and the
+corpus. A separately named successor semantics protocol is now frozen after source audit and before
+semantics selection. It adds a 32-record 1946-1949 stratum while retaining the prior 416-record
+allocation, hash namespace, comparison, and decision thresholds unchanged; the resulting
+448-record bounded audit has not run. BioASQ must not be relabelled as a recovered baseline or
+inserted into the current benchmark contract. Current PubMed remains an engineering/prospective
+input, and the
 Persistent PubMed Abstracts service remains unsuitable because it lacks historical MeSH
 assignments. Full reasoning and acquisition commands are in
 `plans/reports/source-alternatives-260811.md`.
@@ -190,9 +193,10 @@ after seeing them.
 4. Keep watching for independently preserved complete NLM releases. The archived-baseline reader
    and targeted pair/ABC accumulator remain closed until complete release file sets are pinned. The
    BioASQ full-payload audit matches published aggregate counts but fails the reported publication
-   scope, so it emits zero readiness and the first frozen semantics protocol remains unrun. Freeze a
-   separately named successor protocol that handles the measured 280 pre-1950 records before
-   selecting any full-corpus semantics sample. Only after that bounded audit may a
+   scope, so it emits zero readiness and the first frozen semantics protocol remains unrun. A
+   separately named 448-record successor protocol is now frozen to handle the measured 280
+   pre-1950 records without changing the prior thresholds. Generate and replay its deterministic
+   sample before any maintained-current PubMed request. Only after that bounded audit may a
    new secondary-snapshot experiment be pre-registered before any candidate formula runs.
 5. Run development cases, make at most one documented revision, then freeze.
 6. Run held-out cases and the manual audit.

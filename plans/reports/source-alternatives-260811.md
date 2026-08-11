@@ -23,7 +23,7 @@ benchmark without changing the experimental population.
 
 | Candidate | Dated citation-to-MeSH state | Fixed declared corpus | Current decision |
 |---|---|---|---|
-| BioASQ Task 1a v2013 | Yes, described with MeSH 2013 labels | 10,876,004 articles measured; reported post-1949 scope does not match | Freeze a successor semantics protocol for the measured corpus |
+| BioASQ Task 1a v2013 | Yes, described with MeSH 2013 labels | 10,876,004 articles measured; reported post-1949 scope does not match | Run the frozen 448-record bounded semantics audit |
 | Current PubMed baseline frozen locally | No historical state; indexing is maintained-current | A complete current release can be pinned | Engineering and future prospective work only |
 | Persistent PubMed Abstracts | Dated titles and abstracts, but no historical MeSH assignments | Dated text snapshots are documented | Rejected for metric-v3 historical indexing |
 | Europe PMC current bulk services | Current literature metadata and selected full-text bulk sets | Current collections, not the required old MEDLINE baselines | Not a historical-baseline replacement |
@@ -118,6 +118,22 @@ Thus the three published aggregates match, while the reported publication scope 
 snapshot gate do not. The manifest status is `measured_unmatched_input` and contributes zero
 readiness.
 
+## Successor semantics protocol frozen
+
+`benchmarks/v3/bioasq-semantics-protocol-v2.json` was frozen after the aggregate source audit and
+before any full-corpus selection or new PubMed request. It changes only what the measured sampling
+frame made unsatisfiable:
+
+- adds one SHA-256 bottom-k stratum selecting 32 of the 280 records dated 1946-1949;
+- increases the declared total from 416 to 448;
+- discloses the full source audit and exact year-normalisation rule.
+
+The hash namespace is deliberately unchanged, preserving the original deterministic choices in all
+eight 1950-2013 strata. Their sample sizes and rationales are byte-for-byte unchanged. The PubMed
+comparison, 90% all-descriptor minimum, 50% major-topic maximum, every-stratum separation rule,
+classification labels, and zero-readiness rule are also unchanged. The validator rejects any
+successor that tunes those parent fields. No semantics result was observed at freeze time.
+
 ## Implemented streaming audit
 
 `python -m pipeline.benchmark.bioasq_snapshot` now reads plain JSON, gzip, or a ZIP containing one
@@ -150,10 +166,10 @@ python -m pipeline.benchmark.bioasq_snapshot \
   path/to/raw_training_set.zip
 ```
 
-The first semantics protocol must remain unchanged: its strict sampler correctly rejects the 280
-records outside its 1950-2013 strata. In a separate update, freeze a
-successor protocol that discloses and handles this measured sampling frame before selecting any
-record or issuing any new PubMed request. The original NLM-baseline gate remains visible and red.
+The first semantics protocol remains unchanged: its strict sampler correctly rejects the 280
+records outside its 1950-2013 strata. Use only the pinned successor for the next selection, and
+replay that selection from the full snapshot before issuing any new PubMed request. The original
+NLM-baseline gate remains visible and red.
 
 ## Primary documentation
 

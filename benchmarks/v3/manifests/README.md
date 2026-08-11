@@ -59,9 +59,11 @@ pinned payload.
 The separate `../bioasq-semantics-protocol.json` was frozen before the registered payload was
 available. The measured payload violates its declared 1950-2013 sampling frame, so its strict
 selector rejects the source and the protocol remains an immutable failed pre-registration. Do not
-write `bioasq-2013-semantics.json` from a modified copy. A separately named successor protocol must
-first disclose and handle the 280 pre-1950 records; only then may a new
-selection be generated before any EFetch comparison.
+write `bioasq-2013-semantics.json` from a modified copy. The separately named
+`../bioasq-semantics-protocol-v2.json` now handles the 280 pre-1950 records with a predeclared
+32-record stratum. It was frozen before selection and keeps the prior comparison and decision
+thresholds unchanged. Generate the 448-record selection only under that checksum-pinned protocol,
+then replay it from the full snapshot before any EFetch comparison.
 
 Reproduce the committed public-sample audit with:
 

@@ -12,7 +12,7 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 9
+    assert status["schema_version"] == 10
     assert status["status"] == "not_ready"
     assert status["historical_sources"] == {
         "ready": False,
@@ -73,6 +73,10 @@ def test_project_status_exposes_validator_results_without_claiming_readiness():
         "matches_published_publication_scope": False,
         "passes_declared_snapshot_gate": False,
     }
+    successor = status["source_alternatives"]["bioasq_successor_protocol"]
+    assert successor["status"] == "frozen_after_source_audit_before_semantics_selection"
+    assert successor["sampling"]["total_sample_size"] == 448
+    assert successor["decision_rule"]["readiness_contribution"] == 0
     assert len(status["source_alternatives"]["entries"]) == 3
     assert status["candidate_intake"]["counts"] == {
         "accepted": 2,
@@ -160,6 +164,7 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
         "source_alternatives",
         "bioasq_snapshot_audit",
         "bioasq_semantics_protocol",
+        "bioasq_successor_semantics_protocol",
         "historical_inventories",
         "mbr_preservation_capture",
         "candidate_intake",

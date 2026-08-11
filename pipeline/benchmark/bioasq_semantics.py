@@ -24,6 +24,7 @@ from collections.abc import Callable
 from pathlib import Path
 
 from pipeline.benchmark.bioasq_snapshot import (
+    YEAR_NORMALISATION_RULE,
     _sha256_file,
     open_snapshot_text,
     iter_articles,
@@ -35,6 +36,9 @@ from pipeline.provenance import sha256_payload
 from pipeline.pubmed_client import MAX_EFETCH_IDS, PubMedClient
 
 PROTOCOL_PATH = REPO_ROOT / "benchmarks" / "v3" / "bioasq-semantics-protocol.json"
+SUCCESSOR_PROTOCOL_PATH = (
+    REPO_ROOT / "benchmarks" / "v3" / "bioasq-semantics-protocol-v2.json"
+)
 DEFAULT_SAMPLE_PATH = (
     REPO_ROOT / "data" / "medline-baseline" / "bioasq" / "semantics-sample.json"
 )
@@ -68,9 +72,14 @@ def _file_reference(path: Path) -> dict[str, object]:
 def audit_semantics_protocol(path: Path = PROTOCOL_PATH) -> dict:
     payload = json.loads(path.read_text(encoding="utf-8"))
     _require(payload.get("schema_version") == 1, "unsupported BioASQ semantics protocol")
+    status = payload.get("status")
     _require(
-        payload.get("status") == "frozen_before_full_payload",
-        "semantics protocol must remain frozen before the full payload",
+        status
+        in {
+            "frozen_before_full_payload",
+            "frozen_after_source_audit_before_semantics_selection",
+        },
+        "unsupported semantics protocol freeze stage",
     )
     _require(payload.get("source_alternative_id") == "bioasq-2013-task-a", "wrong source")
     _require(payload.get("metric_blind") is True, "semantics sampling must be metric-blind")
@@ -78,10 +87,20 @@ def audit_semantics_protocol(path: Path = PROTOCOL_PATH) -> dict:
         payload.get("candidate_metric_seen") is False,
         "semantics protocol cannot be informed by a candidate metric",
     )
-    _require(
-        payload.get("full_payload_seen_before_freeze") is False,
-        "semantics protocol must disclose if the full payload was seen",
-    )
+    if status == "frozen_before_full_payload":
+        _require(
+            payload.get("full_payload_seen_before_freeze") is False,
+            "original semantics protocol must remain frozen before the full payload",
+        )
+    else:
+        _require(
+            payload.get("full_payload_seen_before_freeze") is True,
+            "successor protocol must disclose full-payload access",
+        )
+        _require(
+            payload.get("semantics_sample_seen_before_freeze") is False,
+            "successor protocol must be frozen before semantics selection",
+        )
     _require(not find_forbidden_fields(payload), "metric output fields are forbidden")
 
     evidence = payload.get("evidence_seen_before_freeze")
@@ -93,6 +112,46 @@ def audit_semantics_protocol(path: Path = PROTOCOL_PATH) -> dict:
         measured_sha256 == evidence.get("public_sample_audit_sha256"),
         "public sample audit checksum drifted",
     )
+
+    parent_protocol: dict | None = None
+    snapshot_audit: dict | None = None
+    if status == "frozen_after_source_audit_before_semantics_selection":
+        parent_relative = Path(str(evidence.get("prior_protocol_path", "")))
+        _require(
+            not parent_relative.is_absolute() and ".." not in parent_relative.parts,
+            "unsafe prior protocol path",
+        )
+        parent_path = REPO_ROOT / parent_relative
+        _require(parent_path.is_file() and parent_path != path, "prior protocol is missing")
+        parent_sha256, _ = _sha256_file(parent_path)
+        _require(
+            parent_sha256 == evidence.get("prior_protocol_sha256"),
+            "prior semantics protocol checksum drifted",
+        )
+        parent_protocol = audit_semantics_protocol(parent_path)
+        _require(
+            parent_protocol["status"] == "frozen_before_full_payload",
+            "successor parent must be the pre-payload protocol",
+        )
+
+        snapshot_relative = Path(str(evidence.get("full_snapshot_audit_path", "")))
+        _require(
+            not snapshot_relative.is_absolute() and ".." not in snapshot_relative.parts,
+            "unsafe full snapshot audit path",
+        )
+        snapshot_path = REPO_ROOT / snapshot_relative
+        _require(snapshot_path.is_file(), "full snapshot audit is missing")
+        snapshot_sha256, _ = _sha256_file(snapshot_path)
+        _require(
+            snapshot_sha256 == evidence.get("full_snapshot_audit_sha256"),
+            "full snapshot audit checksum drifted",
+        )
+        snapshot_audit = json.loads(snapshot_path.read_text(encoding="utf-8"))
+        _require(
+            snapshot_audit.get("status") == "measured_unmatched_input"
+            and snapshot_audit.get("readiness_contribution") == 0,
+            "successor must retain the source audit's bounded mismatch",
+        )
 
     sampling = payload.get("sampling")
     _require(isinstance(sampling, dict), "protocol is missing sampling rules")
@@ -170,6 +229,102 @@ def audit_semantics_protocol(path: Path = PROTOCOL_PATH) -> dict:
         "semantics thresholds must separate all-descriptor and major-topic matches",
     )
     _require(decision.get("readiness_contribution") == 0, "semantics cannot add readiness")
+
+    if status == "frozen_after_source_audit_before_semantics_selection":
+        _require(
+            parent_protocol is not None and snapshot_audit is not None,
+            "missing parent audit",
+        )
+        parent_sampling = parent_protocol["sampling"]
+        inherited_sampling_fields = (
+            "algorithm",
+            "hash_namespace",
+            "hash_input",
+            "record_key",
+            "tie_breaker",
+        )
+        _require(
+            all(
+                sampling.get(field) == parent_sampling.get(field)
+                for field in inherited_sampling_fields
+            ),
+            "successor changed an inherited sampling identity",
+        )
+        _require(
+            sampling.get("publication_year_normalisation") == YEAR_NORMALISATION_RULE,
+            "successor publication-year normalisation drifted",
+        )
+        _require(
+            sampling.get("outside_strata_policy") == "reject_entire_selection",
+            "successor must reject any still-uncovered record",
+        )
+        parent_strata = {item["id"]: item for item in parent_sampling["strata"]}
+        successor_strata = {item["id"]: item for item in strata}
+        _require(
+            set(successor_strata) == set(parent_strata) | {"y1946_1949"},
+            "successor must add only the measured pre-1950 stratum",
+        )
+        _require(
+            all(successor_strata[key] == value for key, value in parent_strata.items()),
+            "successor changed a prior sampling stratum",
+        )
+        _require(
+            successor_strata["y1946_1949"]
+            == {
+                "id": "y1946_1949",
+                "year_min": 1946,
+                "year_max": 1949,
+                "sample_size": 32,
+                "rationale": (
+                    "Covers the 280 measured records that contradict the reported post-1949 "
+                    "scope; 32 matches the allocation for each other broad historical stratum "
+                    "without treating this small anomalous group as population-representative."
+                ),
+            },
+            "successor pre-1950 stratum drifted",
+        )
+        _require(
+            sampling["total_sample_size"] == parent_sampling["total_sample_size"] + 32,
+            "successor total must add exactly 32 records",
+        )
+        _require(comparison == parent_protocol["comparison"], "comparison rules changed")
+        _require(decision == parent_protocol["decision_rule"], "decision thresholds changed")
+
+        measured = snapshot_audit["measured"]
+        snapshot_comparison = snapshot_audit["declared_comparison"]
+        source_population = payload.get("source_population")
+        _require(isinstance(source_population, dict), "missing measured source population")
+        expected_pre_1950 = {
+            year: measured["publication_year_counts"][year]
+            for year in ("1946", "1947", "1948", "1949")
+        }
+        _require(
+            source_population
+            == {
+                "snapshot_input_sha256": snapshot_audit["input"]["sha256"],
+                "article_count": measured["article_count"],
+                "parseable_publication_year_min": measured["publication_year_min"],
+                "parseable_publication_year_max": measured["publication_year_max"],
+                "noncanonical_year_count": measured["noncanonical_year_count"],
+                "unparseable_year_count": measured["unparseable_year_count"],
+                "records_before_1950": snapshot_comparison[
+                    "articles_before_declared_publication_scope"
+                ],
+                "records_before_1950_by_year": expected_pre_1950,
+            },
+            "successor source population does not match the pinned audit",
+        )
+        revision = payload.get("revision_from_prior_protocol")
+        _require(
+            isinstance(revision, dict)
+            and bool(revision.get("reason"))
+            and isinstance(revision.get("changed"), list)
+            and revision["changed"]
+            and isinstance(revision.get("unchanged"), list)
+            and revision["unchanged"],
+            "successor must disclose its revision scope",
+        )
+
     limitations = payload.get("limitations")
     _require(
         isinstance(limitations, list)

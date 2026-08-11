@@ -51,18 +51,17 @@ python -m pipeline.benchmark.bioasq_snapshot \
 
 The strict command is expected to fail: the pinned audit measures 280 records before the reported
 post-1949 scope. All years are parseable, with 751,238 explicitly normalized non-`YYYY` values. Do
-not run the frozen semantics protocol
-against this mismatched sampling frame. A separately named successor protocol must be committed
-before running commands of the following shape:
+not run the original semantics protocol against this mismatched sampling frame. The separately
+named successor is now frozen and checksum-pinned; use it explicitly:
 
 ```bash
 python -m pipeline.benchmark.bioasq_semantics \
-  --protocol path/to/reviewed-successor-protocol.json sample \
+  --protocol benchmarks/v3/bioasq-semantics-protocol-v2.json sample \
   data/medline-baseline/bioasq/PubMedWithMeSH.zip \
   --output data/medline-baseline/bioasq/semantics-sample.json
 $env:NCBI_EMAIL = Read-Host "NCBI registered email"
 python -m pipeline.benchmark.bioasq_semantics \
-  --protocol path/to/reviewed-successor-protocol.json audit \
+  --protocol benchmarks/v3/bioasq-semantics-protocol-v2.json audit \
   data/medline-baseline/bioasq/semantics-sample.json \
   --snapshot data/medline-baseline/bioasq/PubMedWithMeSH.zip \
   --output benchmarks/v3/manifests/bioasq-2013-semantics.json

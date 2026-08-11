@@ -531,6 +531,7 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
     (entry) => entry.id === status.source_alternatives.recommended_id,
   );
   const snapshot = status.source_alternatives.bioasq_snapshot;
+  const successorProtocol = status.source_alternatives.bioasq_successor_protocol;
 
   return el('section', { class: 'contribution-missions', id: 'contribute' }, [
     el('div', { class: 'section-kicker' }, ['THE OPEN WORK']),
@@ -564,8 +565,10 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
           'records predate the reported post-1949 scope and ' +
           `${snapshot.measured.noncanonical_year_count.toLocaleString()} year values use an ` +
           'explicit non-YYYY normalization rule. ' +
-          'The frozen semantics protocol stays immutable; a separately named successor is needed. ' +
-          'This measured secondary snapshot still contributes zero readiness.',
+          `A separately named ${successorProtocol.sampling.total_sample_size.toLocaleString()}-record ` +
+          'successor protocol is now frozen without changing the original thresholds; its bounded ' +
+          'maintained-current comparison has not run. This secondary snapshot still contributes ' +
+          'zero readiness.',
         progress(
           pinnedSources,
           sourceStatuses.length,

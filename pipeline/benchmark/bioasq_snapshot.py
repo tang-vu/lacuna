@@ -42,6 +42,9 @@ MAX_ARTICLE_CHARS = 64 * 1024 * 1024
 JSON_HEADER = re.compile(r'^\ufeff?\s*\{\s*"articles"\s*:\s*\[')
 LEGACY_ASSIGNMENT_HEADER = re.compile(r"^\ufeff?\s*\{\s*'articles'\s*=\s*\[")
 YEAR_TOKEN = re.compile(r"(?<!\d)(?:18|19|20)\d{2}(?!\d)")
+YEAR_NORMALISATION_RULE = (
+    "strip_text_then_parse_full_digits_else_first_four_digit_token_not_adjacent_to_a_digit"
+)
 TRAILER = re.compile(r"^\s*\}\s*$")
 REQUIRED_FIELDS = {"abstractText", "journal", "meshMajor", "pmid", "title", "year"}
 ALTERNATIVES_PATH = REPO_ROOT / "benchmarks" / "v3" / "source-alternatives.json"

@@ -22,7 +22,10 @@ from pipeline.benchmark.negative_review_context import (
     OUTPUT_PATH as NEGATIVE_REVIEW_CONTEXT_PATH,
     audit_review_context,
 )
-from pipeline.benchmark.bioasq_semantics import PROTOCOL_PATH as BIOASQ_SEMANTICS_PROTOCOL_PATH
+from pipeline.benchmark.bioasq_semantics import (
+    PROTOCOL_PATH as BIOASQ_SEMANTICS_PROTOCOL_PATH,
+    SUCCESSOR_PROTOCOL_PATH as BIOASQ_SUCCESSOR_PROTOCOL_PATH,
+)
 from pipeline.benchmark.bioasq_snapshot import MANIFEST_PATH as BIOASQ_SNAPSHOT_MANIFEST_PATH
 from pipeline.benchmark.mbr_capture import CAPTURE_PATH as MBR_CAPTURE_PATH
 from pipeline.benchmark.validate_candidates import CANDIDATES_PATH, audit_candidates
@@ -56,6 +59,9 @@ def build_project_status() -> dict:
     sources = audit_sources()
     alternatives = audit_source_alternatives()
     bioasq_snapshot = json.loads(BIOASQ_SNAPSHOT_MANIFEST_PATH.read_text(encoding="utf-8"))
+    bioasq_successor_protocol = json.loads(
+        BIOASQ_SUCCESSOR_PROTOCOL_PATH.read_text(encoding="utf-8")
+    )
     candidates = audit_candidates()
     negative_queue = audit_queue()
     audit_review_context()
@@ -73,13 +79,16 @@ def build_project_status() -> dict:
     negative_protocol = load_protocol()
 
     return {
-        "schema_version": 9,
+        "schema_version": 10,
         "status": "ready" if ready else "not_ready",
         "inputs": {
             "historical_sources": _input_identity(SOURCES_PATH),
             "source_alternatives": _input_identity(ALTERNATIVES_PATH),
             "bioasq_snapshot_audit": _input_identity(BIOASQ_SNAPSHOT_MANIFEST_PATH),
             "bioasq_semantics_protocol": _input_identity(BIOASQ_SEMANTICS_PROTOCOL_PATH),
+            "bioasq_successor_semantics_protocol": _input_identity(
+                BIOASQ_SUCCESSOR_PROTOCOL_PATH
+            ),
             "historical_inventories": _input_identity(INVENTORIES_PATH),
             "mbr_preservation_capture": _input_identity(MBR_CAPTURE_PATH),
             "candidate_intake": _input_identity(CANDIDATES_PATH),
@@ -122,6 +131,7 @@ def build_project_status() -> dict:
             "counts": alternatives.counts,
             "readiness_contribution": alternatives.readiness_contribution,
             "bioasq_snapshot": bioasq_snapshot,
+            "bioasq_successor_protocol": bioasq_successor_protocol,
             "entries": list(alternatives.entries),
         },
         "candidate_intake": {

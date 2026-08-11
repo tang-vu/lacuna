@@ -9,6 +9,7 @@ import pytest
 from pipeline.benchmark.bioasq_semantics import (
     BioasqSemanticsError,
     PROTOCOL_PATH,
+    SUCCESSOR_PROTOCOL_PATH,
     audit_semantics_sample,
     audit_semantics_protocol,
     compare_semantics_sample,
@@ -77,6 +78,29 @@ def test_sampler_keeps_predeclared_bottom_hashes_independent_of_input_order(tmp_
         "selected_total": 2,
     }
     assert sample["readiness_contribution"] == 0
+
+
+def test_successor_protocol_adds_only_the_measured_pre_1950_stratum():
+    parent = audit_semantics_protocol(PROTOCOL_PATH)
+    successor = audit_semantics_protocol(SUCCESSOR_PROTOCOL_PATH)
+
+    assert successor["sampling"]["total_sample_size"] == 448
+    assert successor["sampling"]["strata"][1:] == parent["sampling"]["strata"]
+    assert successor["comparison"] == parent["comparison"]
+    assert successor["decision_rule"] == parent["decision_rule"]
+    assert successor["semantics_sample_seen_before_freeze"] is False
+
+
+def test_successor_protocol_cannot_tune_a_parent_threshold(tmp_path: Path):
+    successor = json.loads(SUCCESSOR_PROTOCOL_PATH.read_text(encoding="utf-8"))
+    successor["decision_rule"]["consistent_with_all_assigned_descriptors_if"][
+        "minimum_all_descriptor_assignment_match_fraction"
+    ] = 0.89
+    path = tmp_path / "successor.json"
+    path.write_text(json.dumps(successor), encoding="utf-8")
+
+    with pytest.raises(BioasqSemanticsError, match="decision thresholds changed"):
+        audit_semantics_protocol(path)
 
 
 @pytest.mark.parametrize("outside_year", ["1999", "undated"])

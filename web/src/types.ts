@@ -199,6 +199,10 @@ export interface ProjectStatus {
         path: string;
         sha256: string;
       };
+      successor_semantics_protocol?: {
+        path: string;
+        sha256: string;
+      };
       snapshot_audit?: {
         path: string;
         sha256: string;
@@ -227,6 +231,21 @@ export interface ProjectStatus {
         matches_published_aggregate_counts: boolean;
         matches_published_publication_scope: boolean;
         passes_declared_snapshot_gate: boolean;
+      };
+    };
+    bioasq_successor_protocol: {
+      status: 'frozen_after_source_audit_before_semantics_selection';
+      sampling: {
+        total_sample_size: number;
+        strata: Array<{
+          id: string;
+          year_min: number;
+          year_max: number;
+          sample_size: number;
+        }>;
+      };
+      decision_rule: {
+        readiness_contribution: 0;
       };
     };
   };
