@@ -118,6 +118,14 @@ a population-weighted or period-appropriate audit. Current PubMed is engineering
 only; Persistent PubMed Abstracts lacks historical MeSH assignments. None can silently change the
 original gate.
 
+`bioasq-pilot.json` is the separately frozen secondary-snapshot experiment contract. It fixes all
+five LION Cancer Discovery source cases and every item in the 16-entry metric-blind control queue,
+giving 11 development and 10 held-out cases. It also fixes the publication-cutoff transform,
+support thresholds, conservative tie ranking, one-revision limit, sensitivity settings, and
+held-out decision rule. Source-labelled positives are not independently validated discovery truth;
+ontology-generated controls are not verified absences. The contract was frozen before endpoint
+support or any pilot formula/output, and every outcome contributes zero readiness.
+
 Acquire and verify the public audit inputs with:
 
 ```bash
@@ -145,6 +153,17 @@ The original semantics protocol must not be edited or run around its outside-str
 the checksum-pinned successor to reproduce the deterministic selection into an ignored local
 intermediate. The production audit replays that selection against the full snapshot before any
 EFetch request; write reproductions to review paths rather than overwriting the committed manifest.
+
+Validate the next experiment boundary without computing a score:
+
+```bash
+python -m pipeline.benchmark.validate_bioasq_pilot
+python -m pipeline.benchmark.validate_bioasq_pilot --verify-local-mesh
+```
+
+The second command additionally checks the ignored local MeSH 2013 archive and all 46 unique
+endpoint/bridge mappings. The next pipeline artifact must be the frozen score-free source-
+compatibility audit, not a metric result.
 
 The retired repository homepage also has a checksum-pinned Common Crawl capture:
 

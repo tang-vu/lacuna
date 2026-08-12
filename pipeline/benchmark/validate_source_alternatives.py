@@ -22,6 +22,7 @@ from pipeline.benchmark.bioasq_semantics import (
     audit_semantics_manifest,
     audit_semantics_protocol,
 )
+from pipeline.benchmark.validate_bioasq_pilot import audit_bioasq_pilot
 from pipeline.paths import REPO_ROOT
 
 ALTERNATIVES_PATH = REPO_ROOT / "benchmarks" / "v3" / "source-alternatives.json"
@@ -229,6 +230,28 @@ def _audit_semantics_manifest_reference(
     )
 
 
+def _audit_bioasq_pilot_reference(value: object, context: str) -> None:
+    _require(isinstance(value, dict), f"{context}: missing BioASQ pilot protocol")
+    _require(set(value) == {"path", "sha256"}, f"{context}: malformed pilot reference")
+    relative = Path(str(value["path"]))
+    _require(not relative.is_absolute() and ".." not in relative.parts, f"{context}: unsafe path")
+    path = REPO_ROOT / relative
+    _require(path.is_file(), f"{context}: referenced pilot protocol is missing")
+    _require(
+        isinstance(value.get("sha256"), str)
+        and len(value["sha256"]) == 64
+        and _sha256_file(path) == value["sha256"],
+        f"{context}: BioASQ pilot checksum mismatch",
+    )
+    pilot = audit_bioasq_pilot(path)
+    _require(
+        pilot.status == "frozen_before_bioasq_pilot_metric"
+        and pilot.total_cases == 21
+        and pilot.readiness_contribution == 0,
+        f"{context}: BioASQ pilot scope drifted",
+    )
+
+
 def _audit_snapshot_reference(value: object, context: str) -> dict:
     _require(isinstance(value, dict), f"{context}: missing full snapshot audit")
     _require(set(value) == {"path", "sha256"}, f"{context}: malformed snapshot reference")
@@ -411,6 +434,10 @@ def audit_source_alternatives(
                         f"{entry_id}.semantics_audit",
                         protocol_reference=entry.get("successor_semantics_protocol"),
                         snapshot_reference=entry.get("snapshot_audit"),
+                    )
+                    _audit_bioasq_pilot_reference(
+                        entry.get("pilot_protocol"),
+                        f"{entry_id}.pilot_protocol",
                     )
                     _require(
                         snapshot["measured"]["article_count"] == declared["article_count"]

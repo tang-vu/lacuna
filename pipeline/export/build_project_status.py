@@ -29,6 +29,10 @@ from pipeline.benchmark.bioasq_semantics import (
     audit_semantics_manifest,
 )
 from pipeline.benchmark.bioasq_snapshot import MANIFEST_PATH as BIOASQ_SNAPSHOT_MANIFEST_PATH
+from pipeline.benchmark.validate_bioasq_pilot import (
+    PILOT_PATH as BIOASQ_PILOT_PATH,
+    audit_bioasq_pilot,
+)
 from pipeline.benchmark.mbr_capture import CAPTURE_PATH as MBR_CAPTURE_PATH
 from pipeline.benchmark.validate_candidates import CANDIDATES_PATH, audit_candidates
 from pipeline.benchmark.validate_source_alternatives import (
@@ -65,6 +69,8 @@ def build_project_status() -> dict:
         BIOASQ_SUCCESSOR_PROTOCOL_PATH.read_text(encoding="utf-8")
     )
     bioasq_semantics_audit = audit_semantics_manifest()
+    audit_bioasq_pilot()
+    bioasq_pilot = json.loads(BIOASQ_PILOT_PATH.read_text(encoding="utf-8"))
     candidates = audit_candidates()
     negative_queue = audit_queue()
     audit_review_context()
@@ -82,7 +88,7 @@ def build_project_status() -> dict:
     negative_protocol = load_protocol()
 
     return {
-        "schema_version": 11,
+        "schema_version": 12,
         "status": "ready" if ready else "not_ready",
         "inputs": {
             "historical_sources": _input_identity(SOURCES_PATH),
@@ -93,6 +99,7 @@ def build_project_status() -> dict:
                 BIOASQ_SUCCESSOR_PROTOCOL_PATH
             ),
             "bioasq_semantics_audit": _input_identity(BIOASQ_SEMANTICS_AUDIT_PATH),
+            "bioasq_pilot_protocol": _input_identity(BIOASQ_PILOT_PATH),
             "historical_inventories": _input_identity(INVENTORIES_PATH),
             "mbr_preservation_capture": _input_identity(MBR_CAPTURE_PATH),
             "candidate_intake": _input_identity(CANDIDATES_PATH),
@@ -137,6 +144,7 @@ def build_project_status() -> dict:
             "bioasq_snapshot": bioasq_snapshot,
             "bioasq_successor_protocol": bioasq_successor_protocol,
             "bioasq_semantics_audit": bioasq_semantics_audit,
+            "bioasq_pilot_protocol": bioasq_pilot,
             "entries": list(alternatives.entries),
         },
         "candidate_intake": {

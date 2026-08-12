@@ -78,6 +78,16 @@ ignored local state and must be reproducible from the source snapshot and its se
 successor protocol. This secondary corpus contributes zero readiness and must not be named or
 referenced as one of the four complete historical NLM releases.
 
+Before any BioASQ pilot formula is written, validate the frozen case and mapping boundary:
+
+```bash
+python -m pipeline.benchmark.validate_bioasq_pilot --verify-local-mesh
+```
+
+The protocol contains 21 fixed cases and requires a score-free source-compatibility audit next.
+Do not compute endpoint ranks while building that audit; incompatible cases cannot be replaced
+without a separately named successor protocol frozen before any metric output.
+
 The committed manifest pins canonical SHA-256 digests of the exact taxonomy and row content used
 to build each artifact. Canonicalisation excludes fetch timestamps and strips `mailto` and
 `api_key` query parameters; neither personal identifiers nor credentials are part of a published

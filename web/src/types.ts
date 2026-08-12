@@ -207,6 +207,10 @@ export interface ProjectStatus {
         path: string;
         sha256: string;
       };
+      pilot_protocol?: {
+        path: string;
+        sha256: string;
+      };
       snapshot_audit?: {
         path: string;
         sha256: string;
@@ -276,6 +280,40 @@ export interface ProjectStatus {
       };
       decision_checks: {
         passed: boolean;
+      };
+    };
+    bioasq_pilot_protocol: {
+      status: 'frozen_before_bioasq_pilot_metric';
+      claim_boundary: {
+        readiness_contribution: 0;
+      };
+      freeze_timing: {
+        case_endpoint_support_counts_seen: false;
+        bioasq_pilot_metric_formula_seen: false;
+        bioasq_pilot_scores_or_ranks_seen: false;
+      };
+      case_population: {
+        total_cases: number;
+        split_counts: {
+          development: number;
+          heldout: number;
+        };
+        positives: {
+          count: number;
+        };
+        controls: {
+          counts: {
+            hard_negative: { development: number; heldout: number };
+            distant_negative: { development: number; heldout: number };
+          };
+        };
+      };
+      source_compatibility_gate: {
+        required_case_count: number;
+        failure_outcome: 'pilot_inconclusive_source_coverage';
+      };
+      heldout_decision_rule: {
+        readiness_contribution: 0;
       };
     };
   };

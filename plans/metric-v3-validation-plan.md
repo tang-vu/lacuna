@@ -97,6 +97,16 @@ Persistent PubMed Abstracts service remains unsuitable because it lacks historic
 assignments. Full reasoning and acquisition commands are in
 `plans/reports/source-alternatives-260811.md`.
 
+The secondary-snapshot pilot is now frozen separately in `benchmarks/v3/bioasq-pilot.json`. Its
+positive population is all five Cancer Discovery cases used by LION, not a subset chosen by this
+project. A metric-blind SHA-256 rule assigns three development and two held-out positives. All
+sixteen previously frozen ontology-generated controls are included with their proposed splits,
+yielding 11 development and 10 held-out cases overall. These labels remain source cases and
+structural-control proposals rather than independently adjudicated discovery truth. The protocol
+fixes score-free source compatibility, rank definition, support sensitivities, one allowed formula
+revision, and the held-out rule before any pilot support count, formula, score, or rank. Every
+outcome contributes zero original benchmark readiness.
+
 Primary documentation:
 
 - [NLM annual baseline overview](https://www.nlm.nih.gov/bsd/licensee/baseline.html)
@@ -199,8 +209,10 @@ after seeing them.
    separately named 448-record successor protocol is now frozen to handle the measured 280
    pre-1950 records without changing the prior thresholds. Its deterministic sample has been
    replayed and the bounded maintained-current audit follows the frozen passing rule while adding
-   zero readiness. Pre-register the new secondary-snapshot experiment, case population, and success
-   criteria before any candidate formula runs.
+   zero readiness. The new secondary-snapshot experiment, complete case population, and success
+   criteria are now frozen. Run its score-free 21-case source-compatibility audit next. If it is
+   adequate, freeze a separate formula contract before development scores; if not, report the
+   predeclared inconclusive outcome without replacing cases.
 5. Run development cases, make at most one documented revision, then freeze.
 6. Run held-out cases and the manual audit.
 7. Only after a pass, design the LLM interpretation schema and pair-detail UI.

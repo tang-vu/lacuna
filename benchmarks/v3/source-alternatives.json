@@ -78,16 +78,21 @@
         "path": "benchmarks/v3/manifests/bioasq-2013-semantics.json",
         "sha256": "88e93e5f5b36871234218e8236b25c53de9eb803c3e80d26dce6e4161e849e6d"
       },
+      "pilot_protocol": {
+        "path": "benchmarks/v3/bioasq-pilot.json",
+        "sha256": "0b8f33b3d35d6d4db94b553af27f0535f0374d81f49545ab2b7c5bbe5d97697e"
+      },
       "potential_role": "A separately pre-registered pilot over the measured secondary corpus after a successor semantics protocol explicitly handles its observed publication-year scope. It may support post-snapshot discovery cases but is not an NLM baseline substitute.",
       "blockers": [
         "The acquired payload matches all three published aggregate counts, but its measured publication-year scope does not match the reported post-1949 scope: 280 records are dated 1946-1949. All years are parseable, although 751,238 values are not plain YYYY.",
         "The 448-record balanced audit is consistent with meshMajor containing all assigned descriptors under maintained-current PubMed: 5,201 of 5,296 assignments match all descriptors and 455 match MajorTopicYN=Y headings. It is not population-weighted, period-appropriate, or evidence of corpus completeness.",
         "The original 416-record protocol remains immutable. Its separately named 448-record successor and checksum-pinned bounded result retain every original threshold and contribute zero readiness.",
+        "A separate 21-case secondary-snapshot pilot is frozen before endpoint-support measurement or formula selection. Its five LION cases are source-labelled reproduction targets and its sixteen controls remain ontology-generated proposals, not independently validated discovery truth or verified absences.",
         "The measured secondary corpus is not the complete 21,508,439-record 2013 NLM baseline, and the two totals are not a measured coverage fraction.",
         "Only a 2013 snapshot is relevant here, so it cannot supply the missing 2007, 2011, and 2012 releases.",
         "Using it changes the experimental population and therefore requires a new pre-registration rather than a source-status flip."
       ],
-      "next_action": "Use the bounded field-semantics result only to pre-register a separate secondary-snapshot pilot, including its case population and success criteria, before running or tuning any candidate metric."
+      "next_action": "Run the frozen pilot's score-free source-compatibility audit over all 21 cases. If every endpoint satisfies the predeclared support gate, freeze a separate formula contract before computing any development score; otherwise record pilot_inconclusive_source_coverage without replacing cases."
     },
     {
       "id": "current-pubmed-frozen-surrogate",

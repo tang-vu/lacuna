@@ -1,15 +1,15 @@
 {
- "schema_version": 11,
+ "schema_version": 12,
  "status": "not_ready",
  "inputs": {
   "historical_sources": {
    "path": "benchmarks/v3/sources.json",
-   "sha256": "33784bd99760a3ededeb8e152d875347d609cb53dfdf05061a3ef9f24acca185",
+   "sha256": "c09994b91ebe6c1a38d9bbc2b5387e02eb3d1ecbc3e46ef53b12ff172a877eef",
    "canonicalisation": "canonical-json-v1"
   },
   "source_alternatives": {
    "path": "benchmarks/v3/source-alternatives.json",
-   "sha256": "d2c0e569e393334aef2334cfec6ff370d47eb2b2ff810c4fcfbf9bc9b5d70822",
+   "sha256": "e4932925f4f5cf1d95becdcb81611a4476819406c55377fee7efdb62312f5ad1",
    "canonicalisation": "canonical-json-v1"
   },
   "bioasq_snapshot_audit": {
@@ -30,6 +30,11 @@
   "bioasq_semantics_audit": {
    "path": "benchmarks/v3/manifests/bioasq-2013-semantics.json",
    "sha256": "6661fab25b8217a26292653380c32464172077e670cf23a2801e24a79495c6ac",
+   "canonicalisation": "canonical-json-v1"
+  },
+  "bioasq_pilot_protocol": {
+   "path": "benchmarks/v3/bioasq-pilot.json",
+   "sha256": "4c496c9575e5dd0778a6304c091d57b37a299dff0ddd454417f9747a7a4742ab",
    "canonicalisation": "canonical-json-v1"
   },
   "historical_inventories": {
@@ -4781,6 +4786,318 @@
     "This protocol cannot contribute metric-v3 readiness and no gap score, rank, bridge, or candidate formula may enter sampling or interpretation."
    ]
   },
+  "bioasq_pilot_protocol": {
+   "schema_version": 1,
+   "status": "frozen_before_bioasq_pilot_metric",
+   "frozen_on": "2026-08-12",
+   "source_alternative_id": "bioasq-2013-task-a",
+   "purpose": "Test whether a separately pre-registered term-level ranking method can reproduce source-labelled LION cases while separating metric-blind structural controls inside the measured BioASQ 2013 secondary snapshot.",
+   "claim_boundary": {
+    "experiment_class": "secondary_snapshot_reproduction_and_control_separation_pilot",
+    "not_a_claim_of": [
+     "period-appropriate historical indexing",
+     "validated discovery ground truth",
+     "population-wide gap detection",
+     "original metric-v3 source readiness",
+     "validity outside the biomedical academic literature represented by BioASQ"
+    ],
+    "readiness_contribution": 0
+   },
+   "freeze_timing": {
+    "full_source_audit_seen": true,
+    "bounded_field_semantics_result_seen": true,
+    "positive_source_cases_seen": true,
+    "metric_blind_control_queue_seen": true,
+    "all_unique_case_endpoint_and_bridge_mappings_checked_in_pinned_mesh_2013": true,
+    "unique_mapping_count_checked": 46,
+    "case_endpoint_support_counts_seen": false,
+    "bioasq_pilot_metric_formula_seen": false,
+    "bioasq_pilot_scores_or_ranks_seen": false,
+    "legacy_failed_openalex_metric_outputs_seen": true,
+    "disclosure": "The source, case identities, mappings, and prior failed OpenAlex metrics were known before freeze. No support count, BioASQ pilot formula, score, rank, or held-out result was inspected."
+   },
+   "inputs": {
+    "snapshot_audit": {
+     "path": "benchmarks/v3/manifests/bioasq-2013-task-a.json",
+     "sha256": "7545ce6b2062315244af3d71fa4b476ff26277d36b6377dd3e210c23c53e1f6c"
+    },
+    "snapshot_transport": {
+     "sha256": "c4f738af8835b9fc300488d484efd633fd4137b149cd852b66a839651e328f68",
+     "bytes": 5471741580
+    },
+    "field_semantics_audit": {
+     "path": "benchmarks/v3/manifests/bioasq-2013-semantics.json",
+     "sha256": "88e93e5f5b36871234218e8236b25c53de9eb803c3e80d26dce6e4161e849e6d"
+    },
+    "positive_candidate_ledger": {
+     "path": "benchmarks/v3/candidates.json",
+     "sha256": "7b8552114859afb5f47bea0c6757aeb120ce67c6e8b143212efc2c243de8bdc5"
+    },
+    "negative_selection_protocol": {
+     "path": "benchmarks/v3/negative-selection.json",
+     "sha256": "f4b250a1b7322a20940f045f528f4c75018f9a8ecafb378d25d29bdde9904a75"
+    },
+    "negative_candidate_queue": {
+     "path": "artifacts/negative-candidates.json",
+     "sha256": "87c3662af83f450d8d738499e6ff4ec50a127171ab4f0ed209e488f68d828c26"
+    },
+    "descriptor_vocabulary": {
+     "year": 2013,
+     "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/2013/xmlmesh/desc2013.gz",
+     "sha256": "c928973ae228ebd03ceeec8950b31f63a867fc9dc2699ae1578e506f25739740",
+     "bytes": 16103897,
+     "descriptor_count": 26853
+    }
+   },
+   "case_population": {
+    "total_cases": 21,
+    "split_counts": {
+     "development": 11,
+     "heldout": 10
+    },
+    "heldout_disclosure": "Held-out identities are public and known to the author. Held-out means score-unseen and excluded from formula choice or revision, not identity-blinded.",
+    "positives": {
+     "population_definition": "All five Cancer Discovery cases used in the LION evaluation and present in the pinned candidate ledger; no case was selected by a lacuna metric result.",
+     "label_scope": "source_labeled_lion_reproduction_case_not_independently_validated_discovery_truth",
+     "count": 5,
+     "split_rule": {
+      "method": "sha256_bottom_2_case_ids_are_heldout",
+      "hash_namespace": "lacuna-bioasq-pilot-v1-positive-split",
+      "hash_input": "utf8(hash_namespace + NUL + case_id)",
+      "tie_breaker": "case_id_ascending",
+      "development_count": 3,
+      "heldout_count": 2
+     },
+     "cases": [
+      {
+       "id": "lion-nfkb-adenoma",
+       "split": "development",
+       "selection_hash": "b7beb610031595e1b0ee84b3a737c02e3392c92d04a1d4a8567bfcaaa733dddd",
+       "cutoff": "2011-12-31",
+       "source_discovery_year": 2016,
+       "endpoint_a": {
+        "descriptor_ui": "D016328",
+        "descriptor_label": "NF-kappa B"
+       },
+       "bridge_b": {
+        "descriptor_ui": "D019253",
+        "descriptor_label": "Proto-Oncogene Proteins c-bcl-2"
+       },
+       "target_c": {
+        "descriptor_ui": "D000236",
+        "descriptor_label": "Adenoma"
+       }
+      },
+      {
+       "id": "lion-notch1-cebpb",
+       "split": "development",
+       "selection_hash": "91e79a228fcf18294b1f6ca06aa992e0cef0692be484bb3334017d536f21916a",
+       "cutoff": "2011-12-31",
+       "source_discovery_year": 2016,
+       "endpoint_a": {
+        "descriptor_ui": "D051881",
+        "descriptor_label": "Receptor, Notch1"
+       },
+       "bridge_b": {
+        "descriptor_ui": "D016922",
+        "descriptor_label": "Cell Aging"
+       },
+       "target_c": {
+        "descriptor_ui": "D022782",
+        "descriptor_label": "CCAAT-Enhancer-Binding Protein-beta"
+       }
+      },
+      {
+       "id": "lion-il17-mkp1",
+       "split": "heldout",
+       "selection_hash": "17cbb16e0b04c1dd2268b49e4bf3f71e74d95b2679204d7de674a50a8cdcbcf6",
+       "cutoff": "2010-12-31",
+       "source_discovery_year": 2015,
+       "endpoint_a": {
+        "descriptor_ui": "D020381",
+        "descriptor_label": "Interleukin-17"
+       },
+       "bridge_b": {
+        "descriptor_ui": "D048051",
+        "descriptor_label": "p38 Mitogen-Activated Protein Kinases"
+       },
+       "target_c": {
+        "descriptor_ui": "D054638",
+        "descriptor_label": "Dual Specificity Phosphatase 1"
+       }
+      },
+      {
+       "id": "lion-nrf2-pancreatic-cancer",
+       "split": "heldout",
+       "selection_hash": "35df6dbf987587076560c6708df44843a1aa2d51fad3a8d86197686ed1bfa3fc",
+       "cutoff": "2006-12-31",
+       "source_discovery_year": 2011,
+       "endpoint_a": {
+        "descriptor_ui": "D051267",
+        "descriptor_label": "NF-E2-Related Factor 2"
+       },
+       "bridge_b": {
+        "descriptor_ui": "D017382",
+        "descriptor_label": "Reactive Oxygen Species"
+       },
+       "target_c": {
+        "descriptor_ui": "D010190",
+        "descriptor_label": "Pancreatic Neoplasms"
+       }
+      },
+      {
+       "id": "lion-cxcl12-thyroid-cancer",
+       "split": "development",
+       "selection_hash": "9852a6d0eeb40c27e43a189f7c94a304c151ebe19dd9bf4536a939ab040b37fb",
+       "cutoff": "2012-12-31",
+       "source_discovery_year": 2017,
+       "endpoint_a": {
+        "descriptor_ui": "D054377",
+        "descriptor_label": "Chemokine CXCL12"
+       },
+       "bridge_b": {
+        "descriptor_ui": "D016922",
+        "descriptor_label": "Cell Aging"
+       },
+       "target_c": {
+        "descriptor_ui": "D013964",
+        "descriptor_label": "Thyroid Neoplasms"
+       }
+      }
+     ]
+    },
+    "controls": {
+     "population_definition": "Every entry in the pinned 16-item metric-blind negative review queue, preserving its proposed kind, cutoff, and split.",
+     "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+     "status_at_freeze": "proposed_zero_readiness",
+     "counts": {
+      "hard_negative": {
+       "development": 4,
+       "heldout": 4
+      },
+      "distant_negative": {
+       "development": 4,
+       "heldout": 4
+      }
+     },
+     "ids_by_kind_and_split": {
+      "hard_negative": {
+       "development": [
+        "generated-hard-2012-01-d001174-d014143",
+        "generated-hard-2012-03-d016496-d041382",
+        "generated-hard-2013-01-d004309-d007389",
+        "generated-hard-2013-03-d016082-d055609"
+       ],
+       "heldout": [
+        "generated-hard-2012-02-d003652-d010169",
+        "generated-hard-2012-04-d019956-d019960",
+        "generated-hard-2013-02-d004553-d025802",
+        "generated-hard-2013-04-d005685-d009844"
+       ]
+      },
+      "distant_negative": {
+       "development": [
+        "generated-distant-2012-01-d011651-d013783",
+        "generated-distant-2012-03-d009008-d008888",
+        "generated-distant-2013-01-d008438-d057141",
+        "generated-distant-2013-03-d004620-d004581"
+       ],
+       "heldout": [
+        "generated-distant-2012-02-d047229-d011337",
+        "generated-distant-2012-04-d008524-d055700",
+        "generated-distant-2013-02-d029902-d003887",
+        "generated-distant-2013-04-d011372-d013177"
+       ]
+      }
+     }
+    }
+   },
+   "source_transform": {
+    "publication_cutoff": "include_article_if_normalized_publication_year_lte_case_cutoff_year",
+    "year_normalisation": "strip_text_then_parse_full_digits_else_first_four_digit_token_not_adjacent_to_a_digit",
+    "descriptor_identity": "exact_mesh_2013_descriptor_ui_resolved_from_normalized_bioasq_label",
+    "article_contribution": "binary_unique_descriptor_set_per_article",
+    "cooccurrence_unit": "number_of_articles_containing_both_descriptors",
+    "direct_endpoint_cooccurrences": "retain_and_report_exactly; never delete A-C articles for a named case",
+    "candidate_target_universe": "all_non_seed_descriptors_with_at_least_primary_minimum_support_articles_at_the_case_cutoff",
+    "primary_minimum_support_articles": 10,
+    "support_sensitivity_articles": [
+     5,
+     20
+    ],
+    "excluded_from_candidate_universe": [
+     "the seed descriptor itself",
+     "descriptors absent from the cutoff slice",
+     "descriptors below the active minimum-support threshold"
+    ],
+    "ontology_relatives_policy": "Do not remove parent, child, or sibling descriptors before ranking; the hard controls exist to measure that confounder.",
+    "bridge_policy": "The named B is a traceability diagnostic, not a supervised feature or label. Candidate methods must expose corpus-derived bridge terms for every evaluated target."
+   },
+   "source_compatibility_gate": {
+    "must_run_before_metric_formula_selection": true,
+    "required_case_count": 21,
+    "requirements": [
+     "Every endpoint and named positive bridge resolves to exactly one pinned MeSH 2013 descriptor UI.",
+     "Every seed A and target C has at least 10 source articles at its primary cutoff.",
+     "Every target C belongs to the primary candidate universe for its seed and cutoff.",
+     "Every case records exact endpoint marginals, A-C cooccurrence, and named-positive bridge marginals without a ranking score."
+    ],
+    "failure_outcome": "pilot_inconclusive_source_coverage",
+    "replacement_policy": "Do not replace, drop, or relabel an incompatible case after seeing support. Freeze a separately named successor protocol before any metric output if this source population is inadequate."
+   },
+   "metric_isolation": {
+    "formula_contract_required_before_scores": true,
+    "formula_contract_must_be_separately_checksum_pinned": true,
+    "metric_inputs_may_not_include": [
+     "case kind",
+     "development or heldout split",
+     "source discovery year",
+     "named target identity as a feature",
+     "named positive bridge identity as a feature",
+     "any LLM-generated feature"
+    ],
+    "development_policy": "Development cases may be inspected only after the initial formula contract is frozen. At most one documented formula revision is allowed.",
+    "heldout_policy": "Do not compute, cache, log, or persist held-out scores until the final post-development formula contract is frozen.",
+    "candidate_formula_revision_limit": 1
+   },
+   "ranking_contract": {
+    "primary_orientation": "rank target C conditioned on seed A",
+    "candidate_order": "descending metric score",
+    "tie_policy": "conservative worst tied rank",
+    "one_based_rank": "count(candidate_score >= target_score)",
+    "rank_fraction": "one_based_rank / eligible_candidate_count",
+    "top_5_percent": "rank_fraction <= 0.05",
+    "top_1_percent_and_top_100": "diagnostic_only",
+    "reciprocal_c_to_a_orientation": "diagnostic_only_and_cannot_change_the_primary_decision"
+   },
+   "heldout_decision_rule": {
+    "evaluability_requirement": "All 10 held-out cases pass the primary source-compatibility gate; otherwise the outcome is pilot_inconclusive_source_coverage.",
+    "positive_requirement": "At least 1 of 2 held-out source-labelled LION targets ranks in the top 5 percent.",
+    "hard_control_requirement": "Zero of 4 held-out ontology-sibling hard controls ranks in the top 5 percent.",
+    "distant_control_requirement": "All 4 held-out cross-branch distant controls rank below the median, meaning rank_fraction > 0.5.",
+    "sensitivity_requirement": "The three held-out requirements must also hold at minimum-support settings 5 and 20; an unevaluable sensitivity setting is not a pass.",
+    "passing_label": "pilot_signal_consistent_with_frozen_source_labeled_separation_rule",
+    "failing_label": "pilot_signal_not_reproduced",
+    "inconclusive_label": "pilot_inconclusive_source_coverage",
+    "readiness_contribution": 0
+   },
+   "reporting_requirements": [
+    "Publish all development and held-out case ranks, eligible-universe sizes, rank fractions, endpoint marginals, exact A-C cooccurrence counts, and surfaced bridge terms.",
+    "Keep source-labelled positives, ontology-generated controls, and measured metric outputs structurally distinct.",
+    "Report every non-evaluable case without denominator shrinkage or post-result replacement.",
+    "Report primary and sensitivity outcomes even when they disagree.",
+    "A passing label supports only this BioASQ secondary-snapshot pilot signal and cannot be called metric-v3 validation or gap discovery."
+   ],
+   "limitations": [
+    "BioASQ supplies a single 2013 secondary snapshot, not the missing 2007, 2011, 2012, and 2013 NLM baseline releases.",
+    "Filtering article publication year does not reconstruct the MeSH assignments visible at each historical cutoff; all descriptor identities are resolved through MeSH 2013.",
+    "The five positive cases are source-labelled LION reproduction cases and have not all passed independent discovery-truth adjudication.",
+    "The sixteen controls are metric-blind ontology proposals, not proof that a relation is absent in academic or non-academic knowledge.",
+    "Held-out identities are public, so a passing result is weaker than identity-blinded external validation.",
+    "BioASQ and MeSH omit or thinly represent craft, practitioner, indigenous, humanities, historical, and other non-academic knowledge.",
+    "No outcome from this protocol contributes metric-v3 readiness or authorizes an LLM interpretation layer."
+   ]
+  },
   "entries": [
    {
     "id": "bioasq-2013-task-a",
@@ -4850,16 +5167,21 @@
      "path": "benchmarks/v3/manifests/bioasq-2013-semantics.json",
      "sha256": "88e93e5f5b36871234218e8236b25c53de9eb803c3e80d26dce6e4161e849e6d"
     },
+    "pilot_protocol": {
+     "path": "benchmarks/v3/bioasq-pilot.json",
+     "sha256": "0b8f33b3d35d6d4db94b553af27f0535f0374d81f49545ab2b7c5bbe5d97697e"
+    },
     "potential_role": "A separately pre-registered pilot over the measured secondary corpus after a successor semantics protocol explicitly handles its observed publication-year scope. It may support post-snapshot discovery cases but is not an NLM baseline substitute.",
     "blockers": [
      "The acquired payload matches all three published aggregate counts, but its measured publication-year scope does not match the reported post-1949 scope: 280 records are dated 1946-1949. All years are parseable, although 751,238 values are not plain YYYY.",
      "The 448-record balanced audit is consistent with meshMajor containing all assigned descriptors under maintained-current PubMed: 5,201 of 5,296 assignments match all descriptors and 455 match MajorTopicYN=Y headings. It is not population-weighted, period-appropriate, or evidence of corpus completeness.",
      "The original 416-record protocol remains immutable. Its separately named 448-record successor and checksum-pinned bounded result retain every original threshold and contribute zero readiness.",
+     "A separate 21-case secondary-snapshot pilot is frozen before endpoint-support measurement or formula selection. Its five LION cases are source-labelled reproduction targets and its sixteen controls remain ontology-generated proposals, not independently validated discovery truth or verified absences.",
      "The measured secondary corpus is not the complete 21,508,439-record 2013 NLM baseline, and the two totals are not a measured coverage fraction.",
      "Only a 2013 snapshot is relevant here, so it cannot supply the missing 2007, 2011, and 2012 releases.",
      "Using it changes the experimental population and therefore requires a new pre-registration rather than a source-status flip."
     ],
-    "next_action": "Use the bounded field-semantics result only to pre-register a separate secondary-snapshot pilot, including its case population and success criteria, before running or tuning any candidate metric."
+    "next_action": "Run the frozen pilot's score-free source-compatibility audit over all 21 cases. If every endpoint satisfies the predeclared support gate, freeze a separate formula contract before computing any development score; otherwise record pilot_inconclusive_source_coverage without replacing cases."
    },
    {
     "id": "current-pubmed-frozen-surrogate",

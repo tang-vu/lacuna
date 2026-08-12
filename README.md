@@ -311,6 +311,14 @@ population estimate, historical indexing reconstruction, or completeness result.
 audit status remains `measured_unmatched_input`; the
 `--require-declared-match` command is expected to fail. Readiness remains zero.
 
+The next experiment is now frozen separately in `benchmarks/v3/bioasq-pilot.json`, before any
+BioASQ endpoint-support count, pilot formula, score, or rank was inspected. It includes the complete
+five-case LION Cancer Discovery population plus all sixteen metric-blind structural-control
+proposals: 11 development and 10 held-out cases. The positive held-out split is deterministic
+SHA-256 bottom-2. The first gate is score-free source compatibility for all 21 cases; an
+incompatible endpoint makes the pilot inconclusive and cannot be silently replaced. Even a later
+passing pilot label contributes zero metric-v3 readiness and is not discovery validation.
+
 ## Deployment
 
 The static site is deployed from `main` by the Git-integrated Cloudflare Pages project `lacuna`.

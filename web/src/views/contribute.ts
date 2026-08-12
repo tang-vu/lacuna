@@ -534,6 +534,7 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
   const successorProtocol = status.source_alternatives.bioasq_successor_protocol;
   const semanticsAudit = status.source_alternatives.bioasq_semantics_audit;
   const semanticsOverall = semanticsAudit.maintained_current_pubmed_comparison.overall;
+  const pilot = status.source_alternatives.bioasq_pilot_protocol;
 
   return el('section', { class: 'contribution-missions', id: 'contribute' }, [
     el('div', { class: 'section-kicker' }, ['THE OPEN WORK']),
@@ -576,8 +577,13 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
           'descriptors, versus ' +
           `${semanticsOverall.matched_current_major_topic_assignments.toLocaleString()} major-topic ` +
           `matches. The frozen sample rule ${semanticsAudit.decision_checks.passed ? 'passed' : 'did not pass'}, ` +
-          'but this is neither population-weighted nor period-appropriate and still contributes ' +
-          'zero readiness.',
+          'but this is neither population-weighted nor period-appropriate. A separate ' +
+          `${pilot.case_population.total_cases}-case pilot is now frozen with ` +
+          `${pilot.case_population.split_counts.development} development and ` +
+          `${pilot.case_population.split_counts.heldout} held-out cases before support counts or ` +
+          'formula selection. Its LION targets are source-labelled and its controls remain ' +
+          'ontology-generated proposals; the next gate is score-free source compatibility. ' +
+          'Both the semantics result and pilot contribute zero readiness.',
         progress(
           pinnedSources,
           sourceStatuses.length,

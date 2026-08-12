@@ -23,7 +23,7 @@ benchmark without changing the experimental population.
 
 | Candidate | Dated citation-to-MeSH state | Fixed declared corpus | Current decision |
 |---|---|---|---|
-| BioASQ Task 1a v2013 | Yes, described with MeSH 2013 labels | 10,876,004 articles measured; reported post-1949 scope does not match | Pre-register a separate secondary-snapshot pilot; keep the original gate red |
+| BioASQ Task 1a v2013 | Yes, described with MeSH 2013 labels | 10,876,004 articles measured; reported post-1949 scope does not match | Run the frozen score-free 21-case compatibility audit; keep the original gate red |
 | Current PubMed baseline frozen locally | No historical state; indexing is maintained-current | A complete current release can be pinned | Engineering and future prospective work only |
 | Persistent PubMed Abstracts | Dated titles and abstracts, but no historical MeSH assignments | Dated text snapshots are documented | Rejected for metric-v3 historical indexing |
 | Europe PMC current bulk services | Current literature metadata and selected full-text bulk sets | Current collections, not the required old MEDLINE baselines | Not a historical-baseline replacement |
@@ -164,6 +164,35 @@ PubMed is maintained-current rather than frozen in 2013; 95 assignments do not m
 descriptor; and the source still fails its reported publication-scope gate. The result contributes
 zero readiness and does not replace any missing NLM historical release.
 
+## Secondary-snapshot pilot frozen
+
+`benchmarks/v3/bioasq-pilot.json` was frozen on 2026-08-12 after the source, semantics, case
+identities, and descriptor mappings were known but before endpoint-support counts, a BioASQ pilot
+formula, scores, or ranks. The positive population is complete rather than convenience-selected:
+all five Cancer Discovery cases used in the LION evaluation. SHA-256 bottom-2 assigns IL-17/MKP-1
+and Nrf2/pancreatic cancer to held-out; the other three are development cases. All sixteen entries
+from the separately frozen negative-control queue are retained with their proposed split, for 21
+cases total: 11 development and 10 held-out.
+
+The labels deliberately remain asymmetric in evidential strength. The five positives are
+source-labelled LION reproduction targets, not independently validated discovery truth. The eight
+hard and eight distant controls are metric-blind ontology-generated proposals, not evidence that no
+relationship or non-academic knowledge exists. The protocol tests reproduction and structural-
+control separation inside one secondary snapshot; it does not validate a gap detector.
+
+The score-free compatibility gate requires every case endpoint to map uniquely to MeSH 2013 and
+have at least ten articles at its source cutoff. All 46 unique endpoint and positive-bridge mappings
+have already been checksum-replayed against the pinned MeSH 2013 archive, but support remains
+unseen. A support failure produces `pilot_inconclusive_source_coverage`; cases cannot be dropped or
+replaced. Only after a compatible result may a separately checksum-pinned formula contract be
+written. Development permits one documented revision, and held-out scores must not be computed or
+persisted before the final formula freeze.
+
+The later held-out signal rule is also fixed: at least one of two positive targets in the top 5%,
+no hard control in the top 5%, and all four distant controls below the median, repeated at minimum
+supports 5, 10, and 20. A consistent signal remains a BioASQ pilot result with zero readiness; it is
+not metric-v3 validation, period-appropriate reconstruction, or permission to add LLM output.
+
 ## Implemented streaming audit
 
 `python -m pipeline.benchmark.bioasq_snapshot` now reads plain JSON, gzip, or a ZIP containing one
@@ -199,8 +228,8 @@ python -m pipeline.benchmark.bioasq_snapshot \
 The first semantics protocol remains unchanged: its strict sampler correctly rejects the 280
 records outside its 1950-2013 strata. Reproduce the completed bounded audit only with the pinned
 successor, replay the selection before network access, and write outputs to review paths. The next
-scientific action is a separate pre-registration for a secondary-snapshot pilot, not a status flip
-for the original NLM-baseline gate, which remains visible and red.
+scientific action is the frozen pilot's score-free compatibility audit, not a status flip for the
+original NLM-baseline gate, which remains visible and red.
 
 ## Primary documentation
 
@@ -209,6 +238,7 @@ for the original NLM-baseline gate, which remains visible and red.
 - [BioASQ public Task 1a sample](https://participants-area.bioasq.org/download/sampleData/task1a/)
 - [BioASQ 2013 challenge operation report](https://bioasq.org/sites/default/files/PublicDocuments/BioASQ_D4.4-Report-On-Challenge-operation-and-technical-support-1_final.pdf)
 - [BioASQ first challenge announcement](https://www.bioasq.org/news/bioasq-1st-official-announcement)
+- [Pyysalo et al. (2019), LION LBD and its five Cancer Discovery evaluation cases](https://doi.org/10.1093/bioinformatics/bty845)
 - [NLM 2013 baseline inventory](https://www.nlm.nih.gov/bsd/licensee/2013_stats/baseline_med_filecount.html)
 - [NLM Persistent PubMed Abstracts documentation](https://bionlp.nlm.nih.gov/persistentAbstracts.html)
 - [Europe PMC bulk-download documentation](https://dev.europepmc.org/downloads)
