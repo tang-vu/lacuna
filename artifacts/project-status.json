@@ -1,15 +1,15 @@
 {
- "schema_version": 13,
+ "schema_version": 14,
  "status": "not_ready",
  "inputs": {
   "historical_sources": {
    "path": "benchmarks/v3/sources.json",
-   "sha256": "7922b92a8e7d1d587fe87b1fef4085086eb26fed1b045d38594d3575ff7684d7",
+   "sha256": "7ec327f54bf7166a6c92034f04e7766937dd743b3aba793e7b6327f774309ba5",
    "canonicalisation": "canonical-json-v1"
   },
   "source_alternatives": {
    "path": "benchmarks/v3/source-alternatives.json",
-   "sha256": "9489ed98929d0af94324a0eccd2559cedfd23dfd0d7905a8e445f4cc43b55ab5",
+   "sha256": "c0f73883ae566a797575cf18581f62bccba59b5501bf447452d21c84868b4d3f",
    "canonicalisation": "canonical-json-v1"
   },
   "bioasq_snapshot_audit": {
@@ -40,6 +40,11 @@
   "bioasq_pilot_compatibility_audit": {
    "path": "benchmarks/v3/manifests/bioasq-pilot-compatibility.json",
    "sha256": "0a8db015ccde1850bd79edd0092e8eea278f77223468d99e727783b662e29b2b",
+   "canonicalisation": "canonical-json-v1"
+  },
+  "bioasq_pilot_successor_protocol": {
+   "path": "benchmarks/v3/bioasq-pilot-v2.json",
+   "sha256": "ac331130f01ef31cd6ee3d50668fe898e5d510fbcb551a0166666f974d49f782",
    "canonicalisation": "canonical-json-v1"
   },
   "historical_inventories": {
@@ -5958,6 +5963,150 @@
     "No result here contributes metric-v3 readiness or permits an LLM interpretation layer."
    ]
   },
+  "bioasq_pilot_successor_protocol": {
+   "schema_version": 1,
+   "id": "bioasq-secondary-pilot-v2-source-informed",
+   "status": "frozen_after_source_compatibility_before_metric_formula",
+   "frozen_on": "2026-08-12",
+   "source_alternative_id": "bioasq-2013-task-a",
+   "claim_boundary": {
+    "experiment_class": "source_informed_secondary_snapshot_reproduction_and_control_separation_pilot",
+    "not_a_claim_of": [
+     "period-appropriate historical indexing",
+     "validated discovery ground truth",
+     "independent identity-blinded holdout",
+     "population-wide gap detection",
+     "original metric-v3 source readiness",
+     "generalization beyond biomedicine"
+    ],
+    "readiness_contribution": 0
+   },
+   "predecessor": {
+    "protocol": {
+     "path": "benchmarks/v3/bioasq-pilot.json",
+     "sha256": "0b8f33b3d35d6d4db94b553af27f0535f0374d81f49545ab2b7c5bbe5d97697e"
+    },
+    "source_compatibility_audit": {
+     "path": "benchmarks/v3/manifests/bioasq-pilot-compatibility.json",
+     "sha256": "dc61b13024cfc364ecf8246d254de544c0b4834dbc51c653458ecc9ac730ce95"
+    },
+    "terminal_status": "primary_source_compatible_but_sensitivity_20_unevaluable",
+    "preservation_rule": "The predecessor remains terminal and immutable; v2 does not retroactively turn it into a passing or metric-authorized experiment."
+   },
+   "freeze_timing": {
+    "case_identities_and_splits_seen": true,
+    "case_endpoint_support_counts_seen": true,
+    "case_direct_ac_cooccurrence_counts_seen": true,
+    "positive_named_bridge_support_and_cooccurrence_counts_seen": true,
+    "candidate_universe_sizes_at_support_5_10_20_seen": true,
+    "predecessor_sensitivity_blocker_seen": true,
+    "legacy_failed_openalex_metric_outputs_seen": true,
+    "bioasq_pilot_metric_formula_seen": false,
+    "bioasq_pilot_development_scores_or_ranks_seen": false,
+    "bioasq_pilot_heldout_scores_or_ranks_seen": false,
+    "disclosure": "This is a source-informed successor, not a source-blind preregistration. All source measurements in the pinned compatibility audit were visible before freeze; no BioASQ metric formula, score, rank, percentile, or surfaced bridge output was computed."
+   },
+   "successor_change": {
+    "reason": "The predecessor requires sensitivity 20 to pass, but one frozen held-out hard control has target support exactly 10 at its cutoff and is therefore unevaluable at 20 before any metric exists.",
+    "changed_rule": "Remove support 20 from the successor decision and retain primary support 10 plus lower-support sensitivity 5.",
+    "source_informed_status": "The change is explicitly informed by source coverage and weakens independence; it is not evidence that support 20 was scientifically undesirable.",
+    "unchanged_rules": [
+     "all 21 case identities, kinds, cutoffs, and development/heldout splits",
+     "source transform and exact descriptor identity",
+     "direct A-C article retention",
+     "primary minimum support 10",
+     "ranking orientation and conservative worst-tie rank",
+     "positive, hard-control, and distant-control held-out requirements",
+     "one development revision limit",
+     "zero readiness and no LLM interpretation"
+    ]
+   },
+   "case_population": {
+    "inherit_exactly_from_predecessor": true,
+    "total_cases": 21,
+    "split_counts": {
+     "development": 11,
+     "heldout": 10
+    },
+    "replacement_policy": "Do not drop, replace, relabel, or move any predecessor case after source measurement.",
+    "heldout_disclosure": "Held-out identities, marginals, direct A-C counts, and candidate-universe sizes are known. Held-out means metric-score-unseen and excluded from formula choice or revision; it is not identity-, source-, or analyst-blinded."
+   },
+   "source_compatibility": {
+    "primary_minimum_support_articles": 10,
+    "support_sensitivity_articles": [
+     5
+    ],
+    "all_21_cases_primary_eligible": true,
+    "all_10_heldout_cases_eligible_at_5_and_10": true,
+    "predecessor_support_20_blocker_ids": [
+     "generated-hard-2012-04-d019956-d019960"
+    ],
+    "metric_work_boundary": "A formula contract may be frozen only for this successor, never under the terminal predecessor."
+   },
+   "source_transform": {
+    "inherit_non_threshold_fields_from_predecessor": true,
+    "publication_cutoff": "include_article_if_normalized_publication_year_lte_case_cutoff_year",
+    "descriptor_identity": "exact_mesh_2013_descriptor_ui_resolved_from_normalized_bioasq_label",
+    "article_contribution": "binary_unique_descriptor_set_per_article",
+    "cooccurrence_unit": "number_of_articles_containing_both_descriptors",
+    "direct_endpoint_cooccurrences": "retain_and_report_exactly; never delete A-C articles for a named case",
+    "ontology_relatives_policy": "Do not remove parent, child, or sibling descriptors before ranking; the hard controls exist to measure that confounder."
+   },
+   "metric_isolation": {
+    "formula_contract_required_before_scores": true,
+    "formula_contract_must_be_separately_checksum_pinned": true,
+    "metric_inputs_may_not_include": [
+     "case kind",
+     "development or heldout split",
+     "source discovery year",
+     "named target identity as a feature",
+     "named positive bridge identity as a feature",
+     "case-specific support eligibility overrides",
+     "any LLM-generated feature"
+    ],
+    "development_policy": "Development cases may be inspected only after the initial v2 formula contract is frozen. At most one documented formula revision is allowed.",
+    "heldout_policy": "Do not compute, cache, log, or persist held-out metric scores, ranks, percentiles, or surfaced bridge outputs until the final post-development v2 formula contract is frozen.",
+    "candidate_formula_revision_limit": 1
+   },
+   "ranking_contract": {
+    "primary_orientation": "rank target C conditioned on seed A",
+    "candidate_order": "descending metric score",
+    "tie_policy": "conservative worst tied rank",
+    "one_based_rank": "count(candidate_score >= target_score)",
+    "rank_fraction": "one_based_rank / eligible_candidate_count",
+    "top_5_percent": "rank_fraction <= 0.05",
+    "top_1_percent_and_top_100": "diagnostic_only",
+    "reciprocal_c_to_a_orientation": "diagnostic_only_and_cannot_change_the_primary_decision"
+   },
+   "heldout_decision_rule": {
+    "evaluability_requirement": "All 10 frozen held-out cases must be evaluable at support 10 and sensitivity 5; denominator shrinkage is forbidden.",
+    "positive_requirement": "At least 1 of 2 held-out source-labelled LION targets ranks in the top 5 percent.",
+    "hard_control_requirement": "Zero of 4 held-out ontology-sibling hard controls ranks in the top 5 percent.",
+    "distant_control_requirement": "All 4 held-out cross-branch distant controls rank below the median, meaning rank_fraction > 0.5.",
+    "sensitivity_requirement": "The three held-out requirements must hold at both primary support 10 and lower-support sensitivity 5; an unevaluable case or disagreement is not a pass.",
+    "passing_label": "source_informed_pilot_signal_consistent_with_frozen_separation_rule",
+    "failing_label": "source_informed_pilot_signal_not_reproduced",
+    "inconclusive_label": "source_informed_pilot_inconclusive",
+    "readiness_contribution": 0
+   },
+   "reporting_requirements": [
+    "Publish predecessor and successor outcomes side by side; never erase the sensitivity-20 blocker.",
+    "Publish all development and held-out ranks, eligible-universe sizes, rank fractions, endpoint marginals, exact A-C counts, and surfaced bridge terms after the final formula freeze.",
+    "Keep source-labelled positives, ontology-generated controls, source measurements, and metric outputs structurally distinct.",
+    "Report primary-support and sensitivity-5 outcomes even when they disagree.",
+    "Label any passing result as source-informed and BioASQ-specific, with zero metric-v3 readiness."
+   ],
+   "limitations": [
+    "The successor was designed after case-specific source counts and a held-out coverage blocker were known.",
+    "The held-out layer is score-unseen but not identity-, source-, or analyst-blinded.",
+    "Removing sensitivity 20 is a disclosed feasibility redesign and can make the successor easier to evaluate than its predecessor.",
+    "The source is one secondary 2013 snapshot using MeSH 2013 labels, not period-appropriate historical indexing.",
+    "The five positives are source-labelled reproduction cases, not independently adjudicated discovery truth.",
+    "The sixteen controls are ontology-generated proposals, not verified absences of relationships or non-academic knowledge.",
+    "Public held-out identities make intentional or inadvertent method tailoring possible.",
+    "No result contributes metric-v3 readiness, validates a general gap detector, generalizes beyond biomedicine, or authorizes an LLM interpretation layer."
+   ]
+  },
   "entries": [
    {
     "id": "bioasq-2013-task-a",
@@ -6035,6 +6184,10 @@
      "path": "benchmarks/v3/manifests/bioasq-pilot-compatibility.json",
      "sha256": "dc61b13024cfc364ecf8246d254de544c0b4834dbc51c653458ecc9ac730ce95"
     },
+    "pilot_successor_protocol": {
+     "path": "benchmarks/v3/bioasq-pilot-v2.json",
+     "sha256": "48e8a9b932dfee884a4062bbe4a32da2353b74f6305bdf5e255810ed19cef833"
+    },
     "potential_role": "A separately pre-registered pilot over the measured secondary corpus after a successor semantics protocol explicitly handles its observed publication-year scope. It may support post-snapshot discovery cases but is not an NLM baseline substitute.",
     "blockers": [
      "The acquired payload matches all three published aggregate counts, but its measured publication-year scope does not match the reported post-1949 scope: 280 records are dated 1946-1949. All years are parseable, although 751,238 values are not plain YYYY.",
@@ -6042,11 +6195,12 @@
      "The original 416-record protocol remains immutable. Its separately named 448-record successor and checksum-pinned bounded result retain every original threshold and contribute zero readiness.",
      "A separate 21-case secondary-snapshot pilot is frozen before endpoint-support measurement or formula selection. Its five LION cases are source-labelled reproduction targets and its sixteen controls remain ontology-generated proposals, not independently validated discovery truth or verified absences.",
      "The score-free full-snapshot audit found all 21 cases source-compatible at the primary minimum support of 10. However, held-out hard control generated-hard-2012-04-d019956-d019960 has target support exactly 10 and is ineligible at sensitivity 20. The frozen rule says an unevaluable sensitivity is not a pass, so this pilot cannot earn its passing label and does not authorize metric work.",
+     "A separately named source-informed successor now preserves all 21 cases and replaces the infeasible sensitivity 20 with sensitivity 5 while keeping primary support 10. It discloses every source count seen before freeze, labels held-out cases score-unseen rather than independent, and remains at zero readiness.",
      "The measured secondary corpus is not the complete 21,508,439-record 2013 NLM baseline, and the two totals are not a measured coverage fraction.",
      "Only a 2013 snapshot is relevant here, so it cannot supply the missing 2007, 2011, and 2012 releases.",
      "Using it changes the experimental population and therefore requires a new pre-registration rather than a source-status flip."
     ],
-    "next_action": "Preserve the sensitivity-blocked pilot without computing a metric or changing its cases. If work continues, freeze a separately named successor before any metric output, disclose that source support is now known, and keep both experiments at zero readiness."
+    "next_action": "Preserve the sensitivity-blocked predecessor unchanged. For the source-informed successor only, checksum-pin a separate initial formula contract before computing any development output; do not compute or persist held-out metric output until the final post-development formula is frozen."
    },
    {
     "id": "current-pubmed-frozen-surrogate",

@@ -536,6 +536,7 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
   const semanticsOverall = semanticsAudit.maintained_current_pubmed_comparison.overall;
   const pilot = status.source_alternatives.bioasq_pilot_protocol;
   const compatibility = status.source_alternatives.bioasq_pilot_compatibility_audit;
+  const pilotV2 = status.source_alternatives.bioasq_pilot_successor_protocol;
   const sensitivityBlockerId = compatibility.decision.heldout_sensitivity_blockers['20'][0];
   const sensitivityBlocker = compatibility.measurement.cases.find(
     (entry) => entry.id === sensitivityBlockerId,
@@ -591,8 +592,13 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
           'the primary support of 10, but held-out hard control ' +
           `${sensitivityBlockerId ?? 'unknown'} has target support ` +
           `${sensitivityBlocker?.target_c.article_support ?? 'unknown'} and is therefore ineligible ` +
-          'at sensitivity 20. The frozen rule cannot pass, so this audit does not authorize metric ' +
-          'work. The semantics result, pilot, and source audit all contribute zero readiness.',
+          'at sensitivity 20. The predecessor cannot pass and its audit does not authorize metric ' +
+          'work. A separately named source-informed successor preserves all 21 cases, discloses ' +
+          'the known source counts, and uses primary support ' +
+          `${pilotV2.source_compatibility.primary_minimum_support_articles} plus sensitivity ` +
+          `${pilotV2.source_compatibility.support_sensitivity_articles.join(', ')}. Its next gate ` +
+          'is a separately checksum-pinned formula contract before development output. No metric ' +
+          'output exists, and every BioASQ layer still contributes zero readiness.',
         progress(
           pinnedSources,
           sourceStatuses.length,

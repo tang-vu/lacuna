@@ -115,6 +115,14 @@ sensitivity setting is not a pass. Consequently, this pilot cannot earn its pass
 not authorize formula selection or metric output. The pilot and cases remain unchanged; a
 continuation requires a separately named successor that discloses the now-known source counts.
 
+That successor is now frozen in `benchmarks/v3/bioasq-pilot-v2.json`, still before any BioASQ
+formula, score, rank, percentile, or surfaced bridge output. It preserves all 21 cases and splits,
+retains primary support 10, and replaces only the infeasible sensitivity 20 with lower-support
+sensitivity 5. This source-informed feasibility redesign weakens holdout independence: identities,
+marginals, direct A-C counts, and candidate-universe sizes are known. Held-out now means only
+metric-score-unseen and excluded from formula selection/revision. V2 remains BioASQ-specific and
+contributes zero readiness.
+
 Primary documentation:
 
 - [NLM annual baseline overview](https://www.nlm.nih.gov/bsd/licensee/baseline.html)
@@ -220,10 +228,11 @@ after seeing them.
    zero readiness. The secondary-snapshot experiment and complete case population were frozen, then
    its score-free 21-case audit found primary support adequate but sensitivity 20 unevaluable for
    one held-out hard control. Preserve this terminal pre-metric result without replacing cases or
-   selecting a formula. Freeze a separately named successor before metric output only if the pilot
-   is redesigned with the now-known source counts disclosed.
-5. For a valid successor only, run development cases, make at most one documented revision, then
-   freeze.
+   selecting a formula. A separately named source-informed successor is now frozen with the known
+   counts disclosed and all cases unchanged. Checksum-pin its initial formula contract before any
+   development output.
+5. For v2 only, run development cases after that formula freeze, make at most one documented
+   revision, then freeze the final formula before held-out output.
 6. Run held-out cases and the manual audit.
 7. Only after a pass, design the LLM interpretation schema and pair-detail UI.
 

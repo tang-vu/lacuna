@@ -195,6 +195,15 @@ therefore sets `metric_work_authorized_by_this_audit` to `false`. The original p
 remain immutable; a continuation needs a separately named successor frozen before metric output
 and must disclose that support counts are now known.
 
+That successor is now frozen as `benchmarks/v3/bioasq-pilot-v2.json`. It preserves the exact 21
+case identities, kinds, cutoffs, and splits. It retains primary support 10 and replaces only the
+infeasible upper sensitivity 20 with lower-support sensitivity 5. The change is source-informed,
+not evidence that support 20 is generally undesirable, and it weakens holdout independence. V2
+explicitly records that endpoint marginals, direct A-C counts, positive named-bridge counts, and
+candidate-universe sizes were visible before freeze. No BioASQ formula, development output, or
+held-out metric output had been computed. Its next permitted artifact is a separately pinned
+initial formula contract; it also contributes zero readiness.
+
 The exact retained direct A-C counts for the five source-labelled positives, in protocol order, are
 16, 0, 0, 0, and 5. Eight of sixteen generated controls have zero direct A-C articles; the other
 eight have positive counts from 1 to 121. These are source measurements, not evidence that the
@@ -241,9 +250,10 @@ python -m pipeline.benchmark.bioasq_snapshot \
 The first semantics protocol remains unchanged: its strict sampler correctly rejects the 280
 records outside its 1950-2013 strata. Reproduce the completed bounded audit only with the pinned
 successor, replay the selection before network access, and write outputs to review paths. The
-completed pilot audit is primary-compatible but sensitivity-blocked. The next scientific action is
-to preserve that result and, only if continuing, freeze a separately named pre-metric successor—not
-to flip the original NLM-baseline gate, which remains visible and red.
+completed v1 audit is primary-compatible but sensitivity-blocked and remains preserved. The
+source-informed v2 successor is now frozen before metric output. The next scientific action is to
+pin an explicit initial v2 formula contract—not to flip the original NLM-baseline gate, which
+remains visible and red.
 
 ## Primary documentation
 

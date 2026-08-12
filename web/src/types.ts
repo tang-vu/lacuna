@@ -342,6 +342,25 @@ export interface ProjectStatus {
         readiness_contribution: 0;
       };
     };
+    bioasq_pilot_successor_protocol: {
+      status: 'frozen_after_source_compatibility_before_metric_formula';
+      claim_boundary: { readiness_contribution: 0 };
+      freeze_timing: {
+        case_endpoint_support_counts_seen: true;
+        bioasq_pilot_metric_formula_seen: false;
+        bioasq_pilot_development_scores_or_ranks_seen: false;
+        bioasq_pilot_heldout_scores_or_ranks_seen: false;
+      };
+      case_population: {
+        total_cases: 21;
+        split_counts: { development: 11; heldout: 10 };
+      };
+      source_compatibility: {
+        primary_minimum_support_articles: 10;
+        support_sensitivity_articles: [5];
+        predecessor_support_20_blocker_ids: string[];
+      };
+    };
   };
   candidate_intake: {
     counts: { accepted: number; proposed: number; rejected: number };

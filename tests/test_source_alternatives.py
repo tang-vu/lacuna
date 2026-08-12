@@ -140,6 +140,14 @@ def test_bioasq_pilot_compatibility_audit_is_checksum_pinned(tmp_path):
         audit_source_alternatives(_write_payload(tmp_path, payload))
 
 
+def test_bioasq_pilot_successor_is_checksum_pinned(tmp_path):
+    payload = json.loads(ALTERNATIVES_PATH.read_text(encoding="utf-8"))
+    payload["alternatives"][0]["pilot_successor_protocol"]["sha256"] = "0" * 64
+
+    with pytest.raises(SourceAlternativeContractError, match="pilot v2 checksum mismatch"):
+        audit_source_alternatives(_write_payload(tmp_path, payload))
+
+
 def test_bioasq_full_snapshot_audit_is_checksum_pinned(tmp_path):
     payload = json.loads(ALTERNATIVES_PATH.read_text(encoding="utf-8"))
     payload["alternatives"][0]["snapshot_audit"]["sha256"] = "0" * 64

@@ -324,6 +324,13 @@ pre-registered sensitivity 20. Because the frozen rule says an unevaluable sensi
 pass, this pilot cannot earn its passing label and does not authorize metric work. No case was
 replaced, no formula or score was computed, and the result contributes zero metric-v3 readiness.
 
+`benchmarks/v3/bioasq-pilot-v2.json` is a separately named, source-informed successor frozen after
+that audit but still before any BioASQ formula or metric output. It preserves all 21 cases and
+splits, discloses that case-level source counts are known, and replaces the infeasible sensitivity
+20 with lower-support sensitivity 5 while retaining primary support 10. Its held-out layer is only
+score-unseen—not identity-, source-, or analyst-blinded. The next permitted action is to pin a
+separate initial formula contract before development output; v2 also contributes zero readiness.
+
 ## Deployment
 
 The static site is deployed from `main` by the Git-integrated Cloudflare Pages project `lacuna`.

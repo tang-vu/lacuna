@@ -92,8 +92,14 @@ python -m pipeline.benchmark.bioasq_pilot_compatibility --validate
 
 All cases pass primary support 10, but one held-out hard control is ineligible at sensitivity 20,
 so the frozen rule cannot pass and does not authorize metric work. Do not replace the case or alter
-the original protocol. Any continuation must be a separately named successor frozen before metric
-output and must disclose that source-support counts are now known.
+the original protocol. The separately named source-informed successor is checked with:
+
+```bash
+python -m pipeline.benchmark.validate_bioasq_pilot_v2
+```
+
+It preserves all cases, discloses that source-support counts are known, and remains pre-metric. Its
+next artifact must be a separately pinned formula contract before development output.
 
 The committed manifest pins canonical SHA-256 digests of the exact taxonomy and row content used
 to build each artifact. Canonicalisation excludes fetch timestamps and strips `mailto` and

@@ -12,7 +12,7 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 13
+    assert status["schema_version"] == 14
     assert status["status"] == "not_ready"
     assert status["historical_sources"] == {
         "ready": False,
@@ -119,6 +119,18 @@ def test_project_status_exposes_validator_results_without_claiming_readiness():
     assert compatibility["decision"]["frozen_heldout_rule_can_still_pass"] is False
     assert compatibility["decision"]["metric_work_authorized_by_this_audit"] is False
     assert compatibility["readiness_contribution"] == 0
+    pilot_v2 = status["source_alternatives"]["bioasq_pilot_successor_protocol"]
+    assert pilot_v2["status"] == "frozen_after_source_compatibility_before_metric_formula"
+    assert pilot_v2["case_population"]["total_cases"] == 21
+    assert pilot_v2["case_population"]["split_counts"] == {
+        "development": 11,
+        "heldout": 10,
+    }
+    assert pilot_v2["freeze_timing"]["case_endpoint_support_counts_seen"] is True
+    assert pilot_v2["freeze_timing"]["bioasq_pilot_metric_formula_seen"] is False
+    assert pilot_v2["source_compatibility"]["primary_minimum_support_articles"] == 10
+    assert pilot_v2["source_compatibility"]["support_sensitivity_articles"] == [5]
+    assert pilot_v2["claim_boundary"]["readiness_contribution"] == 0
     assert len(status["source_alternatives"]["entries"]) == 3
     assert status["candidate_intake"]["counts"] == {
         "accepted": 2,
@@ -210,6 +222,7 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
         "bioasq_semantics_audit",
         "bioasq_pilot_protocol",
         "bioasq_pilot_compatibility_audit",
+        "bioasq_pilot_successor_protocol",
         "historical_inventories",
         "mbr_preservation_capture",
         "candidate_intake",

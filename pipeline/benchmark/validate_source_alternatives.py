@@ -24,6 +24,7 @@ from pipeline.benchmark.bioasq_semantics import (
 )
 from pipeline.benchmark.bioasq_pilot_compatibility import audit_compatibility_manifest
 from pipeline.benchmark.validate_bioasq_pilot import audit_bioasq_pilot
+from pipeline.benchmark.validate_bioasq_pilot_v2 import audit_bioasq_pilot_v2
 from pipeline.paths import REPO_ROOT
 
 ALTERNATIVES_PATH = REPO_ROOT / "benchmarks" / "v3" / "source-alternatives.json"
@@ -279,6 +280,29 @@ def _audit_bioasq_compatibility_reference(value: object, context: str) -> None:
     )
 
 
+def _audit_bioasq_pilot_v2_reference(value: object, context: str) -> None:
+    _require(isinstance(value, dict), f"{context}: missing pilot v2 protocol")
+    _require(set(value) == {"path", "sha256"}, f"{context}: malformed protocol reference")
+    relative = Path(str(value["path"]))
+    _require(not relative.is_absolute() and ".." not in relative.parts, f"{context}: unsafe path")
+    path = REPO_ROOT / relative
+    _require(path.is_file(), f"{context}: referenced pilot v2 protocol is missing")
+    _require(
+        isinstance(value.get("sha256"), str)
+        and len(value["sha256"]) == 64
+        and _sha256_file(path) == value["sha256"],
+        f"{context}: pilot v2 checksum mismatch",
+    )
+    audit = audit_bioasq_pilot_v2(path)
+    _require(
+        audit.status == "frozen_after_source_compatibility_before_metric_formula"
+        and audit.total_cases == 21
+        and audit.sensitivity_supports == (5,)
+        and audit.readiness_contribution == 0,
+        f"{context}: pilot v2 scope drifted",
+    )
+
+
 def _audit_snapshot_reference(value: object, context: str) -> dict:
     _require(isinstance(value, dict), f"{context}: missing full snapshot audit")
     _require(set(value) == {"path", "sha256"}, f"{context}: malformed snapshot reference")
@@ -469,6 +493,10 @@ def audit_source_alternatives(
                     _audit_bioasq_compatibility_reference(
                         entry.get("pilot_compatibility_audit"),
                         f"{entry_id}.pilot_compatibility_audit",
+                    )
+                    _audit_bioasq_pilot_v2_reference(
+                        entry.get("pilot_successor_protocol"),
+                        f"{entry_id}.pilot_successor_protocol",
                     )
                     _require(
                         snapshot["measured"]["article_count"] == declared["article_count"]

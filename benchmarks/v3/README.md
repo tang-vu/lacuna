@@ -134,6 +134,13 @@ therefore excluded at sensitivity 20. The frozen held-out rule explicitly treats
 sensitivity as not passing, so the current pilot cannot earn a passing label and no formula work is
 authorized. The protocol remains unchanged and the audit contributes zero readiness.
 
+`bioasq-pilot-v2.json` is the separately named source-informed successor. It preserves every case,
+kind, cutoff, and split, explicitly records all source measurements seen before freeze, retains
+primary support 10, and replaces only the infeasible support-20 sensitivity with lower-support
+sensitivity 5. This is a disclosed feasibility redesign that weakens holdout independence; it is
+not a retroactive pass for v1. No BioASQ formula, development output, or held-out metric output had
+been computed at freeze, and v2 contributes zero readiness.
+
 Acquire and verify the public audit inputs with:
 
 ```bash
@@ -168,20 +175,23 @@ Validate the experiment boundary and completed source audit without computing a 
 python -m pipeline.benchmark.validate_bioasq_pilot
 python -m pipeline.benchmark.validate_bioasq_pilot --verify-local-mesh
 python -m pipeline.benchmark.bioasq_pilot_compatibility --validate
+python -m pipeline.benchmark.validate_bioasq_pilot_v2
 ```
 
 The second command additionally checks the ignored local MeSH 2013 archive and all 46 unique
 endpoint/bridge mappings. The third validates the committed identities, count constraints,
-sensitivity blocker, and zero-readiness decision without rescanning the ignored snapshot. A full
-source replay that requires byte-equivalent output is available with:
+sensitivity blocker, and zero-readiness decision without rescanning the ignored snapshot. The
+fourth validates v2's source-informed disclosure and unchanged case population. A full source
+replay that requires byte-equivalent output is available with:
 
 ```bash
 python -m pipeline.benchmark.bioasq_pilot_compatibility \
   data/medline-baseline/bioasq/PubMedWithMeSH.zip --verify
 ```
 
-Do not run a pilot metric after this result. A continuation needs a separately named successor
-frozen before any metric output and must disclose that source support is now known.
+Do not run a metric under the terminal v1 protocol. For v2, the next artifact must be a separately
+checksum-pinned initial formula contract before any development output. Held-out output must remain
+uncomputed until a final post-development formula contract is frozen.
 
 The retired repository homepage also has a checksum-pinned Common Crawl capture:
 
