@@ -14,6 +14,7 @@ from pipeline.benchmark.autonomous_t0 import (
     _download_verified_transport,
     _promote_verified_part,
     audit_remote_inventory,
+    audit_sealed_t0,
     discover_remote_inventory,
     download_t0_sources,
     seal_local_t0,
@@ -414,6 +415,13 @@ def test_local_seal_requires_every_file_checks_hashes_and_refuses_overwrite(tmp_
         (2, 2, "pubmed26n0002.xml.gz"),
     ]
     assert all(len(item["sha256"]) == 64 for item in manifest["pubmed_baseline"]["files"])
+    audit = audit_sealed_t0(output, inventory_path)
+    assert audit.pubmed_file_count == 2
+    assert audit.pubmed_record_count == 2
+    assert audit.pubmed_bytes == first.stat().st_size + second.stat().st_size
+    assert audit.mesh_descriptor_count == 1
+    assert audit.state == "awaiting_frozen_metric"
+    assert audit.readiness_contribution == 0
     with pytest.raises(AutonomousT0Error, match="refusing to overwrite"):
         seal_local_t0(inventory_path, baseline_dir, mesh, output)
 
@@ -455,6 +463,36 @@ def test_local_seal_rejects_an_unsafe_worker_count_before_writing(tmp_path):
         )
 
     assert not output.exists()
+
+
+def test_sealed_t0_audit_rejects_record_count_drift(tmp_path):
+    baseline_dir = tmp_path / "baseline"
+    baseline_dir.mkdir()
+    first = baseline_dir / "pubmed26n0001.xml.gz"
+    second = baseline_dir / "pubmed26n0002.xml.gz"
+    _write_pubmed_file(first, "1")
+    _write_pubmed_file(second, "2")
+    mesh = tmp_path / "desc2026.gz"
+    mesh.write_bytes(_mesh_bytes())
+    fetch, _files = _remote_fixture()
+    inventory = discover_remote_inventory(
+        release_year=2026,
+        observed_on=date(2026, 8, 12),
+        fetch=fetch,
+        workers=2,
+    )
+    for item, path in zip(inventory["pubmed_baseline"]["files"], (first, second), strict=True):
+        item["official_md5"] = hashlib.md5(path.read_bytes()).hexdigest()
+    inventory_path = tmp_path / "remote-inventory.json"
+    inventory_path.write_text(json.dumps(inventory), encoding="utf-8")
+    output = tmp_path / "sealed-t0.json"
+    seal_local_t0(inventory_path, baseline_dir, mesh, output)
+    payload = json.loads(output.read_text(encoding="utf-8"))
+    payload["pubmed_baseline"]["files"][0]["total_record_count"] = 2
+    output.write_text(json.dumps(payload), encoding="utf-8")
+
+    with pytest.raises(AutonomousT0Error, match="record subtotal drifted"):
+        audit_sealed_t0(output, inventory_path)
 
 
 def test_exclusive_json_writer_never_replaces_prior_evidence(tmp_path):

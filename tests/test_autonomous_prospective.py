@@ -11,15 +11,15 @@ from pipeline.benchmark.validate_autonomous_prospective import (
 )
 
 
-def test_active_protocol_has_no_human_dependency_and_abstains_until_t0():
+def test_active_protocol_has_sealed_t0_no_human_dependency_and_no_metric_claim():
     audit = audit_autonomous_prospective()
 
     assert audit.protocol_id == "autonomous-prospective-pubmed-link-emergence-v1"
-    assert audit.state == "awaiting_t0_baseline"
+    assert audit.state == "awaiting_frozen_metric"
     assert audit.verdict == "not_ready"
     assert audit.human_dependency_count == 0
     assert audit.readiness_contribution == 0
-    assert len(audit.blockers) == 4
+    assert len(audit.blockers) == 3
     assert audit.ready is False
 
 
@@ -63,6 +63,17 @@ def test_protocol_rejects_remote_inventory_identity_drift(tmp_path):
 
     with pytest.raises(AutonomousProspectiveContractError, match="remote inventory identity"):
         audit_autonomous_prospective(path)
+
+
+def test_protocol_rejects_sealed_t0_manifest_identity_drift(tmp_path):
+    payload = json.loads(PROTOCOL_PATH.read_text(encoding="utf-8"))
+    payload["source_contract"]["t0_manifest"]["sha256"] = "0" * 64
+    path = tmp_path / "protocol.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+
+    with pytest.raises(AutonomousProspectiveContractError, match="sealed T0 manifest identity"):
+        audit_autonomous_prospective(path)
+
 
 def test_protocol_rejects_power_threshold_or_current_readiness_drift(tmp_path):
     payload = json.loads(PROTOCOL_PATH.read_text(encoding="utf-8"))

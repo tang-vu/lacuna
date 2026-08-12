@@ -203,14 +203,15 @@ Persistent project rules live in `AGENTS.md`. Repeatable workflows are repositor
 
 ## Contributing
 
-The active validation contract now has no human label, review, or adjudication dependency. A
-versioned
-[`2026 remote inventory`](benchmarks/autonomous/t0-2026-remote-inventory.json) pins all 1,334
-official PubMed file checksums plus the matching MeSH descriptor transport and its 31,110 parsed
-descriptor identities. This is source-discovery evidence only and contributes zero readiness. The
-highest-impact work is acquisition and local checksum verification for those complete source
-bytes, refusal-to-overwrite prediction sealing, streaming exact pair counts, and deterministic
-future-outcome evaluation. No human review or adjudication is an active dependency. Read
+The active validation contract now has no human label, review, or adjudication dependency. Its
+[`sealed 2026 T0 manifest`](benchmarks/autonomous/t0-2026.json) pins 1,334 official PubMed files,
+54,267,874,919 compressed bytes, 39,994,988 parsed records, and the matching 31,110-descriptor MeSH
+transport against the versioned
+[`remote inventory`](benchmarks/autonomous/t0-2026-remote-inventory.json). This closes the source
+gate but contributes no metric or scientific result. The highest-impact work is now streaming the
+exhaustive exact candidate universe, freezing one deterministic metric, refusal-to-overwrite
+prediction sealing, and deterministic future-outcome evaluation. No human review or adjudication
+is an active dependency. Read
 [`CONTRIBUTING.md`](CONTRIBUTING.md) before changing the pipeline. The live site's **Open work**
 board is generated from
 `artifacts/project-status.json`; its counts and contract fingerprints are rebuilt from the same
@@ -226,7 +227,7 @@ database-link emergence (including separately reported re-indexing of pre-existi
 zero is only “no observed emergence in this window”; ambiguous or incomplete evidence forces
 `abstain`. Passing validates only prospective PubMed link-emergence ranking—not a knowledge-gap
 detector or autonomous scientific discovery. Run
-`python -m pipeline.benchmark.autonomous_t0 audit` to verify the pinned remote inventory and
+`python -m pipeline.benchmark.autonomous_t0 audit-sealed` to verify the pinned T0 manifest and
 `python -m pipeline.benchmark.validate_autonomous_prospective` to inspect the current machine
 blockers. The interpretation layer remains gated off.
 

@@ -13,8 +13,6 @@ The active campaign is governed by
 human-label, review, or adjudication dependency. Useful contributions automate one of these frozen
 machine transitions:
 
-- acquire and checksum-verify every byte named by the pinned 2026 PubMed + MeSH remote inventory;
-- emit a refusal-to-overwrite T0 source manifest;
 - exhaustively build the exact-zero candidate universe;
 - seal one formula and every prediction before future outcomes exist;
 - acquire the T1 baseline three annual releases later and apply the frozen pass/fail/abstain gate.
@@ -29,6 +27,15 @@ Audit it without network access:
 
 ```bash
 python -m pipeline.benchmark.autonomous_t0 audit
+```
+
+The complete source gate is now sealed at
+[`benchmarks/autonomous/t0-2026.json`](benchmarks/autonomous/t0-2026.json). Audit every embedded
+transport identity and record subtotal against the remote inventory without rereading the raw
+corpus:
+
+```bash
+python -m pipeline.benchmark.autonomous_t0 audit-sealed
 ```
 
 Acquire all named files directly onto a non-system data volume. The downloader retains interrupted
@@ -55,6 +62,9 @@ python -m pipeline.benchmark.autonomous_t0 seal \
   --output benchmarks/autonomous/t0-2026.json \
   --workers 4
 ```
+
+These acquisition commands document reproducibility; rerunning them does not advance the current
+state. The active next transition is the exhaustive candidate-universe and metric/prediction seal.
 
 ## Archived v3 campaign
 

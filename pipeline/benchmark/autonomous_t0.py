@@ -9,6 +9,7 @@ the descriptor vocabulary, and creates a manifest with exclusive-create semantic
 
 Run:
     python -m pipeline.benchmark.autonomous_t0 audit
+    python -m pipeline.benchmark.autonomous_t0 audit-sealed
     python -m pipeline.benchmark.autonomous_t0 discover \
       --output benchmarks/autonomous/t0-2026-remote-inventory.json
     python -m pipeline.benchmark.autonomous_t0 download \
@@ -19,7 +20,8 @@ Run:
       --inventory benchmarks/autonomous/t0-2026-remote-inventory.json \
       --baseline-dir D:/lacuna-sources/pubmed/baseline \
       --mesh D:/lacuna-sources/mesh/desc2026.gz \
-      --output benchmarks/autonomous/t0-2026.json
+      --output benchmarks/autonomous/t0-2026.json \
+      --workers 4
 """
 
 from __future__ import annotations
@@ -56,6 +58,7 @@ SHA256 = re.compile(r"^[0-9a-f]{64}$")
 REMOTE_INVENTORY_PATH = (
     REPO_ROOT / "benchmarks" / "autonomous" / "t0-2026-remote-inventory.json"
 )
+SEALED_T0_PATH = REPO_ROOT / "benchmarks" / "autonomous" / "t0-2026.json"
 
 
 class AutonomousT0Error(ValueError):
@@ -84,6 +87,19 @@ class DownloadAudit:
     baseline_dir: Path
     mesh_path: Path
     readiness_contribution: int = 0
+
+
+@dataclass(frozen=True)
+class SealedT0Audit:
+    path: Path
+    sha256: str
+    release_year: int
+    pubmed_file_count: int
+    pubmed_bytes: int
+    pubmed_record_count: int
+    mesh_descriptor_count: int
+    state: str
+    readiness_contribution: int
 
 
 _SESSION_LOCAL = threading.local()
@@ -745,6 +761,111 @@ def write_new_json(output: Path, payload: dict) -> None:
         raise AutonomousT0Error(f"refusing to overwrite existing evidence: {output}") from None
 
 
+def audit_sealed_t0(
+    path: Path = SEALED_T0_PATH,
+    inventory_path: Path = REMOTE_INVENTORY_PATH,
+) -> SealedT0Audit:
+    """Audit the immutable T0 manifest against every pinned remote transport identity."""
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        inventory = json.loads(inventory_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise AutonomousT0Error("sealed T0 or remote inventory is not readable JSON") from exc
+    year, remote_files, remote_mesh = _validate_remote_inventory(inventory)
+    if (
+        payload.get("schema_version") != 1
+        or payload.get("kind") != "autonomous_prospective_t0"
+        or payload.get("status") != "locally_verified_complete_t0"
+        or payload.get("protocol_id")
+        != "autonomous-prospective-pubmed-link-emergence-v1"
+        or payload.get("release_year") != year
+    ):
+        raise AutonomousT0Error("sealed T0 identity drifted")
+    if payload.get("remote_inventory") != {
+        "filename": inventory_path.name,
+        "sha256": sha256_payload(inventory),
+        "canonicalisation": "canonical-json-v1",
+    }:
+        raise AutonomousT0Error("sealed T0 remote inventory reference drifted")
+
+    pubmed = payload.get("pubmed_baseline")
+    files = pubmed.get("files") if isinstance(pubmed, dict) else None
+    if (
+        not isinstance(files, list)
+        or pubmed.get("file_count") != len(remote_files)
+        or len(files) != len(remote_files)
+    ):
+        raise AutonomousT0Error("sealed T0 PubMed file set is incomplete")
+    expected_fields = {
+        "filename",
+        "url",
+        "official_md5",
+        "sha256",
+        "bytes",
+        "pubmed_article_count",
+        "pubmed_book_article_count",
+        "delete_citation_count",
+        "total_record_count",
+    }
+    pubmed_bytes = 0
+    pubmed_records = 0
+    for remote, measured in zip(remote_files, files, strict=True):
+        if not isinstance(measured, dict) or set(measured) != expected_fields:
+            raise AutonomousT0Error("sealed T0 PubMed record schema drifted")
+        if (
+            measured["filename"] != remote["filename"]
+            or measured["url"] != remote["url"]
+            or measured["official_md5"] != remote["official_md5"]
+            or not SHA256.fullmatch(str(measured["sha256"]))
+            or type(measured["bytes"]) is not int
+            or measured["bytes"] <= 0
+        ):
+            raise AutonomousT0Error(f"{remote['filename']}: sealed source identity drifted")
+        count_fields = (
+            "pubmed_article_count",
+            "pubmed_book_article_count",
+            "delete_citation_count",
+        )
+        if any(type(measured[field]) is not int or measured[field] < 0 for field in count_fields):
+            raise AutonomousT0Error(f"{remote['filename']}: invalid sealed record count")
+        subtotal = sum(measured[field] for field in count_fields)
+        if measured["total_record_count"] != subtotal or subtotal <= 0:
+            raise AutonomousT0Error(f"{remote['filename']}: sealed record subtotal drifted")
+        pubmed_bytes += measured["bytes"]
+        pubmed_records += subtotal
+
+    if payload.get("mesh_descriptor") != {
+        "filename": remote_mesh["filename"],
+        "url": remote_mesh["url"],
+        "sha256": remote_mesh["observed_transport_sha256"],
+        "bytes": remote_mesh["bytes"],
+        "descriptor_count": remote_mesh["descriptor_count"],
+    }:
+        raise AutonomousT0Error("sealed T0 MeSH identity drifted")
+    if payload.get("total_record_count") != pubmed_records:
+        raise AutonomousT0Error("sealed T0 aggregate record count drifted")
+    if (
+        payload.get("human_dependencies") != []
+        or payload.get("readiness_contribution") != 0
+        or payload.get("state_transition")
+        != {"from": "awaiting_t0_baseline", "to": "awaiting_frozen_metric"}
+        or payload.get("claim_boundary")
+        != "This seals source identity only. It is not a metric result, validation result, or knowledge-gap claim."
+    ):
+        raise AutonomousT0Error("sealed T0 claim or state boundary drifted")
+    return SealedT0Audit(
+        path=path,
+        sha256=sha256_payload(payload),
+        release_year=year,
+        pubmed_file_count=len(files),
+        pubmed_bytes=pubmed_bytes,
+        pubmed_record_count=pubmed_records,
+        mesh_descriptor_count=remote_mesh["descriptor_count"],
+        state="awaiting_frozen_metric",
+        readiness_contribution=0,
+    )
+
+
 def seal_local_t0(
     inventory_path: Path,
     baseline_dir: Path,
@@ -851,6 +972,9 @@ def main() -> None:
     discover.add_argument("--output", type=Path, required=True)
     audit = subparsers.add_parser("audit")
     audit.add_argument("--inventory", type=Path, default=REMOTE_INVENTORY_PATH)
+    audit_sealed = subparsers.add_parser("audit-sealed")
+    audit_sealed.add_argument("--manifest", type=Path, default=SEALED_T0_PATH)
+    audit_sealed.add_argument("--inventory", type=Path, default=REMOTE_INVENTORY_PATH)
     download = subparsers.add_parser("download")
     download.add_argument("--inventory", type=Path, default=REMOTE_INVENTORY_PATH)
     download.add_argument("--baseline-dir", type=Path, required=True)
@@ -884,6 +1008,17 @@ def main() -> None:
             print(f"PubMed files: {result.pubmed_file_count}")
             print(f"MeSH descriptors: {result.mesh_descriptor_count}")
             print("readiness contribution: 0 (local source bytes are not sealed)")
+        elif args.command == "audit-sealed":
+            result = audit_sealed_t0(args.manifest, args.inventory)
+            print(f"sealed T0: {result.path}")
+            print(f"canonical JSON SHA-256: {result.sha256}")
+            print(f"release: {result.release_year}")
+            print(f"PubMed files: {result.pubmed_file_count}")
+            print(f"PubMed bytes: {result.pubmed_bytes}")
+            print(f"PubMed rows: {result.pubmed_record_count}")
+            print(f"MeSH descriptors: {result.mesh_descriptor_count}")
+            print(f"state: {result.state}")
+            print("readiness contribution: 0 (no metric or outcome result)")
         elif args.command == "download":
             if args.minimum_free_gib < 0:
                 raise AutonomousT0Error("minimum free GiB cannot be negative")

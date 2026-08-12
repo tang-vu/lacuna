@@ -20,6 +20,7 @@ description: Run lacuna's complete validation workflow and report metric drift, 
 
    ```bash
    python -m pipeline.benchmark.autonomous_t0 audit
+   python -m pipeline.benchmark.autonomous_t0 audit-sealed
    python -m pipeline.benchmark.validate_autonomous_prospective
    python -m pipeline.benchmark.validate_autonomous_prospective --require-ready
    python -m pipeline.benchmark.source_inventories
@@ -45,9 +46,10 @@ description: Run lacuna's complete validation workflow and report metric drift, 
    releases; an unreachable dependency is a skipped live check, not evidence of drift.
 
    The remote-inventory audit must report 1,334 PubMed files, 31,110 MeSH descriptors, and zero
-   readiness; it does not prove that local T0 bytes exist. All three `--require-ready` commands are
-   expected to fail while the active T0 baseline and
-   predictions are absent, historical inputs are unavailable, and the archived v3 benchmark is a
+   readiness. The sealed-T0 audit must report the same file and descriptor counts plus 39,994,988
+   parsed PubMed rows, state `awaiting_frozen_metric`, and zero metric/scientific readiness. All
+   three `--require-ready` commands are expected to fail while the active metric and predictions
+   are absent, historical inputs are unavailable, and the archived v3 benchmark is a
    draft. Record their blockers and exit codes; never change a status merely to make the workflow
    green. The active track must report zero human dependencies and must abstain on missing source,
    integrity, outcome, or power evidence. Proposed and rejected legacy intake entries contribute

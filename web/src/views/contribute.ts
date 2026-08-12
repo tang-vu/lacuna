@@ -712,6 +712,7 @@ export function renderAutonomousMissions(status: ProjectStatus): HTMLElement {
   const protocol = active.protocol;
   const current = protocol.current_state;
   const remoteInventory = active.remote_inventory;
+  const sealedT0 = active.sealed_t0;
   const sourceReady = current.state !== 'awaiting_t0_baseline';
   const predictionsSealed = [
     'predictions_sealed_waiting_for_outcome',
@@ -724,6 +725,7 @@ export function renderAutonomousMissions(status: ProjectStatus): HTMLElement {
   const outcomeMature = ['evaluating', 'passed', 'failed', 'abstained'].includes(current.state);
   const contractUrl = `${REPOSITORY}/blob/main/benchmarks/autonomous-prospective-v1.json`;
   const inventoryUrl = `${REPOSITORY}/blob/main/benchmarks/autonomous/t0-2026-remote-inventory.json`;
+  const t0Url = `${REPOSITORY}/blob/main/benchmarks/autonomous/t0-2026.json`;
 
   return el('section', { class: 'contribution-missions', id: 'contribute' }, [
     el('div', { class: 'section-kicker' }, ['AUTONOMOUS VALIDATION']),
@@ -744,15 +746,21 @@ export function renderAutonomousMissions(status: ProjectStatus): HTMLElement {
         '01',
         sourceReady ? 'DONE' : 'NEXT',
         'Seal the T0 evidence base',
-        `${remoteInventory.pubmed_file_count.toLocaleString()} official PubMed file checksums and ` +
-          `${remoteInventory.mesh_descriptor_count.toLocaleString()} MeSH descriptor identities are ` +
-          'now pinned as a zero-readiness remote inventory. ' +
-          current.next_machine_action +
-          ' API result pages and partial releases are forbidden as baselines; no credentials may ' +
-          'enter artifacts or logs.',
+        sourceReady
+          ? `${sealedT0.pubmed_file_count.toLocaleString()} official PubMed files containing ` +
+            `${sealedT0.pubmed_record_count.toLocaleString()} records and ` +
+            `${sealedT0.mesh_descriptor_count.toLocaleString()} MeSH descriptors are checksum-verified ` +
+            'in the immutable T0 manifest. This seals source identity only and contributes no metric ' +
+            `or scientific result. ${current.next_machine_action}`
+          : `${remoteInventory.pubmed_file_count.toLocaleString()} official PubMed file checksums and ` +
+            `${remoteInventory.mesh_descriptor_count.toLocaleString()} MeSH descriptor identities are ` +
+            'pinned in a zero-readiness remote inventory. ' +
+            current.next_machine_action +
+            ' API result pages and partial releases are forbidden as baselines; no credentials may ' +
+            'enter artifacts or logs.',
         progress(sourceReady ? 2 : 1, 2, 'Remote inventory + complete local T0 seal'),
-        'Inspect the pinned inventory',
-        inventoryUrl,
+        sourceReady ? 'Inspect the sealed T0' : 'Inspect the pinned inventory',
+        sourceReady ? t0Url : inventoryUrl,
       ),
       mission(
         '02',

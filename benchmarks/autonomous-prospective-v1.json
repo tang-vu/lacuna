@@ -80,6 +80,17 @@
       "mesh_descriptor_count": 31110,
       "evidence_scope": "remote source identities only; zero readiness until every local byte and record count is sealed"
     },
+    "t0_manifest": {
+      "path": "autonomous/t0-2026.json",
+      "sha256": "6ec0372008bb8efe0e17f72695a07bb03816f2b41881d6518d35077ecdac5066",
+      "canonicalisation": "canonical-json-v1",
+      "release_year": 2026,
+      "pubmed_file_count": 1334,
+      "pubmed_bytes": 54267874919,
+      "pubmed_record_count": 39994988,
+      "mesh_descriptor_count": 31110,
+      "evidence_scope": "locally sealed source identity and record counts; zero metric or scientific readiness"
+    },
     "t0": {
       "source": "official complete annual PubMed baseline",
       "matching_vocabulary": "official MeSH descriptor release used by that baseline",
@@ -231,9 +242,9 @@
     "automatic_abstention_visible": true
   },
   "current_state": {
-    "state": "awaiting_t0_baseline",
+    "state": "awaiting_frozen_metric",
     "t0_remote_inventory_pinned": true,
-    "t0_source_pinned": false,
+    "t0_source_pinned": true,
     "metric_frozen": false,
     "predictions_sealed": false,
     "t1_source_pinned": false,
@@ -241,11 +252,10 @@
     "verdict": "not_ready",
     "readiness_contribution": 0,
     "blockers": [
-      "the 2026 remote inventory is pinned, but complete local PubMed and MeSH bytes are not checksum-verified and sealed as T0",
       "no autonomous metric formula is frozen",
       "no T0 predictions are sealed",
       "the three-release prospective outcome window has not matured"
     ],
-    "next_machine_action": "Download every file named in the pinned 2026 remote inventory to adequate storage, then checksum-verify and emit a refusal-to-overwrite T0 manifest."
+    "next_machine_action": "Compute the exhaustive exact T0 candidate universe from the sealed source, then freeze one deterministic metric and refusal-to-overwrite prediction contract before producing any score."
   }
 }

@@ -12,14 +12,14 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 21
+    assert status["schema_version"] == 22
     assert status["status"] == "not_ready"
     assert status["active_validation_track"] == (
         "autonomous-prospective-pubmed-link-emergence-v1"
     )
     autonomous = status["autonomous_validation"]
     assert autonomous["active"] is True
-    assert autonomous["state"] == "awaiting_t0_baseline"
+    assert autonomous["state"] == "awaiting_frozen_metric"
     assert autonomous["verdict"] == "not_ready"
     assert autonomous["ready"] is False
     assert autonomous["human_dependency_count"] == 0
@@ -31,7 +31,17 @@ def test_project_status_exposes_validator_results_without_claiming_readiness():
         "mesh_descriptor_count": 31110,
         "readiness_contribution": 0,
     }
-    assert len(autonomous["readiness_blockers"]) == 4
+    assert autonomous["sealed_t0"] == {
+        "status": "locally_verified_complete_t0",
+        "release_year": 2026,
+        "pubmed_file_count": 1334,
+        "pubmed_bytes": 54_267_874_919,
+        "pubmed_record_count": 39_994_988,
+        "mesh_descriptor_count": 31_110,
+        "canonical_sha256": "6ec0372008bb8efe0e17f72695a07bb03816f2b41881d6518d35077ecdac5066",
+        "readiness_contribution": 0,
+    }
+    assert len(autonomous["readiness_blockers"]) == 3
     assert autonomous["protocol"]["machine_outcomes"][
         "llm_or_manual_labels_allowed"
     ] is False
@@ -379,6 +389,7 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
     assert set(committed["inputs"]) == {
         "autonomous_prospective_protocol",
         "autonomous_t0_remote_inventory",
+        "autonomous_t0_manifest",
         "historical_sources",
         "source_alternatives",
         "bioasq_snapshot_audit",

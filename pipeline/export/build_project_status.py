@@ -1,4 +1,4 @@
-"""Export the contributor-facing state of metric v3 from its validated contracts.
+"""Export the active autonomous state and archived audit tracks from validated contracts.
 
 This artifact is deliberately separate from the dated v2 measurement snapshot. Benchmark and
 source readiness can change without changing the failed v2 inputs, so putting both under one
@@ -32,7 +32,9 @@ from pipeline.benchmark.validate_autonomous_prospective import (
 )
 from pipeline.benchmark.autonomous_t0 import (
     REMOTE_INVENTORY_PATH as AUTONOMOUS_T0_REMOTE_INVENTORY_PATH,
+    SEALED_T0_PATH as AUTONOMOUS_T0_PATH,
     audit_remote_inventory,
+    audit_sealed_t0,
 )
 from pipeline.benchmark.bioasq_semantics import (
     DEFAULT_AUDIT_PATH as BIOASQ_SEMANTICS_AUDIT_PATH,
@@ -101,6 +103,7 @@ def build_project_status() -> dict:
     sources = audit_sources()
     autonomous = audit_autonomous_prospective()
     autonomous_remote_inventory = audit_remote_inventory()
+    autonomous_t0 = audit_sealed_t0()
     autonomous_payload = json.loads(AUTONOMOUS_PROSPECTIVE_PATH.read_text(encoding="utf-8"))
     alternatives = audit_source_alternatives()
     bioasq_snapshot = json.loads(BIOASQ_SNAPSHOT_MANIFEST_PATH.read_text(encoding="utf-8"))
@@ -151,7 +154,7 @@ def build_project_status() -> dict:
     negative_protocol = load_protocol()
 
     return {
-        "schema_version": 21,
+        "schema_version": 22,
         "status": "ready" if ready else "not_ready",
         "active_validation_track": autonomous.protocol_id,
         "inputs": {
@@ -159,6 +162,7 @@ def build_project_status() -> dict:
             "autonomous_t0_remote_inventory": _input_identity(
                 AUTONOMOUS_T0_REMOTE_INVENTORY_PATH
             ),
+            "autonomous_t0_manifest": _input_identity(AUTONOMOUS_T0_PATH),
             "historical_sources": _input_identity(SOURCES_PATH),
             "source_alternatives": _input_identity(ALTERNATIVES_PATH),
             "bioasq_snapshot_audit": _input_identity(BIOASQ_SNAPSHOT_MANIFEST_PATH),
@@ -206,6 +210,16 @@ def build_project_status() -> dict:
                 "pubmed_file_count": autonomous_remote_inventory.pubmed_file_count,
                 "mesh_descriptor_count": autonomous_remote_inventory.mesh_descriptor_count,
                 "readiness_contribution": autonomous_remote_inventory.readiness_contribution,
+            },
+            "sealed_t0": {
+                "status": "locally_verified_complete_t0",
+                "release_year": autonomous_t0.release_year,
+                "pubmed_file_count": autonomous_t0.pubmed_file_count,
+                "pubmed_bytes": autonomous_t0.pubmed_bytes,
+                "pubmed_record_count": autonomous_t0.pubmed_record_count,
+                "mesh_descriptor_count": autonomous_t0.mesh_descriptor_count,
+                "canonical_sha256": autonomous_t0.sha256,
+                "readiness_contribution": autonomous_t0.readiness_contribution,
             },
         },
         "historical_sources": {

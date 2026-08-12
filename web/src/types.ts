@@ -168,6 +168,16 @@ export interface ProjectStatus {
       mesh_descriptor_count: number;
       readiness_contribution: 0;
     };
+    sealed_t0: {
+      status: 'locally_verified_complete_t0';
+      release_year: 2026;
+      pubmed_file_count: number;
+      pubmed_bytes: number;
+      pubmed_record_count: number;
+      mesh_descriptor_count: number;
+      canonical_sha256: string;
+      readiness_contribution: 0;
+    };
     protocol: {
       id: 'autonomous-prospective-pubmed-link-emergence-v1';
       status: 'frozen_before_t0_source_acquisition_and_metric';
@@ -192,6 +202,17 @@ export interface ProjectStatus {
           canonicalisation: 'canonical-json-v1';
           release_year: 2026;
           pubmed_file_count: number;
+          mesh_descriptor_count: number;
+          evidence_scope: string;
+        };
+        t0_manifest: {
+          path: string;
+          sha256: string;
+          canonicalisation: 'canonical-json-v1';
+          release_year: 2026;
+          pubmed_file_count: number;
+          pubmed_bytes: number;
+          pubmed_record_count: number;
           mesh_descriptor_count: number;
           evidence_scope: string;
         };
@@ -226,6 +247,7 @@ export interface ProjectStatus {
         state: ProjectStatus['autonomous_validation']['state'];
         verdict: ProjectStatus['autonomous_validation']['verdict'];
         t0_remote_inventory_pinned: true;
+        t0_source_pinned: boolean;
         readiness_contribution: 0;
         blockers: string[];
         next_machine_action: string;

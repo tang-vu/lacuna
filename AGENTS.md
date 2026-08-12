@@ -23,10 +23,10 @@ the expense of gap detection, validation, or traceability.
 - Historical metric v3 and BioASQ v2 are archived audit tracks; BioASQ v2 terminated on its
   development gate without held-out execution.
 - The active replacement is `benchmarks/autonomous-prospective-v1.json`: a no-human prospective
-  PubMed link-emergence benchmark. Its 2026 remote inventory pins 1,334 official PubMed checksums
-  and the matching MeSH descriptor transport but contributes zero readiness. It remains not ready
-  until all local T0 bytes, the frozen metric, sealed predictions, and the three-release outcome
-  window pass machine-verifiable gates.
+  PubMed link-emergence benchmark. Its sealed 2026 T0 pins 1,334 official PubMed transports,
+  39,994,988 parsed records, and the matching 31,110-descriptor MeSH transport. This closes only the
+  source gate; the track remains not ready until a frozen metric, sealed predictions, and the
+  three-release outcome window pass machine-verifiable gates.
 - A pass on the active track validates only future PubMed MeSH link-emergence ranking. Never call it
   a validated knowledge-gap detector, autonomous scientific discovery, or evidence of absent
   human knowledge.
@@ -54,6 +54,7 @@ python -m pipeline.benchmark.source_inventories
 python -m pipeline.benchmark.mbr_capture
 python -m pipeline.benchmark.validate_source_alternatives
 python -m pipeline.benchmark.autonomous_t0 audit
+python -m pipeline.benchmark.autonomous_t0 audit-sealed
 python -m pipeline.benchmark.autonomous_t0 download --help
 python -m pipeline.benchmark.validate_autonomous_prospective
 python -m pipeline.benchmark.validate_candidates

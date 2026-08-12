@@ -16,6 +16,11 @@ stage this corpus in `%TEMP%` or on the system drive. The command verifies every
 pinned MeSH SHA-256 before promoting a `.part` file, but contributes zero readiness until `seal`
 parses and fingerprints the complete release.
 
+The active 2026 corpus is stored at `D:/lacuna-storage/autonomous/t0-2026/` and exposed locally via
+the ignored `data/autonomous-t0` junction. Its committed manifest is already sealed; raw files stay
+off Git and off the system volume. `python -m pipeline.benchmark.autonomous_t0 audit-sealed` audits
+the committed identities without another 50 GiB corpus scan.
+
 This directory holds regenerable API caches, the fetched OpenAlex taxonomy, and co-occurrence
 rows. It also holds trimmed PubMed metadata fetched for benchmark mapping audits. Those files are
 intentionally ignored: the current pre-1986 pilot is tens of megabytes and the replacement MEDLINE

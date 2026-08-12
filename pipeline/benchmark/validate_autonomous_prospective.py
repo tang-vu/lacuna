@@ -1,7 +1,7 @@
 """Validate the no-human prospective link-emergence protocol and current state.
 
-This is a protocol validator, not a metric result. A structurally valid protocol contributes zero
-scientific readiness while its T0 source, sealed predictions, and future outcome window are absent.
+This is a protocol validator, not a metric result. A sealed T0 closes only the source gate; the
+track remains not ready while its metric, sealed predictions, and future outcome window are absent.
 
 Run:
     python -m pipeline.benchmark.validate_autonomous_prospective
@@ -17,7 +17,9 @@ from pathlib import Path
 
 from pipeline.benchmark.autonomous_t0 import (
     REMOTE_INVENTORY_PATH,
+    SEALED_T0_PATH,
     audit_remote_inventory,
+    audit_sealed_t0,
 )
 from pipeline.paths import REPO_ROOT
 
@@ -25,7 +27,6 @@ PROTOCOL_PATH = REPO_ROOT / "benchmarks" / "autonomous-prospective-v1.json"
 EXPECTED_ID = "autonomous-prospective-pubmed-link-emergence-v1"
 EXPECTED_STATUS = "frozen_before_t0_source_acquisition_and_metric"
 EXPECTED_BLOCKERS = (
-    "the 2026 remote inventory is pinned, but complete local PubMed and MeSH bytes are not checksum-verified and sealed as T0",
     "no autonomous metric formula is frozen",
     "no T0 predictions are sealed",
     "the three-release prospective outcome window has not matured",
@@ -148,6 +149,26 @@ def audit_autonomous_prospective(path: Path = PROTOCOL_PATH) -> AutonomousProspe
         }
         and remote_audit.readiness_contribution == 0,
         "T0 remote inventory identity or zero-readiness boundary drifted",
+    )
+    sealed_reference = sources.get("t0_manifest")
+    _require(isinstance(sealed_reference, dict), "sealed T0 manifest reference missing")
+    sealed_audit = audit_sealed_t0(SEALED_T0_PATH, REMOTE_INVENTORY_PATH)
+    _require(
+        sealed_reference
+        == {
+            "path": "autonomous/t0-2026.json",
+            "sha256": sealed_audit.sha256,
+            "canonicalisation": "canonical-json-v1",
+            "release_year": sealed_audit.release_year,
+            "pubmed_file_count": sealed_audit.pubmed_file_count,
+            "pubmed_bytes": sealed_audit.pubmed_bytes,
+            "pubmed_record_count": sealed_audit.pubmed_record_count,
+            "mesh_descriptor_count": sealed_audit.mesh_descriptor_count,
+            "evidence_scope": "locally sealed source identity and record counts; zero metric or scientific readiness",
+        }
+        and sealed_audit.state == "awaiting_frozen_metric"
+        and sealed_audit.readiness_contribution == 0,
+        "sealed T0 manifest identity or claim boundary drifted",
     )
     _require(
         sources.get("source_failure_action") == "abstain"
@@ -276,9 +297,9 @@ def audit_autonomous_prospective(path: Path = PROTOCOL_PATH) -> AutonomousProspe
     current = payload.get("current_state")
     _require(isinstance(current, dict), "current state missing")
     _require(
-        current.get("state") == "awaiting_t0_baseline"
+        current.get("state") == "awaiting_frozen_metric"
         and current.get("t0_remote_inventory_pinned") is True
-        and current.get("t0_source_pinned") is False
+        and current.get("t0_source_pinned") is True
         and current.get("metric_frozen") is False
         and current.get("predictions_sealed") is False
         and current.get("t1_source_pinned") is False
@@ -290,7 +311,8 @@ def audit_autonomous_prospective(path: Path = PROTOCOL_PATH) -> AutonomousProspe
     blockers = current.get("blockers")
     _require(blockers == list(EXPECTED_BLOCKERS), "current blocker list drifted")
     _require(
-        "checksum-verify" in current.get("next_machine_action", "")
+        "exhaustive exact T0 candidate universe" in current.get("next_machine_action", "")
+        and "freeze one deterministic metric" in current.get("next_machine_action", "")
         and "refusal-to-overwrite" in current.get("next_machine_action", ""),
         "next machine action drifted",
     )
