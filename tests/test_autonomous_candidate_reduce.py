@@ -6,8 +6,11 @@ import numpy as np
 import pytest
 
 from pipeline.benchmark.autonomous_candidate_index import PAIR_DTYPE, CandidateIndexError, VocabularyDescriptor
+from pipeline.benchmark.autonomous_candidate_index import VocabularyAudit
+import pipeline.benchmark.autonomous_candidate_reduce as candidate_reduce
 from pipeline.benchmark.autonomous_candidate_reduce import (
     GLOBAL_PAIR_DTYPE,
+    ReductionAudit,
     RunArtifact,
     audit_candidate_stream,
     build_exclusions,
@@ -165,3 +168,65 @@ def test_exclusions_and_candidate_stream_apply_only_frozen_zero_count_gates(tmp_
             vocabulary=vocabulary,
             denominator=1000,
         )
+
+
+def test_candidate_universe_manifest_is_immutable_score_free_and_reusable(tmp_path, monkeypatch):
+    scan_dir = tmp_path / "candidate-index"
+    reduced_dir = scan_dir / "reduced"
+    reduced_dir.mkdir(parents=True)
+    vocabulary = VocabularyAudit(
+        descriptor_count=3,
+        sha256="e" * 64,
+        bytes=123,
+        descriptors=(
+            VocabularyDescriptor("D000001", "One", ("A01",), ("one",)),
+            VocabularyDescriptor("D000002", "Two", ("B01",), ("two",)),
+            VocabularyDescriptor("D000003", "Three", ("C01",), ("three",)),
+        ),
+    )
+    support_path = reduced_dir / "supports.u64.bin"
+    np.array([100, 100, 100], dtype="<u8").tofile(support_path)
+    support = _run(support_path, np.array([100, 100, 100], dtype="<u8"), "support-u64-v1")
+    pmid_path = reduced_dir / "pmids.u64.bin"
+    pmids = _run(pmid_path, np.array([1, 2, 3], dtype="<u8"), "pmid-u64-v1")
+    pair_path = reduced_dir / "positive-pairs.u64u64.bin"
+    positives = _run(
+        pair_path,
+        _pairs([(1, 1)], dtype=GLOBAL_PAIR_DTYPE),
+        "pair-u64-u64-v1",
+    )
+    reduction = ReductionAudit(
+        source_set_sha256="f" * 64,
+        corpus_denominator=1000,
+        descriptor_assignments=300,
+        pair_observations=1,
+        source_count=1,
+        records_without_mesh=0,
+        vocabulary=vocabulary,
+        support_vector=support,
+        pmid_vector=pmids,
+        positive_pairs=positives,
+    )
+    monkeypatch.setattr(candidate_reduce, "reduce_scan_set", lambda *args, **kwargs: reduction)
+    manifest_path = tmp_path / "manifest.json"
+
+    first = candidate_reduce.build_candidate_universe(
+        scan_dir,
+        tmp_path / "mesh.gz",
+        manifest_path,
+        minimum_free_bytes=0,
+    )
+    second = candidate_reduce.build_candidate_universe(
+        scan_dir,
+        tmp_path / "mesh.gz",
+        manifest_path,
+        minimum_free_bytes=0,
+    )
+
+    assert first == second
+    assert first["status"] == "score_free_candidate_universe_complete"
+    assert first["counts"]["candidate_pairs"] == 2
+    assert first["completion_gates"]["metric_scores_or_predictions_emitted"] is False
+    rendered = manifest_path.read_text(encoding="utf-8")
+    for forbidden in ('"score"', '"rank"', '"percentile"', '"prediction_label"', '"interpretation"'):
+        assert forbidden not in rendered

@@ -744,13 +744,6 @@ def write_descriptor_table(
     contract_sha256: str,
 ) -> RunArtifact:
     """Write the vocabulary order and exact exclusion inputs as canonical JSON."""
-    completed_on = dt.date.today().isoformat()
-    if manifest_path.exists():
-        existing_completed_on = json.loads(manifest_path.read_text(encoding="utf-8")).get(
-            "completed_on"
-        )
-        if isinstance(existing_completed_on, str):
-            completed_on = existing_completed_on
     payload = {
         "schema_version": 1,
         "kind": "autonomous_t0_descriptor_table",
@@ -894,6 +887,19 @@ def build_candidate_universe(
         denominator=reduction.corpus_denominator,
     )
     builder_sha256 = _sha256_file(Path(__file__))
+    completed_on = dt.date.today().isoformat()
+    if manifest_path.exists():
+        existing_completed_on = json.loads(manifest_path.read_text(encoding="utf-8")).get(
+            "completed_on"
+        )
+        if isinstance(existing_completed_on, str):
+            try:
+                dt.date.fromisoformat(existing_completed_on)
+            except ValueError as exc:
+                raise CandidateIndexError(
+                    f"existing candidate-universe completion date drifted: {manifest_path}"
+                ) from exc
+            completed_on = existing_completed_on
     payload = {
         "schema_version": 1,
         "id": "autonomous-t0-candidate-universe-v1",

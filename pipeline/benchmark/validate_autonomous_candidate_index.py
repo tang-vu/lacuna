@@ -23,6 +23,7 @@ class AutonomousCandidateIndexContractError(ValueError):
 class AutonomousCandidateIndexAudit:
     contract_id: str
     sha256: str
+    t0_manifest_sha256: str
     source_file_count: int
     source_record_count: int
     descriptor_count: int
@@ -192,6 +193,7 @@ def audit_candidate_index_contract(path: Path = CONTRACT_PATH) -> AutonomousCand
     return AutonomousCandidateIndexAudit(
         contract_id=payload["id"],
         sha256=sha256_payload(payload),
+        t0_manifest_sha256=known["t0_manifest_sha256"],
         source_file_count=sealed.pubmed_file_count,
         source_record_count=sealed.pubmed_record_count,
         descriptor_count=sealed.mesh_descriptor_count,
