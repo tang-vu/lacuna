@@ -12,6 +12,7 @@ from pipeline.benchmark.autonomous_candidate_index import (
     CandidateIndexError,
     read_vocabulary,
     scan_source_file,
+    scan_t0_sources,
 )
 
 
@@ -224,3 +225,13 @@ def test_source_scan_revalidates_checkpoint_binary_invariants(tmp_path):
 
     with pytest.raises(CandidateIndexError, match="shard invariants drifted"):
         scan_source_file(source_path, source, shard_dir, **kwargs)
+
+
+def test_source_scan_rejects_more_than_sixteen_workers_before_touching_paths(tmp_path):
+    with pytest.raises(CandidateIndexError, match="between 1 and 16"):
+        scan_t0_sources(
+            tmp_path / "missing-baseline",
+            tmp_path / "missing-mesh.gz",
+            tmp_path / "output",
+            workers=17,
+        )

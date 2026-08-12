@@ -513,8 +513,8 @@ def scan_t0_sources(
     progress: Callable[[int, int, SourceShardAudit], None] | None = None,
 ) -> tuple[SourceShardAudit, ...]:
     """Scan every sealed source into restartable off-system-volume count shards."""
-    if not 1 <= workers <= 8:
-        raise CandidateIndexError("scan workers must be between 1 and 8")
+    if not 1 <= workers <= 16:
+        raise CandidateIndexError("scan workers must be between 1 and 16")
     contract = audit_candidate_index_contract()
     sealed = audit_sealed_t0()
     if enforce_non_system_volume:
