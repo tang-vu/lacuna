@@ -45,7 +45,7 @@ from pipeline.benchmark.validate_autonomous_candidate_index import (
 from pipeline.provenance import canonical_json_bytes
 
 GLOBAL_PAIR_DTYPE = np.dtype([("key", "<u8"), ("count", "<u8")])
-PAIR_KEY_BUCKET_SPAN = 2_000_000
+PAIR_MERGE_INPUT_ROW_CAP = 2_000_000
 AUDIT_ROW_CHUNK = 5_000_000
 RunKind = Literal["pmids", "pairs"]
 RunFormat = Literal[
@@ -397,22 +397,26 @@ def _merge_pair_group_bounded(
     byte_count = 0
     row_count = 0
     key_limit = vocabulary_size * vocabulary_size
+    positions = [0] * len(blocks)
+    lower = 0
     with part.open("wb") as handle:
-        for lower in range(0, key_limit, PAIR_KEY_BUCKET_SPAN):
-            upper = min(lower + PAIR_KEY_BUCKET_SPAN, key_limit)
+        while any(position < block.size for position, block in zip(positions, blocks)):
+            upper, stops = _bounded_pair_bucket(
+                blocks,
+                positions,
+                lower=lower,
+                key_limit=key_limit,
+                maximum_rows=PAIR_MERGE_INPUT_ROW_CAP,
+            )
             key_blocks: list[np.ndarray] = []
             count_blocks: list[np.ndarray] = []
-            for block in blocks:
-                if not block.size:
+            for block, start, stop in zip(blocks, positions, stops):
+                if stop <= start:
                     continue
-                keys = block["key"]
-                start = int(np.searchsorted(keys, np.uint64(lower), side="left"))
-                stop = int(np.searchsorted(keys, np.uint64(upper), side="left"))
-                if stop > start:
-                    key_blocks.append(np.asarray(keys[start:stop]))
-                    count_blocks.append(np.asarray(block["count"][start:stop], dtype="<u8"))
+                key_blocks.append(np.asarray(block["key"][start:stop]))
+                count_blocks.append(np.asarray(block["count"][start:stop], dtype="<u8"))
             if not key_blocks:
-                continue
+                raise CandidateIndexError("adaptive pair merge bucket made no progress")
             keys = np.concatenate(key_blocks) if len(key_blocks) > 1 else key_blocks[0].copy()
             counts = (
                 np.concatenate(count_blocks) if len(count_blocks) > 1 else count_blocks[0].copy()
@@ -435,6 +439,8 @@ def _merge_pair_group_bounded(
             digest.update(raw)
             byte_count += len(raw)
             row_count += int(pairs.size)
+            positions = stops
+            lower = upper
         handle.flush()
         os.fsync(handle.fileno())
     try:
@@ -456,6 +462,45 @@ def _merge_pair_group_bounded(
     )
     _write_run_checkpoint(destination, identity, run)
     return run
+
+
+def _bounded_pair_bucket(
+    blocks: Sequence[np.ndarray],
+    positions: Sequence[int],
+    *,
+    lower: int,
+    key_limit: int,
+    maximum_rows: int,
+) -> tuple[int, list[int]]:
+    """Find the widest next key interval whose input rows fit the fixed memory cap."""
+    if maximum_rows < len(blocks):
+        raise CandidateIndexError("pair merge row cap is smaller than bounded fan-in")
+
+    def stops_at(upper: int) -> list[int]:
+        return [
+            int(np.searchsorted(block["key"], np.uint64(upper), side="left"))
+            if block.size
+            else 0
+            for block in blocks
+        ]
+
+    low = lower + 1
+    high = key_limit
+    best_upper = low
+    best_stops = stops_at(low)
+    if sum(stop - start for start, stop in zip(positions, best_stops)) > maximum_rows:
+        raise CandidateIndexError("one pair key exceeds the bounded merge row cap")
+    while low <= high:
+        middle = (low + high) // 2
+        candidate_stops = stops_at(middle)
+        rows = sum(stop - start for start, stop in zip(positions, candidate_stops))
+        if rows <= maximum_rows:
+            best_upper = middle
+            best_stops = candidate_stops
+            low = middle + 1
+        else:
+            high = middle - 1
+    return best_upper, best_stops
 
 
 def external_merge(

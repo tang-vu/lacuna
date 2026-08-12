@@ -102,6 +102,34 @@ def test_pair_merge_sums_equal_keys_exactly(tmp_path):
     assert pairs["count"].tolist() == [5, 1, 2]
 
 
+def test_pair_merge_keeps_exact_output_across_multiple_adaptive_buckets(tmp_path, monkeypatch):
+    monkeypatch.setattr(candidate_reduce, "PAIR_MERGE_INPUT_ROW_CAP", 2)
+    left = _run(
+        tmp_path / "left-bucketed.bin",
+        _pairs([(1, 2), (7, 1), (13, 4)]),
+        "pair-u64-u32-v1",
+    )
+    right = _run(
+        tmp_path / "right-bucketed.bin",
+        _pairs([(1, 3), (8, 2), (14, 1)]),
+        "pair-u64-u32-v1",
+    )
+    output = tmp_path / "bucketed-pairs.bin"
+
+    merge_run_group(
+        [left, right],
+        output,
+        kind="pairs",
+        contract_sha256="c" * 64,
+        vocabulary_size=5,
+        denominator=10,
+    )
+
+    pairs = np.fromfile(output, dtype=GLOBAL_PAIR_DTYPE)
+    assert pairs["key"].tolist() == [1, 7, 8, 13, 14]
+    assert pairs["count"].tolist() == [5, 1, 2, 4, 1]
+
+
 def test_support_reduce_uses_uint64_and_checks_shape_and_denominator(tmp_path):
     first = tmp_path / "first.bin"
     second = tmp_path / "second.bin"
