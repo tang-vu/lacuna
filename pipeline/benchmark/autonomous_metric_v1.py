@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import json
 import os
 import shutil
 import subprocess
@@ -34,14 +35,17 @@ from pipeline.benchmark.autonomous_metric_v1_formula import (
     prevalence_score,
     resource_allocation_weight_q48,
 )
+from pipeline.benchmark.autonomous_t0 import write_new_json
 from pipeline.benchmark.validate_autonomous_candidate_universe import (
+    MANIFEST_PATH as CANDIDATE_UNIVERSE_MANIFEST_PATH,
     audit_candidate_universe,
 )
 from pipeline.benchmark.validate_autonomous_metric_v1 import (
+    CONTRACT_PATH as METRIC_CONTRACT_PATH,
     audit_autonomous_metric_v1,
 )
 from pipeline.paths import REPO_ROOT
-from pipeline.provenance import canonical_json_bytes
+from pipeline.provenance import canonical_json_bytes, sha256_payload
 
 ENGINE_SOURCE = (
     REPO_ROOT
@@ -66,6 +70,9 @@ WEIGHT_DTYPE = np.dtype(
 )
 POSITIVE_DTYPE = np.dtype([("key", "<u8"), ("count", "<u8")])
 MINIMUM_FREE_BYTES = 20 * 1024**3
+PREDICTION_MANIFEST_PATH = (
+    REPO_ROOT / "benchmarks" / "autonomous" / "t0-predictions-v1.json"
+)
 
 
 class AutonomousMetricV1BuildError(ValueError):
@@ -94,6 +101,7 @@ class MetricRunAudit:
     degree_maximum: int
     score_rows: int
     primary_order_rows: int
+    conformance_path: Path
     conformance_sha256: str
 
 
@@ -519,8 +527,204 @@ def build_full_run(
         degree_maximum=stats[4],
         score_rows=universe.candidate_pair_count,
         primary_order_rows=universe.candidate_pair_count,
+        conformance_path=Path(conformance["path"]),
         conformance_sha256=conformance["sha256"],
     )
+
+
+def _artifact_entry(output_dir: Path, path: Path, *, artifact_format: str, rows: int) -> dict:
+    _require(path.is_file(), f"prediction artifact is missing: {path}")
+    return {
+        "path": path.relative_to(output_dir).as_posix(),
+        "format": artifact_format,
+        "rows": rows,
+        "bytes": path.stat().st_size,
+        "sha256": _sha256_file(path),
+    }
+
+
+def seal_full_run(
+    scan_dir: Path,
+    output_dir: Path,
+    manifest_path: Path = PREDICTION_MANIFEST_PATH,
+    *,
+    compiler: str = "g++",
+    minimum_free_bytes: int = MINIMUM_FREE_BYTES,
+) -> dict:
+    """Re-audit the complete local run and write its refusal-to-overwrite seal once."""
+    _require(not manifest_path.exists(), f"prediction manifest already exists: {manifest_path}")
+    run = build_full_run(
+        scan_dir,
+        output_dir,
+        compiler=compiler,
+        minimum_free_bytes=minimum_free_bytes,
+    )
+    metric = audit_autonomous_metric_v1()
+    universe = audit_candidate_universe(scan_dir=scan_dir)
+    universe_payload = json.loads(CANDIDATE_UNIVERSE_MANIFEST_PATH.read_text(encoding="utf-8"))
+    metric_payload = json.loads(METRIC_CONTRACT_PATH.read_text(encoding="utf-8"))
+    arguments = _full_engine_args(scan_dir, output_dir, universe.descriptor_count)
+    scores_path = Path(arguments["scores"])
+    score_rows = np.memmap(scores_path, mode="r", dtype=SCORE_DTYPE)
+    zero_scores = int(np.count_nonzero(score_rows["adamic_adar_q48"] == 0))
+    nonzero_scores = int(score_rows.size) - zero_scores
+    maximum_common_neighbors = int(score_rows["common_neighbors"].max(initial=0))
+    primary_minimum = int(score_rows["adamic_adar_q48"].min(initial=0))
+    primary_maximum = int(score_rows["adamic_adar_q48"].max(initial=0))
+    conformance_payload = json.loads(run.conformance_path.read_text(encoding="utf-8"))
+    _require(conformance_payload.get("passed") is True, "native conformance is not a pass")
+    artifacts = {
+        "degree_weights": _artifact_entry(
+            output_dir,
+            Path(arguments["weights"]),
+            artifact_format="degree-aa-q48-ra-q48-u64-v1",
+            rows=universe.descriptor_count + 1,
+        ),
+        "backbone_offsets": _artifact_entry(
+            output_dir,
+            Path(arguments["offsets"]),
+            artifact_format="csr-offset-u64-v1",
+            rows=universe.descriptor_count + 1,
+        ),
+        "backbone_neighbors": _artifact_entry(
+            output_dir,
+            Path(arguments["neighbors"]),
+            artifact_format="csr-neighbor-u32-v1",
+            rows=run.backbone_edge_count * 2,
+        ),
+        "candidate_scores": _artifact_entry(
+            output_dir,
+            scores_path,
+            artifact_format="candidate-score-record-v1",
+            rows=universe.candidate_pair_count,
+        ),
+        "primary_order": _artifact_entry(
+            output_dir,
+            Path(arguments["primary-order"]),
+            artifact_format="ranked-pair-key-u64-v1",
+            rows=universe.candidate_pair_count,
+        ),
+    }
+    payload = {
+        "schema_version": 1,
+        "id": "autonomous-t0-predictions-v1",
+        "status": "sealed_before_t1",
+        "sealed_on": "2026-08-13",
+        "protocol_id": "autonomous-prospective-pubmed-link-emergence-v1",
+        "sealed_inputs": {
+            "t0_manifest_canonical_json_sha256": universe_payload["inputs"]["sealed_t0"][
+                "canonical_json_sha256"
+            ],
+            "candidate_universe": {
+                "canonical_json_sha256": universe.sha256,
+                "candidate_stream_sha256": universe_payload["artifacts"]["candidate_stream"][
+                    "sha256"
+                ],
+                "candidate_pair_count": universe.candidate_pair_count,
+            },
+            "metric_contract": {
+                "canonical_json_sha256": metric.sha256,
+                "formula_source_sha256": metric_payload["sealed_inputs"]["formula_source"][
+                    "file_sha256"
+                ],
+                "dependency_lock_sha256": metric_payload["sealed_inputs"]["dependency_lock"][
+                    "file_sha256"
+                ],
+            },
+            "support_vector_sha256": universe_payload["artifacts"]["support_vector"]["sha256"],
+            "positive_cooccurrence_index_sha256": universe_payload["artifacts"][
+                "positive_cooccurrence_index"
+            ]["sha256"],
+        },
+        "runtime": {
+            "python_implementation": sys.implementation.name,
+            "python_version": sys.version.split()[0],
+            "numpy_version": np.__version__,
+            "native_language_standard": "C++17",
+            "compiler_executable": Path(run.engine.compiler_path).name,
+            "compiler_version": run.engine.compiler_version,
+            "compile_flags": [
+                "-std=c++17",
+                "-O3",
+                "-DNDEBUG",
+                "-Wall",
+                "-Wextra",
+                "-Werror",
+            ],
+            "orchestrator_source": {
+                "path": "pipeline/benchmark/autonomous_metric_v1.py",
+                "sha256": _sha256_file(Path(__file__)),
+            },
+            "engine_source": {
+                "path": "pipeline/benchmark/native/autonomous_metric_v1_engine.cpp",
+                "sha256": run.engine.source_sha256,
+            },
+            "engine_binary": _artifact_entry(
+                output_dir,
+                run.engine.path,
+                artifact_format="native-executable",
+                rows=1,
+            ),
+            "native_conformance": {
+                **_artifact_entry(
+                    output_dir,
+                    run.conformance_path,
+                    artifact_format="canonical-json-v1",
+                    rows=1,
+                ),
+                "passed": True,
+                "edge_rows_checked": conformance_payload["edge_rows_checked"],
+                "candidate_score_rows_checked": conformance_payload[
+                    "candidate_score_rows_checked"
+                ],
+            },
+        },
+        "measurements": {
+            "positive_source_rows_audited": universe.positive_pair_count,
+            "backbone_edges": run.backbone_edge_count,
+            "backbone_neighbor_rows": run.backbone_edge_count * 2,
+            "degree_minimum": run.degree_minimum,
+            "degree_median_nearest_rank": run.degree_median,
+            "degree_p90_nearest_rank": run.degree_p90,
+            "degree_p99_nearest_rank": run.degree_p99,
+            "degree_maximum": run.degree_maximum,
+            "candidate_score_rows": run.score_rows,
+            "candidate_primary_score_zero_rows": zero_scores,
+            "candidate_primary_score_nonzero_rows": nonzero_scores,
+            "candidate_primary_score_minimum_q48": str(primary_minimum),
+            "candidate_primary_score_maximum_q48": str(primary_maximum),
+            "maximum_candidate_common_neighbors": maximum_common_neighbors,
+            "primary_order_rows": run.primary_order_rows,
+        },
+        "artifacts": artifacts,
+        "integrity_gates": {
+            "all_candidate_universe_local_hashes_and_invariants_match": True,
+            "native_engine_matches_python_reference_fixture": True,
+            "every_positive_source_row_reapplied_to_backbone": True,
+            "backbone_csr_exact_symmetric_sorted_duplicate_free": True,
+            "one_exact_score_tuple_for_every_candidate": True,
+            "score_pair_keys_equal_candidate_stream_in_order": True,
+            "primary_total_order_recomputed_and_equal": True,
+            "missing_duplicate_extra_nonfinite_or_overflow_rows": 0,
+            "human_or_llm_scoring_ranking_filtering_or_labels": False,
+            "t1_source_or_outcomes_inspected": False,
+        },
+        "seal_policy": {
+            "overwrite_allowed": False,
+            "formula_revision_allowed": False,
+            "prediction_artifact_revision_allowed": False,
+            "future_integrity_drift_action": "abstain",
+        },
+        "claim_boundary": (
+            "Exhaustive machine-ranked future PubMed/MeSH database-link candidates from a frozen "
+            "unvalidated method; not discoveries, validated gaps, scientific truths, importance "
+            "estimates, or evidence of absent academic or non-academic knowledge."
+        ),
+        "readiness_contribution": 0,
+    }
+    _require(sha256_payload(payload), "prediction manifest cannot be canonicalized")
+    write_new_json(manifest_path, payload)
+    return payload
 
 
 def main() -> None:
@@ -534,6 +738,12 @@ def main() -> None:
     conformance_parser = subparsers.add_parser("conformance")
     conformance_parser.add_argument("--output-dir", type=Path, required=True)
     conformance_parser.add_argument("--compiler", default="g++")
+    seal_parser = subparsers.add_parser("seal")
+    seal_parser.add_argument("--scan-dir", type=Path, required=True)
+    seal_parser.add_argument("--output-dir", type=Path, required=True)
+    seal_parser.add_argument("--manifest", type=Path, default=PREDICTION_MANIFEST_PATH)
+    seal_parser.add_argument("--compiler", default="g++")
+    seal_parser.add_argument("--minimum-free-gib", type=float, default=20.0)
     args = parser.parse_args()
     try:
         if args.command == "conformance":
@@ -543,6 +753,19 @@ def main() -> None:
             print(f"conformance SHA-256: {result['sha256']}")
             return
         _require(args.minimum_free_gib >= 0, "minimum free GiB cannot be negative")
+        if args.command == "seal":
+            result = seal_full_run(
+                args.scan_dir,
+                args.output_dir,
+                args.manifest,
+                compiler=args.compiler,
+                minimum_free_bytes=int(args.minimum_free_gib * 1024**3),
+            )
+            print(f"prediction manifest: {args.manifest}")
+            print(f"canonical JSON SHA-256: {sha256_payload(result)}")
+            print(f"candidate score rows sealed: {result['measurements']['candidate_score_rows']}")
+            print("readiness contribution: 0 (prospective outcomes do not exist yet)")
+            return
         result = build_full_run(
             args.scan_dir,
             args.output_dir,

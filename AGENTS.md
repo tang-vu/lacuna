@@ -67,6 +67,7 @@ python -m pipeline.benchmark.validate_autonomous_candidate_universe
 python -m pipeline.benchmark.validate_autonomous_metric_v1
 python -m pipeline.benchmark.autonomous_metric_v1 conformance --help
 python -m pipeline.benchmark.autonomous_metric_v1 build --help
+python -m pipeline.benchmark.autonomous_metric_v1 seal --help
 python -m pipeline.benchmark.autonomous_candidate_index --help
 python -m pipeline.benchmark.autonomous_candidate_reduce --help
 python -m pipeline.benchmark.validate_autonomous_prospective

@@ -137,6 +137,17 @@ and refuses existing partial or mismatched outputs. Completion is still an unsea
 prediction run with zero readiness until the small immutable prediction manifest passes its own
 validator and is committed.
 
+Only after the complete build audit passes, create that manifest once:
+
+```bash
+python -m pipeline.benchmark.autonomous_metric_v1 seal \
+  --scan-dir /data/lacuna/t0-2026/candidate-index-v1 \
+  --output-dir /data/lacuna/t0-2026/metric-v1
+```
+
+The seal command deliberately re-runs the full byte, backbone, score, and order audit. It refuses
+an existing manifest rather than updating any prediction after the fact.
+
 ## Archived v3 campaign
 
 The [Metric v3 readiness milestone](https://github.com/tang-vu/lacuna/milestone/1) preserves the
