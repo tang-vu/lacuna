@@ -102,6 +102,10 @@
         "path": "benchmarks/v3/manifests/bioasq-v2-development-084cc2a9e381.json",
         "sha256": "bdc3d045f443b9f44d81fad522ae525f494866d0022443d0949d3c75c2be88e2"
       },
+      "pilot_revision_formula_contract": {
+        "path": "benchmarks/v3/bioasq-formula-v2-revision-1.json",
+        "sha256": "7a41b3e1ddf66a477a52b0a2ef4e2fc91c2fc92e035556ee98d54050efb91be0"
+      },
       "potential_role": "A separately pre-registered pilot over the measured secondary corpus after a successor semantics protocol explicitly handles its observed publication-year scope. It may support post-snapshot discovery cases but is not an NLM baseline substitute.",
       "blockers": [
         "The acquired payload matches all three published aggregate counts, but its measured publication-year scope does not match the reported post-1949 scope: 280 records are dated 1946-1949. All years are parseable, although 751,238 values are not plain YYYY.",
@@ -112,11 +116,12 @@
         "A separately named source-informed successor now preserves all 21 cases and replaces the infeasible sensitivity 20 with sensitivity 5 while keeping primary support 10. It discloses every source count seen before freeze, labels held-out cases score-unseen rather than independent, and remains at zero readiness.",
         "V2's initial formula is frozen before development output: article-level MeSH Jaccard edge weights, minimum aggregation along A-B-C paths, and sum accumulation across B. It is literature-grounded in LION's default but differs materially in graph and co-occurrence unit, retains direct A-C articles, and forbids held-out execution before a final formula freeze.",
         "The initial-formula development measurement is complete for all 11 cases at support 10 and 5, with zero held-out cases computed. None of the three source-labelled positives reaches the top 5%, while three of four ontology-generated hard controls do at both supports. The lower-support run changes no target score or bridge count. This is evidence of poor development discrimination and likely structural-proximity confounding, not held-out validation or a successful gap metric.",
+        "The single permitted post-development revision is now checksum-frozen before revision output. It keeps the graph and indirect Jaccard-sum-min score unchanged, divides every candidate score by one plus its exact direct A-C count, consumes the full revision budget, and pre-registers a mechanical development pass-or-terminate gate. It uses no case kind, ontology relation, or held-out metric output; held-out identities and source counts were already known. It contributes zero readiness.",
         "The measured secondary corpus is not the complete 21,508,439-record 2013 NLM baseline, and the two totals are not a measured coverage fraction.",
         "Only a 2013 snapshot is relevant here, so it cannot supply the missing 2007, 2011, and 2012 releases.",
         "Using it changes the experimental population and therefore requires a new pre-registration rather than a source-status flip."
       ],
-      "next_action": "Preserve the development measurement and sensitivity-blocked predecessor unchanged. Record a post-development formula decision in a separately checksum-pinned contract before any held-out execution. Do not compute, preview, cache, or persist held-out metric output until that final contract is frozen; do not present the development failure as metric-v3 readiness or as permission for an LLM interpretation layer."
+      "next_action": "Run the checksum-frozen direct-penalized revision on all 11 development cases at support 10 and 5 into a new refusal-to-overwrite artifact. Apply its pre-registered gate mechanically: pass freezes this exact revision in a separate final contract before one held-out run; failure terminates the pilot without held-out execution. No further formula revision is permitted."
     },
     {
       "id": "current-pubmed-frozen-surrogate",

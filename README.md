@@ -347,6 +347,18 @@ executor identities so every exported count is auditable from a clean clone and 
 the checksum-pinned local source without committing the 810 MB cache. A separately pinned
 post-development formula decision is required before held-out execution.
 
+That single permitted decision is now frozen in
+`benchmarks/v3/bioasq-formula-v2-revision-1.json`, still before any revision-formula or held-out
+score. It preserves the graph and indirect Jaccard–minimum–sum calculation, then divides every
+candidate's indirect score by `1 + n_AC`, where `n_AC` is its exact direct co-occurrence count at
+the case cutoff. The additive one is fixed additive-one smoothing rather than a fitted parameter. This
+revision was selected after inspecting the initial development failure, consumes the entire
+revision budget, and is not independent formula selection or an exact LION replication. Before
+revision output, the contract also freezes a mechanical development gate at both support settings:
+at least 2/3 positives in the top 5%, 0/4 hard controls in the top 5%, and 4/4 distant controls
+below the median. Passing requires a separate final freeze before one held-out run; failing stops
+the pilot without computing held-out output. No further formula revision is permitted.
+
 ## Deployment
 
 The static site is deployed from `main` by the Git-integrated Cloudflare Pages project `lacuna`.

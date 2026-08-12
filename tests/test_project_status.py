@@ -12,7 +12,7 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 16
+    assert status["schema_version"] == 17
     assert status["status"] == "not_ready"
     assert status["historical_sources"] == {
         "ready": False,
@@ -178,6 +178,39 @@ def test_project_status_exposes_validator_results_without_claiming_readiness():
         "development_summary"
     ]["10"]
     assert development["readiness_contribution"] == 0
+    revision = status["source_alternatives"]["bioasq_revision_formula_contract"]
+    assert revision["status"] == (
+        "frozen_single_revision_after_initial_development_before_revision_output"
+    )
+    assert revision["revision_accounting"] == {
+        "initial_budget": 1,
+        "revision_number": 1,
+        "budget_consumed": 1,
+        "budget_remaining": 0,
+        "no_further_formula_revision_permitted": True,
+        "changed_components": [
+            "candidate score adds the frozen direct A-C denominator 1 + n_AC"
+        ],
+        "unchanged_components": [
+            "source snapshot and publication cutoffs",
+            "MeSH descriptor identities",
+            "support runs 10 and 5",
+            "eligible node, edge, bridge, and candidate sets",
+            "article Jaccard edge weights",
+            "minimum A-B-C path aggregation",
+            "sum accumulation across B",
+            "Decimal precision, ordering, quantization, and tie policy",
+            "all 21 case identities, kinds, cutoffs, and splits",
+        ],
+    }
+    assert revision["score_contract"]["direct_penalty"] == "D(A,C) = 1 + n_AC"
+    assert revision["freeze_timing"][
+        "revision_formula_development_scores_ranks_or_bridges_seen"
+    ] is False
+    assert revision["freeze_timing"][
+        "bioasq_heldout_scores_ranks_orderings_or_bridges_seen"
+    ] is False
+    assert revision["claim_boundary"]["readiness_contribution"] == 0
     assert len(status["source_alternatives"]["entries"]) == 3
     assert status["candidate_intake"]["counts"] == {
         "accepted": 2,
@@ -272,6 +305,7 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
         "bioasq_pilot_successor_protocol",
         "bioasq_initial_formula_contract",
         "bioasq_development_measurement",
+        "bioasq_revision_formula_contract",
         "historical_inventories",
         "mbr_preservation_capture",
         "candidate_intake",

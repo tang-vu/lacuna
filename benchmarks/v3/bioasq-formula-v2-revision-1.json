@@ -1,0 +1,187 @@
+{
+ "schema_version": 1,
+ "id": "bioasq-v2-revision-1-direct-penalized-jaccard-sum-min",
+ "status": "frozen_single_revision_after_initial_development_before_revision_output",
+ "frozen_on": "2026-08-12",
+ "claim_boundary": {
+  "formula_class": "article_level_mesh_direct_penalized_jaccard_sum_of_path_minima",
+  "readiness_contribution": 0,
+  "not_a_claim_of": [
+   "a validated gap detector",
+   "an exact LION replication",
+   "independent formula selection",
+   "held-out validation",
+   "period-appropriate historical indexing",
+   "generalization beyond the BioASQ secondary snapshot"
+  ]
+ },
+ "inputs": {
+  "successor_protocol": {
+   "path": "benchmarks/v3/bioasq-pilot-v2.json",
+   "sha256": "48e8a9b932dfee884a4062bbe4a32da2353b74f6305bdf5e255810ed19cef833"
+  },
+  "initial_formula_contract": {
+   "path": "benchmarks/v3/bioasq-formula-v2-initial.json",
+   "sha256": "084cc2a9e3810119f10190fcc5fdccb48f05195d2ecf17b2115214bc07e7342e"
+  },
+  "initial_development_measurement": {
+   "path": "benchmarks/v3/manifests/bioasq-v2-development-084cc2a9e381.json",
+   "sha256": "bdc3d045f443b9f44d81fad522ae525f494866d0022443d0949d3c75c2be88e2"
+  },
+  "case_blind_graph_manifest": {
+   "path": "benchmarks/v3/manifests/bioasq-v2-graph-cache-084cc2a9e381-8ebd0c227d93.json",
+   "sha256": "9f0d8631ff64783fc02fd37071775f32ea13f1c509a8b550741d21ce61763548"
+  }
+ },
+ "revision_accounting": {
+  "initial_budget": 1,
+  "revision_number": 1,
+  "budget_consumed": 1,
+  "budget_remaining": 0,
+  "no_further_formula_revision_permitted": true,
+  "changed_components": [
+   "candidate score adds the frozen direct A-C denominator 1 + n_AC"
+  ],
+  "unchanged_components": [
+   "source snapshot and publication cutoffs",
+   "MeSH descriptor identities",
+   "support runs 10 and 5",
+   "eligible node, edge, bridge, and candidate sets",
+   "article Jaccard edge weights",
+   "minimum A-B-C path aggregation",
+   "sum accumulation across B",
+   "Decimal precision, ordering, quantization, and tie policy",
+   "all 21 case identities, kinds, cutoffs, and splits"
+  ]
+ },
+ "freeze_timing": {
+  "source_compatibility_counts_seen": true,
+  "case_identities_splits_and_labels_seen": true,
+  "initial_formula_development_scores_ranks_and_bridges_seen": true,
+  "revision_formula_development_scores_ranks_or_bridges_seen": false,
+  "bioasq_heldout_scores_ranks_orderings_or_bridges_seen": false,
+  "disclosure": "The only revision was selected after all initial-formula development output was known. No revision-formula development output and no BioASQ held-out metric output existed at this freeze."
+ },
+ "observed_initial_development_failure": {
+  "scope": "descriptive development measurement under the checksum-pinned initial formula",
+  "case_count": 11,
+  "heldout_case_count_computed": 0,
+  "at_support_10": {
+   "source_labeled_positive_top_5_percent": "0 of 3",
+   "ontology_generated_hard_control_top_5_percent": "3 of 4",
+   "ontology_generated_distant_control_below_median": "1 of 4"
+  },
+  "at_support_5": {
+   "source_labeled_positive_top_5_percent": "0 of 3",
+   "ontology_generated_hard_control_top_5_percent": "3 of 4",
+   "ontology_generated_distant_control_below_median": "1 of 4"
+  },
+  "support_sensitivity_observation": "All 11 target scores and target bridge counts are identical between support 10 and support 5; candidate-universe denominators differ.",
+  "interpretation": "The initial development pattern is consistent with a generic association score that rewards structurally close controls; it does not establish the cause of failure and is not held-out validation."
+ },
+ "revision_rationale": {
+  "construct": "A literature gap candidate should combine indirect A-B-C evidence with relative scarcity of direct A-C literature rather than rank generic association strength alone.",
+  "single_change": "Divide the unchanged indirect score by one plus the exact direct A-C article count.",
+  "denominator_choice": "The additive one is fixed additive-one smoothing: it keeps zero-direct candidates finite, uses no fitted parameter, and makes every additional direct article monotonically reduce the revised score.",
+  "source_timing": "Every case-level direct A-C count was already disclosed by the score-free source audit before the initial formula freeze; the feature is not sourced from held-out metric output.",
+  "anti_tuning_boundary": "No case kind, split, ontology relation, target identity, named bridge, development rank, or held-out metric output enters the formula. Held-out identities and source counts were known, as already disclosed. The exponent, additive constant, and functional form may not be tuned after this freeze.",
+  "relation_to_lion": "LION's retrospective evaluation removes direct A-C documents. This revision does not claim to reproduce that case-specific graph operation; it uses a simpler article-count penalty and reports the material difference."
+ },
+ "graph_contract": {
+  "inherit_exactly_from_initial_formula": true,
+  "node_identity": "MeSH 2013 descriptor UI",
+  "document_unit": "one BioASQ article",
+  "threshold_runs": [
+   {
+    "name": "primary",
+    "minimum_support_articles": 10
+   },
+   {
+    "name": "sensitivity_lower_support",
+    "minimum_support_articles": 5
+   }
+  ],
+  "candidate_set": "For seed A, rank every C in V_t except A, including candidates with a direct A-C edge.",
+  "bridge_set": "For a candidate C, use every B in V_t except A and C where n_AB > 0 and n_BC > 0.",
+  "direct_ac_count": "n_AC is the exact number of included articles containing both A and C at the case cutoff; zero when the edge is absent.",
+  "direct_article_policy": "Retain every A-C article in all support, edge, and bridge counts; use n_AC only through the frozen denominator."
+ },
+ "score_contract": {
+  "edge_weight": "J(x,y) = n_xy / (n_x + n_y - n_xy)",
+  "path_score": "P(A,B,C) = min(J(A,B), J(B,C))",
+  "indirect_score": "I(A,C) = sum(P(A,B,C) for B in bridge_set(A,C))",
+  "direct_penalty": "D(A,C) = 1 + n_AC",
+  "revised_candidate_score": "R(A,C) = I(A,C) / D(A,C)",
+  "empty_bridge_score": "0",
+  "monotonicity": "At fixed indirect score, R is non-increasing in integer n_AC and equals I when n_AC is zero.",
+  "candidate_direct_count_scope": "Compute n_AC independently for every eligible candidate in the same cutoff graph; the named target receives no special handling."
+ },
+ "numeric_reproducibility": {
+  "arithmetic": "Python decimal.Decimal only for every persisted score; native integer rational bounds may only screen rank comparisons and may not be persisted as scores.",
+  "decimal_context_precision": 40,
+  "decimal_rounding": "ROUND_HALF_EVEN",
+  "bridge_order": "descriptor_ui ascending",
+  "indirect_evaluation": "Evaluate every edge Jaccard from integer counts, take each path minimum, and sum in bridge order under the frozen context.",
+  "direct_penalty_evaluation": "After the full indirect sum, construct Decimal(1 + n_AC) from the exact integer and perform one division under the frozen context.",
+  "persisted_score_quantum": "0.000000000000001",
+  "persisted_score_rounding": "quantize once after the direct-penalty division using ROUND_HALF_EVEN",
+  "comparison_value": "the persisted quantized revised score"
+ },
+ "ranking_contract": {
+  "primary_orientation": "rank target C conditioned on seed A",
+  "candidate_order": "persisted revised score descending, descriptor_ui ascending for display only",
+  "tie_policy": "conservative worst tied rank",
+  "one_based_rank": "count(candidate_persisted_revised_score >= target_persisted_revised_score)",
+  "rank_fraction": "one_based_rank / eligible_candidate_count",
+  "eligible_candidate_count": "cardinality(V_t) - 1",
+  "top_5_percent": "rank_fraction <= 0.05",
+  "reciprocal_orientation": "diagnostic_only_and_cannot_change_the_primary_decision"
+ },
+ "feature_exclusions": [
+  "case kind or label",
+  "development or heldout split",
+  "source discovery year",
+  "named target identity as a feature",
+  "named positive bridge identity as a feature",
+  "MeSH tree distance, parent, child, or sibling relationship",
+  "case-specific threshold, penalty, exponent, or candidate override",
+  "any OpenAlex topic metric output",
+  "any LLM-generated or embedding feature"
+ ],
+ "execution_isolation": {
+  "allowed_revision_run": "development cases only, at support 10 and 5",
+  "heldout_prohibition": "Do not compute, cache, log, persist, or preview any held-out score, rank, percentile, candidate ordering, or surfaced bridge list under the revision before a separately pinned finalization decision authorizes it.",
+  "shared_graph_rule": "Reuse the checksum-pinned case-blind graph only; revised scores and direct penalties remain development-case scoped.",
+  "output_path_rule": "Revision development output must use a new revision-contract-checksum-addressed path and refuse overwrite.",
+  "no_further_revision": "Any later change to source, threshold, graph, feature, score, numeric rule, or ranking terminates this pilot rather than creating revision 2."
+ },
+ "pre_registered_revision_development_gate": {
+  "evaluability_requirement": "All 11 development cases must be evaluable at support 10 and 5; denominator shrinkage is forbidden.",
+  "positive_requirement": "At least 2 of 3 development source-labelled positives rank in the top 5 percent.",
+  "hard_control_requirement": "Zero of 4 development ontology-sibling hard controls ranks in the top 5 percent.",
+  "distant_control_requirement": "All 4 development cross-branch distant controls rank below the median, meaning rank_fraction > 0.5.",
+  "sensitivity_requirement": "All three requirements must hold at both support 10 and support 5; an unevaluable case or disagreement is not a pass.",
+  "pass_action": "Freeze this exact revision as final in a new checksum-pinned contract before one held-out execution.",
+  "fail_action": "Terminate the BioASQ v2 formula pilot before held-out execution and publish the development failure with zero readiness.",
+  "no_discretion_rule": "Do not choose the initial formula, relax a threshold, reinterpret a control, or inspect held-out output after seeing the revision development result."
+ },
+ "development_reporting": [
+  "Report all 11 development cases at support 10 and 5 without denominator shrinkage.",
+  "For every case report endpoint supports, direct A-C count, indirect score, direct penalty, revised score, eligible candidate count, worst-tie rank, rank fraction, and top contributing B terms.",
+  "Report every pre-registered revision development gate component and the mechanically determined pass or fail action.",
+  "Keep source-labelled positives, ontology-generated controls, measured counts, and metric outputs structurally distinct.",
+  "Do not present revision development performance as held-out validation, discovery truth, metric-v3 readiness, or permission to add an LLM interpretation layer."
+ ],
+ "limitations": [
+  "The revision was selected after inspecting all initial-formula development outputs and is not an independently chosen formula.",
+  "The additive-one direct penalty is a transparent heuristic, not an estimate of causal novelty or an exact LION implementation.",
+  "Held-out identities and source counts were known before the revision; held-out means metric-score-unseen, not analyst- or source-blinded.",
+  "Article-level MeSH co-occurrence differs materially from LION's sentence-level heterogeneous entity graph and case-specific direct-document removal.",
+  "Source-labelled positives are reproduction targets, not independently adjudicated discovery truth.",
+  "Ontology-generated controls are not verified absences of relationships, failed hypotheses, or non-academic knowledge.",
+  "The development population is only 11 cases and the pass gate is a routing rule, not a performance estimate.",
+  "The maintained 2013 MeSH vocabulary is not period-appropriate historical indexing, and the secondary snapshot is not the complete NLM baseline.",
+  "The snapshot omits or thins non-academic, practitioner, craft, indigenous, humanities, and historical knowledge.",
+  "No outcome contributes metric-v3 readiness, validates gap discovery, generalizes outside this pilot, or authorizes an LLM interpretation layer."
+ ]
+}

@@ -413,6 +413,36 @@ export interface ProjectStatus {
         }>;
       }>;
     };
+    bioasq_revision_formula_contract: {
+      status: 'frozen_single_revision_after_initial_development_before_revision_output';
+      claim_boundary: {
+        formula_class: 'article_level_mesh_direct_penalized_jaccard_sum_of_path_minima';
+        readiness_contribution: 0;
+      };
+      revision_accounting: {
+        revision_number: 1;
+        budget_consumed: 1;
+        budget_remaining: 0;
+        no_further_formula_revision_permitted: true;
+      };
+      freeze_timing: {
+        revision_formula_development_scores_ranks_or_bridges_seen: false;
+        bioasq_heldout_scores_ranks_orderings_or_bridges_seen: false;
+      };
+      score_contract: {
+        indirect_score: string;
+        direct_penalty: 'D(A,C) = 1 + n_AC';
+        revised_candidate_score: string;
+      };
+      pre_registered_revision_development_gate: {
+        positive_requirement: string;
+        hard_control_requirement: string;
+        distant_control_requirement: string;
+        sensitivity_requirement: string;
+        pass_action: string;
+        fail_action: string;
+      };
+    };
   };
   candidate_intake: {
     counts: { accepted: number; proposed: number; rejected: number };

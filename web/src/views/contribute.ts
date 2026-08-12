@@ -540,6 +540,7 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
   const initialFormula = status.source_alternatives.bioasq_initial_formula_contract;
   const development = status.source_alternatives.bioasq_development_measurement;
   const primaryDevelopment = development.development_summary['10'];
+  const revision = status.source_alternatives.bioasq_revision_formula_contract;
   const sensitivityBlockerId = compatibility.decision.heldout_sensitivity_blockers['20'][0];
   const sensitivityBlocker = compatibility.measurement.cases.find(
     (entry) => entry.id === sensitivityBlockerId,
@@ -608,9 +609,14 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
           `reached the top 5%, while ${primaryDevelopment.hard_negative.top_5_percent_count} of ` +
           `${primaryDevelopment.hard_negative.case_count} ontology-generated hard controls did. ` +
           'This is poor development discrimination and a pattern consistent with ' +
-          'structural-proximity confounding, not metric success. Held-out output remains ' +
-          'prohibited until a final ' +
-          `contract is frozen; ${development.execution_isolation.heldout_case_count_computed} ` +
+          'structural-proximity confounding, not metric success. The one permitted revision is ' +
+          `now frozen as ${revision.score_contract.revised_candidate_score}; its budget remaining ` +
+          `is ${revision.revision_accounting.budget_remaining}. Revision development must satisfy ` +
+          `${revision.pre_registered_revision_development_gate.positive_requirement} ` +
+          `${revision.pre_registered_revision_development_gate.hard_control_requirement} ` +
+          `${revision.pre_registered_revision_development_gate.distant_control_requirement} ` +
+          'Failure terminates the pilot before held-out. Revision output does not yet exist; ' +
+          `${development.execution_isolation.heldout_case_count_computed} ` +
           'held-out cases were computed, and every BioASQ layer still contributes zero readiness.',
         progress(
           pinnedSources,

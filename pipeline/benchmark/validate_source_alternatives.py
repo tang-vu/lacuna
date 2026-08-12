@@ -24,6 +24,9 @@ from pipeline.benchmark.bioasq_semantics import (
 )
 from pipeline.benchmark.bioasq_pilot_compatibility import audit_compatibility_manifest
 from pipeline.benchmark.validate_bioasq_formula_v2 import audit_bioasq_formula_v2
+from pipeline.benchmark.validate_bioasq_formula_v2_revision import (
+    audit_bioasq_formula_v2_revision,
+)
 from pipeline.benchmark.validate_bioasq_v2_development import (
     audit_bioasq_v2_graph_manifest,
     audit_bioasq_v2_development,
@@ -361,6 +364,29 @@ def _audit_bioasq_v2_development_reference(value: object, context: str) -> None:
     )
 
 
+def _audit_bioasq_v2_revision_reference(value: object, context: str) -> None:
+    _require(isinstance(value, dict), f"{context}: missing revision formula")
+    _require(set(value) == {"path", "sha256"}, f"{context}: malformed revision reference")
+    relative = Path(str(value["path"]))
+    _require(not relative.is_absolute() and ".." not in relative.parts, f"{context}: unsafe path")
+    path = REPO_ROOT / relative
+    _require(path.is_file(), f"{context}: referenced revision formula is missing")
+    _require(
+        isinstance(value.get("sha256"), str)
+        and len(value["sha256"]) == 64
+        and _sha256_file(path) == value["sha256"],
+        f"{context}: revision formula checksum mismatch",
+    )
+    audit = audit_bioasq_formula_v2_revision(path)
+    _require(
+        audit.revision_number == 1
+        and audit.budget_remaining == 0
+        and audit.heldout_output_seen is False
+        and audit.readiness_contribution == 0,
+        f"{context}: revision formula scope drifted",
+    )
+
+
 def _audit_bioasq_v2_graph_reference(value: object, context: str) -> None:
     _require(isinstance(value, dict), f"{context}: missing graph manifest")
     _require(set(value) == {"path", "sha256"}, f"{context}: malformed graph reference")
@@ -583,6 +609,10 @@ def audit_source_alternatives(
                     _audit_bioasq_v2_development_reference(
                         entry.get("pilot_development_measurement"),
                         f"{entry_id}.pilot_development_measurement",
+                    )
+                    _audit_bioasq_v2_revision_reference(
+                        entry.get("pilot_revision_formula_contract"),
+                        f"{entry_id}.pilot_revision_formula_contract",
                     )
                     _require(
                         snapshot["measured"]["article_count"] == declared["article_count"]

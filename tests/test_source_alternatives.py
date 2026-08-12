@@ -51,6 +51,9 @@ def test_current_alternatives_keep_original_readiness_at_zero():
     assert bioasq["pilot_graph_cache_manifest"]["path"].endswith(
         "bioasq-v2-graph-cache-084cc2a9e381-8ebd0c227d93.json"
     )
+    assert bioasq["pilot_revision_formula_contract"]["path"].endswith(
+        "bioasq-formula-v2-revision-1.json"
+    )
 
 
 def test_alternative_cannot_claim_original_gate_readiness(tmp_path):
@@ -183,6 +186,17 @@ def test_bioasq_graph_manifest_is_checksum_pinned(tmp_path):
     with pytest.raises(
         SourceAlternativeContractError,
         match="graph manifest checksum mismatch",
+    ):
+        audit_source_alternatives(_write_payload(tmp_path, payload))
+
+
+def test_bioasq_revision_formula_is_checksum_pinned(tmp_path):
+    payload = json.loads(ALTERNATIVES_PATH.read_text(encoding="utf-8"))
+    payload["alternatives"][0]["pilot_revision_formula_contract"]["sha256"] = "0" * 64
+
+    with pytest.raises(
+        SourceAlternativeContractError,
+        match="revision formula checksum mismatch",
     ):
         audit_source_alternatives(_write_payload(tmp_path, payload))
 
