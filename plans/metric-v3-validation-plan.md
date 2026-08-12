@@ -123,6 +123,15 @@ marginals, direct A-C counts, and candidate-universe sizes are known. Held-out n
 metric-score-unseen and excluded from formula selection/revision. V2 remains BioASQ-specific and
 contributes zero readiness.
 
+The initial v2 formula is now frozen separately in
+`benchmarks/v3/bioasq-formula-v2-initial.json`, before any BioASQ development or held-out metric
+output. It instantiates LION's published default open-discovery pattern as article-level MeSH
+Jaccard edge weights, minimum aggregation along A-B-C paths, and sum accumulation across B. This is
+not an exact LION replication: the co-occurrence unit and entity graph differ, and direct A-C
+articles are retained. Decimal arithmetic, quantization, candidate and bridge sets, feature
+exclusions, worst-tie ranking, one-revision budget, and held-out isolation are fixed. The first run
+may include only the 11 development cases at support 10 and 5.
+
 Primary documentation:
 
 - [NLM annual baseline overview](https://www.nlm.nih.gov/bsd/licensee/baseline.html)
@@ -229,9 +238,9 @@ after seeing them.
    its score-free 21-case audit found primary support adequate but sensitivity 20 unevaluable for
    one held-out hard control. Preserve this terminal pre-metric result without replacing cases or
    selecting a formula. A separately named source-informed successor is now frozen with the known
-   counts disclosed and all cases unchanged. Checksum-pin its initial formula contract before any
-   development output.
-5. For v2 only, run development cases after that formula freeze, make at most one documented
+   counts disclosed and all cases unchanged. Its initial Jaccard-sum-min formula contract is now
+   checksum-pinned before development output.
+5. For v2 only, implement the frozen formula and run development cases, make at most one documented
    revision, then freeze the final formula before held-out output.
 6. Run held-out cases and the manual audit.
 7. Only after a pass, design the LLM interpretation schema and pair-detail UI.

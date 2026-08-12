@@ -12,7 +12,7 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 14
+    assert status["schema_version"] == 15
     assert status["status"] == "not_ready"
     assert status["historical_sources"] == {
         "ready": False,
@@ -131,6 +131,23 @@ def test_project_status_exposes_validator_results_without_claiming_readiness():
     assert pilot_v2["source_compatibility"]["primary_minimum_support_articles"] == 10
     assert pilot_v2["source_compatibility"]["support_sensitivity_articles"] == [5]
     assert pilot_v2["claim_boundary"]["readiness_contribution"] == 0
+    formula = status["source_alternatives"]["bioasq_initial_formula_contract"]
+    assert formula["status"] == "frozen_initial_before_development_metric_output"
+    assert formula["claim_boundary"]["formula_class"] == (
+        "article_level_mesh_jaccard_sum_of_path_minima"
+    )
+    assert formula["freeze_timing"]["bioasq_development_metric_outputs_seen"] is False
+    assert formula["freeze_timing"]["bioasq_heldout_metric_outputs_seen"] is False
+    assert formula["graph_contract"]["threshold_runs"] == [
+        {"name": "primary", "minimum_support_articles": 10},
+        {"name": "sensitivity_lower_support", "minimum_support_articles": 5},
+    ]
+    assert formula["edge_weight"]["name"] == "article_jaccard"
+    assert formula["path_and_candidate_score"]["path_formula"] == (
+        "P(A,B,C) = min(J(A,B), J(B,C))"
+    )
+    assert formula["execution_isolation"]["revision_budget"] == 1
+    assert formula["claim_boundary"]["readiness_contribution"] == 0
     assert len(status["source_alternatives"]["entries"]) == 3
     assert status["candidate_intake"]["counts"] == {
         "accepted": 2,
@@ -223,6 +240,7 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
         "bioasq_pilot_protocol",
         "bioasq_pilot_compatibility_audit",
         "bioasq_pilot_successor_protocol",
+        "bioasq_initial_formula_contract",
         "historical_inventories",
         "mbr_preservation_capture",
         "candidate_intake",

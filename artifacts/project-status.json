@@ -1,15 +1,15 @@
 {
- "schema_version": 14,
+ "schema_version": 15,
  "status": "not_ready",
  "inputs": {
   "historical_sources": {
    "path": "benchmarks/v3/sources.json",
-   "sha256": "7ec327f54bf7166a6c92034f04e7766937dd743b3aba793e7b6327f774309ba5",
+   "sha256": "d257e5f394edcfcc612d802e8ec90cd11523d0d925edac6fa8e2cf974b6d03eb",
    "canonicalisation": "canonical-json-v1"
   },
   "source_alternatives": {
    "path": "benchmarks/v3/source-alternatives.json",
-   "sha256": "c0f73883ae566a797575cf18581f62bccba59b5501bf447452d21c84868b4d3f",
+   "sha256": "f1badc227ebf9fe1e4da5aaf2b00850f3646d20279b1653e02ab2bafbc0ef82a",
    "canonicalisation": "canonical-json-v1"
   },
   "bioasq_snapshot_audit": {
@@ -45,6 +45,11 @@
   "bioasq_pilot_successor_protocol": {
    "path": "benchmarks/v3/bioasq-pilot-v2.json",
    "sha256": "ac331130f01ef31cd6ee3d50668fe898e5d510fbcb551a0166666f974d49f782",
+   "canonicalisation": "canonical-json-v1"
+  },
+  "bioasq_initial_formula_contract": {
+   "path": "benchmarks/v3/bioasq-formula-v2-initial.json",
+   "sha256": "afef5b7e5125be25bb33a78c9dcbfc1b94b7eb93296fb285ea1f288679794e27",
    "canonicalisation": "canonical-json-v1"
   },
   "historical_inventories": {
@@ -6107,6 +6112,146 @@
     "No result contributes metric-v3 readiness, validates a general gap detector, generalizes beyond biomedicine, or authorizes an LLM interpretation layer."
    ]
   },
+  "bioasq_initial_formula_contract": {
+   "schema_version": 1,
+   "id": "bioasq-v2-initial-jaccard-sum-min",
+   "status": "frozen_initial_before_development_metric_output",
+   "frozen_on": "2026-08-12",
+   "successor_protocol": {
+    "path": "benchmarks/v3/bioasq-pilot-v2.json",
+    "sha256": "48e8a9b932dfee884a4062bbe4a32da2353b74f6305bdf5e255810ed19cef833"
+   },
+   "claim_boundary": {
+    "formula_class": "article_level_mesh_jaccard_sum_of_path_minima",
+    "not_a_claim_of": [
+     "a validated gap detector",
+     "an exact LION replication",
+     "period-appropriate historical indexing",
+     "independent held-out validation",
+     "generalization beyond the BioASQ secondary snapshot"
+    ],
+    "readiness_contribution": 0
+   },
+   "freeze_timing": {
+    "source_compatibility_counts_seen": true,
+    "case_identities_splits_and_labels_seen": true,
+    "legacy_failed_openalex_metric_outputs_seen": true,
+    "lion_published_aggregate_evaluation_results_seen": true,
+    "bioasq_development_metric_outputs_seen": false,
+    "bioasq_heldout_metric_outputs_seen": false,
+    "this_formula_executed_on_bioasq_seen": false,
+    "disclosure": "The source-informed v2 protocol, all source measurements, public case identities, and LION's published aggregate evaluation were visible. No BioASQ candidate score, case rank, percentile, surfaced bridge list, development result, or held-out result was computed before this freeze."
+   },
+   "research_basis": {
+    "primary_source": {
+     "citation": "Pyysalo et al. (2019), LION LBD: a literature-based discovery system for cancer biology",
+     "doi": "https://doi.org/10.1093/bioinformatics/bty845",
+     "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6499247/"
+    },
+    "adopted_design": "LION's default open-discovery configuration uses Jaccard edge weights, minimum path aggregation, and sum accumulation across linking paths.",
+    "material_differences": [
+     "LION uses sentence-level entity co-occurrence over a heterogeneous concept graph; this formula uses binary article-level MeSH descriptor co-occurrence.",
+     "LION's retrospective evaluation deletes documents where named A and C co-occur; this experiment retains every article and reports direct A-C counts.",
+     "LION's published aggregate results informed the formula choice, so this is a literature-grounded baseline rather than an independent method search.",
+     "The BioASQ cases and source counts are known, although no BioASQ metric output has been computed."
+    ]
+   },
+   "graph_contract": {
+    "node_identity": "MeSH 2013 descriptor UI",
+    "document_unit": "one BioASQ article",
+    "publication_cutoff": "include_article_if_normalized_publication_year_lte_case_cutoff_year",
+    "article_labels": "binary unique descriptor set; duplicate assignments are an error",
+    "support": "n_x is the number of included articles containing descriptor x",
+    "cooccurrence": "n_xy is the number of included articles containing both distinct descriptors x and y",
+    "threshold_runs": [
+     {
+      "name": "primary",
+      "minimum_support_articles": 10
+     },
+     {
+      "name": "sensitivity_lower_support",
+      "minimum_support_articles": 5
+     }
+    ],
+    "eligible_node_set": "V_t contains every descriptor x with n_x >= threshold t",
+    "eligible_edge": "An undirected edge (x,y) exists when x and y are distinct members of V_t and n_xy > 0",
+    "candidate_set": "For seed A, rank every C in V_t except A, including candidates with a direct A-C edge.",
+    "bridge_set": "For a candidate C, use every B in V_t except A and C where n_AB > 0 and n_BC > 0.",
+    "direct_ac_policy": "Never delete A-C articles, never exclude C because n_AC > 0, report n_AC, and do not use n_AC as a separate score feature."
+   },
+   "edge_weight": {
+    "name": "article_jaccard",
+    "formula": "J(x,y) = n_xy / (n_x + n_y - n_xy)",
+    "domain": "distinct eligible descriptors joined by an eligible edge",
+    "range": "0 < J(x,y) <= 1",
+    "zero_policy": "A missing edge contributes no path rather than an edge of weight zero."
+   },
+   "path_and_candidate_score": {
+    "path_formula": "P(A,B,C) = min(J(A,B), J(B,C))",
+    "candidate_formula": "S(A,C) = sum(P(A,B,C) for B in bridge_set(A,C))",
+    "empty_bridge_score": "0",
+    "bridge_order": "descriptor_ui ascending",
+    "interpretation": "A candidate scores highly when A and C have many shared linking descriptors with balanced Jaccard strength on both sides; this is a graph association measurement, not a generated hypothesis."
+   },
+   "numeric_reproducibility": {
+    "arithmetic": "Python decimal.Decimal only; binary floating point is forbidden for persisted scores",
+    "decimal_context_precision": 40,
+    "decimal_rounding": "ROUND_HALF_EVEN",
+    "edge_weight_evaluation": "construct Decimal from integer counts, then divide under the frozen context",
+    "summation": "sum path Decimal values in descriptor_ui ascending order under the frozen context",
+    "persisted_score_quantum": "0.000000000000001",
+    "persisted_score_rounding": "quantize once after the full sum using ROUND_HALF_EVEN",
+    "comparison_value": "the persisted quantized Decimal score"
+   },
+   "ranking_contract": {
+    "primary_orientation": "rank target C conditioned on seed A",
+    "candidate_order": "persisted score descending, descriptor_ui ascending for display only",
+    "tie_policy": "conservative worst tied rank",
+    "one_based_rank": "count(candidate_persisted_score >= target_persisted_score)",
+    "rank_fraction": "one_based_rank / eligible_candidate_count",
+    "eligible_candidate_count": "cardinality(V_t) - 1",
+    "top_5_percent": "rank_fraction <= 0.05",
+    "reciprocal_orientation": "diagnostic_only_and_cannot_change_the_primary_decision"
+   },
+   "feature_exclusions": [
+    "case kind or label",
+    "development or heldout split",
+    "source discovery year",
+    "named target identity as a feature",
+    "named positive bridge identity as a feature",
+    "direct A-C count as a separate feature, penalty, filter, or bonus",
+    "MeSH tree distance, parent, child, or sibling relationship",
+    "case-specific threshold or candidate override",
+    "any OpenAlex topic metric output",
+    "any LLM-generated or embedding feature"
+   ],
+   "execution_isolation": {
+    "allowed_first_run": "development cases only, at support 10 and 5",
+    "heldout_prohibition": "Do not compute, cache, log, persist, or preview any held-out score, rank, percentile, candidate ordering, or surfaced bridge list under the initial formula.",
+    "shared_graph_rule": "Corpus graph construction may be shared across cases only when it is case-label-blind and does not materialize held-out candidate scores.",
+    "output_path_rule": "Development output must be written to a new checksum-addressed review artifact and must refuse overwrite.",
+    "revision_budget": 1,
+    "revision_rule": "After development, either freeze this exact formula as final or freeze at most one separately named revision contract before rerunning development. The held-out layer remains prohibited until the final formula contract is pinned.",
+    "no_silent_tuning": "Changing a threshold, edge weight, path aggregation, accumulation, precision, tie rule, or candidate filter creates a formula revision and consumes the single revision budget."
+   },
+   "development_reporting": [
+    "Report all 11 development cases at support 10 and 5 without denominator shrinkage.",
+    "For every case report endpoint supports, direct A-C count, eligible candidate count, persisted target score, worst-tie rank, rank fraction, and top contributing B terms.",
+    "Keep source-labelled positives, ontology-generated controls, measured counts, and metric outputs structurally distinct.",
+    "Report runtime, peak storage, graph edge count, source checksums, protocol checksum, formula checksum, and exact command.",
+    "Do not present development performance as held-out validation, discovery truth, metric-v3 readiness, or permission to add an LLM interpretation layer."
+   ],
+   "limitations": [
+    "The formula choice is informed by LION's published results and is not an independent comparison of LBD formulas.",
+    "Article-level MeSH co-occurrence differs materially from LION's sentence-level heterogeneous entity graph.",
+    "Known case identities and source measurements allow inadvertent tailoring even though BioASQ metric outputs remain unseen.",
+    "Sum accumulation can reward candidates with many weak shared bridges and may retain degree bias despite Jaccard normalization.",
+    "MeSH ontology proximity is intentionally not filtered, so hard controls can expose taxonomy confounding.",
+    "Retaining direct A-C articles differs from classic undiscovered-link evaluation and permits already co-occurring targets.",
+    "The snapshot omits or thins non-academic, practitioner, craft, indigenous, humanities, and historical knowledge.",
+    "No outcome contributes metric-v3 readiness, validates gap discovery, generalizes outside this pilot, or authorizes an LLM interpretation layer."
+   ]
+  },
   "entries": [
    {
     "id": "bioasq-2013-task-a",
@@ -6188,6 +6333,10 @@
      "path": "benchmarks/v3/bioasq-pilot-v2.json",
      "sha256": "48e8a9b932dfee884a4062bbe4a32da2353b74f6305bdf5e255810ed19cef833"
     },
+    "pilot_initial_formula_contract": {
+     "path": "benchmarks/v3/bioasq-formula-v2-initial.json",
+     "sha256": "084cc2a9e3810119f10190fcc5fdccb48f05195d2ecf17b2115214bc07e7342e"
+    },
     "potential_role": "A separately pre-registered pilot over the measured secondary corpus after a successor semantics protocol explicitly handles its observed publication-year scope. It may support post-snapshot discovery cases but is not an NLM baseline substitute.",
     "blockers": [
      "The acquired payload matches all three published aggregate counts, but its measured publication-year scope does not match the reported post-1949 scope: 280 records are dated 1946-1949. All years are parseable, although 751,238 values are not plain YYYY.",
@@ -6196,11 +6345,12 @@
      "A separate 21-case secondary-snapshot pilot is frozen before endpoint-support measurement or formula selection. Its five LION cases are source-labelled reproduction targets and its sixteen controls remain ontology-generated proposals, not independently validated discovery truth or verified absences.",
      "The score-free full-snapshot audit found all 21 cases source-compatible at the primary minimum support of 10. However, held-out hard control generated-hard-2012-04-d019956-d019960 has target support exactly 10 and is ineligible at sensitivity 20. The frozen rule says an unevaluable sensitivity is not a pass, so this pilot cannot earn its passing label and does not authorize metric work.",
      "A separately named source-informed successor now preserves all 21 cases and replaces the infeasible sensitivity 20 with sensitivity 5 while keeping primary support 10. It discloses every source count seen before freeze, labels held-out cases score-unseen rather than independent, and remains at zero readiness.",
+     "V2's initial formula is frozen before development output: article-level MeSH Jaccard edge weights, minimum aggregation along A-B-C paths, and sum accumulation across B. It is literature-grounded in LION's default but differs materially in graph and co-occurrence unit, retains direct A-C articles, and forbids held-out execution before a final formula freeze.",
      "The measured secondary corpus is not the complete 21,508,439-record 2013 NLM baseline, and the two totals are not a measured coverage fraction.",
      "Only a 2013 snapshot is relevant here, so it cannot supply the missing 2007, 2011, and 2012 releases.",
      "Using it changes the experimental population and therefore requires a new pre-registration rather than a source-status flip."
     ],
-    "next_action": "Preserve the sensitivity-blocked predecessor unchanged. For the source-informed successor only, checksum-pin a separate initial formula contract before computing any development output; do not compute or persist held-out metric output until the final post-development formula is frozen."
+    "next_action": "Preserve the sensitivity-blocked predecessor unchanged. Implement the frozen initial v2 Jaccard-sum-min formula and run only the 11 development cases at support 10 and 5 into a new refusal-to-overwrite review artifact. Do not compute, preview, cache, or persist held-out metric output until the final post-development formula contract is frozen."
    },
    {
     "id": "current-pubmed-frozen-surrogate",

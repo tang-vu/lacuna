@@ -537,6 +537,7 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
   const pilot = status.source_alternatives.bioasq_pilot_protocol;
   const compatibility = status.source_alternatives.bioasq_pilot_compatibility_audit;
   const pilotV2 = status.source_alternatives.bioasq_pilot_successor_protocol;
+  const initialFormula = status.source_alternatives.bioasq_initial_formula_contract;
   const sensitivityBlockerId = compatibility.decision.heldout_sensitivity_blockers['20'][0];
   const sensitivityBlocker = compatibility.measurement.cases.find(
     (entry) => entry.id === sensitivityBlockerId,
@@ -596,9 +597,11 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
           'work. A separately named source-informed successor preserves all 21 cases, discloses ' +
           'the known source counts, and uses primary support ' +
           `${pilotV2.source_compatibility.primary_minimum_support_articles} plus sensitivity ` +
-          `${pilotV2.source_compatibility.support_sensitivity_articles.join(', ')}. Its next gate ` +
-          'is a separately checksum-pinned formula contract before development output. No metric ' +
-          'output exists, and every BioASQ layer still contributes zero readiness.',
+          `${pilotV2.source_compatibility.support_sensitivity_articles.join(', ')}. Its initial ` +
+          `formula is now frozen as ${initialFormula.edge_weight.name} edge weights, minimum ` +
+          'A–B–C path aggregation, and sum accumulation across B. The next permitted run is the ' +
+          '11 development cases only; held-out output remains prohibited until a final formula ' +
+          'freeze. No metric output exists, and every BioASQ layer still contributes zero readiness.',
         progress(
           pinnedSources,
           sourceStatuses.length,

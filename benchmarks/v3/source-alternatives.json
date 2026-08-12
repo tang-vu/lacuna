@@ -90,6 +90,10 @@
         "path": "benchmarks/v3/bioasq-pilot-v2.json",
         "sha256": "48e8a9b932dfee884a4062bbe4a32da2353b74f6305bdf5e255810ed19cef833"
       },
+      "pilot_initial_formula_contract": {
+        "path": "benchmarks/v3/bioasq-formula-v2-initial.json",
+        "sha256": "084cc2a9e3810119f10190fcc5fdccb48f05195d2ecf17b2115214bc07e7342e"
+      },
       "potential_role": "A separately pre-registered pilot over the measured secondary corpus after a successor semantics protocol explicitly handles its observed publication-year scope. It may support post-snapshot discovery cases but is not an NLM baseline substitute.",
       "blockers": [
         "The acquired payload matches all three published aggregate counts, but its measured publication-year scope does not match the reported post-1949 scope: 280 records are dated 1946-1949. All years are parseable, although 751,238 values are not plain YYYY.",
@@ -98,11 +102,12 @@
         "A separate 21-case secondary-snapshot pilot is frozen before endpoint-support measurement or formula selection. Its five LION cases are source-labelled reproduction targets and its sixteen controls remain ontology-generated proposals, not independently validated discovery truth or verified absences.",
         "The score-free full-snapshot audit found all 21 cases source-compatible at the primary minimum support of 10. However, held-out hard control generated-hard-2012-04-d019956-d019960 has target support exactly 10 and is ineligible at sensitivity 20. The frozen rule says an unevaluable sensitivity is not a pass, so this pilot cannot earn its passing label and does not authorize metric work.",
         "A separately named source-informed successor now preserves all 21 cases and replaces the infeasible sensitivity 20 with sensitivity 5 while keeping primary support 10. It discloses every source count seen before freeze, labels held-out cases score-unseen rather than independent, and remains at zero readiness.",
+        "V2's initial formula is frozen before development output: article-level MeSH Jaccard edge weights, minimum aggregation along A-B-C paths, and sum accumulation across B. It is literature-grounded in LION's default but differs materially in graph and co-occurrence unit, retains direct A-C articles, and forbids held-out execution before a final formula freeze.",
         "The measured secondary corpus is not the complete 21,508,439-record 2013 NLM baseline, and the two totals are not a measured coverage fraction.",
         "Only a 2013 snapshot is relevant here, so it cannot supply the missing 2007, 2011, and 2012 releases.",
         "Using it changes the experimental population and therefore requires a new pre-registration rather than a source-status flip."
       ],
-      "next_action": "Preserve the sensitivity-blocked predecessor unchanged. For the source-informed successor only, checksum-pin a separate initial formula contract before computing any development output; do not compute or persist held-out metric output until the final post-development formula is frozen."
+      "next_action": "Preserve the sensitivity-blocked predecessor unchanged. Implement the frozen initial v2 Jaccard-sum-min formula and run only the 11 development cases at support 10 and 5 into a new refusal-to-overwrite review artifact. Do not compute, preview, cache, or persist held-out metric output until the final post-development formula contract is frozen."
     },
     {
       "id": "current-pubmed-frozen-surrogate",

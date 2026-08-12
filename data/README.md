@@ -99,7 +99,14 @@ python -m pipeline.benchmark.validate_bioasq_pilot_v2
 ```
 
 It preserves all cases, discloses that source-support counts are known, and remains pre-metric. Its
-next artifact must be a separately pinned formula contract before development output.
+initial formula is now frozen and checked with:
+
+```bash
+python -m pipeline.benchmark.validate_bioasq_formula_v2
+```
+
+The next execution may produce development output only. Building a shared graph must remain
+case-label-blind and must not materialize held-out scores, ranks, candidate orderings, or bridges.
 
 The committed manifest pins canonical SHA-256 digests of the exact taxonomy and row content used
 to build each artifact. Canonicalisation excludes fetch timestamps and strips `mailto` and

@@ -331,6 +331,13 @@ splits, discloses that case-level source counts are known, and replaces the infe
 score-unseen—not identity-, source-, or analyst-blinded. The next permitted action is to pin a
 separate initial formula contract before development output; v2 also contributes zero readiness.
 
+That formula is now checksum-frozen in `benchmarks/v3/bioasq-formula-v2-initial.json`. It adapts
+LION's default open-discovery configuration to article-level MeSH: Jaccard edge weights, the minimum
+edge weight along each A–B–C path, and a sum across B. Direct A–C articles remain in the corpus and
+do not exclude a candidate. Decimal precision, score quantization, candidate universe, worst-tie
+ranking, feature exclusions, and held-out isolation are all fixed before development output. The
+next run is limited to 11 development cases at support 10 and 5; no held-out metric output exists.
+
 ## Deployment
 
 The static site is deployed from `main` by the Git-integrated Cloudflare Pages project `lacuna`.

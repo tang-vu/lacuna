@@ -33,6 +33,10 @@ from pipeline.benchmark.bioasq_pilot_compatibility import (
     MANIFEST_PATH as BIOASQ_PILOT_COMPATIBILITY_PATH,
     audit_compatibility_manifest,
 )
+from pipeline.benchmark.validate_bioasq_formula_v2 import (
+    FORMULA_PATH as BIOASQ_FORMULA_V2_PATH,
+    audit_bioasq_formula_v2,
+)
 from pipeline.benchmark.validate_bioasq_pilot import (
     PILOT_PATH as BIOASQ_PILOT_PATH,
     audit_bioasq_pilot,
@@ -85,6 +89,8 @@ def build_project_status() -> dict:
     )
     audit_bioasq_pilot_v2()
     bioasq_pilot_v2 = json.loads(BIOASQ_PILOT_V2_PATH.read_text(encoding="utf-8"))
+    audit_bioasq_formula_v2()
+    bioasq_formula_v2 = json.loads(BIOASQ_FORMULA_V2_PATH.read_text(encoding="utf-8"))
     candidates = audit_candidates()
     negative_queue = audit_queue()
     audit_review_context()
@@ -102,7 +108,7 @@ def build_project_status() -> dict:
     negative_protocol = load_protocol()
 
     return {
-        "schema_version": 14,
+        "schema_version": 15,
         "status": "ready" if ready else "not_ready",
         "inputs": {
             "historical_sources": _input_identity(SOURCES_PATH),
@@ -118,6 +124,7 @@ def build_project_status() -> dict:
                 BIOASQ_PILOT_COMPATIBILITY_PATH
             ),
             "bioasq_pilot_successor_protocol": _input_identity(BIOASQ_PILOT_V2_PATH),
+            "bioasq_initial_formula_contract": _input_identity(BIOASQ_FORMULA_V2_PATH),
             "historical_inventories": _input_identity(INVENTORIES_PATH),
             "mbr_preservation_capture": _input_identity(MBR_CAPTURE_PATH),
             "candidate_intake": _input_identity(CANDIDATES_PATH),
@@ -165,6 +172,7 @@ def build_project_status() -> dict:
             "bioasq_pilot_protocol": bioasq_pilot,
             "bioasq_pilot_compatibility_audit": bioasq_pilot_compatibility,
             "bioasq_pilot_successor_protocol": bioasq_pilot_v2,
+            "bioasq_initial_formula_contract": bioasq_formula_v2,
             "entries": list(alternatives.entries),
         },
         "candidate_intake": {

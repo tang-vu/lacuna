@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "id": "bioasq-v2-initial-jaccard-sum-min",
+  "status": "frozen_initial_before_development_metric_output",
+  "frozen_on": "2026-08-12",
+  "successor_protocol": {
+    "path": "benchmarks/v3/bioasq-pilot-v2.json",
+    "sha256": "48e8a9b932dfee884a4062bbe4a32da2353b74f6305bdf5e255810ed19cef833"
+  },
+  "claim_boundary": {
+    "formula_class": "article_level_mesh_jaccard_sum_of_path_minima",
+    "not_a_claim_of": [
+      "a validated gap detector",
+      "an exact LION replication",
+      "period-appropriate historical indexing",
+      "independent held-out validation",
+      "generalization beyond the BioASQ secondary snapshot"
+    ],
+    "readiness_contribution": 0
+  },
+  "freeze_timing": {
+    "source_compatibility_counts_seen": true,
+    "case_identities_splits_and_labels_seen": true,
+    "legacy_failed_openalex_metric_outputs_seen": true,
+    "lion_published_aggregate_evaluation_results_seen": true,
+    "bioasq_development_metric_outputs_seen": false,
+    "bioasq_heldout_metric_outputs_seen": false,
+    "this_formula_executed_on_bioasq_seen": false,
+    "disclosure": "The source-informed v2 protocol, all source measurements, public case identities, and LION's published aggregate evaluation were visible. No BioASQ candidate score, case rank, percentile, surfaced bridge list, development result, or held-out result was computed before this freeze."
+  },
+  "research_basis": {
+    "primary_source": {
+      "citation": "Pyysalo et al. (2019), LION LBD: a literature-based discovery system for cancer biology",
+      "doi": "https://doi.org/10.1093/bioinformatics/bty845",
+      "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6499247/"
+    },
+    "adopted_design": "LION's default open-discovery configuration uses Jaccard edge weights, minimum path aggregation, and sum accumulation across linking paths.",
+    "material_differences": [
+      "LION uses sentence-level entity co-occurrence over a heterogeneous concept graph; this formula uses binary article-level MeSH descriptor co-occurrence.",
+      "LION's retrospective evaluation deletes documents where named A and C co-occur; this experiment retains every article and reports direct A-C counts.",
+      "LION's published aggregate results informed the formula choice, so this is a literature-grounded baseline rather than an independent method search.",
+      "The BioASQ cases and source counts are known, although no BioASQ metric output has been computed."
+    ]
+  },
+  "graph_contract": {
+    "node_identity": "MeSH 2013 descriptor UI",
+    "document_unit": "one BioASQ article",
+    "publication_cutoff": "include_article_if_normalized_publication_year_lte_case_cutoff_year",
+    "article_labels": "binary unique descriptor set; duplicate assignments are an error",
+    "support": "n_x is the number of included articles containing descriptor x",
+    "cooccurrence": "n_xy is the number of included articles containing both distinct descriptors x and y",
+    "threshold_runs": [
+      {
+        "name": "primary",
+        "minimum_support_articles": 10
+      },
+      {
+        "name": "sensitivity_lower_support",
+        "minimum_support_articles": 5
+      }
+    ],
+    "eligible_node_set": "V_t contains every descriptor x with n_x >= threshold t",
+    "eligible_edge": "An undirected edge (x,y) exists when x and y are distinct members of V_t and n_xy > 0",
+    "candidate_set": "For seed A, rank every C in V_t except A, including candidates with a direct A-C edge.",
+    "bridge_set": "For a candidate C, use every B in V_t except A and C where n_AB > 0 and n_BC > 0.",
+    "direct_ac_policy": "Never delete A-C articles, never exclude C because n_AC > 0, report n_AC, and do not use n_AC as a separate score feature."
+  },
+  "edge_weight": {
+    "name": "article_jaccard",
+    "formula": "J(x,y) = n_xy / (n_x + n_y - n_xy)",
+    "domain": "distinct eligible descriptors joined by an eligible edge",
+    "range": "0 < J(x,y) <= 1",
+    "zero_policy": "A missing edge contributes no path rather than an edge of weight zero."
+  },
+  "path_and_candidate_score": {
+    "path_formula": "P(A,B,C) = min(J(A,B), J(B,C))",
+    "candidate_formula": "S(A,C) = sum(P(A,B,C) for B in bridge_set(A,C))",
+    "empty_bridge_score": "0",
+    "bridge_order": "descriptor_ui ascending",
+    "interpretation": "A candidate scores highly when A and C have many shared linking descriptors with balanced Jaccard strength on both sides; this is a graph association measurement, not a generated hypothesis."
+  },
+  "numeric_reproducibility": {
+    "arithmetic": "Python decimal.Decimal only; binary floating point is forbidden for persisted scores",
+    "decimal_context_precision": 40,
+    "decimal_rounding": "ROUND_HALF_EVEN",
+    "edge_weight_evaluation": "construct Decimal from integer counts, then divide under the frozen context",
+    "summation": "sum path Decimal values in descriptor_ui ascending order under the frozen context",
+    "persisted_score_quantum": "0.000000000000001",
+    "persisted_score_rounding": "quantize once after the full sum using ROUND_HALF_EVEN",
+    "comparison_value": "the persisted quantized Decimal score"
+  },
+  "ranking_contract": {
+    "primary_orientation": "rank target C conditioned on seed A",
+    "candidate_order": "persisted score descending, descriptor_ui ascending for display only",
+    "tie_policy": "conservative worst tied rank",
+    "one_based_rank": "count(candidate_persisted_score >= target_persisted_score)",
+    "rank_fraction": "one_based_rank / eligible_candidate_count",
+    "eligible_candidate_count": "cardinality(V_t) - 1",
+    "top_5_percent": "rank_fraction <= 0.05",
+    "reciprocal_orientation": "diagnostic_only_and_cannot_change_the_primary_decision"
+  },
+  "feature_exclusions": [
+    "case kind or label",
+    "development or heldout split",
+    "source discovery year",
+    "named target identity as a feature",
+    "named positive bridge identity as a feature",
+    "direct A-C count as a separate feature, penalty, filter, or bonus",
+    "MeSH tree distance, parent, child, or sibling relationship",
+    "case-specific threshold or candidate override",
+    "any OpenAlex topic metric output",
+    "any LLM-generated or embedding feature"
+  ],
+  "execution_isolation": {
+    "allowed_first_run": "development cases only, at support 10 and 5",
+    "heldout_prohibition": "Do not compute, cache, log, persist, or preview any held-out score, rank, percentile, candidate ordering, or surfaced bridge list under the initial formula.",
+    "shared_graph_rule": "Corpus graph construction may be shared across cases only when it is case-label-blind and does not materialize held-out candidate scores.",
+    "output_path_rule": "Development output must be written to a new checksum-addressed review artifact and must refuse overwrite.",
+    "revision_budget": 1,
+    "revision_rule": "After development, either freeze this exact formula as final or freeze at most one separately named revision contract before rerunning development. The held-out layer remains prohibited until the final formula contract is pinned.",
+    "no_silent_tuning": "Changing a threshold, edge weight, path aggregation, accumulation, precision, tie rule, or candidate filter creates a formula revision and consumes the single revision budget."
+  },
+  "development_reporting": [
+    "Report all 11 development cases at support 10 and 5 without denominator shrinkage.",
+    "For every case report endpoint supports, direct A-C count, eligible candidate count, persisted target score, worst-tie rank, rank fraction, and top contributing B terms.",
+    "Keep source-labelled positives, ontology-generated controls, measured counts, and metric outputs structurally distinct.",
+    "Report runtime, peak storage, graph edge count, source checksums, protocol checksum, formula checksum, and exact command.",
+    "Do not present development performance as held-out validation, discovery truth, metric-v3 readiness, or permission to add an LLM interpretation layer."
+  ],
+  "limitations": [
+    "The formula choice is informed by LION's published results and is not an independent comparison of LBD formulas.",
+    "Article-level MeSH co-occurrence differs materially from LION's sentence-level heterogeneous entity graph.",
+    "Known case identities and source measurements allow inadvertent tailoring even though BioASQ metric outputs remain unseen.",
+    "Sum accumulation can reward candidates with many weak shared bridges and may retain degree bias despite Jaccard normalization.",
+    "MeSH ontology proximity is intentionally not filtered, so hard controls can expose taxonomy confounding.",
+    "Retaining direct A-C articles differs from classic undiscovered-link evaluation and permits already co-occurring targets.",
+    "The snapshot omits or thins non-academic, practitioner, craft, indigenous, humanities, and historical knowledge.",
+    "No outcome contributes metric-v3 readiness, validates gap discovery, generalizes outside this pilot, or authorizes an LLM interpretation layer."
+  ]
+}

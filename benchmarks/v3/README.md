@@ -141,6 +141,14 @@ sensitivity 5. This is a disclosed feasibility redesign that weakens holdout ind
 not a retroactive pass for v1. No BioASQ formula, development output, or held-out metric output had
 been computed at freeze, and v2 contributes zero readiness.
 
+`bioasq-formula-v2-initial.json` freezes the first v2 formula before development output. Following
+LION's published default, it uses Jaccard edge weights, minimum aggregation along each A–B–C path,
+and sum accumulation across B. Here the graph is binary article-level MeSH rather than LION's
+sentence-level heterogeneous entity graph, and direct A-C articles are retained. Decimal arithmetic,
+quantization, bridge order, candidate set, worst-tie ranking, feature exclusions, one-revision
+budget, and held-out prohibition are load-bearing parts of the contract. This is a
+literature-grounded baseline, not an exact LION replication or a validated method.
+
 Acquire and verify the public audit inputs with:
 
 ```bash
@@ -176,21 +184,23 @@ python -m pipeline.benchmark.validate_bioasq_pilot
 python -m pipeline.benchmark.validate_bioasq_pilot --verify-local-mesh
 python -m pipeline.benchmark.bioasq_pilot_compatibility --validate
 python -m pipeline.benchmark.validate_bioasq_pilot_v2
+python -m pipeline.benchmark.validate_bioasq_formula_v2
 ```
 
 The second command additionally checks the ignored local MeSH 2013 archive and all 46 unique
 endpoint/bridge mappings. The third validates the committed identities, count constraints,
 sensitivity blocker, and zero-readiness decision without rescanning the ignored snapshot. The
-fourth validates v2's source-informed disclosure and unchanged case population. A full source
-replay that requires byte-equivalent output is available with:
+fourth validates v2's source-informed disclosure and unchanged case population. The fifth freezes
+the exact formula and its execution isolation. A full source replay that requires byte-equivalent
+output is available with:
 
 ```bash
 python -m pipeline.benchmark.bioasq_pilot_compatibility \
   data/medline-baseline/bioasq/PubMedWithMeSH.zip --verify
 ```
 
-Do not run a metric under the terminal v1 protocol. For v2, the next artifact must be a separately
-checksum-pinned initial formula contract before any development output. Held-out output must remain
+Do not run a metric under the terminal v1 protocol. Under the frozen v2 formula, run development
+cases only and write a new refusal-to-overwrite review artifact. Held-out output must remain
 uncomputed until a final post-development formula contract is frozen.
 
 The retired repository homepage also has a checksum-pinned Common Crawl capture:

@@ -361,6 +361,26 @@ export interface ProjectStatus {
         predecessor_support_20_blocker_ids: string[];
       };
     };
+    bioasq_initial_formula_contract: {
+      status: 'frozen_initial_before_development_metric_output';
+      claim_boundary: {
+        formula_class: 'article_level_mesh_jaccard_sum_of_path_minima';
+        readiness_contribution: 0;
+      };
+      freeze_timing: {
+        bioasq_development_metric_outputs_seen: false;
+        bioasq_heldout_metric_outputs_seen: false;
+      };
+      edge_weight: { name: 'article_jaccard' };
+      path_and_candidate_score: {
+        path_formula: string;
+        candidate_formula: string;
+      };
+      graph_contract: {
+        threshold_runs: Array<{ name: string; minimum_support_articles: number }>;
+      };
+      execution_isolation: { revision_budget: 1 };
+    };
   };
   candidate_intake: {
     counts: { accepted: number; proposed: number; rejected: number };

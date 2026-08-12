@@ -204,6 +204,17 @@ candidate-universe sizes were visible before freeze. No BioASQ formula, developm
 held-out metric output had been computed. Its next permitted artifact is a separately pinned
 initial formula contract; it also contributes zero readiness.
 
+The initial formula is now checksum-frozen in
+`benchmarks/v3/bioasq-formula-v2-initial.json`. It adopts the default open-discovery pattern
+reported by [Pyysalo et al. (2019)](https://doi.org/10.1093/bioinformatics/bty845): Jaccard edge
+weights, minimum aggregation along a path, and sum accumulation across paths. The adaptation is
+explicitly non-identical: lacuna uses article-level binary MeSH descriptor co-occurrence rather than
+sentence-level heterogeneous entities, retains all direct A-C articles, and ranks every eligible
+descriptor except A. Decimal precision 40, `1e-15` quantization, bridge ordering, conservative
+worst-tie ranking, feature exclusions, and one-revision budget are fixed. The contract permits only
+the 11 development cases at supports 10 and 5; held-out metric output remains prohibited until a
+final formula contract is pinned.
+
 The exact retained direct A-C counts for the five source-labelled positives, in protocol order, are
 16, 0, 0, 0, and 5. Eight of sixteen generated controls have zero direct A-C articles; the other
 eight have positive counts from 1 to 121. These are source measurements, not evidence that the
@@ -251,9 +262,9 @@ The first semantics protocol remains unchanged: its strict sampler correctly rej
 records outside its 1950-2013 strata. Reproduce the completed bounded audit only with the pinned
 successor, replay the selection before network access, and write outputs to review paths. The
 completed v1 audit is primary-compatible but sensitivity-blocked and remains preserved. The
-source-informed v2 successor is now frozen before metric output. The next scientific action is to
-pin an explicit initial v2 formula contract—not to flip the original NLM-baseline gate, which
-remains visible and red.
+source-informed v2 successor and its initial formula are now frozen before metric output. The next
+scientific action is to implement that exact formula and run development cases only—not to flip the
+original NLM-baseline gate, which remains visible and red.
 
 ## Primary documentation
 
