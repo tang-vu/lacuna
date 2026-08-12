@@ -34,7 +34,7 @@ import re
 import shutil
 import threading
 import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from datetime import date
 from html.parser import HTMLParser
@@ -714,6 +714,26 @@ def _count_pubmed_rows(path: Path) -> dict[str, int]:
     return counts
 
 
+def _seal_pubmed_file(task: tuple[Path, dict]) -> tuple[dict, int]:
+    """Hash and parse one PubMed transport in a process-pool-safe worker."""
+    path, remote = task
+    measured_md5, sha256, size = _hash_file(path)
+    if measured_md5 != remote["official_md5"]:
+        raise AutonomousT0Error(f"{path.name}: official MD5 mismatch; abstaining")
+    counts = _count_pubmed_rows(path)
+    return (
+        {
+            "filename": path.name,
+            "url": remote["url"],
+            "official_md5": remote["official_md5"],
+            "sha256": sha256,
+            "bytes": size,
+            **counts,
+        },
+        counts["total_record_count"],
+    )
+
+
 def write_new_json(output: Path, payload: dict) -> None:
     """Write one immutable evidence object; rendering occurs before the exclusive create."""
     rendered = json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
@@ -731,7 +751,7 @@ def seal_local_t0(
     mesh_path: Path,
     output: Path,
     *,
-    workers: int = 4,
+    workers: int = 1,
     progress: Callable[[int, int, str], None] | None = None,
 ) -> dict:
     """Create the T0 manifest only after every local source passes the frozen machine gate."""
@@ -756,36 +776,25 @@ def seal_local_t0(
     if actual_names != expected_names:
         raise AutonomousT0Error("local PubMed files do not exactly cover the remote inventory")
 
-    def seal_pubmed_file(remote: dict) -> tuple[dict, int]:
-        path = baseline_dir / remote["filename"]
-        measured_md5, sha256, size = _hash_file(path)
-        if measured_md5 != remote["official_md5"]:
-            raise AutonomousT0Error(f"{path.name}: official MD5 mismatch; abstaining")
-        counts = _count_pubmed_rows(path)
-        return (
-            {
-                "filename": path.name,
-                "url": remote["url"],
-                "official_md5": remote["official_md5"],
-                "sha256": sha256,
-                "bytes": size,
-                **counts,
-            },
-            counts["total_record_count"],
-        )
-
     sealed_files = []
     total_records = 0
-    with ThreadPoolExecutor(max_workers=workers) as executor:
-        # map preserves inventory order, so concurrency cannot alter the manifest bytes.
-        for completed, (sealed, record_count) in enumerate(
-            executor.map(seal_pubmed_file, remote_files),
-            start=1,
-        ):
+    tasks = [(baseline_dir / remote["filename"], remote) for remote in remote_files]
+
+    def collect(results) -> None:
+        nonlocal total_records
+        # Both built-in map and executor.map preserve inventory order, so concurrency cannot alter
+        # the manifest bytes.
+        for completed, (sealed, record_count) in enumerate(results, start=1):
             sealed_files.append(sealed)
             total_records += record_count
             if progress is not None:
                 progress(completed, len(remote_files), sealed["filename"])
+
+    if workers == 1:
+        collect(map(_seal_pubmed_file, tasks))
+    else:
+        with ProcessPoolExecutor(max_workers=workers) as executor:
+            collect(executor.map(_seal_pubmed_file, tasks))
 
     mesh_md5, mesh_sha256, mesh_bytes = _hash_file(mesh_path)
     del mesh_md5
