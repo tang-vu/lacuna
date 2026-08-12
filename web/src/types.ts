@@ -187,6 +187,18 @@ export interface ProjectStatus {
       descriptor_count: number;
       readiness_contribution: 0;
     };
+    candidate_universe: {
+      id: 'autonomous-t0-candidate-universe-v1';
+      status: 'score_free_candidate_universe_complete';
+      canonical_sha256: string;
+      distinct_pmid_count: number;
+      descriptor_count: number;
+      descriptor_assignment_count: number;
+      positive_pair_count: number;
+      pair_observation_count: number;
+      candidate_pair_count: number;
+      readiness_contribution: 0;
+    };
     protocol: {
       id: 'autonomous-prospective-pubmed-link-emergence-v1';
       status: 'frozen_before_t0_source_acquisition_and_metric';
@@ -266,6 +278,7 @@ export interface ProjectStatus {
         t0_remote_inventory_pinned: true;
         t0_source_pinned: boolean;
         candidate_index_contract_frozen: boolean;
+        candidate_universe_sealed: boolean;
         readiness_contribution: 0;
         blockers: string[];
         next_machine_action: string;

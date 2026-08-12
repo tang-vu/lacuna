@@ -27,6 +27,9 @@ the expense of gap detection, validation, or traceability.
   39,994,988 parsed records, and the matching 31,110-descriptor MeSH transport. This closes only the
   source gate; the track remains not ready until a frozen metric, sealed predictions, and the
   three-release outcome window pass machine-verifiable gates.
+- The score-free T0 construction has sealed 7,310,895 exhaustive exact-zero candidates from
+  39,994,988 unique PMIDs. This is an exact maintained-current PubMed/MeSH count/index artifact
+  with zero metric or scientific readiness.
 - A pass on the active track validates only future PubMed MeSH link-emergence ranking. Never call it
   a validated knowledge-gap detector, autonomous scientific discovery, or evidence of absent
   human knowledge.
@@ -57,6 +60,7 @@ python -m pipeline.benchmark.autonomous_t0 audit
 python -m pipeline.benchmark.autonomous_t0 audit-sealed
 python -m pipeline.benchmark.autonomous_t0 download --help
 python -m pipeline.benchmark.validate_autonomous_candidate_index
+python -m pipeline.benchmark.validate_autonomous_candidate_universe
 python -m pipeline.benchmark.autonomous_candidate_index --help
 python -m pipeline.benchmark.autonomous_candidate_reduce --help
 python -m pipeline.benchmark.validate_autonomous_prospective

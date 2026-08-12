@@ -100,6 +100,20 @@ The merge runs, support vector, PMID vector, descriptor table, positive-pair ind
 stream, checkpoints, and `.part` files all stay under `--scan-dir`. The manifest contains no score,
 rank, prediction label, interpretation, or scientific-readiness claim.
 
+The active run has completed this gate at
+[`benchmarks/autonomous/t0-candidate-universe-v1.json`](benchmarks/autonomous/t0-candidate-universe-v1.json):
+7,310,895 score-free candidates from exactly 39,994,988 unique PMIDs. Audit the small committed
+manifest anywhere, or recheck all off-repository bytes where the D-drive index is mounted:
+
+```bash
+python -m pipeline.benchmark.validate_autonomous_candidate_universe
+python -m pipeline.benchmark.validate_autonomous_candidate_universe \
+  --verify-local /data/lacuna/t0-2026/candidate-index-v1
+```
+
+This closes candidate construction only. The next transition is to freeze one metric and its
+prediction-seal contract before computing any candidate score.
+
 ## Archived v3 campaign
 
 The [Metric v3 readiness milestone](https://github.com/tang-vu/lacuna/milestone/1) preserves the

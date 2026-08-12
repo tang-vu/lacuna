@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "id": "autonomous-t0-candidate-universe-v1",
+  "status": "score_free_candidate_universe_complete",
+  "completed_on": "2026-08-13",
+  "protocol_id": "autonomous-prospective-pubmed-link-emergence-v1",
+  "inputs": {
+    "candidate_index_contract": {
+      "path": "autonomous/t0-candidate-index-v1.json",
+      "canonical_json_sha256": "afa2bee6eedd091929eca6a8b92122870506631ce12a559a418d227723497366"
+    },
+    "sealed_t0": {
+      "path": "autonomous/t0-2026.json",
+      "canonical_json_sha256": "6ec0372008bb8efe0e17f72695a07bb03816f2b41881d6518d35077ecdac5066"
+    },
+    "source_shard_set_canonical_json_sha256": "e270c88b1f7504da059f426f6d681d02b2b88fedda9123f8ac0536b580dbefa1",
+    "mesh_transport_sha256": "9fe35b3170652376a592daf69e91a80d6c693ecaf9c571ceb701d04204cb357d",
+    "builder_source_sha256": "ebfd9d0851dcc59ce3ca39a79b45eeb5b965a60e271ba3b552c04e8b8d003bc9"
+  },
+  "measurement_boundary": {
+    "indexing_basis": "maintained_2026_pubmed_mesh_assignments",
+    "method": "exact full-baseline integer reduction; no sampling or approximation",
+    "readiness_contribution": 0
+  },
+  "counts": {
+    "source_files": 1334,
+    "distinct_valid_pmids": 39994988,
+    "records_without_mesh": 6964358,
+    "mesh_descriptors": 31110,
+    "descriptor_assignments": 342733118,
+    "positive_pair_rows": 51128229,
+    "pair_observations": 2010408430,
+    "candidate_pairs": 7310895
+  },
+  "artifacts": {
+    "descriptor_table": {
+      "path": "reduced/descriptors.json",
+      "format": "descriptor-json-v1",
+      "rows": 31110,
+      "sha256": "378b04808f4b850b00fc0d73cb9963ca0bfb90c527f7a1c4cc38bda068aed885",
+      "bytes": 11045496
+    },
+    "support_vector": {
+      "path": "reduced/supports.u64.bin",
+      "format": "support-u64-v1",
+      "rows": 31110,
+      "sha256": "e207f5f25633820281992d0a17f0e93266bf62b28d677b8b06d0d09400eb9a22",
+      "bytes": 248880
+    },
+    "pmid_vector": {
+      "path": "reduced/pmids.u64.bin",
+      "format": "pmid-u64-v1",
+      "rows": 39994988,
+      "sha256": "9659a4dacc7fc6695aa96e7c5b8261504f7ef556b3ff6c76602cc7165545f1db",
+      "bytes": 319959904
+    },
+    "positive_cooccurrence_index": {
+      "path": "reduced/positive-pairs.u64u64.bin",
+      "format": "pair-u64-u64-v1",
+      "rows": 51128229,
+      "sha256": "8b656c29bfa3d4fb5df8e7591598a968c5d677a8ad29171908a771efe9e6cced",
+      "bytes": 818051664
+    },
+    "candidate_stream": {
+      "path": "reduced/candidate-keys.u64.bin",
+      "format": "candidate-key-u64-v1",
+      "rows": 7310895,
+      "sha256": "ed3c015515ac3e9bb69f7bc98f7663941d7fe57311165d68d72d1979e7b945b4",
+      "bytes": 58487160
+    }
+  },
+  "completion_gates": {
+    "all_source_hashes_and_record_subtotals_match": true,
+    "global_pmids_strictly_unique_and_equal_sealed_denominator": true,
+    "unknown_descriptors": 0,
+    "support_and_positive_pair_reductions_exact": true,
+    "candidate_stream_exhaustive_strictly_ordered_duplicate_free": true,
+    "metric_scores_or_predictions_emitted": false
+  },
+  "claim_boundary": "Exact maintained-current PubMed/MeSH count index and score-free candidate set only; not a metric result, prediction, discovery, validated gap, or evidence of absent knowledge."
+}

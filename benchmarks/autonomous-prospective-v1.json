@@ -146,6 +146,19 @@
     "score_free": true,
     "readiness_contribution": 0
   },
+  "t0_candidate_universe_artifact": {
+    "path": "autonomous/t0-candidate-universe-v1.json",
+    "sha256": "2313dcc1837d620394f96e5e4c150661c8a2be9e7472c1b5eccad19c13d57f84",
+    "canonicalisation": "canonical-json-v1",
+    "status": "score_free_candidate_universe_complete",
+    "source_file_count": 1334,
+    "distinct_pmid_count": 39994988,
+    "descriptor_count": 31110,
+    "positive_pair_count": 51128229,
+    "candidate_pair_count": 7310895,
+    "score_free": true,
+    "readiness_contribution": 0
+  },
   "prediction_seal": {
     "required_before_t1": [
       "metric source SHA-256",
@@ -254,6 +267,7 @@
     "t0_remote_inventory_pinned": true,
     "t0_source_pinned": true,
     "candidate_index_contract_frozen": true,
+    "candidate_universe_sealed": true,
     "metric_frozen": false,
     "predictions_sealed": false,
     "t1_source_pinned": false,
@@ -265,6 +279,6 @@
       "no T0 predictions are sealed",
       "the three-release prospective outcome window has not matured"
     ],
-    "next_machine_action": "Compute the exhaustive exact T0 candidate universe from the sealed source, then freeze one deterministic metric and refusal-to-overwrite prediction contract before producing any score."
+    "next_machine_action": "Freeze one deterministic metric and refusal-to-overwrite prediction contract against the sealed exhaustive T0 candidate universe before producing any score."
   }
 }

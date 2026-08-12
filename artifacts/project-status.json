@@ -1,11 +1,11 @@
 {
- "schema_version": 23,
+ "schema_version": 24,
  "status": "not_ready",
  "active_validation_track": "autonomous-prospective-pubmed-link-emergence-v1",
  "inputs": {
   "autonomous_prospective_protocol": {
    "path": "benchmarks/autonomous-prospective-v1.json",
-   "sha256": "2490569d80810cb935ab9cf384d9ab06d6626651af2b080abd158ab1343f81dc",
+   "sha256": "bcec6718b2cd9412ae33b76e5cc41e724ca9a6d2edb65cf631b1386dec93cb8d",
    "canonicalisation": "canonical-json-v1"
   },
   "autonomous_t0_remote_inventory": {
@@ -21,6 +21,11 @@
   "autonomous_candidate_index_contract": {
    "path": "benchmarks/autonomous/t0-candidate-index-v1.json",
    "sha256": "afa2bee6eedd091929eca6a8b92122870506631ce12a559a418d227723497366",
+   "canonicalisation": "canonical-json-v1"
+  },
+  "autonomous_candidate_universe": {
+   "path": "benchmarks/autonomous/t0-candidate-universe-v1.json",
+   "sha256": "2313dcc1837d620394f96e5e4c150661c8a2be9e7472c1b5eccad19c13d57f84",
    "canonicalisation": "canonical-json-v1"
   },
   "historical_sources": {
@@ -279,6 +284,19 @@
     "score_free": true,
     "readiness_contribution": 0
    },
+   "t0_candidate_universe_artifact": {
+    "path": "autonomous/t0-candidate-universe-v1.json",
+    "sha256": "2313dcc1837d620394f96e5e4c150661c8a2be9e7472c1b5eccad19c13d57f84",
+    "canonicalisation": "canonical-json-v1",
+    "status": "score_free_candidate_universe_complete",
+    "source_file_count": 1334,
+    "distinct_pmid_count": 39994988,
+    "descriptor_count": 31110,
+    "positive_pair_count": 51128229,
+    "candidate_pair_count": 7310895,
+    "score_free": true,
+    "readiness_contribution": 0
+   },
    "prediction_seal": {
     "required_before_t1": [
      "metric source SHA-256",
@@ -387,6 +405,7 @@
     "t0_remote_inventory_pinned": true,
     "t0_source_pinned": true,
     "candidate_index_contract_frozen": true,
+    "candidate_universe_sealed": true,
     "metric_frozen": false,
     "predictions_sealed": false,
     "t1_source_pinned": false,
@@ -398,7 +417,7 @@
      "no T0 predictions are sealed",
      "the three-release prospective outcome window has not matured"
     ],
-    "next_machine_action": "Compute the exhaustive exact T0 candidate universe from the sealed source, then freeze one deterministic metric and refusal-to-overwrite prediction contract before producing any score."
+    "next_machine_action": "Freeze one deterministic metric and refusal-to-overwrite prediction contract against the sealed exhaustive T0 candidate universe before producing any score."
    }
   },
   "state": "awaiting_frozen_metric",
@@ -435,6 +454,18 @@
    "source_file_count": 1334,
    "source_record_count": 39994988,
    "descriptor_count": 31110,
+   "readiness_contribution": 0
+  },
+  "candidate_universe": {
+   "id": "autonomous-t0-candidate-universe-v1",
+   "status": "score_free_candidate_universe_complete",
+   "canonical_sha256": "2313dcc1837d620394f96e5e4c150661c8a2be9e7472c1b5eccad19c13d57f84",
+   "distinct_pmid_count": 39994988,
+   "descriptor_count": 31110,
+   "descriptor_assignment_count": 342733118,
+   "positive_pair_count": 51128229,
+   "pair_observation_count": 2010408430,
+   "candidate_pair_count": 7310895,
    "readiness_contribution": 0
   }
  },

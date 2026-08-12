@@ -85,6 +85,22 @@ def test_protocol_rejects_candidate_index_contract_identity_drift(tmp_path):
         audit_autonomous_prospective(path)
 
 
+def test_protocol_rejects_candidate_universe_identity_or_state_drift(tmp_path):
+    payload = json.loads(PROTOCOL_PATH.read_text(encoding="utf-8"))
+    payload["t0_candidate_universe_artifact"]["candidate_pair_count"] = 1
+    path = tmp_path / "protocol-universe.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(AutonomousProspectiveContractError, match="candidate-universe artifact"):
+        audit_autonomous_prospective(path)
+
+    payload = json.loads(PROTOCOL_PATH.read_text(encoding="utf-8"))
+    payload["current_state"]["candidate_universe_sealed"] = False
+    path = tmp_path / "protocol-state.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(AutonomousProspectiveContractError, match="current autonomous state"):
+        audit_autonomous_prospective(path)
+
+
 def test_protocol_rejects_power_threshold_or_current_readiness_drift(tmp_path):
     payload = json.loads(PROTOCOL_PATH.read_text(encoding="utf-8"))
     payload["pre_registered_evaluation"]["minimum_observed_positive_outcomes"] = 1

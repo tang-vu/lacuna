@@ -31,6 +31,11 @@ uses deterministic bounded fan-in and fixed numeric key ranges, so peak RAM does
 complete positive-pair index. Only the final small, hash-pinned candidate-universe manifest belongs
 in `benchmarks/autonomous/`; none of these binary intermediates belong in Git or on C.
 
+The active build completed with 51,128,229 globally distinct positive pair rows, 2,010,408,430
+pair observations, and 7,310,895 score-free candidate keys. The small committed manifest pins the
+five final artifacts; `validate_autonomous_candidate_universe --verify-local` rechecks their bytes,
+ordering, sums, and candidate exhaustiveness from the D-drive copy.
+
 This directory holds regenerable API caches, the fetched OpenAlex taxonomy, and co-occurrence
 rows. It also holds trimmed PubMed metadata fetched for benchmark mapping audits. Those files are
 intentionally ignored: the current pre-1986 pilot is tens of megabytes and the replacement MEDLINE

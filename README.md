@@ -17,10 +17,11 @@ Details in [the validation report](plans/reports/validation-260727-1140-swanson-
 
 The active replacement is a no-human prospective PubMed/MeSH link-emergence benchmark. Its 2026
 source baseline is sealed, and its score-free candidate construction contract was frozen before
-descriptor supports or pair counts were measured. The exact source scan and bounded external
-reducer now exist, but no candidate universe, metric, prediction, or prospective outcome has been
-sealed yet. This advances engineering traceability only; scientific and metric readiness remain
-zero.
+descriptor supports or pair counts were measured. The exact full-baseline reducer has now sealed
+7,310,895 score-free candidate pairs from 39,994,988 unique PubMed records. No metric, prediction,
+or prospective outcome has been sealed. The candidate count is an exact maintained-current
+PubMed/MeSH index measurement, not a discovery or validated gap; scientific and metric readiness
+remain zero.
 
 ---
 

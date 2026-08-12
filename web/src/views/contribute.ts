@@ -714,6 +714,7 @@ export function renderAutonomousMissions(status: ProjectStatus): HTMLElement {
   const remoteInventory = active.remote_inventory;
   const sealedT0 = active.sealed_t0;
   const candidateIndex = active.candidate_index_contract;
+  const candidateUniverse = active.candidate_universe;
   const sourceReady = current.state !== 'awaiting_t0_baseline';
   const predictionsSealed = [
     'predictions_sealed_waiting_for_outcome',
@@ -727,7 +728,7 @@ export function renderAutonomousMissions(status: ProjectStatus): HTMLElement {
   const contractUrl = `${REPOSITORY}/blob/main/benchmarks/autonomous-prospective-v1.json`;
   const inventoryUrl = `${REPOSITORY}/blob/main/benchmarks/autonomous/t0-2026-remote-inventory.json`;
   const t0Url = `${REPOSITORY}/blob/main/benchmarks/autonomous/t0-2026.json`;
-  const candidateIndexUrl = `${REPOSITORY}/blob/main/benchmarks/autonomous/t0-candidate-index-v1.json`;
+  const candidateUniverseUrl = `${REPOSITORY}/blob/main/benchmarks/autonomous/t0-candidate-universe-v1.json`;
 
   return el('section', { class: 'contribution-missions', id: 'contribute' }, [
     el('div', { class: 'section-kicker' }, ['AUTONOMOUS VALIDATION']),
@@ -766,16 +767,17 @@ export function renderAutonomousMissions(status: ProjectStatus): HTMLElement {
       ),
       mission(
         '02',
-        predictionsSealed ? 'DONE' : 'LOCKED',
+        predictionsSealed ? 'DONE' : current.candidate_universe_sealed ? 'NEXT' : 'LOCKED',
         'Freeze one formula and every prediction',
-        `The score-free candidate-index contract is frozen at ${candidateIndex.canonical_sha256.slice(0, 12)}… ` +
-          `over all ${candidateIndex.source_record_count.toLocaleString()} source records. ` +
-          'The eligible universe must be exhaustive, exact-zero at T0, and hash-pinned. The formula, ' +
+        `The score-free contract ${candidateIndex.canonical_sha256.slice(0, 12)}… produced and sealed ` +
+          `${candidateUniverse.candidate_pair_count.toLocaleString()} exhaustive exact-zero T0 candidates ` +
+          `from ${candidateUniverse.distinct_pmid_count.toLocaleString()} unique PubMed records. This is an ` +
+          'exact count/index artifact with zero metric or scientific readiness. The formula, ' +
           'parameters, total ordering, tie policy, and prediction artifact must be sealed before ' +
           'future outcomes exist. After sealing, overwrite and revision are forbidden.',
-        progress(predictionsSealed ? 1 : 0, 1, 'Refusal-to-overwrite prediction seal'),
-        'Inspect the score-free index contract',
-        candidateIndexUrl,
+        progress(predictionsSealed ? 2 : 1, 2, 'Candidate universe + prediction seal'),
+        'Inspect the sealed score-free universe',
+        candidateUniverseUrl,
       ),
       mission(
         '03',

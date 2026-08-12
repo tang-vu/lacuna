@@ -25,6 +25,10 @@ from pipeline.benchmark.validate_autonomous_candidate_index import (
     CONTRACT_PATH as CANDIDATE_INDEX_CONTRACT_PATH,
     audit_candidate_index_contract,
 )
+from pipeline.benchmark.validate_autonomous_candidate_universe import (
+    MANIFEST_PATH as CANDIDATE_UNIVERSE_PATH,
+    audit_candidate_universe,
+)
 from pipeline.paths import REPO_ROOT
 
 PROTOCOL_PATH = REPO_ROOT / "benchmarks" / "autonomous-prospective-v1.json"
@@ -216,6 +220,24 @@ def audit_autonomous_prospective(path: Path = PROTOCOL_PATH) -> AutonomousProspe
         },
         "candidate-index construction contract identity drifted",
     )
+    candidate_universe = audit_candidate_universe(CANDIDATE_UNIVERSE_PATH)
+    _require(
+        payload.get("t0_candidate_universe_artifact")
+        == {
+            "path": "autonomous/t0-candidate-universe-v1.json",
+            "sha256": candidate_universe.sha256,
+            "canonicalisation": "canonical-json-v1",
+            "status": candidate_universe.status,
+            "source_file_count": candidate_universe.source_file_count,
+            "distinct_pmid_count": candidate_universe.distinct_pmid_count,
+            "descriptor_count": candidate_universe.descriptor_count,
+            "positive_pair_count": candidate_universe.positive_pair_count,
+            "candidate_pair_count": candidate_universe.candidate_pair_count,
+            "score_free": True,
+            "readiness_contribution": 0,
+        },
+        "candidate-universe artifact identity drifted",
+    )
 
     seal = payload.get("prediction_seal")
     _require(isinstance(seal, dict), "prediction seal missing")
@@ -318,6 +340,7 @@ def audit_autonomous_prospective(path: Path = PROTOCOL_PATH) -> AutonomousProspe
         and current.get("t0_remote_inventory_pinned") is True
         and current.get("t0_source_pinned") is True
         and current.get("candidate_index_contract_frozen") is True
+        and current.get("candidate_universe_sealed") is True
         and current.get("metric_frozen") is False
         and current.get("predictions_sealed") is False
         and current.get("t1_source_pinned") is False
@@ -329,8 +352,8 @@ def audit_autonomous_prospective(path: Path = PROTOCOL_PATH) -> AutonomousProspe
     blockers = current.get("blockers")
     _require(blockers == list(EXPECTED_BLOCKERS), "current blocker list drifted")
     _require(
-        "exhaustive exact T0 candidate universe" in current.get("next_machine_action", "")
-        and "freeze one deterministic metric" in current.get("next_machine_action", "")
+        "sealed exhaustive T0 candidate universe" in current.get("next_machine_action", "")
+        and "Freeze one deterministic metric" in current.get("next_machine_action", "")
         and "refusal-to-overwrite" in current.get("next_machine_action", ""),
         "next machine action drifted",
     )

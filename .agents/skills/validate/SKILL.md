@@ -22,6 +22,7 @@ description: Run lacuna's complete validation workflow and report metric drift, 
    python -m pipeline.benchmark.autonomous_t0 audit
    python -m pipeline.benchmark.autonomous_t0 audit-sealed
    python -m pipeline.benchmark.validate_autonomous_candidate_index
+   python -m pipeline.benchmark.validate_autonomous_candidate_universe
    python -m pipeline.benchmark.validate_autonomous_prospective
    python -m pipeline.benchmark.validate_autonomous_prospective --require-ready
    python -m pipeline.benchmark.source_inventories
@@ -33,6 +34,11 @@ description: Run lacuna's complete validation workflow and report metric drift, 
    python -m pipeline.benchmark.validate_v3
    python -m pipeline.benchmark.validate_v3 --require-ready
    ```
+
+   When the off-repository active index is mounted, also run
+   `python -m pipeline.benchmark.validate_autonomous_candidate_universe --verify-local
+   D:\lacuna-storage\autonomous\t0-2026\candidate-index-v1`. Report a missing local index as a
+   skipped byte-level check, never as a structural pass or drift.
 
    When network access is available, replay both preservation probes and report reachability or
    drift separately from scientific readiness:
