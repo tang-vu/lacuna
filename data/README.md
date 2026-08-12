@@ -41,6 +41,12 @@ checkpoint, compiler output, and `.part` file must stay under the same D-drive t
 contract refuses scoring when the selected non-system volume has less than 20 GiB free and limits
 the working set to 2 GiB. Only the final small hash manifest will be committed.
 
+Use `python -m pipeline.benchmark.autonomous_metric_v1 build` with both `--scan-dir` and
+`--output-dir` on that D-drive tree. The native engine is compiled into the output directory,
+passes a byte-exact synthetic Python conformance fixture, and audits the complete backbone,
+candidate score stream, and total order. No native binary or generated score belongs on C or in
+Git.
+
 This directory holds regenerable API caches, the fetched OpenAlex taxonomy, and co-occurrence
 rows. It also holds trimmed PubMed metadata fetched for benchmark mapping audits. Those files are
 intentionally ignored: the current pre-1986 pilot is tens of megabytes and the replacement MEDLINE

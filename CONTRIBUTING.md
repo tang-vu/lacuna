@@ -120,6 +120,23 @@ pins every baseline, tie rule, artifact format, D-drive requirement, and abstent
 Do not alter its formula source or parameters after scoring begins. A frozen formula contributes
 zero readiness until exhaustive predictions and prospective outcomes pass their gates.
 
+The native scorer must pass byte-for-byte Python conformance before the full run. On the active
+Windows host, keep its compiler output, CSR graph, weights, score records, and rank order on D:
+
+```bash
+python -m pipeline.benchmark.autonomous_metric_v1 conformance \
+  --output-dir /data/lacuna/t0-2026/metric-v1
+python -m pipeline.benchmark.autonomous_metric_v1 build \
+  --scan-dir /data/lacuna/t0-2026/candidate-index-v1 \
+  --output-dir /data/lacuna/t0-2026/metric-v1
+```
+
+The build rechecks all candidate-universe bytes, recomputes the exact positive-association
+backbone from all 51,128,229 positive rows, scores every candidate, reconstructs the total order,
+and refuses existing partial or mismatched outputs. Completion is still an unsealed local
+prediction run with zero readiness until the small immutable prediction manifest passes its own
+validator and is committed.
+
 ## Archived v3 campaign
 
 The [Metric v3 readiness milestone](https://github.com/tang-vu/lacuna/milestone/1) preserves the
