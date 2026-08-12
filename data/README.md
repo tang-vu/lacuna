@@ -21,6 +21,11 @@ the ignored `data/autonomous-t0` junction. Its committed manifest is already sea
 off Git and off the system volume. `python -m pipeline.benchmark.autonomous_t0 audit-sealed` audits
 the committed identities without another 50 GiB corpus scan.
 
+Score-free candidate-index shards belong beside that corpus, for example under
+`D:/lacuna-storage/autonomous/t0-2026/candidate-index-v1/`. They must never be staged in `%TEMP%` or
+on C. Each source checkpoint pins its raw source SHA-256 plus support, positive-pair, and PMID shard
+hashes; an interrupted run reuses only a complete matching checkpoint.
+
 This directory holds regenerable API caches, the fetched OpenAlex taxonomy, and co-occurrence
 rows. It also holds trimmed PubMed metadata fetched for benchmark mapping audits. Those files are
 intentionally ignored: the current pre-1986 pilot is tens of megabytes and the replacement MEDLINE

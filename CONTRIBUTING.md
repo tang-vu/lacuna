@@ -70,6 +70,19 @@ The score-free construction contract is frozen at
 validate it with `python -m pipeline.benchmark.validate_autonomous_candidate_index`. Never weaken
 its exact-count, full-PMID, off-system-volume, or automatic-abstention gates after seeing counts.
 
+The resumable score-free scan writes only checkpointed binary shards on the selected data volume:
+
+```bash
+python -m pipeline.benchmark.autonomous_candidate_index scan \
+  --baseline-dir /data/lacuna/t0-2026/pubmed-baseline \
+  --mesh /data/lacuna/t0-2026/mesh/desc2026.gz \
+  --output-dir /data/lacuna/t0-2026/candidate-index-v1 \
+  --workers 4
+```
+
+Finishing this command is not candidate-index completion: global PMID uniqueness, exact external
+pair reduction, exclusion gates, and the final candidate-stream hash must still pass.
+
 ## Archived v3 campaign
 
 The [Metric v3 readiness milestone](https://github.com/tang-vu/lacuna/milestone/1) preserves the
