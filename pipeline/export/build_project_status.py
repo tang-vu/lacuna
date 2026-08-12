@@ -29,6 +29,10 @@ from pipeline.benchmark.bioasq_semantics import (
     audit_semantics_manifest,
 )
 from pipeline.benchmark.bioasq_snapshot import MANIFEST_PATH as BIOASQ_SNAPSHOT_MANIFEST_PATH
+from pipeline.benchmark.bioasq_pilot_compatibility import (
+    MANIFEST_PATH as BIOASQ_PILOT_COMPATIBILITY_PATH,
+    audit_compatibility_manifest,
+)
 from pipeline.benchmark.validate_bioasq_pilot import (
     PILOT_PATH as BIOASQ_PILOT_PATH,
     audit_bioasq_pilot,
@@ -71,6 +75,10 @@ def build_project_status() -> dict:
     bioasq_semantics_audit = audit_semantics_manifest()
     audit_bioasq_pilot()
     bioasq_pilot = json.loads(BIOASQ_PILOT_PATH.read_text(encoding="utf-8"))
+    audit_compatibility_manifest()
+    bioasq_pilot_compatibility = json.loads(
+        BIOASQ_PILOT_COMPATIBILITY_PATH.read_text(encoding="utf-8")
+    )
     candidates = audit_candidates()
     negative_queue = audit_queue()
     audit_review_context()
@@ -88,7 +96,7 @@ def build_project_status() -> dict:
     negative_protocol = load_protocol()
 
     return {
-        "schema_version": 12,
+        "schema_version": 13,
         "status": "ready" if ready else "not_ready",
         "inputs": {
             "historical_sources": _input_identity(SOURCES_PATH),
@@ -100,6 +108,9 @@ def build_project_status() -> dict:
             ),
             "bioasq_semantics_audit": _input_identity(BIOASQ_SEMANTICS_AUDIT_PATH),
             "bioasq_pilot_protocol": _input_identity(BIOASQ_PILOT_PATH),
+            "bioasq_pilot_compatibility_audit": _input_identity(
+                BIOASQ_PILOT_COMPATIBILITY_PATH
+            ),
             "historical_inventories": _input_identity(INVENTORIES_PATH),
             "mbr_preservation_capture": _input_identity(MBR_CAPTURE_PATH),
             "candidate_intake": _input_identity(CANDIDATES_PATH),
@@ -145,6 +156,7 @@ def build_project_status() -> dict:
             "bioasq_successor_protocol": bioasq_successor_protocol,
             "bioasq_semantics_audit": bioasq_semantics_audit,
             "bioasq_pilot_protocol": bioasq_pilot,
+            "bioasq_pilot_compatibility_audit": bioasq_pilot_compatibility,
             "entries": list(alternatives.entries),
         },
         "candidate_intake": {

@@ -12,7 +12,7 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 12
+    assert status["schema_version"] == 13
     assert status["status"] == "not_ready"
     assert status["historical_sources"] == {
         "ready": False,
@@ -101,6 +101,24 @@ def test_project_status_exposes_validator_results_without_claiming_readiness():
     assert pilot["freeze_timing"]["case_endpoint_support_counts_seen"] is False
     assert pilot["freeze_timing"]["bioasq_pilot_scores_or_ranks_seen"] is False
     assert pilot["claim_boundary"]["readiness_contribution"] == 0
+    compatibility = status["source_alternatives"]["bioasq_pilot_compatibility_audit"]
+    assert compatibility["status"] == (
+        "primary_source_compatible_but_sensitivity_20_unevaluable"
+    )
+    assert compatibility["decision"]["all_21_cases_primary_source_compatible"] is True
+    assert compatibility["decision"]["heldout_sensitivity_evaluable"] == {
+        "5": True,
+        "10": True,
+        "20": False,
+    }
+    assert compatibility["decision"]["heldout_sensitivity_blockers"] == {
+        "5": [],
+        "10": [],
+        "20": ["generated-hard-2012-04-d019956-d019960"],
+    }
+    assert compatibility["decision"]["frozen_heldout_rule_can_still_pass"] is False
+    assert compatibility["decision"]["metric_work_authorized_by_this_audit"] is False
+    assert compatibility["readiness_contribution"] == 0
     assert len(status["source_alternatives"]["entries"]) == 3
     assert status["candidate_intake"]["counts"] == {
         "accepted": 2,
@@ -191,6 +209,7 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
         "bioasq_successor_semantics_protocol",
         "bioasq_semantics_audit",
         "bioasq_pilot_protocol",
+        "bioasq_pilot_compatibility_audit",
         "historical_inventories",
         "mbr_preservation_capture",
         "candidate_intake",

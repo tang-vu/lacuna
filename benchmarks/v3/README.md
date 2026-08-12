@@ -126,6 +126,14 @@ held-out decision rule. Source-labelled positives are not independently validate
 ontology-generated controls are not verified absences. The contract was frozen before endpoint
 support or any pilot formula/output, and every outcome contributes zero readiness.
 
+`manifests/bioasq-pilot-compatibility.json` is the resulting full-snapshot score-free audit. It
+scanned 10,876,004 articles and reproduced 136,439,656 MeSH assignments. Every case passes the
+primary support gate of 10, but held-out hard control
+`generated-hard-2012-04-d019956-d019960` has A/C supports 266/10 at the 2011 cutoff. Its target is
+therefore excluded at sensitivity 20. The frozen held-out rule explicitly treats an unevaluable
+sensitivity as not passing, so the current pilot cannot earn a passing label and no formula work is
+authorized. The protocol remains unchanged and the audit contributes zero readiness.
+
 Acquire and verify the public audit inputs with:
 
 ```bash
@@ -154,16 +162,26 @@ the checksum-pinned successor to reproduce the deterministic selection into an i
 intermediate. The production audit replays that selection against the full snapshot before any
 EFetch request; write reproductions to review paths rather than overwriting the committed manifest.
 
-Validate the next experiment boundary without computing a score:
+Validate the experiment boundary and completed source audit without computing a score:
 
 ```bash
 python -m pipeline.benchmark.validate_bioasq_pilot
 python -m pipeline.benchmark.validate_bioasq_pilot --verify-local-mesh
+python -m pipeline.benchmark.bioasq_pilot_compatibility --validate
 ```
 
 The second command additionally checks the ignored local MeSH 2013 archive and all 46 unique
-endpoint/bridge mappings. The next pipeline artifact must be the frozen score-free source-
-compatibility audit, not a metric result.
+endpoint/bridge mappings. The third validates the committed identities, count constraints,
+sensitivity blocker, and zero-readiness decision without rescanning the ignored snapshot. A full
+source replay that requires byte-equivalent output is available with:
+
+```bash
+python -m pipeline.benchmark.bioasq_pilot_compatibility \
+  data/medline-baseline/bioasq/PubMedWithMeSH.zip --verify
+```
+
+Do not run a pilot metric after this result. A continuation needs a separately named successor
+frozen before any metric output and must disclose that source support is now known.
 
 The retired repository homepage also has a checksum-pinned Common Crawl capture:
 

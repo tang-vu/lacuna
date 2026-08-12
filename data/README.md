@@ -84,9 +84,16 @@ Before any BioASQ pilot formula is written, validate the frozen case and mapping
 python -m pipeline.benchmark.validate_bioasq_pilot --verify-local-mesh
 ```
 
-The protocol contains 21 fixed cases and requires a score-free source-compatibility audit next.
-Do not compute endpoint ranks while building that audit; incompatible cases cannot be replaced
-without a separately named successor protocol frozen before any metric output.
+The protocol contains 21 fixed cases. Its completed score-free audit is validated with:
+
+```bash
+python -m pipeline.benchmark.bioasq_pilot_compatibility --validate
+```
+
+All cases pass primary support 10, but one held-out hard control is ineligible at sensitivity 20,
+so the frozen rule cannot pass and does not authorize metric work. Do not replace the case or alter
+the original protocol. Any continuation must be a separately named successor frozen before metric
+output and must disclose that source-support counts are now known.
 
 The committed manifest pins canonical SHA-256 digests of the exact taxonomy and row content used
 to build each artifact. Canonicalisation excludes fetch timestamps and strips `mailto` and

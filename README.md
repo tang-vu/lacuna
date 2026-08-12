@@ -311,13 +311,18 @@ population estimate, historical indexing reconstruction, or completeness result.
 audit status remains `measured_unmatched_input`; the
 `--require-declared-match` command is expected to fail. Readiness remains zero.
 
-The next experiment is now frozen separately in `benchmarks/v3/bioasq-pilot.json`, before any
-BioASQ endpoint-support count, pilot formula, score, or rank was inspected. It includes the complete
+The experiment was frozen separately in `benchmarks/v3/bioasq-pilot.json`, before any BioASQ
+endpoint-support count, pilot formula, score, or rank was inspected. It includes the complete
 five-case LION Cancer Discovery population plus all sixteen metric-blind structural-control
 proposals: 11 development and 10 held-out cases. The positive held-out split is deterministic
-SHA-256 bottom-2. The first gate is score-free source compatibility for all 21 cases; an
-incompatible endpoint makes the pilot inconclusive and cannot be silently replaced. Even a later
-passing pilot label contributes zero metric-v3 readiness and is not discovery validation.
+SHA-256 bottom-2.
+
+The checksum-pinned score-free scan then read all 10,876,004 articles. All 21 cases meet the
+primary minimum support of 10, but held-out hard control
+`generated-hard-2012-04-d019956-d019960` has target support exactly 10 and is ineligible at the
+pre-registered sensitivity 20. Because the frozen rule says an unevaluable sensitivity is not a
+pass, this pilot cannot earn its passing label and does not authorize metric work. No case was
+replaced, no formula or score was computed, and the result contributes zero metric-v3 readiness.
 
 ## Deployment
 

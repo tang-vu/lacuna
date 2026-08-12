@@ -23,7 +23,7 @@ benchmark without changing the experimental population.
 
 | Candidate | Dated citation-to-MeSH state | Fixed declared corpus | Current decision |
 |---|---|---|---|
-| BioASQ Task 1a v2013 | Yes, described with MeSH 2013 labels | 10,876,004 articles measured; reported post-1949 scope does not match | Run the frozen score-free 21-case compatibility audit; keep the original gate red |
+| BioASQ Task 1a v2013 | Yes, described with MeSH 2013 labels | 10,876,004 articles measured; reported post-1949 scope does not match | Preserve the sensitivity-blocked pilot; keep the original gate red |
 | Current PubMed baseline frozen locally | No historical state; indexing is maintained-current | A complete current release can be pinned | Engineering and future prospective work only |
 | Persistent PubMed Abstracts | Dated titles and abstracts, but no historical MeSH assignments | Dated text snapshots are documented | Rejected for metric-v3 historical indexing |
 | Europe PMC current bulk services | Current literature metadata and selected full-text bulk sets | Current collections, not the required old MEDLINE baselines | Not a historical-baseline replacement |
@@ -182,16 +182,29 @@ control separation inside one secondary snapshot; it does not validate a gap det
 
 The score-free compatibility gate requires every case endpoint to map uniquely to MeSH 2013 and
 have at least ten articles at its source cutoff. All 46 unique endpoint and positive-bridge mappings
-have already been checksum-replayed against the pinned MeSH 2013 archive, but support remains
-unseen. A support failure produces `pilot_inconclusive_source_coverage`; cases cannot be dropped or
-replaced. Only after a compatible result may a separately checksum-pinned formula contract be
-written. Development permits one documented revision, and held-out scores must not be computed or
-persisted before the final formula freeze.
+were checksum-replayed against the pinned MeSH 2013 archive. The subsequent full scan read
+10,876,004 articles and 136,439,656 assignments. Included article counts were 7,689,223 at cutoff
+2006, 9,728,136 at 2010, 10,321,817 at 2011, and 10,864,645 at 2012. All 21 cases pass primary
+support 10, so no case was dropped or replaced.
 
-The later held-out signal rule is also fixed: at least one of two positive targets in the top 5%,
+The primary gate is not the full decision rule. Held-out hard control
+`generated-hard-2012-04-d019956-d019960` has A/C supports 266/10 at cutoff 2011. Its target is
+eligible at support 10 but not at sensitivity 20. The frozen rule says an unevaluable sensitivity
+setting is not a pass, so the pilot cannot earn a passing label before any metric is run. The audit
+therefore sets `metric_work_authorized_by_this_audit` to `false`. The original protocol and cases
+remain immutable; a continuation needs a separately named successor frozen before metric output
+and must disclose that support counts are now known.
+
+The exact retained direct A-C counts for the five source-labelled positives, in protocol order, are
+16, 0, 0, 0, and 5. Eight of sixteen generated controls have zero direct A-C articles; the other
+eight have positive counts from 1 to 121. These are source measurements, not evidence that the
+positive cases are validated discoveries or that zero-count controls are true negatives.
+
+The held-out signal rule remains fixed: at least one of two positive targets in the top 5%,
 no hard control in the top 5%, and all four distant controls below the median, repeated at minimum
 supports 5, 10, and 20. A consistent signal remains a BioASQ pilot result with zero readiness; it is
-not metric-v3 validation, period-appropriate reconstruction, or permission to add LLM output.
+not metric-v3 validation, period-appropriate reconstruction, or permission to add LLM output. The
+current pilot stops before this metric stage because sensitivity 20 is not evaluable.
 
 ## Implemented streaming audit
 
@@ -227,9 +240,10 @@ python -m pipeline.benchmark.bioasq_snapshot \
 
 The first semantics protocol remains unchanged: its strict sampler correctly rejects the 280
 records outside its 1950-2013 strata. Reproduce the completed bounded audit only with the pinned
-successor, replay the selection before network access, and write outputs to review paths. The next
-scientific action is the frozen pilot's score-free compatibility audit, not a status flip for the
-original NLM-baseline gate, which remains visible and red.
+successor, replay the selection before network access, and write outputs to review paths. The
+completed pilot audit is primary-compatible but sensitivity-blocked. The next scientific action is
+to preserve that result and, only if continuing, freeze a separately named pre-metric successor—not
+to flip the original NLM-baseline gate, which remains visible and red.
 
 ## Primary documentation
 

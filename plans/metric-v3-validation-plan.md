@@ -107,6 +107,14 @@ fixes score-free source compatibility, rank definition, support sensitivities, o
 revision, and the held-out rule before any pilot support count, formula, score, or rank. Every
 outcome contributes zero original benchmark readiness.
 
+The subsequent checksum-pinned score-free scan measured all 10,876,004 snapshot articles. All 21
+cases meet the primary support gate of 10. However, held-out hard control
+`generated-hard-2012-04-d019956-d019960` has endpoint supports 266 and 10 at its 2011 cutoff, so its
+target is ineligible at sensitivity 20. The frozen decision rule states that an unevaluable
+sensitivity setting is not a pass. Consequently, this pilot cannot earn its passing label and does
+not authorize formula selection or metric output. The pilot and cases remain unchanged; a
+continuation requires a separately named successor that discloses the now-known source counts.
+
 Primary documentation:
 
 - [NLM annual baseline overview](https://www.nlm.nih.gov/bsd/licensee/baseline.html)
@@ -209,11 +217,13 @@ after seeing them.
    separately named 448-record successor protocol is now frozen to handle the measured 280
    pre-1950 records without changing the prior thresholds. Its deterministic sample has been
    replayed and the bounded maintained-current audit follows the frozen passing rule while adding
-   zero readiness. The new secondary-snapshot experiment, complete case population, and success
-   criteria are now frozen. Run its score-free 21-case source-compatibility audit next. If it is
-   adequate, freeze a separate formula contract before development scores; if not, report the
-   predeclared inconclusive outcome without replacing cases.
-5. Run development cases, make at most one documented revision, then freeze.
+   zero readiness. The secondary-snapshot experiment and complete case population were frozen, then
+   its score-free 21-case audit found primary support adequate but sensitivity 20 unevaluable for
+   one held-out hard control. Preserve this terminal pre-metric result without replacing cases or
+   selecting a formula. Freeze a separately named successor before metric output only if the pilot
+   is redesigned with the now-known source counts disclosed.
+5. For a valid successor only, run development cases, make at most one documented revision, then
+   freeze.
 6. Run held-out cases and the manual audit.
 7. Only after a pass, design the LLM interpretation schema and pair-detail UI.
 

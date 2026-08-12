@@ -82,17 +82,22 @@
         "path": "benchmarks/v3/bioasq-pilot.json",
         "sha256": "0b8f33b3d35d6d4db94b553af27f0535f0374d81f49545ab2b7c5bbe5d97697e"
       },
+      "pilot_compatibility_audit": {
+        "path": "benchmarks/v3/manifests/bioasq-pilot-compatibility.json",
+        "sha256": "dc61b13024cfc364ecf8246d254de544c0b4834dbc51c653458ecc9ac730ce95"
+      },
       "potential_role": "A separately pre-registered pilot over the measured secondary corpus after a successor semantics protocol explicitly handles its observed publication-year scope. It may support post-snapshot discovery cases but is not an NLM baseline substitute.",
       "blockers": [
         "The acquired payload matches all three published aggregate counts, but its measured publication-year scope does not match the reported post-1949 scope: 280 records are dated 1946-1949. All years are parseable, although 751,238 values are not plain YYYY.",
         "The 448-record balanced audit is consistent with meshMajor containing all assigned descriptors under maintained-current PubMed: 5,201 of 5,296 assignments match all descriptors and 455 match MajorTopicYN=Y headings. It is not population-weighted, period-appropriate, or evidence of corpus completeness.",
         "The original 416-record protocol remains immutable. Its separately named 448-record successor and checksum-pinned bounded result retain every original threshold and contribute zero readiness.",
         "A separate 21-case secondary-snapshot pilot is frozen before endpoint-support measurement or formula selection. Its five LION cases are source-labelled reproduction targets and its sixteen controls remain ontology-generated proposals, not independently validated discovery truth or verified absences.",
+        "The score-free full-snapshot audit found all 21 cases source-compatible at the primary minimum support of 10. However, held-out hard control generated-hard-2012-04-d019956-d019960 has target support exactly 10 and is ineligible at sensitivity 20. The frozen rule says an unevaluable sensitivity is not a pass, so this pilot cannot earn its passing label and does not authorize metric work.",
         "The measured secondary corpus is not the complete 21,508,439-record 2013 NLM baseline, and the two totals are not a measured coverage fraction.",
         "Only a 2013 snapshot is relevant here, so it cannot supply the missing 2007, 2011, and 2012 releases.",
         "Using it changes the experimental population and therefore requires a new pre-registration rather than a source-status flip."
       ],
-      "next_action": "Run the frozen pilot's score-free source-compatibility audit over all 21 cases. If every endpoint satisfies the predeclared support gate, freeze a separate formula contract before computing any development score; otherwise record pilot_inconclusive_source_coverage without replacing cases."
+      "next_action": "Preserve the sensitivity-blocked pilot without computing a metric or changing its cases. If work continues, freeze a separately named successor before any metric output, disclose that source support is now known, and keep both experiments at zero readiness."
     },
     {
       "id": "current-pubmed-frozen-surrogate",

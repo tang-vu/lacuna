@@ -535,6 +535,11 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
   const semanticsAudit = status.source_alternatives.bioasq_semantics_audit;
   const semanticsOverall = semanticsAudit.maintained_current_pubmed_comparison.overall;
   const pilot = status.source_alternatives.bioasq_pilot_protocol;
+  const compatibility = status.source_alternatives.bioasq_pilot_compatibility_audit;
+  const sensitivityBlockerId = compatibility.decision.heldout_sensitivity_blockers['20'][0];
+  const sensitivityBlocker = compatibility.measurement.cases.find(
+    (entry) => entry.id === sensitivityBlockerId,
+  );
 
   return el('section', { class: 'contribution-missions', id: 'contribute' }, [
     el('div', { class: 'section-kicker' }, ['THE OPEN WORK']),
@@ -582,8 +587,12 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
           `${pilot.case_population.split_counts.development} development and ` +
           `${pilot.case_population.split_counts.heldout} held-out cases before support counts or ` +
           'formula selection. Its LION targets are source-labelled and its controls remain ' +
-          'ontology-generated proposals; the next gate is score-free source compatibility. ' +
-          'Both the semantics result and pilot contribute zero readiness.',
+          'ontology-generated proposals. The full score-free scan found all 21 cases eligible at ' +
+          'the primary support of 10, but held-out hard control ' +
+          `${sensitivityBlockerId ?? 'unknown'} has target support ` +
+          `${sensitivityBlocker?.target_c.article_support ?? 'unknown'} and is therefore ineligible ` +
+          'at sensitivity 20. The frozen rule cannot pass, so this audit does not authorize metric ' +
+          'work. The semantics result, pilot, and source audit all contribute zero readiness.',
         progress(
           pinnedSources,
           sourceStatuses.length,

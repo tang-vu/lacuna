@@ -316,6 +316,32 @@ export interface ProjectStatus {
         readiness_contribution: 0;
       };
     };
+    bioasq_pilot_compatibility_audit: {
+      status: 'primary_source_compatible_but_sensitivity_20_unevaluable';
+      readiness_contribution: 0;
+      measurement: {
+        count_scope: 'exact_within_pinned_secondary_snapshot';
+        article_count_scanned: number;
+        mesh_assignment_count_scanned: number;
+        cases: Array<{
+          id: string;
+          kind: string;
+          split: 'development' | 'heldout';
+          endpoint_a: { article_support: number };
+          target_c: { article_support: number };
+          direct_ac_article_count: number;
+        }>;
+      };
+      decision: {
+        primary_source_gate_status: 'source_compatible_for_separately_frozen_formula_contract';
+        all_21_cases_primary_source_compatible: true;
+        heldout_sensitivity_evaluable: Record<'5' | '10' | '20', boolean>;
+        heldout_sensitivity_blockers: Record<'5' | '10' | '20', string[]>;
+        frozen_heldout_rule_can_still_pass: false;
+        metric_work_authorized_by_this_audit: false;
+        readiness_contribution: 0;
+      };
+    };
   };
   candidate_intake: {
     counts: { accepted: number; proposed: number; rejected: number };

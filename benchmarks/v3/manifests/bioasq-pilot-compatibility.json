@@ -1,0 +1,855 @@
+{
+ "schema_version": 1,
+ "status": "primary_source_compatible_but_sensitivity_20_unevaluable",
+ "readiness_contribution": 0,
+ "claim_boundary": "Exact source support measurement inside the pinned BioASQ 2013 secondary snapshot; not a metric result, historical-baseline reconstruction, discovery validation, or evidence that generated controls are true negatives.",
+ "inputs": {
+  "pilot_protocol": {
+   "path": "benchmarks/v3/bioasq-pilot.json",
+   "sha256": "0b8f33b3d35d6d4db94b553af27f0535f0374d81f49545ab2b7c5bbe5d97697e"
+  },
+  "snapshot_audit": {
+   "path": "benchmarks/v3/manifests/bioasq-2013-task-a.json",
+   "sha256": "7545ce6b2062315244af3d71fa4b476ff26277d36b6377dd3e210c23c53e1f6c"
+  },
+  "snapshot_transport": {
+   "sha256": "c4f738af8835b9fc300488d484efd633fd4137b149cd852b66a839651e328f68",
+   "bytes": 5471741580,
+   "container": {
+    "format": "zip",
+    "member": "allMeSH.json",
+    "member_bytes": 18383359066,
+    "member_compressed_bytes": 5471741342,
+    "member_crc32": "fc9f9a75",
+    "envelope": "bioasq_single_quote_assignment"
+   }
+  },
+  "negative_candidate_queue": {
+   "path": "artifacts/negative-candidates.json",
+   "sha256": "87c3662af83f450d8d738499e6ff4ec50a127171ab4f0ed209e488f68d828c26"
+  },
+  "descriptor_vocabulary": {
+   "year": 2013,
+   "url": "https://nlmpubs.nlm.nih.gov/projects/mesh/2013/xmlmesh/desc2013.gz",
+   "sha256": "c928973ae228ebd03ceeec8950b31f63a867fc9dc2699ae1578e506f25739740",
+   "bytes": 16103897,
+   "descriptor_count": 26853
+  }
+ },
+ "transform": {
+  "publication_cutoff": "include_article_if_normalized_publication_year_lte_case_cutoff_year",
+  "descriptor_identity": "exact_mesh_2013_descriptor_ui_resolved_from_normalized_bioasq_label",
+  "article_contribution": "binary_unique_descriptor_set_per_article",
+  "cooccurrence_unit": "number_of_articles_containing_both_descriptors",
+  "direct_endpoint_cooccurrences": "retain_and_report_exactly; never delete A-C articles for a named case",
+  "support_thresholds_articles": [
+   5,
+   10,
+   20
+  ],
+  "cutoff_years": [
+   2006,
+   2010,
+   2011,
+   2012
+  ],
+  "source_query": "No API query: stream every article in the checksum-pinned local snapshot and include it when its normalized publication year is at or before the case cutoff."
+ },
+ "measurement": {
+  "count_scope": "exact_within_pinned_secondary_snapshot",
+  "article_count_scanned": 10876004,
+  "mesh_assignment_count_scanned": 136439656,
+  "distinct_descriptor_count_through_2012": 26563,
+  "articles_after_last_cutoff": 11359,
+  "included_article_count_by_cutoff": {
+   "2006": 7689223,
+   "2010": 9728136,
+   "2011": 10321817,
+   "2012": 10864645
+  },
+  "support_eligible_descriptor_count_by_cutoff_and_threshold": {
+   "2006": {
+    "5": 24148,
+    "10": 23614,
+    "20": 22801
+   },
+   "2010": {
+    "5": 25616,
+    "10": 25189,
+    "20": 24394
+   },
+   "2011": {
+    "5": 25986,
+    "10": 25622,
+    "20": 24918
+   },
+   "2012": {
+    "5": 26239,
+    "10": 25924,
+    "20": 25249
+   }
+  },
+  "cases": [
+   {
+    "id": "lion-nfkb-adenoma",
+    "kind": "source_labeled_positive",
+    "split": "development",
+    "cutoff": "2011-12-31",
+    "label_scope": "source_labeled_lion_reproduction_case_not_independently_validated_discovery_truth",
+    "endpoint_a": {
+     "descriptor_ui": "D016328",
+     "descriptor_label": "NF-kappa B",
+     "article_support": 30204
+    },
+    "target_c": {
+     "descriptor_ui": "D000236",
+     "descriptor_label": "Adenoma",
+     "article_support": 23636
+    },
+    "direct_ac_article_count": 16,
+    "support_eligibility": {
+     "5": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "10": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "20": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     }
+    },
+    "primary_source_compatible": true,
+    "named_bridge_b": {
+     "descriptor_ui": "D019253",
+     "descriptor_label": "Proto-Oncogene Proteins c-bcl-2",
+     "article_support": 20605,
+     "ab_article_count": 781,
+     "bc_article_count": 124
+    }
+   },
+   {
+    "id": "lion-notch1-cebpb",
+    "kind": "source_labeled_positive",
+    "split": "development",
+    "cutoff": "2011-12-31",
+    "label_scope": "source_labeled_lion_reproduction_case_not_independently_validated_discovery_truth",
+    "endpoint_a": {
+     "descriptor_ui": "D051881",
+     "descriptor_label": "Receptor, Notch1",
+     "article_support": 1512
+    },
+    "target_c": {
+     "descriptor_ui": "D022782",
+     "descriptor_label": "CCAAT-Enhancer-Binding Protein-beta",
+     "article_support": 1042
+    },
+    "direct_ac_article_count": 0,
+    "support_eligibility": {
+     "5": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "10": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "20": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     }
+    },
+    "primary_source_compatible": true,
+    "named_bridge_b": {
+     "descriptor_ui": "D016922",
+     "descriptor_label": "Cell Aging",
+     "article_support": 6402,
+     "ab_article_count": 7,
+     "bc_article_count": 7
+    }
+   },
+   {
+    "id": "lion-il17-mkp1",
+    "kind": "source_labeled_positive",
+    "split": "heldout",
+    "cutoff": "2010-12-31",
+    "label_scope": "source_labeled_lion_reproduction_case_not_independently_validated_discovery_truth",
+    "endpoint_a": {
+     "descriptor_ui": "D020381",
+     "descriptor_label": "Interleukin-17",
+     "article_support": 2174
+    },
+    "target_c": {
+     "descriptor_ui": "D054638",
+     "descriptor_label": "Dual Specificity Phosphatase 1",
+     "article_support": 623
+    },
+    "direct_ac_article_count": 0,
+    "support_eligibility": {
+     "5": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "10": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "20": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     }
+    },
+    "primary_source_compatible": true,
+    "named_bridge_b": {
+     "descriptor_ui": "D048051",
+     "descriptor_label": "p38 Mitogen-Activated Protein Kinases",
+     "article_support": 11246,
+     "ab_article_count": 38,
+     "bc_article_count": 142
+    }
+   },
+   {
+    "id": "lion-nrf2-pancreatic-cancer",
+    "kind": "source_labeled_positive",
+    "split": "heldout",
+    "cutoff": "2006-12-31",
+    "label_scope": "source_labeled_lion_reproduction_case_not_independently_validated_discovery_truth",
+    "endpoint_a": {
+     "descriptor_ui": "D051267",
+     "descriptor_label": "NF-E2-Related Factor 2",
+     "article_support": 357
+    },
+    "target_c": {
+     "descriptor_ui": "D010190",
+     "descriptor_label": "Pancreatic Neoplasms",
+     "article_support": 19883
+    },
+    "direct_ac_article_count": 0,
+    "support_eligibility": {
+     "5": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "10": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "20": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     }
+    },
+    "primary_source_compatible": true,
+    "named_bridge_b": {
+     "descriptor_ui": "D017382",
+     "descriptor_label": "Reactive Oxygen Species",
+     "article_support": 15289,
+     "ab_article_count": 25,
+     "bc_article_count": 29
+    }
+   },
+   {
+    "id": "lion-cxcl12-thyroid-cancer",
+    "kind": "source_labeled_positive",
+    "split": "development",
+    "cutoff": "2012-12-31",
+    "label_scope": "source_labeled_lion_reproduction_case_not_independently_validated_discovery_truth",
+    "endpoint_a": {
+     "descriptor_ui": "D054377",
+     "descriptor_label": "Chemokine CXCL12",
+     "article_support": 3379
+    },
+    "target_c": {
+     "descriptor_ui": "D013964",
+     "descriptor_label": "Thyroid Neoplasms",
+     "article_support": 20235
+    },
+    "direct_ac_article_count": 5,
+    "support_eligibility": {
+     "5": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "10": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "20": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     }
+    },
+    "primary_source_compatible": true,
+    "named_bridge_b": {
+     "descriptor_ui": "D016922",
+     "descriptor_label": "Cell Aging",
+     "article_support": 7022,
+     "ab_article_count": 8,
+     "bc_article_count": 13
+    }
+   },
+   {
+    "id": "generated-distant-2012-01-d011651-d013783",
+    "kind": "distant_negative",
+    "split": "development",
+    "cutoff": "2011-12-31",
+    "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+    "endpoint_a": {
+     "descriptor_ui": "D011651",
+     "descriptor_label": "Pulmonary Artery",
+     "article_support": 20722
+    },
+    "target_c": {
+     "descriptor_ui": "D013783",
+     "descriptor_label": "Textile Industry",
+     "article_support": 1613
+    },
+    "direct_ac_article_count": 0,
+    "support_eligibility": {
+     "5": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "10": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "20": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     }
+    },
+    "primary_source_compatible": true
+   },
+   {
+    "id": "generated-distant-2012-02-d047229-d011337",
+    "kind": "distant_negative",
+    "split": "heldout",
+    "cutoff": "2011-12-31",
+    "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+    "endpoint_a": {
+     "descriptor_ui": "D047229",
+     "descriptor_label": "Plakortis",
+     "article_support": 20
+    },
+    "target_c": {
+     "descriptor_ui": "D011337",
+     "descriptor_label": "Probability Learning",
+     "article_support": 892
+    },
+    "direct_ac_article_count": 0,
+    "support_eligibility": {
+     "5": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "10": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "20": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     }
+    },
+    "primary_source_compatible": true
+   },
+   {
+    "id": "generated-distant-2012-03-d009008-d008888",
+    "kind": "distant_negative",
+    "split": "development",
+    "cutoff": "2011-12-31",
+    "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+    "endpoint_a": {
+     "descriptor_ui": "D009008",
+     "descriptor_label": "Abnormalities, Severe Teratoid",
+     "article_support": 175
+    },
+    "target_c": {
+     "descriptor_ui": "D008888",
+     "descriptor_label": "Military Nursing",
+     "article_support": 380
+    },
+    "direct_ac_article_count": 0,
+    "support_eligibility": {
+     "5": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "10": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "20": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     }
+    },
+    "primary_source_compatible": true
+   },
+   {
+    "id": "generated-distant-2012-04-d008524-d055700",
+    "kind": "distant_negative",
+    "split": "heldout",
+    "cutoff": "2011-12-31",
+    "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+    "endpoint_a": {
+     "descriptor_ui": "D008524",
+     "descriptor_label": "Medrogestone",
+     "article_support": 70
+    },
+    "target_c": {
+     "descriptor_ui": "D055700",
+     "descriptor_label": "Cremation",
+     "article_support": 23
+    },
+    "direct_ac_article_count": 0,
+    "support_eligibility": {
+     "5": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "10": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "20": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     }
+    },
+    "primary_source_compatible": true
+   },
+   {
+    "id": "generated-distant-2013-01-d008438-d057141",
+    "kind": "distant_negative",
+    "split": "development",
+    "cutoff": "2012-12-31",
+    "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+    "endpoint_a": {
+     "descriptor_ui": "D008438",
+     "descriptor_label": "Maxillary Artery",
+     "article_support": 413
+    },
+    "target_c": {
+     "descriptor_ui": "D057141",
+     "descriptor_label": "Food, Preserved",
+     "article_support": 173
+    },
+    "direct_ac_article_count": 0,
+    "support_eligibility": {
+     "5": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "10": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "20": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     }
+    },
+    "primary_source_compatible": true
+   },
+   {
+    "id": "generated-distant-2013-02-d029902-d003887",
+    "kind": "distant_negative",
+    "split": "heldout",
+    "cutoff": "2012-12-31",
+    "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+    "endpoint_a": {
+     "descriptor_ui": "D029902",
+     "descriptor_label": "Medicago",
+     "article_support": 374
+    },
+    "target_c": {
+     "descriptor_ui": "D003887",
+     "descriptor_label": "Desensitization, Psychologic",
+     "article_support": 841
+    },
+    "direct_ac_article_count": 0,
+    "support_eligibility": {
+     "5": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "10": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "20": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     }
+    },
+    "primary_source_compatible": true
+   },
+   {
+    "id": "generated-distant-2013-03-d004620-d004581",
+    "kind": "distant_negative",
+    "split": "development",
+    "cutoff": "2012-12-31",
+    "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+    "endpoint_a": {
+     "descriptor_ui": "D004620",
+     "descriptor_label": "Embolism, Fat",
+     "article_support": 805
+    },
+    "target_c": {
+     "descriptor_ui": "D004581",
+     "descriptor_label": "Electronics",
+     "article_support": 3680
+    },
+    "direct_ac_article_count": 0,
+    "support_eligibility": {
+     "5": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "10": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "20": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     }
+    },
+    "primary_source_compatible": true
+   },
+   {
+    "id": "generated-distant-2013-04-d011372-d013177",
+    "kind": "distant_negative",
+    "split": "heldout",
+    "cutoff": "2012-12-31",
+    "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+    "endpoint_a": {
+     "descriptor_ui": "D011372",
+     "descriptor_label": "Progestins",
+     "article_support": 3308
+    },
+    "target_c": {
+     "descriptor_ui": "D013177",
+     "descriptor_label": "Sports",
+     "article_support": 10776
+    },
+    "direct_ac_article_count": 3,
+    "support_eligibility": {
+     "5": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "10": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "20": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     }
+    },
+    "primary_source_compatible": true
+   },
+   {
+    "id": "generated-hard-2012-01-d001174-d014143",
+    "kind": "hard_negative",
+    "split": "development",
+    "cutoff": "2011-12-31",
+    "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+    "endpoint_a": {
+     "descriptor_ui": "D001174",
+     "descriptor_label": "Arthrodesis",
+     "article_support": 3734
+    },
+    "target_c": {
+     "descriptor_ui": "D014143",
+     "descriptor_label": "Traction",
+     "article_support": 2239
+    },
+    "direct_ac_article_count": 17,
+    "support_eligibility": {
+     "5": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "10": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "20": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     }
+    },
+    "primary_source_compatible": true
+   },
+   {
+    "id": "generated-hard-2012-02-d003652-d010169",
+    "kind": "hard_negative",
+    "split": "heldout",
+    "cutoff": "2011-12-31",
+    "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+    "endpoint_a": {
+     "descriptor_ui": "D003652",
+     "descriptor_label": "Decanoic Acids",
+     "article_support": 1119
+    },
+    "target_c": {
+     "descriptor_ui": "D010169",
+     "descriptor_label": "Palmitic Acids",
+     "article_support": 3479
+    },
+    "direct_ac_article_count": 23,
+    "support_eligibility": {
+     "5": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "10": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "20": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     }
+    },
+    "primary_source_compatible": true
+   },
+   {
+    "id": "generated-hard-2012-03-d016496-d041382",
+    "kind": "hard_negative",
+    "split": "development",
+    "cutoff": "2011-12-31",
+    "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+    "endpoint_a": {
+     "descriptor_ui": "D016496",
+     "descriptor_label": "Incontinence Pads",
+     "article_support": 222
+    },
+    "target_c": {
+     "descriptor_ui": "D041382",
+     "descriptor_label": "Diapers, Adult",
+     "article_support": 38
+    },
+    "direct_ac_article_count": 8,
+    "support_eligibility": {
+     "5": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "10": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "20": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     }
+    },
+    "primary_source_compatible": true
+   },
+   {
+    "id": "generated-hard-2012-04-d019956-d019960",
+    "kind": "hard_negative",
+    "split": "heldout",
+    "cutoff": "2011-12-31",
+    "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+    "endpoint_a": {
+     "descriptor_ui": "D019956",
+     "descriptor_label": "Stereotypic Movement Disorder",
+     "article_support": 266
+    },
+    "target_c": {
+     "descriptor_ui": "D019960",
+     "descriptor_label": "Elimination Disorders",
+     "article_support": 10
+    },
+    "direct_ac_article_count": 0,
+    "support_eligibility": {
+     "5": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "10": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "20": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": false
+     }
+    },
+    "primary_source_compatible": true
+   },
+   {
+    "id": "generated-hard-2013-01-d004309-d007389",
+    "kind": "hard_negative",
+    "split": "development",
+    "cutoff": "2012-12-31",
+    "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+    "endpoint_a": {
+     "descriptor_ui": "D004309",
+     "descriptor_label": "Double Bind Interaction",
+     "article_support": 52
+    },
+    "target_c": {
+     "descriptor_ui": "D007389",
+     "descriptor_label": "Internal-External Control",
+     "article_support": 12285
+    },
+    "direct_ac_article_count": 1,
+    "support_eligibility": {
+     "5": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "10": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "20": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     }
+    },
+    "primary_source_compatible": true
+   },
+   {
+    "id": "generated-hard-2013-02-d004553-d025802",
+    "kind": "hard_negative",
+    "split": "heldout",
+    "cutoff": "2012-12-31",
+    "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+    "endpoint_a": {
+     "descriptor_ui": "D004553",
+     "descriptor_label": "Electric Conductivity",
+     "article_support": 22660
+    },
+    "target_c": {
+     "descriptor_ui": "D025802",
+     "descriptor_label": "Electric Capacitance",
+     "article_support": 1055
+    },
+    "direct_ac_article_count": 121,
+    "support_eligibility": {
+     "5": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "10": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "20": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     }
+    },
+    "primary_source_compatible": true
+   },
+   {
+    "id": "generated-hard-2013-03-d016082-d055609",
+    "kind": "hard_negative",
+    "split": "development",
+    "cutoff": "2012-12-31",
+    "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+    "endpoint_a": {
+     "descriptor_ui": "D016082",
+     "descriptor_label": "Solar System",
+     "article_support": 307
+    },
+    "target_c": {
+     "descriptor_ui": "D055609",
+     "descriptor_label": "Stars, Celestial",
+     "article_support": 36
+    },
+    "direct_ac_article_count": 3,
+    "support_eligibility": {
+     "5": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "10": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "20": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     }
+    },
+    "primary_source_compatible": true
+   },
+   {
+    "id": "generated-hard-2013-04-d005685-d009844",
+    "kind": "hard_negative",
+    "split": "heldout",
+    "cutoff": "2012-12-31",
+    "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+    "endpoint_a": {
+     "descriptor_ui": "D005685",
+     "descriptor_label": "Galactans",
+     "article_support": 1403
+    },
+    "target_c": {
+     "descriptor_ui": "D009844",
+     "descriptor_label": "Oligosaccharides",
+     "article_support": 15625
+    },
+    "direct_ac_article_count": 71,
+    "support_eligibility": {
+     "5": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "10": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     },
+     "20": {
+      "endpoint_a_eligible": true,
+      "target_c_eligible": true
+     }
+    },
+    "primary_source_compatible": true
+   }
+  ]
+ },
+ "decision": {
+  "status": "primary_source_compatible_but_sensitivity_20_unevaluable",
+  "primary_source_gate_status": "source_compatible_for_separately_frozen_formula_contract",
+  "all_21_cases_primary_source_compatible": true,
+  "primary_minimum_support_articles": 10,
+  "incompatible_case_ids": [],
+  "heldout_sensitivity_evaluable": {
+   "5": true,
+   "10": true,
+   "20": false
+  },
+  "heldout_sensitivity_blockers": {
+   "5": [],
+   "10": [],
+   "20": [
+    "generated-hard-2012-04-d019956-d019960"
+   ]
+  },
+  "frozen_heldout_rule_can_still_pass": false,
+  "metric_work_authorized_by_this_audit": false,
+  "replacement_policy": "No case may be dropped, replaced, or relabelled after this measurement.",
+  "next_allowed_step": "Do not compute a metric under this pilot: its frozen held-out rule cannot earn a passing label. Preserve this result and freeze a separately named successor before any metric output if the experiment should continue.",
+  "readiness_contribution": 0
+ },
+ "limitations": [
+  "The counts describe one dated secondary snapshot, not any complete NLM baseline.",
+  "The snapshot uses MeSH 2013 labels and is not period-appropriate historical indexing.",
+  "The five positive cases are source-labelled reproduction targets, not independently adjudicated discovery truth.",
+  "The sixteen controls remain ontology-generated proposals, not verified absences of a relationship or of non-academic knowledge.",
+  "Source compatibility does not evaluate or validate a metric formula.",
+  "No result here contributes metric-v3 readiness or permits an LLM interpretation layer."
+ ]
+}
