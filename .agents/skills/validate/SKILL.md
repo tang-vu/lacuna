@@ -14,10 +14,14 @@ description: Run lacuna's complete validation workflow and report metric drift, 
    python -m pipeline.export.validate_curated
    ```
 
-3. Validate historical source access, metric-blind candidate intake, and the v3 benchmark
-   contract, then run their readiness gates separately:
+3. Validate the active autonomous prospective contract first, then validate historical source
+   access, metric-blind candidate intake, and the archived v3 benchmark contract. Run each
+   readiness gate separately:
 
    ```bash
+   python -m pipeline.benchmark.autonomous_t0 audit
+   python -m pipeline.benchmark.validate_autonomous_prospective
+   python -m pipeline.benchmark.validate_autonomous_prospective --require-ready
    python -m pipeline.benchmark.source_inventories
    python -m pipeline.benchmark.mbr_capture
    python -m pipeline.benchmark.validate_sources
@@ -40,10 +44,14 @@ description: Run lacuna's complete validation workflow and report metric drift, 
    probed independently, so report both statuses. A successful replay contributes zero raw record
    releases; an unreachable dependency is a skipped live check, not evidence of drift.
 
-   Both `--require-ready` commands are expected to fail while historical inputs are unavailable
-   and the benchmark is a draft. Record their blockers and exit codes; never change a status merely
-   to make the workflow green. Proposed and rejected intake entries contribute zero cases to
-   readiness.
+   The remote-inventory audit must report 1,334 PubMed files, 31,110 MeSH descriptors, and zero
+   readiness; it does not prove that local T0 bytes exist. All three `--require-ready` commands are
+   expected to fail while the active T0 baseline and
+   predictions are absent, historical inputs are unavailable, and the archived v3 benchmark is a
+   draft. Record their blockers and exit codes; never change a status merely to make the workflow
+   green. The active track must report zero human dependencies and must abstain on missing source,
+   integrity, outcome, or power evidence. Proposed and rejected legacy intake entries contribute
+   zero cases to readiness.
 4. Run fast tests:
 
    ```bash
@@ -67,9 +75,10 @@ description: Run lacuna's complete validation workflow and report metric drift, 
 
 7. Compare the Swanson target percentile, negative controls, sweep coverage, artifact version,
    input fingerprints, and excluded-topic list with the committed report and manifest.
-8. Report historical source statuses, alternative-source counts and their zero-or-nonzero readiness
-   contribution, candidate counts by status, then v3 case counts by kind, held-out counts, mapping
-   statuses, and every readiness blocker.
+8. Report the active autonomous state, human-dependency count, verdict and every blocker first.
+   Then report historical source statuses, alternative-source counts and their zero-or-nonzero
+   readiness contribution, legacy candidate counts by status, and archived v3 case counts by kind,
+   held-out counts and mapping statuses.
 9. Report every skipped test or unavailable dependency. Never summarize a skipped validation as a
    pass.
 10. Treat a suddenly improved target rank as drift requiring investigation, not proof of success.

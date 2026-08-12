@@ -1,6 +1,8 @@
 # Metric v3 benchmark
 
-This directory is a pre-metric selection record, not a validation result. Its current status is
+This directory is an archived pre-metric selection record, not the active autonomous validation
+path and not a validation result. The no-human replacement is
+`../autonomous-prospective-v1.json`. Its current status is
 `draft`: it contains two canonical development positives, no hard negatives, no distant
 negatives, and no held-out case with reconstructable period-appropriate indexing.
 
@@ -11,7 +13,9 @@ time-sliced labels. Proposed and rejected entries contribute **zero** cases to r
 separation is deliberate: reuse in an LBD paper is evidence for review, not automatic proof that a
 pair was a meaningful discovery.
 
-Negative controls do not duplicate records in `candidates.json`. Their frozen intake is
+The human review and adjudication machinery below is retained as an audit trail and is not an
+active dependency, product surface, or autonomous-readiness input. Negative controls do not
+duplicate records in `candidates.json`. Their frozen intake is
 `../../artifacts/negative-candidates.json`, and `validate_v3` reconciles every accepted negative
 directly against that queue and its public metric-blind adjudication. This keeps positive discovery
 evidence requirements—bridge publication and independent replication—from being incorrectly

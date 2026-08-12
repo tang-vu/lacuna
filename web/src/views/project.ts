@@ -80,14 +80,15 @@ export function renderProjectStatus(
         el('span', { class: 'status-number' }, ['03']),
         el('h3', {}, ['The work now']),
         el('p', {}, [
-          'Freeze a multi-case benchmark and recover period-appropriate MEDLINE records before ' +
-            'another metric sees the held-out cases.',
+          'The complete 2026 remote source inventory is pinned. Acquire and seal every PubMed + ' +
+            'MeSH T0 byte, then freeze one formula and every prediction before the no-human ' +
+            'prospective outcome window begins.',
         ]),
       ]),
     ]),
     el('div', { class: 'hero-actions' }, [
       actionLink('Explore the evidence', '#computed'),
-      actionLink('Help build metric v3', `${REPOSITORY}/blob/main/CONTRIBUTING.md`, 'secondary'),
+      actionLink('Build the autonomous track', `${REPOSITORY}/blob/main/CONTRIBUTING.md`, 'secondary'),
       shareButton(),
     ]),
     el('p', { class: 'status-meta' }, [

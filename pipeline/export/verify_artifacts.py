@@ -77,7 +77,7 @@ def main() -> None:
     print(f"artifact set OK: {manifest['version']}")
     print(f"verified files: {len(manifest['files'])}")
     print(f"computed verdict: {manifest['computed_layer_verdict']}")
-    print(f"project status OK: v3 {project_status['status']}")
+    print(f"project status OK: active autonomous track {project_status['status']}")
 
 
 if __name__ == "__main__":

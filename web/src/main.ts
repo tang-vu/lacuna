@@ -2,7 +2,7 @@ import './styles.css';
 import { loadDataset } from './data';
 import { el } from './dom';
 import { renderComputed } from './views/computed';
-import { renderContributionMissions } from './views/contribute';
+import { renderAutonomousMissions } from './views/contribute';
 import { renderCurated } from './views/curated';
 import { renderFooter, renderProjectStatus } from './views/project';
 import { renderTaxonomy } from './views/taxonomy';
@@ -92,7 +92,7 @@ async function main(): Promise<void> {
       header(manifest, computed),
       el('main', { id: 'main-content' }, [
         renderProjectStatus(manifest, computed),
-        renderContributionMissions(projectStatus),
+        renderAutonomousMissions(projectStatus),
         renderCurated(
           'open-problems',
           'Open problems',

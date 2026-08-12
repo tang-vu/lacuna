@@ -8,16 +8,52 @@ Read `AGENTS.md` and the current status in `README.md` before changing code or d
 
 ## Current campaign
 
-The [Metric v3 readiness milestone](https://github.com/tang-vu/lacuna/milestone/1) keeps the
-pre-metric work public:
+The active campaign is governed by
+[`benchmarks/autonomous-prospective-v1.json`](benchmarks/autonomous-prospective-v1.json). It has no
+human-label, review, or adjudication dependency. Useful contributions automate one of these frozen
+machine transitions:
+
+- acquire and checksum-verify every byte named by the pinned 2026 PubMed + MeSH remote inventory;
+- emit a refusal-to-overwrite T0 source manifest;
+- exhaustively build the exact-zero candidate universe;
+- seal one formula and every prediction before future outcomes exist;
+- acquire the T1 baseline three annual releases later and apply the frozen pass/fail/abstain gate.
+
+Run `python -m pipeline.benchmark.validate_autonomous_prospective` first. Do not add manual labels,
+LLM decisions, or a bypass around automatic abstention. A zero future count means only “no observed
+link emergence in the window”; it is not evidence of absent human knowledge.
+
+The remote source identity is already frozen at
+[`benchmarks/autonomous/t0-2026-remote-inventory.json`](benchmarks/autonomous/t0-2026-remote-inventory.json).
+Audit it without network access:
+
+```bash
+python -m pipeline.benchmark.autonomous_t0 audit
+```
+
+After acquiring all named files to storage, run the fail-closed local gate. It verifies every
+official MD5, computes SHA-256 and record counts, parses the matching MeSH vocabulary, and refuses
+to overwrite an existing T0 manifest:
+
+```bash
+python -m pipeline.benchmark.autonomous_t0 seal \
+  --inventory benchmarks/autonomous/t0-2026-remote-inventory.json \
+  --baseline-dir /path/to/pubmed/baseline \
+  --mesh /path/to/mesh/desc2026.gz \
+  --output benchmarks/autonomous/t0-2026.json
+```
+
+## Archived v3 campaign
+
+The [Metric v3 readiness milestone](https://github.com/tang-vu/lacuna/milestone/1) preserves the
+older manual benchmark audit:
 
 - [recover complete historical MEDLINE baselines](https://github.com/tang-vu/lacuna/issues/6);
 - [adjudicate the proposed positive-case queue](https://github.com/tang-vu/lacuna/issues/7);
 - [build the hard-negative cohort](https://github.com/tang-vu/lacuna/issues/4);
 - [build the distant-negative cohort](https://github.com/tang-vu/lacuna/issues/3).
 
-Each issue has evidence and acceptance criteria. Comment before starting a large investigation so
-parallel contributors do not repeat the same source search or adjudication.
+These issues no longer gate the active autonomous system. They remain available as audit history.
 
 ## Where help matters most
 
@@ -102,8 +138,9 @@ from the written summary and cite every public claim.
 ### 4. Improve the pipeline
 
 Good engineering contributions strengthen provenance, source validation, bounded-count handling,
-streaming performance, accessibility, or reproducibility. Do not implement or tune a v3 scoring
-formula before the benchmark and historical-source gates are ready.
+streaming performance, accessibility, or reproducibility. Do not implement or tune an autonomous
+scoring formula before the complete T0 source manifest and formula-free candidate universe are
+sealed. Once predictions are sealed, the formula cannot be revised for that prospective run.
 
 For a bug, include the smallest reproducible input and explain whether it could change a published
 number or scientific status.
@@ -117,6 +154,8 @@ npm --prefix web ci
 python -m pytest -m "not slow"
 python -m pipeline.export.validate_curated
 python -m pipeline.benchmark.validate_sources
+python -m pipeline.benchmark.autonomous_t0 audit
+python -m pipeline.benchmark.validate_autonomous_prospective
 python -m pipeline.benchmark.validate_candidates
 python -m pipeline.benchmark.negative_controls
 python -m pipeline.benchmark.validate_v3

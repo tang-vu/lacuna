@@ -126,7 +126,7 @@
         "Only a 2013 snapshot is relevant here, so it cannot supply the missing 2007, 2011, and 2012 releases.",
         "Using it changes the experimental population and therefore requires a new pre-registration rather than a source-status flip."
       ],
-      "next_action": "Preserve this BioASQ v2 pilot as a terminal development failure and do not compute its held-out layer. Resume core metric work only through a separately pre-registered metric family after the historical-source and human-adjudicated benchmark gates advance; this terminated pilot does not authorize an LLM interpretation layer."
+      "next_action": "Preserve this BioASQ v2 pilot as a terminal development failure and do not compute its held-out layer. The separately frozen autonomous prospective track does not depend on this historical or human-adjudicated path and cannot inherit a pass from it; this terminated pilot does not authorize an LLM interpretation layer."
     },
     {
       "id": "current-pubmed-frozen-surrogate",
@@ -151,7 +151,7 @@
         "Current records have been maintained to newer vocabularies and do not reconstruct citation-to-MeSH assignments from 2007, 2011, 2012, or 2013.",
         "A prospective benchmark needs a future observation window and cannot validate historical discovery cases immediately."
       ],
-      "next_action": "Keep using small current files for parser smoke tests. If a prospective track is approved, freeze a complete current release with manifests before selecting future evaluation outcomes."
+      "next_action": "The autonomous prospective track has pinned the complete 2026 remote PubMed checksum inventory and matching MeSH transport with zero readiness. Acquire every named local byte, verify it against that inventory, and emit the refusal-to-overwrite T0 manifest before freezing any scoring formula or prediction."
     },
     {
       "id": "persistent-pubmed-abstracts",

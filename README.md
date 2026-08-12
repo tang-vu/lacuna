@@ -203,14 +203,36 @@ Persistent project rules live in `AGENTS.md`. Repeatable workflows are repositor
 
 ## Contributing
 
-The highest-impact contributions are historical MEDLINE source leads, metric-blind benchmark-case
-review, and provenance or validation engineering. Read [`CONTRIBUTING.md`](CONTRIBUTING.md) before
-opening an issue: a vocabulary file is not a historical citation baseline, and a plausible pair is
-not automatically a positive case. The live site's **Open work** board is generated from
+The active validation contract now has no human label, review, or adjudication dependency. A
+versioned
+[`2026 remote inventory`](benchmarks/autonomous/t0-2026-remote-inventory.json) pins all 1,334
+official PubMed file checksums plus the matching MeSH descriptor transport and its 31,110 parsed
+descriptor identities. This is source-discovery evidence only and contributes zero readiness. The
+highest-impact work is acquisition and local checksum verification for those complete source
+bytes, refusal-to-overwrite prediction sealing, streaming exact pair counts, and deterministic
+future-outcome evaluation. No human review or adjudication is an active dependency. Read
+[`CONTRIBUTING.md`](CONTRIBUTING.md) before changing the pipeline. The live site's **Open work**
+board is generated from
 `artifacts/project-status.json`; its counts and contract fingerprints are rebuilt from the same
 validators used by CI rather than maintained as website copy.
 
-The interpretation layer remains gated off. The proposed replacement experiment is documented in
+The active contract is
+[`benchmarks/autonomous-prospective-v1.json`](benchmarks/autonomous-prospective-v1.json). It freezes
+the rules for an exhaustive T0 candidate universe, requires one future sealed prediction artifact,
+and defines a three-annual-release outcome window. Outcomes will be generated mechanically from
+complete T1 PubMed records: at least three
+newly observed co-indexed PMID–pair rows across two journals and two publication years is observed
+database-link emergence (including separately reported re-indexing of pre-existing PMIDs);
+zero is only “no observed emergence in this window”; ambiguous or incomplete evidence forces
+`abstain`. Passing validates only prospective PubMed link-emergence ranking—not a knowledge-gap
+detector or autonomous scientific discovery. Run
+`python -m pipeline.benchmark.autonomous_t0 audit` to verify the pinned remote inventory and
+`python -m pipeline.benchmark.validate_autonomous_prospective` to inspect the current machine
+blockers. The interpretation layer remains gated off.
+
+### Archived metric-v3 audit track
+
+The previous replacement experiment is documented in
 [`plans/metric-v3-validation-plan.md`](plans/metric-v3-validation-plan.md); it moves the biomedical
 pilot to period-appropriate MeSH terms and a multi-case held-out benchmark rather than tuning a
 third formula on the canonical pair. Its
@@ -249,7 +271,9 @@ must survive a substantive-distance review. The protocol was written after the t
 pilot output and says so explicitly; it contains no candidate decision, remains metric-v3 blind,
 and cannot prove reviewer blindness. PubMed links use maintained-current indexing and literal
 title/abstract phrases, so they are review leads—not historical reconstruction or absence evidence.
-The live **Metric-blind review desk** publishes all 14 contract-validated intake records directly
+This human-review path is preserved only as a versioned audit trail and is not rendered by the
+active product or used by autonomous readiness. The archived **Metric-blind review desk** published
+all 14 contract-validated intake records directly
 from that ledger, including their evidence links, mapping limitations, adjudication rationale, and
 unresolved questions. Structural validity is not scientific acceptance: it defaults to the ten
 proposed records and labels each one as contributing zero to readiness; accepted and rejected

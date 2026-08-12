@@ -237,7 +237,10 @@ def main() -> None:
     )
     project_status = write_project_status()
     print(f"\nwrote artifacts/{version}/ (computed layer: {VALIDATION['verdict']})")
-    print(f"wrote artifacts/project-status.json (v3 readiness: {project_status['status']})")
+    print(
+        "wrote artifacts/project-status.json "
+        f"(active autonomous validation: {project_status['status']})"
+    )
 
 
 if __name__ == "__main__":

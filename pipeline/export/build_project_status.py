@@ -26,6 +26,14 @@ from pipeline.benchmark.validate_negative_adjudication_protocol import (
     ADJUDICATION_PROTOCOL_PATH as NEGATIVE_ADJUDICATION_PROTOCOL_PATH,
     audit_negative_adjudication_protocol,
 )
+from pipeline.benchmark.validate_autonomous_prospective import (
+    PROTOCOL_PATH as AUTONOMOUS_PROSPECTIVE_PATH,
+    audit_autonomous_prospective,
+)
+from pipeline.benchmark.autonomous_t0 import (
+    REMOTE_INVENTORY_PATH as AUTONOMOUS_T0_REMOTE_INVENTORY_PATH,
+    audit_remote_inventory,
+)
 from pipeline.benchmark.bioasq_semantics import (
     DEFAULT_AUDIT_PATH as BIOASQ_SEMANTICS_AUDIT_PATH,
     PROTOCOL_PATH as BIOASQ_SEMANTICS_PROTOCOL_PATH,
@@ -91,6 +99,9 @@ def _input_identity(path: Path) -> dict[str, str]:
 
 def build_project_status() -> dict:
     sources = audit_sources()
+    autonomous = audit_autonomous_prospective()
+    autonomous_remote_inventory = audit_remote_inventory()
+    autonomous_payload = json.loads(AUTONOMOUS_PROSPECTIVE_PATH.read_text(encoding="utf-8"))
     alternatives = audit_source_alternatives()
     bioasq_snapshot = json.loads(BIOASQ_SNAPSHOT_MANIFEST_PATH.read_text(encoding="utf-8"))
     bioasq_successor_protocol = json.loads(
@@ -124,7 +135,7 @@ def build_project_status() -> dict:
     audit_negative_adjudication_protocol()
     audit_review_context()
     benchmark = audit_benchmark()
-    ready = sources.ready and benchmark.ready
+    ready = autonomous.ready
     candidate_payload = json.loads(CANDIDATES_PATH.read_text(encoding="utf-8"))
     negative_payload = json.loads(NEGATIVE_QUEUE_PATH.read_text(encoding="utf-8"))
     negative_context_payload = json.loads(
@@ -140,9 +151,14 @@ def build_project_status() -> dict:
     negative_protocol = load_protocol()
 
     return {
-        "schema_version": 19,
+        "schema_version": 21,
         "status": "ready" if ready else "not_ready",
+        "active_validation_track": autonomous.protocol_id,
         "inputs": {
+            "autonomous_prospective_protocol": _input_identity(AUTONOMOUS_PROSPECTIVE_PATH),
+            "autonomous_t0_remote_inventory": _input_identity(
+                AUTONOMOUS_T0_REMOTE_INVENTORY_PATH
+            ),
             "historical_sources": _input_identity(SOURCES_PATH),
             "source_alternatives": _input_identity(ALTERNATIVES_PATH),
             "bioasq_snapshot_audit": _input_identity(BIOASQ_SNAPSHOT_MANIFEST_PATH),
@@ -174,6 +190,23 @@ def build_project_status() -> dict:
             ),
             "negative_review_context": _input_identity(NEGATIVE_REVIEW_CONTEXT_PATH),
             "benchmark": _input_identity(BENCHMARK_PATH),
+        },
+        "autonomous_validation": {
+            "active": True,
+            "protocol": autonomous_payload,
+            "state": autonomous.state,
+            "verdict": autonomous.verdict,
+            "ready": autonomous.ready,
+            "human_dependency_count": autonomous.human_dependency_count,
+            "readiness_contribution": autonomous.readiness_contribution,
+            "readiness_blockers": list(autonomous.blockers),
+            "remote_inventory": {
+                "status": autonomous_remote_inventory.status,
+                "release_year": autonomous_remote_inventory.release_year,
+                "pubmed_file_count": autonomous_remote_inventory.pubmed_file_count,
+                "mesh_descriptor_count": autonomous_remote_inventory.mesh_descriptor_count,
+                "readiness_contribution": autonomous_remote_inventory.readiness_contribution,
+            },
         },
         "historical_sources": {
             "ready": sources.ready,
@@ -275,7 +308,10 @@ def write_project_status(path: Path = PROJECT_STATUS_PATH) -> dict:
 def main() -> None:
     payload = write_project_status()
     print(f"wrote {PROJECT_STATUS_PATH.relative_to(REPO_ROOT).as_posix()}")
-    print(f"v3 readiness: {payload['status'].upper().replace('_', ' ')}")
+    print(
+        "active autonomous validation readiness: "
+        f"{payload['status'].upper().replace('_', ' ')}"
+    )
 
 
 if __name__ == "__main__":

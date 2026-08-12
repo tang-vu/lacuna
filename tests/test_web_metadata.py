@@ -168,6 +168,19 @@ def test_candidate_review_desk_keeps_proposals_curated_and_out_of_readiness():
     assert "metric-v3 blind · post-BioASQ" in view_source
 
 
+def test_active_product_surface_uses_the_no_human_validation_track():
+    main_source = (ROOT / "web" / "src" / "main.ts").read_text(encoding="utf-8")
+    view_source = (ROOT / "web" / "src" / "views" / "contribute.ts").read_text(
+        encoding="utf-8"
+    )
+
+    assert "renderAutonomousMissions(projectStatus)" in main_source
+    assert "renderContributionMissions(projectStatus)" not in main_source
+    assert "A frozen path to a closed evidence loop. No human gate." in view_source
+    assert "contract requires every transition to be machine-gated" in view_source
+    assert "LLM and manual outcome labels are forbidden." in view_source
+
+
 def test_source_recovery_copy_keeps_preservation_metadata_out_of_raw_readiness():
     view_source = (ROOT / "web" / "src" / "views" / "contribute.ts").read_text(
         encoding="utf-8"

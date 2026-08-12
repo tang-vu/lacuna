@@ -140,10 +140,98 @@ export interface Manifest {
 export interface ProjectStatus {
   schema_version: number;
   status: 'ready' | 'not_ready';
+  active_validation_track: 'autonomous-prospective-pubmed-link-emergence-v1';
   inputs: Record<
     string,
     { path: string; sha256: string; canonicalisation: 'canonical-json-v1' }
   >;
+  autonomous_validation: {
+    active: true;
+    state:
+      | 'awaiting_t0_baseline'
+      | 'awaiting_frozen_metric'
+      | 'predictions_sealed_waiting_for_outcome'
+      | 'awaiting_t1_baseline'
+      | 'evaluating'
+      | 'passed'
+      | 'failed'
+      | 'abstained';
+    verdict: 'not_ready' | 'passed' | 'failed' | 'abstained';
+    ready: boolean;
+    human_dependency_count: 0;
+    readiness_contribution: 0;
+    readiness_blockers: string[];
+    remote_inventory: {
+      status: 'remote_inventory_only_not_a_verified_t0';
+      release_year: 2026;
+      pubmed_file_count: number;
+      mesh_descriptor_count: number;
+      readiness_contribution: 0;
+    };
+    protocol: {
+      id: 'autonomous-prospective-pubmed-link-emergence-v1';
+      status: 'frozen_before_t0_source_acquisition_and_metric';
+      purpose: string;
+      human_dependencies: [];
+      scientific_claim_boundary: {
+        measured_target: string;
+        not_measured: string[];
+        passing_label: string;
+        forbidden_labels: string[];
+        llm_interpretation_authorized: false;
+      };
+      state_machine: {
+        initial_state: 'awaiting_t0_baseline';
+        manual_override_allowed: false;
+        failure_is_terminal_for_the_sealed_formula: true;
+      };
+      source_contract: {
+        t0_remote_inventory: {
+          path: string;
+          sha256: string;
+          canonicalisation: 'canonical-json-v1';
+          release_year: 2026;
+          pubmed_file_count: number;
+          mesh_descriptor_count: number;
+          evidence_scope: string;
+        };
+      };
+      machine_outcomes: {
+        positive_label: { name: 'observed_future_link_emergence' };
+        negative_label: {
+          name: 'no_observed_link_emergence_in_window';
+          claim_limit: string;
+        };
+        censored_label: {
+          name: 'indeterminate_or_source_censored';
+          evaluation_action: string;
+        };
+        llm_or_manual_labels_allowed: false;
+      };
+      pre_registered_evaluation: {
+        minimum_observed_positive_outcomes: 200;
+        minimum_observed_negative_outcomes: 20000;
+        underpowered_action: 'abstain';
+        pass_rule: string;
+        fail_rule: string;
+        abstain_rule: string;
+      };
+      autonomous_outputs: {
+        allowed_candidate_label_before_pass: string;
+        allowed_candidate_label_after_pass: string;
+        blind_spots_required_in_every_release: string[];
+        automatic_abstention_visible: true;
+      };
+      current_state: {
+        state: ProjectStatus['autonomous_validation']['state'];
+        verdict: ProjectStatus['autonomous_validation']['verdict'];
+        t0_remote_inventory_pinned: true;
+        readiness_contribution: 0;
+        blockers: string[];
+        next_machine_action: string;
+      };
+    };
+  };
   historical_sources: {
     ready: boolean;
     required_years: number[];

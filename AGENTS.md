@@ -20,8 +20,16 @@ the expense of gap detection, validation, or traceability.
   period-appropriate historical indexing; the official static baseline archive begins in 2002.
 - The legacy MBR download endpoint is currently unavailable. Public production-year MeSH files do
   not substitute for the matching historical citation records; both source gates must be pinned.
-- The v3 benchmark is a draft until `python -m pipeline.benchmark.validate_v3 --require-ready`
-  passes. Structural validation of an incomplete draft is not scientific validation.
+- Historical metric v3 and BioASQ v2 are archived audit tracks; BioASQ v2 terminated on its
+  development gate without held-out execution.
+- The active replacement is `benchmarks/autonomous-prospective-v1.json`: a no-human prospective
+  PubMed link-emergence benchmark. Its 2026 remote inventory pins 1,334 official PubMed checksums
+  and the matching MeSH descriptor transport but contributes zero readiness. It remains not ready
+  until all local T0 bytes, the frozen metric, sealed predictions, and the three-release outcome
+  window pass machine-verifiable gates.
+- A pass on the active track validates only future PubMed MeSH link-emergence ranking. Never call it
+  a validated knowledge-gap detector, autonomous scientific discovery, or evidence of absent
+  human knowledge.
 
 ## Non-negotiables
 
@@ -32,6 +40,8 @@ the expense of gap detection, validation, or traceability.
 - Keep OpenAlex blind spots prominent: thin humanities and historical coverage, and absent craft,
   practitioner, indigenous, and other non-academic knowledge.
 - Never persist API keys in caches, artifacts, logs, or error messages.
+- Do not add human review, adjudication, or manual labels as an active-system dependency. Missing
+  source, integrity, outcome, or power evidence must produce an explicit machine abstention.
 
 ## Commands
 
@@ -43,6 +53,8 @@ python -m pipeline.benchmark.validate_sources
 python -m pipeline.benchmark.source_inventories
 python -m pipeline.benchmark.mbr_capture
 python -m pipeline.benchmark.validate_source_alternatives
+python -m pipeline.benchmark.autonomous_t0 audit
+python -m pipeline.benchmark.validate_autonomous_prospective
 python -m pipeline.benchmark.validate_candidates
 python -m pipeline.benchmark.negative_controls
 python -m pipeline.benchmark.validate_v3

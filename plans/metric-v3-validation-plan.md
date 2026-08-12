@@ -1,6 +1,8 @@
 # Metric v3 validation plan
 
-**Status:** proposal only — no v3 metric has been implemented or tuned.
+**Status:** archived unfinished audit track — no v3 metric was implemented or tuned. It is retained
+for provenance but no longer gates the product. The active no-human replacement is the separately
+frozen `benchmarks/autonomous-prospective-v1.json` protocol.
 
 ## Why a redesign is required
 
@@ -259,9 +261,10 @@ after seeing them.
    counts disclosed and all cases unchanged. Its initial Jaccard-sum-min formula failed development;
    its one permitted direct-penalized revision then failed all three frozen separation requirements.
    Preserve the resulting terminal action and never compute this pilot's held-out layer.
-5. Treat the BioASQ v2 branch as closed. A future metric family requires its own preregistration
-   after the historical-source and human-adjudicated benchmark gates advance; it cannot inherit a
-   pass, held-out authorization, or readiness from this pilot.
+5. Treat the BioASQ v2 branch as closed. The active future metric family is separately
+   preregistered in `benchmarks/autonomous-prospective-v1.json`; it has no historical-source or
+   human-adjudication dependency and cannot inherit a pass, held-out authorization, or readiness
+   from this pilot.
 6. Only after a replacement metric passes its preregistered benchmark, design the LLM
    interpretation schema and pair-detail UI.
 

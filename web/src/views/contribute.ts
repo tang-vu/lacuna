@@ -704,3 +704,97 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
     renderCandidateDesk(status),
   ]);
 }
+
+/** Active no-human validation surface. The older review desks remain versioned code for the
+ * historical v3 audit trail, but the product entry point renders only this autonomous track. */
+export function renderAutonomousMissions(status: ProjectStatus): HTMLElement {
+  const active = status.autonomous_validation;
+  const protocol = active.protocol;
+  const current = protocol.current_state;
+  const remoteInventory = active.remote_inventory;
+  const sourceReady = current.state !== 'awaiting_t0_baseline';
+  const predictionsSealed = [
+    'predictions_sealed_waiting_for_outcome',
+    'awaiting_t1_baseline',
+    'evaluating',
+    'passed',
+    'failed',
+    'abstained',
+  ].includes(current.state);
+  const outcomeMature = ['evaluating', 'passed', 'failed', 'abstained'].includes(current.state);
+  const contractUrl = `${REPOSITORY}/blob/main/benchmarks/autonomous-prospective-v1.json`;
+  const inventoryUrl = `${REPOSITORY}/blob/main/benchmarks/autonomous/t0-2026-remote-inventory.json`;
+
+  return el('section', { class: 'contribution-missions', id: 'contribute' }, [
+    el('div', { class: 'section-kicker' }, ['AUTONOMOUS VALIDATION']),
+    el('div', { class: 'contribution-heading' }, [
+      el('div', {}, [
+        el('h2', {}, ['A frozen path to a closed evidence loop. No human gate.']),
+        el('p', { class: 'status-intro' }, [
+          protocol.purpose +
+            ` Current state: ${active.state.replaceAll('_', ' ')}. ` +
+            'The contract requires every transition to be machine-gated; missing sources, power, ' +
+            'or integrity must produce a visible abstention rather than an inferred answer.',
+        ]),
+      ]),
+      provenanceChip('generated'),
+    ]),
+    el('div', { class: 'mission-grid' }, [
+      mission(
+        '01',
+        sourceReady ? 'DONE' : 'NEXT',
+        'Seal the T0 evidence base',
+        `${remoteInventory.pubmed_file_count.toLocaleString()} official PubMed file checksums and ` +
+          `${remoteInventory.mesh_descriptor_count.toLocaleString()} MeSH descriptor identities are ` +
+          'now pinned as a zero-readiness remote inventory. ' +
+          current.next_machine_action +
+          ' API result pages and partial releases are forbidden as baselines; no credentials may ' +
+          'enter artifacts or logs.',
+        progress(sourceReady ? 2 : 1, 2, 'Remote inventory + complete local T0 seal'),
+        'Inspect the pinned inventory',
+        inventoryUrl,
+      ),
+      mission(
+        '02',
+        predictionsSealed ? 'DONE' : 'LOCKED',
+        'Freeze one formula and every prediction',
+        'The eligible universe must be exhaustive, exact-zero at T0, and hash-pinned. The formula, ' +
+          'parameters, total ordering, tie policy, and prediction artifact must be sealed before ' +
+          'future outcomes exist. After sealing, overwrite and revision are forbidden.',
+        progress(predictionsSealed ? 1 : 0, 1, 'Refusal-to-overwrite prediction seal'),
+        'Inspect the prediction seal',
+        contractUrl,
+      ),
+      mission(
+        '03',
+        outcomeMature ? active.verdict.toUpperCase() : 'WAITING',
+        'Let future evidence decide',
+        `After three complete annual releases, the machine labels at least ` +
+          `${protocol.pre_registered_evaluation.minimum_observed_positive_outcomes} observed ` +
+          `emergences and ${protocol.pre_registered_evaluation.minimum_observed_negative_outcomes.toLocaleString()} ` +
+          'no-observed-emergence outcomes, censors ambiguous records, and applies the frozen ' +
+          'pass/fail/abstain rule. A pass validates only prospective PubMed link-emergence ranking.',
+        progress(outcomeMature ? 1 : 0, 1, 'Prospective outcome window matured'),
+        'Inspect the outcome contract',
+        contractUrl,
+      ),
+    ]),
+    el('div', { class: 'contract-provenance' }, [
+      el('span', {}, ['active contract fingerprints']),
+      ...Object.entries(status.inputs)
+        .filter(([key]) =>
+          ['autonomous_prospective_protocol', 'autonomous_t0_remote_inventory'].includes(key),
+        )
+        .map(([, source]) =>
+          el('a', { href: `${REPOSITORY}/blob/main/${source.path}` }, [
+            `${source.path} · ${source.sha256.slice(0, 10)}`,
+          ]),
+        ),
+    ]),
+    el('p', { class: 'status-intro' }, [
+      protocol.scientific_claim_boundary.measured_target.replaceAll('_', ' ') + '. ',
+      protocol.machine_outcomes.negative_label.claim_limit + ' ',
+      'LLM and manual outcome labels are forbidden.',
+    ]),
+  ]);
+}

@@ -12,8 +12,29 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 19
+    assert status["schema_version"] == 21
     assert status["status"] == "not_ready"
+    assert status["active_validation_track"] == (
+        "autonomous-prospective-pubmed-link-emergence-v1"
+    )
+    autonomous = status["autonomous_validation"]
+    assert autonomous["active"] is True
+    assert autonomous["state"] == "awaiting_t0_baseline"
+    assert autonomous["verdict"] == "not_ready"
+    assert autonomous["ready"] is False
+    assert autonomous["human_dependency_count"] == 0
+    assert autonomous["readiness_contribution"] == 0
+    assert autonomous["remote_inventory"] == {
+        "status": "remote_inventory_only_not_a_verified_t0",
+        "release_year": 2026,
+        "pubmed_file_count": 1334,
+        "mesh_descriptor_count": 31110,
+        "readiness_contribution": 0,
+    }
+    assert len(autonomous["readiness_blockers"]) == 4
+    assert autonomous["protocol"]["machine_outcomes"][
+        "llm_or_manual_labels_allowed"
+    ] is False
     assert status["historical_sources"] == {
         "ready": False,
         "required_years": [2007, 2011, 2012, 2013],
@@ -356,6 +377,8 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
     assert committed == build_project_status()
     assert verify_project_status() == committed
     assert set(committed["inputs"]) == {
+        "autonomous_prospective_protocol",
+        "autonomous_t0_remote_inventory",
         "historical_sources",
         "source_alternatives",
         "bioasq_snapshot_audit",

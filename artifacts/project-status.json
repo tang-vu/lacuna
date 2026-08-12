@@ -1,15 +1,26 @@
 {
- "schema_version": 19,
+ "schema_version": 21,
  "status": "not_ready",
+ "active_validation_track": "autonomous-prospective-pubmed-link-emergence-v1",
  "inputs": {
+  "autonomous_prospective_protocol": {
+   "path": "benchmarks/autonomous-prospective-v1.json",
+   "sha256": "784afc58e7dc8e0ea42957a02715216f005e9460aa16893f5a9f70acd771f042",
+   "canonicalisation": "canonical-json-v1"
+  },
+  "autonomous_t0_remote_inventory": {
+   "path": "benchmarks/autonomous/t0-2026-remote-inventory.json",
+   "sha256": "641338132c7e93f02a02691d9bc5b7f1c7ced9a3d74503a3ea33b50e304350ca",
+   "canonicalisation": "canonical-json-v1"
+  },
   "historical_sources": {
    "path": "benchmarks/v3/sources.json",
-   "sha256": "d257e5f394edcfcc612d802e8ec90cd11523d0d925edac6fa8e2cf974b6d03eb",
+   "sha256": "0ea20eef3c71d9fed6a8dde50583a22b826a8e1a8a0dffa8067313535cf453fb",
    "canonicalisation": "canonical-json-v1"
   },
   "source_alternatives": {
    "path": "benchmarks/v3/source-alternatives.json",
-   "sha256": "58fbb87479fab01901c0a7d6806f6a1b967e4bbafa09ae263cc5f8724657fc65",
+   "sha256": "9d055bac0bbfc95d1a19e5aec65205d99707a4163579723ec9365cd278e0232f",
    "canonicalisation": "canonical-json-v1"
   },
   "bioasq_snapshot_audit": {
@@ -106,6 +117,278 @@
    "path": "benchmarks/v3/cases.json",
    "sha256": "94f64ee2bd55b7fd826336ef743a1345aa272a0931644e991c7df237b05d2065",
    "canonicalisation": "canonical-json-v1"
+  }
+ },
+ "autonomous_validation": {
+  "active": true,
+  "protocol": {
+   "schema_version": 1,
+   "id": "autonomous-prospective-pubmed-link-emergence-v1",
+   "status": "frozen_before_t0_source_acquisition_and_metric",
+   "frozen_on": "2026-08-12",
+   "purpose": "Evaluate, without human labels or decisions, whether a frozen ranking predicts future direct PubMed MeSH link emergence better than prevalence and structural baselines.",
+   "active_track": true,
+   "human_dependencies": [],
+   "legacy_tracks": {
+    "historical_metric_v3": "retained_as_an_unfinished_audit_track_not_a_blocker_for_this_track",
+    "bioasq_v2": "terminal_development_failure_not_reusable_as_a_pass",
+    "human_negative_review": "superseded_as_an_active_dependency_retained_only_as_a_versioned_audit_trail"
+   },
+   "scientific_claim_boundary": {
+    "measured_target": "future_direct_mesh_link_emergence_in_complete_pubmed_baselines",
+    "not_measured": [
+     "truth or importance of a scientific relationship",
+     "causal novelty",
+     "absence of academic or non-academic knowledge",
+     "period-appropriate historical discovery performance",
+     "validity outside biomedicine"
+    ],
+    "passing_label": "validated_for_prospective_pubmed_link_emergence_ranking_only",
+    "forbidden_labels": [
+     "validated knowledge gap detector",
+     "autonomous scientific discovery",
+     "discovery truth"
+    ],
+    "llm_interpretation_authorized": false
+   },
+   "state_machine": {
+    "initial_state": "awaiting_t0_baseline",
+    "states": [
+     "awaiting_t0_baseline",
+     "awaiting_frozen_metric",
+     "predictions_sealed_waiting_for_outcome",
+     "awaiting_t1_baseline",
+     "evaluating",
+     "passed",
+     "failed",
+     "abstained"
+    ],
+    "transitions": [
+     {
+      "from": "awaiting_t0_baseline",
+      "to": "awaiting_frozen_metric",
+      "machine_gate": "complete official T0 PubMed baseline and matching MeSH release are locally checksum-verified"
+     },
+     {
+      "from": "awaiting_frozen_metric",
+      "to": "predictions_sealed_waiting_for_outcome",
+      "machine_gate": "eligible universe, formula source, parameters, predictions, and artifact hashes are sealed before T1"
+     },
+     {
+      "from": "predictions_sealed_waiting_for_outcome",
+      "to": "awaiting_t1_baseline",
+      "machine_gate": "three subsequent annual PubMed baseline release identifiers exist"
+     },
+     {
+      "from": "awaiting_t1_baseline",
+      "to": "evaluating",
+      "machine_gate": "complete official T1 PubMed baseline and matching MeSH release are locally checksum-verified"
+     },
+     {
+      "from": "evaluating",
+      "to": "passed_or_failed_or_abstained",
+      "machine_gate": "all outcome, power, integrity, and metric rules below execute without overrides"
+     }
+    ],
+    "manual_override_allowed": false,
+    "failure_is_terminal_for_the_sealed_formula": true
+   },
+   "source_contract": {
+    "t0_remote_inventory": {
+     "path": "autonomous/t0-2026-remote-inventory.json",
+     "sha256": "641338132c7e93f02a02691d9bc5b7f1c7ced9a3d74503a3ea33b50e304350ca",
+     "canonicalisation": "canonical-json-v1",
+     "release_year": 2026,
+     "pubmed_file_count": 1334,
+     "mesh_descriptor_count": 31110,
+     "evidence_scope": "remote source identities only; zero readiness until every local byte and record count is sealed"
+    },
+    "t0": {
+     "source": "official complete annual PubMed baseline",
+     "matching_vocabulary": "official MeSH descriptor release used by that baseline",
+     "required_identity": [
+      "release year",
+      "official source URL for every file",
+      "filename",
+      "bytes",
+      "SHA-256",
+      "record count",
+      "descriptor vocabulary SHA-256"
+     ]
+    },
+    "t1": {
+     "source": "official complete annual PubMed baseline three releases after T0",
+     "matching_vocabulary": "official MeSH descriptor release used by T1",
+     "required_identity": [
+      "all T0 identity fields",
+      "exact outcome publication-date interval",
+      "record-level PMID deduplication count"
+     ]
+    },
+    "source_failure_action": "abstain",
+    "partial_release_action": "abstain",
+    "api_result_pages_allowed_as_baseline": false,
+    "credentials_persisted": false
+   },
+   "t0_candidate_universe": {
+    "entity": "MeSH descriptors present in the sealed T0 vocabulary and citation baseline",
+    "pair_order": "lexicographic descriptor UI with A less than C",
+    "minimum_endpoint_article_support": 100,
+    "minimum_independence_expected_count": 5,
+    "maximum_exact_direct_ac_count": 0,
+    "exclude_identical_descriptors": true,
+    "exclude_ancestor_descendant_pairs": true,
+    "exclude_shared_entry_term_pairs": true,
+    "candidate_identity_fields": [
+     "descriptor UI A",
+     "descriptor UI C",
+     "T0 endpoint supports",
+     "T0 exact direct count",
+     "T0 expected count",
+     "eligibility rule version"
+    ],
+    "candidate_set_hash_required": true,
+    "sampling_allowed": false
+   },
+   "prediction_seal": {
+    "required_before_t1": [
+     "metric source SHA-256",
+     "dependency lock SHA-256",
+     "all parameter values",
+     "candidate set SHA-256",
+     "one score for every eligible pair",
+     "deterministic total ordering and tie policy",
+     "prediction artifact SHA-256",
+     "T0 input manifest SHA-256"
+    ],
+    "missing_or_nonfinite_score_action": "abstain",
+    "overwrite_allowed": false,
+    "formula_revision_after_seal_allowed": false
+   },
+   "machine_outcomes": {
+    "observation_window": "direct MeSH co-indexing rows present in the complete T1 baseline but absent from the complete sealed T0 baseline; publication dates are reported but do not define database emergence",
+    "new_row_definition": "a PMID plus the unordered T0 descriptor-UI pair is absent at T0 and present at T1",
+    "pre_existing_pmid_handling": "included and counted separately because later indexing of an existing PMID is a database-link emergence, not evidence that the underlying scientific relationship is new",
+    "positive_label": {
+     "name": "observed_future_link_emergence",
+     "requirements": {
+      "minimum_distinct_new_pmids_with_both_t0_descriptor_uis": 3,
+      "minimum_distinct_journals": 2,
+      "minimum_distinct_publication_years": 2
+     }
+    },
+    "negative_label": {
+     "name": "no_observed_link_emergence_in_window",
+     "requirements": {
+      "distinct_new_pmids_with_both_t0_descriptor_uis": 0
+     },
+     "claim_limit": "This label describes one indexed observation window and is not evidence that a relationship or knowledge is absent."
+    },
+    "censored_label": {
+     "name": "indeterminate_or_source_censored",
+     "conditions": [
+      "one or two new co-indexed PMIDs",
+      "either T0 descriptor UI is retired, merged, or cannot be mapped uniquely at T1",
+      "source completeness or record reconciliation fails",
+      "a qualifying PMID is retracted before evaluation"
+     ],
+     "evaluation_action": "exclude from primary metric denominator and report every exclusion reason and count"
+    },
+    "outcome_artifact_requires_exact_pmids_and_source_rows": true,
+    "llm_or_manual_labels_allowed": false
+   },
+   "automatic_structural_diagnostics": {
+    "role": "artifact probes, not negative ground truth",
+    "cohorts": {
+     "ontology_adjacent": "all excluded immediate-parent siblings meeting the endpoint support rule",
+     "degree_matched_distant": "deterministic SHA-256 sample of cross-branch pairs matched into endpoint-support deciles"
+    },
+    "reported_statistics": [
+     "score distribution by cohort",
+     "top 1 percent exposure by cohort",
+     "top 5 percent exposure by cohort",
+     "median percentile by cohort"
+    ],
+    "gate": {
+     "ontology_adjacent_top_1_percent_maximum": 0.01,
+     "degree_matched_distant_top_5_percent_maximum": 0.05
+    },
+    "failure_action": "fail"
+   },
+   "pre_registered_evaluation": {
+    "primary_population": "all non-censored eligible T0 pairs",
+    "minimum_observed_positive_outcomes": 200,
+    "minimum_observed_negative_outcomes": 20000,
+    "underpowered_action": "abstain",
+    "primary_metrics": {
+     "precision_at_100_minimum": 0.25,
+     "precision_at_100_lift_over_prevalence_minimum": 5,
+     "average_precision_lift_over_prevalence_minimum": 3,
+     "bootstrap_replicates": 10000,
+     "bootstrap_seed": "lacuna-autonomous-prospective-v1",
+     "precision_at_100_lift_95_percent_lower_bound_minimum": 2
+    },
+    "pass_rule": "Every source, integrity, power, primary-metric, and structural-diagnostic gate passes.",
+    "fail_rule": "Any evaluable primary-metric or structural-diagnostic gate fails.",
+    "abstain_rule": "Sources, prediction integrity, outcome integrity, or power are insufficient for the frozen test.",
+    "multiple_testing": "Only the sealed formula receives a verdict; later formulas require a new protocol and T0 prediction seal."
+   },
+   "autonomous_outputs": {
+    "allowed_candidate_label_before_pass": "machine_ranked_future_link_candidate_from_unvalidated_method",
+    "allowed_candidate_label_after_pass": "machine_ranked_candidate_from_a_method_validated_only_for_future_pubmed_link_emergence",
+    "required_per_pair_trace": [
+     "T0 source rows",
+     "exact T0 counts",
+     "formula and parameter hashes",
+     "score and rank",
+     "T1 outcome source rows when mature",
+     "classification rule and state"
+    ],
+    "blind_spots_required_in_every_release": [
+     "non-academic knowledge",
+     "craft and practitioner knowledge",
+     "indigenous knowledge",
+     "humanities and historical sources",
+     "knowledge not indexed by PubMed or MeSH"
+    ],
+    "automatic_abstention_visible": true
+   },
+   "current_state": {
+    "state": "awaiting_t0_baseline",
+    "t0_remote_inventory_pinned": true,
+    "t0_source_pinned": false,
+    "metric_frozen": false,
+    "predictions_sealed": false,
+    "t1_source_pinned": false,
+    "outcome_window_mature": false,
+    "verdict": "not_ready",
+    "readiness_contribution": 0,
+    "blockers": [
+     "the 2026 remote inventory is pinned, but complete local PubMed and MeSH bytes are not checksum-verified and sealed as T0",
+     "no autonomous metric formula is frozen",
+     "no T0 predictions are sealed",
+     "the three-release prospective outcome window has not matured"
+    ],
+    "next_machine_action": "Download every file named in the pinned 2026 remote inventory to adequate storage, then checksum-verify and emit a refusal-to-overwrite T0 manifest."
+   }
+  },
+  "state": "awaiting_t0_baseline",
+  "verdict": "not_ready",
+  "ready": false,
+  "human_dependency_count": 0,
+  "readiness_contribution": 0,
+  "readiness_blockers": [
+   "the 2026 remote inventory is pinned, but complete local PubMed and MeSH bytes are not checksum-verified and sealed as T0",
+   "no autonomous metric formula is frozen",
+   "no T0 predictions are sealed",
+   "the three-release prospective outcome window has not matured"
+  ],
+  "remote_inventory": {
+   "status": "remote_inventory_only_not_a_verified_t0",
+   "release_year": 2026,
+   "pubmed_file_count": 1334,
+   "mesh_descriptor_count": 31110,
+   "readiness_contribution": 0
   }
  },
  "historical_sources": {
@@ -16381,7 +16664,7 @@
      "Only a 2013 snapshot is relevant here, so it cannot supply the missing 2007, 2011, and 2012 releases.",
      "Using it changes the experimental population and therefore requires a new pre-registration rather than a source-status flip."
     ],
-    "next_action": "Preserve this BioASQ v2 pilot as a terminal development failure and do not compute its held-out layer. Resume core metric work only through a separately pre-registered metric family after the historical-source and human-adjudicated benchmark gates advance; this terminated pilot does not authorize an LLM interpretation layer."
+    "next_action": "Preserve this BioASQ v2 pilot as a terminal development failure and do not compute its held-out layer. The separately frozen autonomous prospective track does not depend on this historical or human-adjudicated path and cannot inherit a pass from it; this terminated pilot does not authorize an LLM interpretation layer."
    },
    {
     "id": "current-pubmed-frozen-surrogate",
@@ -16406,7 +16689,7 @@
      "Current records have been maintained to newer vocabularies and do not reconstruct citation-to-MeSH assignments from 2007, 2011, 2012, or 2013.",
      "A prospective benchmark needs a future observation window and cannot validate historical discovery cases immediately."
     ],
-    "next_action": "Keep using small current files for parser smoke tests. If a prospective track is approved, freeze a complete current release with manifests before selecting future evaluation outcomes."
+    "next_action": "The autonomous prospective track has pinned the complete 2026 remote PubMed checksum inventory and matching MeSH transport with zero readiness. Acquire every named local byte, verify it against that inventory, and emit the refusal-to-overwrite T0 manifest before freezing any scoring formula or prediction."
    },
    {
     "id": "persistent-pubmed-abstracts",
