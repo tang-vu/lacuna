@@ -75,6 +75,16 @@ def test_protocol_rejects_sealed_t0_manifest_identity_drift(tmp_path):
         audit_autonomous_prospective(path)
 
 
+def test_protocol_rejects_candidate_index_contract_identity_drift(tmp_path):
+    payload = json.loads(PROTOCOL_PATH.read_text(encoding="utf-8"))
+    payload["t0_construction_contract"]["sha256"] = "0" * 64
+    path = tmp_path / "protocol.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+
+    with pytest.raises(AutonomousProspectiveContractError, match="construction contract identity"):
+        audit_autonomous_prospective(path)
+
+
 def test_protocol_rejects_power_threshold_or_current_readiness_drift(tmp_path):
     payload = json.loads(PROTOCOL_PATH.read_text(encoding="utf-8"))
     payload["pre_registered_evaluation"]["minimum_observed_positive_outcomes"] = 1

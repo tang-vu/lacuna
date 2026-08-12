@@ -56,6 +56,7 @@ python -m pipeline.benchmark.validate_source_alternatives
 python -m pipeline.benchmark.autonomous_t0 audit
 python -m pipeline.benchmark.autonomous_t0 audit-sealed
 python -m pipeline.benchmark.autonomous_t0 download --help
+python -m pipeline.benchmark.validate_autonomous_candidate_index
 python -m pipeline.benchmark.validate_autonomous_prospective
 python -m pipeline.benchmark.validate_candidates
 python -m pipeline.benchmark.negative_controls

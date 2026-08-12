@@ -65,6 +65,10 @@ python -m pipeline.benchmark.autonomous_t0 seal \
 
 These acquisition commands document reproducibility; rerunning them does not advance the current
 state. The active next transition is the exhaustive candidate-universe and metric/prediction seal.
+The score-free construction contract is frozen at
+[`benchmarks/autonomous/t0-candidate-index-v1.json`](benchmarks/autonomous/t0-candidate-index-v1.json);
+validate it with `python -m pipeline.benchmark.validate_autonomous_candidate_index`. Never weaken
+its exact-count, full-PMID, off-system-volume, or automatic-abstention gates after seeing counts.
 
 ## Archived v3 campaign
 

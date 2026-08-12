@@ -12,7 +12,7 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 22
+    assert status["schema_version"] == 23
     assert status["status"] == "not_ready"
     assert status["active_validation_track"] == (
         "autonomous-prospective-pubmed-link-emergence-v1"
@@ -39,6 +39,15 @@ def test_project_status_exposes_validator_results_without_claiming_readiness():
         "pubmed_record_count": 39_994_988,
         "mesh_descriptor_count": 31_110,
         "canonical_sha256": "6ec0372008bb8efe0e17f72695a07bb03816f2b41881d6518d35077ecdac5066",
+        "readiness_contribution": 0,
+    }
+    assert autonomous["candidate_index_contract"] == {
+        "id": "autonomous-t0-candidate-index-v1",
+        "status": "frozen_before_descriptor_support_or_pair_measurement",
+        "canonical_sha256": "afa2bee6eedd091929eca6a8b92122870506631ce12a559a418d227723497366",
+        "source_file_count": 1334,
+        "source_record_count": 39_994_988,
+        "descriptor_count": 31_110,
         "readiness_contribution": 0,
     }
     assert len(autonomous["readiness_blockers"]) == 3
@@ -390,6 +399,7 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
         "autonomous_prospective_protocol",
         "autonomous_t0_remote_inventory",
         "autonomous_t0_manifest",
+        "autonomous_candidate_index_contract",
         "historical_sources",
         "source_alternatives",
         "bioasq_snapshot_audit",

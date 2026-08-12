@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "id": "autonomous-t0-candidate-index-v1",
+  "status": "frozen_before_descriptor_support_or_pair_measurement",
+  "frozen_on": "2026-08-13",
+  "protocol_id": "autonomous-prospective-pubmed-link-emergence-v1",
+  "human_dependencies": [],
+  "known_before_freeze": {
+    "t0_manifest_path": "autonomous/t0-2026.json",
+    "t0_manifest_sha256": "6ec0372008bb8efe0e17f72695a07bb03816f2b41881d6518d35077ecdac5066",
+    "canonicalisation": "canonical-json-v1",
+    "pubmed_file_count": 1334,
+    "pubmed_compressed_bytes": 54267874919,
+    "pubmed_record_count": 39994988,
+    "mesh_descriptor_count": 31110,
+    "mesh_transport_sha256": "9fe35b3170652376a592daf69e91a80d6c693ecaf9c571ceb701d04204cb357d",
+    "candidate_counts_seen": false,
+    "descriptor_supports_seen": false,
+    "descriptor_pair_counts_seen": false,
+    "metric_scores_seen": false
+  },
+  "measurement_boundary": {
+    "indexing_basis": "maintained_2026_pubmed_mesh_assignments",
+    "measured_unit": "one distinct PMID in the complete sealed 2026 PubMed baseline",
+    "purpose": "construct the exhaustive exact T0 candidate universe and reusable count index before metric selection",
+    "not_measured": [
+      "truth, importance, or novelty of a scientific relationship",
+      "absence of academic or non-academic knowledge",
+      "period-appropriate historical indexing",
+      "a metric score, rank, prediction, or validation result"
+    ],
+    "readiness_contribution": 0
+  },
+  "record_contract": {
+    "included_xml_record": "PubmedArticle/MedlineCitation",
+    "required_pmid": "non-empty decimal PMID",
+    "pmid_deduplication": "a PMID may occur exactly once across the sealed baseline; any duplicate or missing PMID forces abstention",
+    "descriptor_xpath": "./MeshHeadingList/MeshHeading/DescriptorName",
+    "descriptor_identity": "UI attribute matching ^D[0-9]{6,9}$ and present in the sealed MeSH descriptor vocabulary",
+    "descriptor_multiplicity": "binary within PMID after exact UI deduplication",
+    "major_topic_flag": "ignored; every assigned descriptor contributes once",
+    "unknown_descriptor_action": "abstain",
+    "records_without_mesh": "included in the corpus denominator and contribute no descriptor support",
+    "book_articles": "must remain zero in the sealed source manifest; otherwise abstain",
+    "delete_citations": "must remain zero in the sealed source manifest; otherwise abstain"
+  },
+  "vocabulary_contract": {
+    "descriptor_order": "ascending descriptor UI from the complete sealed descriptor transport",
+    "descriptor_classes": "all DescriptorRecord classes present in the sealed descriptor transport",
+    "tree_numbers": "all TreeNumber values attached to a descriptor",
+    "ancestor_descendant_rule": "exclude when any left tree-number token sequence is a strict prefix of any right sequence or vice versa",
+    "term_source": "every non-empty ConceptList/Concept/TermList/Term/String value, including preferred terms",
+    "term_normalisation": "Unicode NFKC, casefold, collapse all whitespace runs to one ASCII space, strip",
+    "shared_entry_term_rule": "exclude a pair when the normalised term sets intersect"
+  },
+  "count_contract": {
+    "corpus_denominator": "number of distinct valid PMIDs, required to equal the sealed PubMed record count",
+    "descriptor_support": "number of distinct PMIDs containing the descriptor UI",
+    "direct_cooccurrence": "number of distinct PMIDs containing both unordered descriptor UIs",
+    "cooccurrence_generation": "all unordered combinations of the per-PMID deduplicated descriptor set",
+    "integer_width": "unsigned 64-bit accumulation with explicit overflow guards",
+    "sampling_allowed": false,
+    "approximation_allowed": false
+  },
+  "candidate_contract": {
+    "pair_order": "left descriptor UI lexicographically less than right descriptor UI",
+    "minimum_endpoint_article_support": 100,
+    "expected_under_independence": "left_support * right_support / corpus_denominator",
+    "minimum_independence_expected_count": 5,
+    "maximum_exact_direct_cooccurrence": 0,
+    "exclude_identical_descriptors": true,
+    "exclude_ancestor_descendant_pairs": true,
+    "exclude_shared_entry_term_pairs": true,
+    "candidate_identity_fields": [
+      "descriptor UI A",
+      "descriptor UI C",
+      "T0 endpoint supports",
+      "T0 exact direct count",
+      "T0 expected count numerator and denominator",
+      "candidate contract SHA-256"
+    ],
+    "candidate_set_hash_required": true,
+    "exhaustive": true
+  },
+  "storage_contract": {
+    "runtime_volume": "non-system data volume selected explicitly by the operator",
+    "system_temp_allowed": false,
+    "source_file_shard": {
+      "pair_key": "uint64 little-endian: left vocabulary index * 31110 + right vocabulary index",
+      "count": "uint32 little-endian exact within-file PMID count",
+      "order": "strictly ascending pair key with one row per positive pair",
+      "support_vector": "31110 uint32 little-endian values in vocabulary order",
+      "pmid_vector": "ascending uint64 little-endian PMIDs"
+    },
+    "merge": "deterministic bounded-fan-in external merge that sums equal pair keys exactly",
+    "candidate_stream": "ascending uint64 little-endian pair keys after all count and exclusion gates",
+    "checkpoint_identity": "candidate contract SHA-256 plus sealed source filename and SHA-256",
+    "partial_suffix": ".part",
+    "overwrite_allowed": false,
+    "minimum_free_gib_before_scan": 100
+  },
+  "completion_gate": {
+    "required": [
+      "all 1334 source file SHA-256 values match the sealed T0 manifest",
+      "all per-file parsed record subtotals match the sealed T0 manifest",
+      "the global PMID stream contains exactly 39994988 unique values",
+      "unknown descriptor assignments equal zero",
+      "support and positive-pair counts are exact integer reductions of all source shards",
+      "the candidate stream is exhaustive, strictly ordered, duplicate-free, and hash-pinned",
+      "every emitted number and binary artifact is traced to this contract and the sealed T0 manifest"
+    ],
+    "failure_action": "abstain_without_candidate_or_metric_claim",
+    "manual_override_allowed": false
+  },
+  "output_contract": {
+    "manifest_path": "autonomous/t0-candidate-universe-v1.json",
+    "manifest_write": "exclusive create after every completion gate passes",
+    "required_hashes": [
+      "candidate contract canonical JSON SHA-256",
+      "sealed T0 manifest canonical JSON SHA-256",
+      "descriptor table SHA-256",
+      "support vector SHA-256",
+      "positive cooccurrence index SHA-256",
+      "candidate stream SHA-256"
+    ],
+    "forbidden_fields_before_metric_freeze": [
+      "score",
+      "rank",
+      "percentile",
+      "prediction_label",
+      "interpretation"
+    ],
+    "claim_boundary": "The output is an exact maintained-current PubMed/MeSH count index and candidate set. It is not a metric result, prediction, discovery, validated gap, or evidence of absent knowledge."
+  }
+}

@@ -21,6 +21,10 @@ from pipeline.benchmark.autonomous_t0 import (
     audit_remote_inventory,
     audit_sealed_t0,
 )
+from pipeline.benchmark.validate_autonomous_candidate_index import (
+    CONTRACT_PATH as CANDIDATE_INDEX_CONTRACT_PATH,
+    audit_candidate_index_contract,
+)
 from pipeline.paths import REPO_ROOT
 
 PROTOCOL_PATH = REPO_ROOT / "benchmarks" / "autonomous-prospective-v1.json"
@@ -199,6 +203,19 @@ def audit_autonomous_prospective(path: Path = PROTOCOL_PATH) -> AutonomousProspe
         "candidate universe drifted",
     )
     _substantive_list(universe.get("candidate_identity_fields"), "candidate identity", 6)
+    candidate_index = audit_candidate_index_contract(CANDIDATE_INDEX_CONTRACT_PATH)
+    _require(
+        payload.get("t0_construction_contract")
+        == {
+            "path": "autonomous/t0-candidate-index-v1.json",
+            "sha256": candidate_index.sha256,
+            "canonicalisation": "canonical-json-v1",
+            "status": candidate_index.status,
+            "score_free": True,
+            "readiness_contribution": 0,
+        },
+        "candidate-index construction contract identity drifted",
+    )
 
     seal = payload.get("prediction_seal")
     _require(isinstance(seal, dict), "prediction seal missing")
@@ -300,6 +317,7 @@ def audit_autonomous_prospective(path: Path = PROTOCOL_PATH) -> AutonomousProspe
         current.get("state") == "awaiting_frozen_metric"
         and current.get("t0_remote_inventory_pinned") is True
         and current.get("t0_source_pinned") is True
+        and current.get("candidate_index_contract_frozen") is True
         and current.get("metric_frozen") is False
         and current.get("predictions_sealed") is False
         and current.get("t1_source_pinned") is False

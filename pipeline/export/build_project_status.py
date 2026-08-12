@@ -30,6 +30,10 @@ from pipeline.benchmark.validate_autonomous_prospective import (
     PROTOCOL_PATH as AUTONOMOUS_PROSPECTIVE_PATH,
     audit_autonomous_prospective,
 )
+from pipeline.benchmark.validate_autonomous_candidate_index import (
+    CONTRACT_PATH as AUTONOMOUS_CANDIDATE_INDEX_PATH,
+    audit_candidate_index_contract,
+)
 from pipeline.benchmark.autonomous_t0 import (
     REMOTE_INVENTORY_PATH as AUTONOMOUS_T0_REMOTE_INVENTORY_PATH,
     SEALED_T0_PATH as AUTONOMOUS_T0_PATH,
@@ -104,6 +108,7 @@ def build_project_status() -> dict:
     autonomous = audit_autonomous_prospective()
     autonomous_remote_inventory = audit_remote_inventory()
     autonomous_t0 = audit_sealed_t0()
+    autonomous_candidate_index = audit_candidate_index_contract()
     autonomous_payload = json.loads(AUTONOMOUS_PROSPECTIVE_PATH.read_text(encoding="utf-8"))
     alternatives = audit_source_alternatives()
     bioasq_snapshot = json.loads(BIOASQ_SNAPSHOT_MANIFEST_PATH.read_text(encoding="utf-8"))
@@ -154,7 +159,7 @@ def build_project_status() -> dict:
     negative_protocol = load_protocol()
 
     return {
-        "schema_version": 22,
+        "schema_version": 23,
         "status": "ready" if ready else "not_ready",
         "active_validation_track": autonomous.protocol_id,
         "inputs": {
@@ -163,6 +168,9 @@ def build_project_status() -> dict:
                 AUTONOMOUS_T0_REMOTE_INVENTORY_PATH
             ),
             "autonomous_t0_manifest": _input_identity(AUTONOMOUS_T0_PATH),
+            "autonomous_candidate_index_contract": _input_identity(
+                AUTONOMOUS_CANDIDATE_INDEX_PATH
+            ),
             "historical_sources": _input_identity(SOURCES_PATH),
             "source_alternatives": _input_identity(ALTERNATIVES_PATH),
             "bioasq_snapshot_audit": _input_identity(BIOASQ_SNAPSHOT_MANIFEST_PATH),
@@ -220,6 +228,15 @@ def build_project_status() -> dict:
                 "mesh_descriptor_count": autonomous_t0.mesh_descriptor_count,
                 "canonical_sha256": autonomous_t0.sha256,
                 "readiness_contribution": autonomous_t0.readiness_contribution,
+            },
+            "candidate_index_contract": {
+                "id": autonomous_candidate_index.contract_id,
+                "status": autonomous_candidate_index.status,
+                "canonical_sha256": autonomous_candidate_index.sha256,
+                "source_file_count": autonomous_candidate_index.source_file_count,
+                "source_record_count": autonomous_candidate_index.source_record_count,
+                "descriptor_count": autonomous_candidate_index.descriptor_count,
+                "readiness_contribution": autonomous_candidate_index.readiness_contribution,
             },
         },
         "historical_sources": {

@@ -231,6 +231,13 @@ detector or autonomous scientific discovery. Run
 `python -m pipeline.benchmark.validate_autonomous_prospective` to inspect the current machine
 blockers. The interpretation layer remains gated off.
 
+The score-free construction rules for the next machine step are frozen in
+[`t0-candidate-index-v1.json`](benchmarks/autonomous/t0-candidate-index-v1.json) before any
+descriptor support or pair count was measured. They require all 39,994,988 PMIDs, exact positive
+co-occurrence counts, an exhaustive exact-zero candidate stream, deterministic binary hashes, and
+automatic abstention on duplicate PMIDs, unknown descriptors, source drift, or incomplete shards.
+This contract contains no metric, score, rank, or prediction.
+
 `python -m pipeline.benchmark.autonomous_t0 download` now performs resumable, checksum-gated
 acquisition directly on a chosen data volume; see [`data/README.md`](data/README.md). A successful
 download is still only local source acquisition, not a sealed T0 or a scientific result.

@@ -178,6 +178,15 @@ export interface ProjectStatus {
       canonical_sha256: string;
       readiness_contribution: 0;
     };
+    candidate_index_contract: {
+      id: 'autonomous-t0-candidate-index-v1';
+      status: 'frozen_before_descriptor_support_or_pair_measurement';
+      canonical_sha256: string;
+      source_file_count: number;
+      source_record_count: number;
+      descriptor_count: number;
+      readiness_contribution: 0;
+    };
     protocol: {
       id: 'autonomous-prospective-pubmed-link-emergence-v1';
       status: 'frozen_before_t0_source_acquisition_and_metric';
@@ -194,6 +203,14 @@ export interface ProjectStatus {
         initial_state: 'awaiting_t0_baseline';
         manual_override_allowed: false;
         failure_is_terminal_for_the_sealed_formula: true;
+      };
+      t0_construction_contract: {
+        path: string;
+        sha256: string;
+        canonicalisation: 'canonical-json-v1';
+        status: 'frozen_before_descriptor_support_or_pair_measurement';
+        score_free: true;
+        readiness_contribution: 0;
       };
       source_contract: {
         t0_remote_inventory: {
@@ -248,6 +265,7 @@ export interface ProjectStatus {
         verdict: ProjectStatus['autonomous_validation']['verdict'];
         t0_remote_inventory_pinned: true;
         t0_source_pinned: boolean;
+        candidate_index_contract_frozen: boolean;
         readiness_contribution: 0;
         blockers: string[];
         next_machine_action: string;
