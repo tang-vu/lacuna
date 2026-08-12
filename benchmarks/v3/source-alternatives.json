@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "observed_on": "2026-08-11",
+  "observed_on": "2026-08-12",
   "status": "no_equivalent_replacement_pinned",
   "purpose": "A dated, evidence-bounded review of inputs that might keep metric-v3 development moving after NLM confirmed that previous annual PubMed baselines are not available. This contract does not weaken or replace the original historical-record readiness gate.",
   "decision_rule": {
@@ -94,6 +94,14 @@
         "path": "benchmarks/v3/bioasq-formula-v2-initial.json",
         "sha256": "084cc2a9e3810119f10190fcc5fdccb48f05195d2ecf17b2115214bc07e7342e"
       },
+      "pilot_graph_cache_manifest": {
+        "path": "benchmarks/v3/manifests/bioasq-v2-graph-cache-084cc2a9e381-8ebd0c227d93.json",
+        "sha256": "9f0d8631ff64783fc02fd37071775f32ea13f1c509a8b550741d21ce61763548"
+      },
+      "pilot_development_measurement": {
+        "path": "benchmarks/v3/manifests/bioasq-v2-development-084cc2a9e381.json",
+        "sha256": "bdc3d045f443b9f44d81fad522ae525f494866d0022443d0949d3c75c2be88e2"
+      },
       "potential_role": "A separately pre-registered pilot over the measured secondary corpus after a successor semantics protocol explicitly handles its observed publication-year scope. It may support post-snapshot discovery cases but is not an NLM baseline substitute.",
       "blockers": [
         "The acquired payload matches all three published aggregate counts, but its measured publication-year scope does not match the reported post-1949 scope: 280 records are dated 1946-1949. All years are parseable, although 751,238 values are not plain YYYY.",
@@ -103,11 +111,12 @@
         "The score-free full-snapshot audit found all 21 cases source-compatible at the primary minimum support of 10. However, held-out hard control generated-hard-2012-04-d019956-d019960 has target support exactly 10 and is ineligible at sensitivity 20. The frozen rule says an unevaluable sensitivity is not a pass, so this pilot cannot earn its passing label and does not authorize metric work.",
         "A separately named source-informed successor now preserves all 21 cases and replaces the infeasible sensitivity 20 with sensitivity 5 while keeping primary support 10. It discloses every source count seen before freeze, labels held-out cases score-unseen rather than independent, and remains at zero readiness.",
         "V2's initial formula is frozen before development output: article-level MeSH Jaccard edge weights, minimum aggregation along A-B-C paths, and sum accumulation across B. It is literature-grounded in LION's default but differs materially in graph and co-occurrence unit, retains direct A-C articles, and forbids held-out execution before a final formula freeze.",
+        "The initial-formula development measurement is complete for all 11 cases at support 10 and 5, with zero held-out cases computed. None of the three source-labelled positives reaches the top 5%, while three of four ontology-generated hard controls do at both supports. The lower-support run changes no target score or bridge count. This is evidence of poor development discrimination and likely structural-proximity confounding, not held-out validation or a successful gap metric.",
         "The measured secondary corpus is not the complete 21,508,439-record 2013 NLM baseline, and the two totals are not a measured coverage fraction.",
         "Only a 2013 snapshot is relevant here, so it cannot supply the missing 2007, 2011, and 2012 releases.",
         "Using it changes the experimental population and therefore requires a new pre-registration rather than a source-status flip."
       ],
-      "next_action": "Preserve the sensitivity-blocked predecessor unchanged. Implement the frozen initial v2 Jaccard-sum-min formula and run only the 11 development cases at support 10 and 5 into a new refusal-to-overwrite review artifact. Do not compute, preview, cache, or persist held-out metric output until the final post-development formula contract is frozen."
+      "next_action": "Preserve the development measurement and sensitivity-blocked predecessor unchanged. Record a post-development formula decision in a separately checksum-pinned contract before any held-out execution. Do not compute, preview, cache, or persist held-out metric output until that final contract is frozen; do not present the development failure as metric-v3 readiness or as permission for an LLM interpretation layer."
     },
     {
       "id": "current-pubmed-frozen-surrogate",

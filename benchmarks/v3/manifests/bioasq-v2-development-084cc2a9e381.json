@@ -1,0 +1,4848 @@
+{
+ "schema_version": 1,
+ "status": "development_metric_output_initial_formula",
+ "readiness_contribution": 0,
+ "claim_boundary": "Development-only measurement from the source-informed BioASQ secondary-snapshot pilot; not held-out validation, discovery truth, metric-v3 readiness, or a general gap detector.",
+ "inputs": {
+  "formula_contract": {
+   "path": "benchmarks/v3/bioasq-formula-v2-initial.json",
+   "sha256": "084cc2a9e3810119f10190fcc5fdccb48f05195d2ecf17b2115214bc07e7342e",
+   "bytes": 9036
+  },
+  "successor_protocol": {
+   "path": "benchmarks/v3/bioasq-pilot-v2.json",
+   "sha256": "48e8a9b932dfee884a4062bbe4a32da2353b74f6305bdf5e255810ed19cef833",
+   "bytes": 8840
+  },
+  "executor_source": {
+   "path": "pipeline/benchmark/bioasq_v2_development.py",
+   "sha256": "8ebd0c227d93b1d717e856402484a67650091b909c62926b0e0b7971a4ac82de",
+   "bytes": 52910
+  },
+  "native_pair_counter_source": {
+   "path": "pipeline/benchmark/native/bioasq_pair_counts.cpp",
+   "sha256": "ab8264e9ec8a68ff47abcb4cca220ff37a95a594ca585f3b5daa1de31747d841",
+   "bytes": 8880
+  },
+  "native_rank_screener_source": {
+   "path": "pipeline/benchmark/native/bioasq_score_bounds.cpp",
+   "sha256": "069ce4afcf01c90b56e429ce4c1ac71838e105488ca58066f2daf7b280c49c59",
+   "bytes": 8702
+  },
+  "source_snapshot": {
+   "sha256": "c4f738af8835b9fc300488d484efd633fd4137b149cd852b66a839651e328f68",
+   "bytes": 5471741580
+  },
+  "descriptor_vocabulary": {
+   "sha256": "c928973ae228ebd03ceeec8950b31f63a867fc9dc2699ae1578e506f25739740",
+   "bytes": 16103897
+  },
+  "graph_cache_manifest": {
+   "path": "data/cache/bioasq-v2-jaccard-084cc2a9e381-8ebd0c227d93/cache-manifest.json",
+   "sha256": "d8aaa93acdcf3ceba216ecedba284d5678b5356b4328a9532f92b98decd8a169",
+   "bytes": 3230
+  }
+ },
+ "execution_isolation": {
+  "split": "development",
+  "case_count": 11,
+  "heldout_case_count_computed": 0,
+  "heldout_scores_ranks_orderings_or_bridges_materialized": false,
+  "formula_revision_budget_consumed": 0
+ },
+ "formula": {
+  "edge_weight": "article_jaccard",
+  "path_aggregation": "minimum",
+  "candidate_accumulation": "sum",
+  "support_runs": [
+   10,
+   5
+  ],
+  "decimal_precision": 40,
+  "persisted_score_quantum": "0.000000000000001",
+  "tie_policy": "conservative worst tied rank"
+ },
+ "graph": {
+  "node_count": 26853,
+  "cutoff_years": [
+   2011,
+   2012
+  ],
+  "edge_counts": {
+   "2011": 30875964,
+   "2012": 31895136
+  }
+ },
+ "cases": [
+  {
+   "id": "lion-nfkb-adenoma",
+   "kind": "source_labeled_positive",
+   "split": "development",
+   "label_scope": "source_labeled_lion_reproduction_case_not_independently_validated_discovery_truth",
+   "cutoff": "2011-12-31",
+   "endpoint_a": {
+    "descriptor_ui": "D016328",
+    "descriptor_label": "NF-kappa B"
+   },
+   "target_c": {
+    "descriptor_ui": "D000236",
+    "descriptor_label": "Adenoma"
+   },
+   "support_runs": [
+    {
+     "minimum_support_articles": 10,
+     "endpoint_a_article_support": 30204,
+     "target_c_article_support": 23636,
+     "direct_ac_article_count": 16,
+     "eligible_candidate_count": 25621,
+     "target_persisted_score": "1.151138480117359",
+     "target_worst_tie_rank": 1757,
+     "target_rank_fraction": "0.06857655829202607236251512431208774052535",
+     "target_top_5_percent": false,
+     "target_below_median": false,
+     "target_bridge_count": 5503,
+     "top_target_bridges": [
+      {
+       "descriptor_ui": "D015972",
+       "descriptor_label": "Gene Expression Regulation, Neoplastic",
+       "ab_article_count": 1156,
+       "bc_article_count": 713,
+       "jaccard_ab": "0.01510933354245905710439294723496582101452",
+       "jaccard_bc": "0.01013014321436690156853830416003637190271",
+       "path_contribution": "0.010130143214367"
+      },
+      {
+       "descriptor_ui": "D009363",
+       "descriptor_label": "Neoplasm Proteins",
+       "ab_article_count": 503,
+       "bc_article_count": 469,
+       "jaccard_ab": "0.007065003651890555649193774931175908758919",
+       "jaccard_bc": "0.007253100739228604126070953573969255513284",
+       "path_contribution": "0.007065003651891"
+      },
+      {
+       "descriptor_ui": "D016159",
+       "descriptor_label": "Tumor Suppressor Protein p53",
+       "ab_article_count": 540,
+       "bc_article_count": 363,
+       "jaccard_ab": "0.009051290646999664767013074086490110626886",
+       "jaccard_bc": "0.006814469954382473859092530364752482682235",
+       "path_contribution": "0.006814469954382"
+      },
+      {
+       "descriptor_ui": "D007413",
+       "descriptor_label": "Intestinal Mucosa",
+       "ab_article_count": 418,
+       "bc_article_count": 884,
+       "jaccard_ab": "0.006176214187561872959115826179464826607958",
+       "jaccard_bc": "0.01457663451232583065380493033226152197213",
+       "path_contribution": "0.006176214187562"
+      },
+      {
+       "descriptor_ui": "D009361",
+       "descriptor_label": "Neoplasm Invasiveness",
+       "ab_article_count": 399,
+       "bc_article_count": 642,
+       "jaccard_ab": "0.006070195189484413746938278742146019382027",
+       "jaccard_bc": "0.01089613034623217922606924643584521384929",
+       "path_contribution": "0.006070195189484"
+      },
+      {
+       "descriptor_ui": "D007150",
+       "descriptor_label": "Immunohistochemistry",
+       "ab_article_count": 1365,
+       "bc_article_count": 2167,
+       "jaccard_ab": "0.005785687945847656266557028233309455891017",
+       "jaccard_bc": "0.009481223502233578494642474306190578280254",
+       "path_contribution": "0.005785687945848"
+      },
+      {
+       "descriptor_ui": "D002471",
+       "descriptor_label": "Cell Transformation, Neoplastic",
+       "ab_article_count": 272,
+       "bc_article_count": 488,
+       "jaccard_ab": "0.004649970082913069493119070005983417386101",
+       "jaccard_bc": "0.009437063680841600433176693546827560867127",
+       "path_contribution": "0.004649970082913"
+      },
+      {
+       "descriptor_ui": "D003110",
+       "descriptor_label": "Colonic Neoplasms",
+       "ab_article_count": 299,
+       "bc_article_count": 1807,
+       "jaccard_ab": "0.004589972675079058057781462036781185717356",
+       "jaccard_bc": "0.03166508954543861493709038656993656467949",
+       "path_contribution": "0.004589972675079"
+      },
+      {
+       "descriptor_ui": "D003907",
+       "descriptor_label": "Dexamethasone",
+       "ab_article_count": 418,
+       "bc_article_count": 240,
+       "jaccard_ab": "0.006884057971014492753623188405797101449275",
+       "jaccard_bc": "0.004417448923246824958586416344561016013252",
+       "path_contribution": "0.004417448923247"
+      },
+      {
+       "descriptor_ui": "D010190",
+       "descriptor_label": "Pancreatic Neoplasms",
+       "ab_article_count": 247,
+       "bc_article_count": 501,
+       "jaccard_ab": "0.004249754821837201699901928734880679960771",
+       "jaccard_bc": "0.009766272247022359110314041209380299810912",
+       "path_contribution": "0.004249754821837"
+      },
+      {
+       "descriptor_ui": "D025521",
+       "descriptor_label": "Tumor Suppressor Proteins",
+       "ab_article_count": 226,
+       "bc_article_count": 167,
+       "jaccard_ab": "0.004805443334042100786731873272379332341059",
+       "jaccard_bc": "0.004121319809481503417980800078971397546951",
+       "path_contribution": "0.004121319809482"
+      },
+      {
+       "descriptor_ui": "D006528",
+       "descriptor_label": "Carcinoma, Hepatocellular",
+       "ab_article_count": 276,
+       "bc_article_count": 241,
+       "jaccard_ab": "0.004238068914685830108715680854984337571402",
+       "jaccard_bc": "0.004113259715655988121042480927104845454080",
+       "path_contribution": "0.004113259715656"
+      },
+      {
+       "descriptor_ui": "D002467",
+       "descriptor_label": "Cell Nucleus",
+       "ab_article_count": 2291,
+       "bc_article_count": 378,
+       "jaccard_ab": "0.02301009390850198362878521568824386079446",
+       "jaccard_bc": "0.003982720472026130017911705826572542408598",
+       "path_contribution": "0.003982720472026"
+      },
+      {
+       "descriptor_ui": "D003106",
+       "descriptor_label": "Colon",
+       "ab_article_count": 233,
+       "bc_article_count": 667,
+       "jaccard_ab": "0.003880810806309232332317327070737354053199",
+       "jaccard_bc": "0.01257612610064671832871391669966249976432",
+       "path_contribution": "0.003880810806309"
+      },
+      {
+       "descriptor_ui": "D002273",
+       "descriptor_label": "Carcinogens",
+       "ab_article_count": 194,
+       "bc_article_count": 501,
+       "jaccard_ab": "0.003717970831177293547212480116521972441020",
+       "jaccard_bc": "0.01105862616987462475719583259756312908352",
+       "path_contribution": "0.003717970831177"
+      },
+      {
+       "descriptor_ui": "D014407",
+       "descriptor_label": "Tumor Cells, Cultured",
+       "ab_article_count": 2270,
+       "bc_article_count": 615,
+       "jaccard_ab": "0.01323908504508287550594300778014953750685",
+       "jaccard_bc": "0.003692606980528252946580285681691274039472",
+       "path_contribution": "0.003692606980528"
+      },
+      {
+       "descriptor_ui": "D051546",
+       "descriptor_label": "Cyclooxygenase 2",
+       "ab_article_count": 1419,
+       "bc_article_count": 134,
+       "jaccard_ab": "0.03404919016196760647870425914817036592681",
+       "jaccard_bc": "0.003682127940206638821719059133875577049901",
+       "path_contribution": "0.003682127940207"
+      },
+      {
+       "descriptor_ui": "D011518",
+       "descriptor_label": "Proto-Oncogene Proteins",
+       "ab_article_count": 1248,
+       "bc_article_count": 232,
+       "jaccard_ab": "0.01785944275104108530459794788133774095222",
+       "jaccard_bc": "0.003606572667775584124862033049885740046948",
+       "path_contribution": "0.003606572667776"
+      },
+      {
+       "descriptor_ui": "D016588",
+       "descriptor_label": "Anticarcinogenic Agents",
+       "ab_article_count": 155,
+       "bc_article_count": 101,
+       "jaccard_ab": "0.004408669435121451732180442573525228966380",
+       "jaccard_bc": "0.003526043848624493785784108364753526043849",
+       "path_contribution": "0.003526043848624"
+      },
+      {
+       "descriptor_ui": "D020133",
+       "descriptor_label": "Reverse Transcriptase Polymerase Chain Reaction",
+       "ab_article_count": 2443,
+       "bc_article_count": 480,
+       "jaccard_ab": "0.01678253462299406462958892064189931853155",
+       "jaccard_bc": "0.003405148868852110128189666791995062534140",
+       "path_contribution": "0.003405148868852"
+      }
+     ],
+     "rank_proof": {
+      "method": "exact_integer_rational_bounds_then_python_decimal_refinement",
+      "bound_scale_exponent": 21,
+      "decimal_guard_scaled_units": 1000000,
+      "zero_target_nonnegative_shortcut": false,
+      "bound_proven_at_or_above_count": 1756,
+      "bound_proven_below_count": 23864,
+      "exact_decimal_refinement_count": 1,
+      "exact_decimal_at_or_above_count": 1,
+      "partition_candidate_count": 25621
+     }
+    },
+    {
+     "minimum_support_articles": 5,
+     "endpoint_a_article_support": 30204,
+     "target_c_article_support": 23636,
+     "direct_ac_article_count": 16,
+     "eligible_candidate_count": 25985,
+     "target_persisted_score": "1.151138480117359",
+     "target_worst_tie_rank": 1757,
+     "target_rank_fraction": "0.06761593226861650952472580334808543390418",
+     "target_top_5_percent": false,
+     "target_below_median": false,
+     "target_bridge_count": 5503,
+     "top_target_bridges": [
+      {
+       "descriptor_ui": "D015972",
+       "descriptor_label": "Gene Expression Regulation, Neoplastic",
+       "ab_article_count": 1156,
+       "bc_article_count": 713,
+       "jaccard_ab": "0.01510933354245905710439294723496582101452",
+       "jaccard_bc": "0.01013014321436690156853830416003637190271",
+       "path_contribution": "0.010130143214367"
+      },
+      {
+       "descriptor_ui": "D009363",
+       "descriptor_label": "Neoplasm Proteins",
+       "ab_article_count": 503,
+       "bc_article_count": 469,
+       "jaccard_ab": "0.007065003651890555649193774931175908758919",
+       "jaccard_bc": "0.007253100739228604126070953573969255513284",
+       "path_contribution": "0.007065003651891"
+      },
+      {
+       "descriptor_ui": "D016159",
+       "descriptor_label": "Tumor Suppressor Protein p53",
+       "ab_article_count": 540,
+       "bc_article_count": 363,
+       "jaccard_ab": "0.009051290646999664767013074086490110626886",
+       "jaccard_bc": "0.006814469954382473859092530364752482682235",
+       "path_contribution": "0.006814469954382"
+      },
+      {
+       "descriptor_ui": "D007413",
+       "descriptor_label": "Intestinal Mucosa",
+       "ab_article_count": 418,
+       "bc_article_count": 884,
+       "jaccard_ab": "0.006176214187561872959115826179464826607958",
+       "jaccard_bc": "0.01457663451232583065380493033226152197213",
+       "path_contribution": "0.006176214187562"
+      },
+      {
+       "descriptor_ui": "D009361",
+       "descriptor_label": "Neoplasm Invasiveness",
+       "ab_article_count": 399,
+       "bc_article_count": 642,
+       "jaccard_ab": "0.006070195189484413746938278742146019382027",
+       "jaccard_bc": "0.01089613034623217922606924643584521384929",
+       "path_contribution": "0.006070195189484"
+      },
+      {
+       "descriptor_ui": "D007150",
+       "descriptor_label": "Immunohistochemistry",
+       "ab_article_count": 1365,
+       "bc_article_count": 2167,
+       "jaccard_ab": "0.005785687945847656266557028233309455891017",
+       "jaccard_bc": "0.009481223502233578494642474306190578280254",
+       "path_contribution": "0.005785687945848"
+      },
+      {
+       "descriptor_ui": "D002471",
+       "descriptor_label": "Cell Transformation, Neoplastic",
+       "ab_article_count": 272,
+       "bc_article_count": 488,
+       "jaccard_ab": "0.004649970082913069493119070005983417386101",
+       "jaccard_bc": "0.009437063680841600433176693546827560867127",
+       "path_contribution": "0.004649970082913"
+      },
+      {
+       "descriptor_ui": "D003110",
+       "descriptor_label": "Colonic Neoplasms",
+       "ab_article_count": 299,
+       "bc_article_count": 1807,
+       "jaccard_ab": "0.004589972675079058057781462036781185717356",
+       "jaccard_bc": "0.03166508954543861493709038656993656467949",
+       "path_contribution": "0.004589972675079"
+      },
+      {
+       "descriptor_ui": "D003907",
+       "descriptor_label": "Dexamethasone",
+       "ab_article_count": 418,
+       "bc_article_count": 240,
+       "jaccard_ab": "0.006884057971014492753623188405797101449275",
+       "jaccard_bc": "0.004417448923246824958586416344561016013252",
+       "path_contribution": "0.004417448923247"
+      },
+      {
+       "descriptor_ui": "D010190",
+       "descriptor_label": "Pancreatic Neoplasms",
+       "ab_article_count": 247,
+       "bc_article_count": 501,
+       "jaccard_ab": "0.004249754821837201699901928734880679960771",
+       "jaccard_bc": "0.009766272247022359110314041209380299810912",
+       "path_contribution": "0.004249754821837"
+      },
+      {
+       "descriptor_ui": "D025521",
+       "descriptor_label": "Tumor Suppressor Proteins",
+       "ab_article_count": 226,
+       "bc_article_count": 167,
+       "jaccard_ab": "0.004805443334042100786731873272379332341059",
+       "jaccard_bc": "0.004121319809481503417980800078971397546951",
+       "path_contribution": "0.004121319809482"
+      },
+      {
+       "descriptor_ui": "D006528",
+       "descriptor_label": "Carcinoma, Hepatocellular",
+       "ab_article_count": 276,
+       "bc_article_count": 241,
+       "jaccard_ab": "0.004238068914685830108715680854984337571402",
+       "jaccard_bc": "0.004113259715655988121042480927104845454080",
+       "path_contribution": "0.004113259715656"
+      },
+      {
+       "descriptor_ui": "D002467",
+       "descriptor_label": "Cell Nucleus",
+       "ab_article_count": 2291,
+       "bc_article_count": 378,
+       "jaccard_ab": "0.02301009390850198362878521568824386079446",
+       "jaccard_bc": "0.003982720472026130017911705826572542408598",
+       "path_contribution": "0.003982720472026"
+      },
+      {
+       "descriptor_ui": "D003106",
+       "descriptor_label": "Colon",
+       "ab_article_count": 233,
+       "bc_article_count": 667,
+       "jaccard_ab": "0.003880810806309232332317327070737354053199",
+       "jaccard_bc": "0.01257612610064671832871391669966249976432",
+       "path_contribution": "0.003880810806309"
+      },
+      {
+       "descriptor_ui": "D002273",
+       "descriptor_label": "Carcinogens",
+       "ab_article_count": 194,
+       "bc_article_count": 501,
+       "jaccard_ab": "0.003717970831177293547212480116521972441020",
+       "jaccard_bc": "0.01105862616987462475719583259756312908352",
+       "path_contribution": "0.003717970831177"
+      },
+      {
+       "descriptor_ui": "D014407",
+       "descriptor_label": "Tumor Cells, Cultured",
+       "ab_article_count": 2270,
+       "bc_article_count": 615,
+       "jaccard_ab": "0.01323908504508287550594300778014953750685",
+       "jaccard_bc": "0.003692606980528252946580285681691274039472",
+       "path_contribution": "0.003692606980528"
+      },
+      {
+       "descriptor_ui": "D051546",
+       "descriptor_label": "Cyclooxygenase 2",
+       "ab_article_count": 1419,
+       "bc_article_count": 134,
+       "jaccard_ab": "0.03404919016196760647870425914817036592681",
+       "jaccard_bc": "0.003682127940206638821719059133875577049901",
+       "path_contribution": "0.003682127940207"
+      },
+      {
+       "descriptor_ui": "D011518",
+       "descriptor_label": "Proto-Oncogene Proteins",
+       "ab_article_count": 1248,
+       "bc_article_count": 232,
+       "jaccard_ab": "0.01785944275104108530459794788133774095222",
+       "jaccard_bc": "0.003606572667775584124862033049885740046948",
+       "path_contribution": "0.003606572667776"
+      },
+      {
+       "descriptor_ui": "D016588",
+       "descriptor_label": "Anticarcinogenic Agents",
+       "ab_article_count": 155,
+       "bc_article_count": 101,
+       "jaccard_ab": "0.004408669435121451732180442573525228966380",
+       "jaccard_bc": "0.003526043848624493785784108364753526043849",
+       "path_contribution": "0.003526043848624"
+      },
+      {
+       "descriptor_ui": "D020133",
+       "descriptor_label": "Reverse Transcriptase Polymerase Chain Reaction",
+       "ab_article_count": 2443,
+       "bc_article_count": 480,
+       "jaccard_ab": "0.01678253462299406462958892064189931853155",
+       "jaccard_bc": "0.003405148868852110128189666791995062534140",
+       "path_contribution": "0.003405148868852"
+      }
+     ],
+     "rank_proof": {
+      "method": "exact_integer_rational_bounds_then_python_decimal_refinement",
+      "bound_scale_exponent": 21,
+      "decimal_guard_scaled_units": 1000000,
+      "zero_target_nonnegative_shortcut": false,
+      "bound_proven_at_or_above_count": 1756,
+      "bound_proven_below_count": 24228,
+      "exact_decimal_refinement_count": 1,
+      "exact_decimal_at_or_above_count": 1,
+      "partition_candidate_count": 25985
+     }
+    }
+   ]
+  },
+  {
+   "id": "lion-notch1-cebpb",
+   "kind": "source_labeled_positive",
+   "split": "development",
+   "label_scope": "source_labeled_lion_reproduction_case_not_independently_validated_discovery_truth",
+   "cutoff": "2011-12-31",
+   "endpoint_a": {
+    "descriptor_ui": "D051881",
+    "descriptor_label": "Receptor, Notch1"
+   },
+   "target_c": {
+    "descriptor_ui": "D022782",
+    "descriptor_label": "CCAAT-Enhancer-Binding Protein-beta"
+   },
+   "support_runs": [
+    {
+     "minimum_support_articles": 10,
+     "endpoint_a_article_support": 1512,
+     "target_c_article_support": 1042,
+     "direct_ac_article_count": 0,
+     "eligible_candidate_count": 25621,
+     "target_persisted_score": "0.410992730353311",
+     "target_worst_tie_rank": 1343,
+     "target_rank_fraction": "0.05241793840989813043987354123570508567191",
+     "target_top_5_percent": false,
+     "target_below_median": false,
+     "target_bridge_count": 1259,
+     "top_target_bridges": [
+      {
+       "descriptor_ui": "D051819",
+       "descriptor_label": "Immunoglobulin J Recombination Signal Sequence-Binding Protein",
+       "ab_article_count": 98,
+       "bc_article_count": 5,
+       "jaccard_ab": "0.05496354458777341559169938306225462703309",
+       "jaccard_bc": "0.003556187766714082503556187766714082503556",
+       "path_contribution": "0.003556187766714"
+      },
+      {
+       "descriptor_ui": "D038042",
+       "descriptor_label": "Myelopoiesis",
+       "ab_article_count": 5,
+       "bc_article_count": 5,
+       "jaccard_ab": "0.002714440825190010857763300760043431053203",
+       "jaccard_bc": "0.003644314868804664723032069970845481049563",
+       "path_contribution": "0.002714440825190"
+      },
+      {
+       "descriptor_ui": "D050881",
+       "descriptor_label": "E1A-Associated p300 Protein",
+       "ab_article_count": 7,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.003367003367003367003367003367003367003367",
+       "jaccard_bc": "0.002481389578163771712158808933002481389578",
+       "path_contribution": "0.002481389578164"
+      },
+      {
+       "descriptor_ui": "D015533",
+       "descriptor_label": "Transcriptional Activation",
+       "ab_article_count": 64,
+       "bc_article_count": 148,
+       "jaccard_ab": "0.002347331743994131670640014670823399963323",
+       "jaccard_bc": "0.005540788439219797087342293437160720302497",
+       "path_contribution": "0.002347331743994"
+      },
+      {
+       "descriptor_ui": "D052002",
+       "descriptor_label": "NF-kappa B p50 Subunit",
+       "ab_article_count": 6,
+       "bc_article_count": 10,
+       "jaccard_ab": "0.002273588480485032209170140204622963243653",
+       "jaccard_bc": "0.004618937644341801385681293302540415704388",
+       "path_contribution": "0.002273588480485"
+      },
+      {
+       "descriptor_ui": "D047369",
+       "descriptor_label": "Chromatin Immunoprecipitation",
+       "ab_article_count": 15,
+       "bc_article_count": 54,
+       "jaccard_ab": "0.002208155454143971735610186957161784189607",
+       "jaccard_bc": "0.008593252705283259070655633354551241247613",
+       "path_contribution": "0.002208155454144"
+      },
+      {
+       "descriptor_ui": "D014157",
+       "descriptor_label": "Transcription Factors",
+       "ab_article_count": 529,
+       "bc_article_count": 221,
+       "jaccard_ab": "0.005245361969638377408255743621778663572994",
+       "jaccard_bc": "0.002194877295434456594066879202296179324455",
+       "path_contribution": "0.002194877295434"
+      },
+      {
+       "descriptor_ui": "D060588",
+       "descriptor_label": "LIM Domain Proteins",
+       "ab_article_count": 8,
+       "bc_article_count": 5,
+       "jaccard_ab": "0.002831858407079646017699115044247787610619",
+       "jaccard_bc": "0.002120441051738761662425784563189143341815",
+       "path_contribution": "0.002120441051739"
+      },
+      {
+       "descriptor_ui": "D008156",
+       "descriptor_label": "Luciferases",
+       "ab_article_count": 34,
+       "bc_article_count": 46,
+       "jaccard_ab": "0.002101099987640588307996539364726239031022",
+       "jaccard_bc": "0.002929936305732484076433121019108280254777",
+       "path_contribution": "0.002101099987641"
+      },
+      {
+       "descriptor_ui": "D034741",
+       "descriptor_label": "RNA, Small Interfering",
+       "ab_article_count": 74,
+       "bc_article_count": 59,
+       "jaccard_ab": "0.002584791644835656152852003213524747633518",
+       "jaccard_bc": "0.002094129339106978064882515794704337332292",
+       "path_contribution": "0.002094129339107"
+      },
+      {
+       "descriptor_ui": "D055785",
+       "descriptor_label": "Gene Knockdown Techniques",
+       "ab_article_count": 18,
+       "bc_article_count": 14,
+       "jaccard_ab": "0.002516778523489932885906040268456375838926",
+       "jaccard_bc": "0.002093927609931199521387974872868680825606",
+       "path_contribution": "0.002093927609931"
+      },
+      {
+       "descriptor_ui": "D050989",
+       "descriptor_label": "GATA2 Transcription Factor",
+       "ab_article_count": 4,
+       "bc_article_count": 3,
+       "jaccard_ab": "0.002034587995930824008138351983723296032553",
+       "jaccard_bc": "0.002004008016032064128256513026052104208417",
+       "path_contribution": "0.002004008016032"
+      },
+      {
+       "descriptor_ui": "D051996",
+       "descriptor_label": "Transcription Factor RelA",
+       "ab_article_count": 9,
+       "bc_article_count": 18,
+       "jaccard_ab": "0.001970227670753064798598949211908931698774",
+       "jaccard_bc": "0.004402054292002934702861335289801907556860",
+       "path_contribution": "0.001970227670753"
+      },
+      {
+       "descriptor_ui": "D050659",
+       "descriptor_label": "Core Binding Factor Alpha 1 Subunit",
+       "ab_article_count": 6,
+       "bc_article_count": 10,
+       "jaccard_ab": "0.001962708537782139352306182531894013738960",
+       "jaccard_bc": "0.003871467286101432442895857530003871467286",
+       "path_contribution": "0.001962708537782"
+      },
+      {
+       "descriptor_ui": "D022423",
+       "descriptor_label": "Myeloid Cells",
+       "ab_article_count": 7,
+       "bc_article_count": 6,
+       "jaccard_ab": "0.001976842699802315730019768426998023157300",
+       "jaccard_bc": "0.001953125",
+       "path_contribution": "0.001953125000000"
+      },
+      {
+       "descriptor_ui": "D038362",
+       "descriptor_label": "Glycogen Synthase Kinase 3",
+       "ab_article_count": 17,
+       "bc_article_count": 10,
+       "jaccard_ab": "0.002898550724637681159420289855072463768116",
+       "jaccard_bc": "0.001851166234727878563495001851166234727879",
+       "path_contribution": "0.001851166234728"
+      },
+      {
+       "descriptor_ui": "D030161",
+       "descriptor_label": "Avian Proteins",
+       "ab_article_count": 12,
+       "bc_article_count": 5,
+       "jaccard_ab": "0.003735990037359900373599003735990037359900",
+       "jaccard_bc": "0.001818843215714805383775918515823935976719",
+       "path_contribution": "0.001818843215715"
+      },
+      {
+       "descriptor_ui": "D002454",
+       "descriptor_label": "Cell Differentiation",
+       "ab_article_count": 421,
+       "bc_article_count": 210,
+       "jaccard_ab": "0.003630624881422584039048621052450025009055",
+       "jaccard_bc": "0.001815054581284194331843836161073129413392",
+       "path_contribution": "0.001815054581284"
+      },
+      {
+       "descriptor_ui": "D041681",
+       "descriptor_label": "NIH 3T3 Cells",
+       "ab_article_count": 20,
+       "bc_article_count": 15,
+       "jaccard_ab": "0.002284148012791228871630881681132937414344",
+       "jaccard_bc": "0.001809190688698588831262815100711615004221",
+       "path_contribution": "0.001809190688699"
+      },
+      {
+       "descriptor_ui": "D015534",
+       "descriptor_label": "Trans-Activators",
+       "ab_article_count": 64,
+       "bc_article_count": 88,
+       "jaccard_ab": "0.001806939778085208503910330613512521527993",
+       "jaccard_bc": "0.002519685039370078740157480314960629921260",
+       "path_contribution": "0.001806939778085"
+      }
+     ],
+     "rank_proof": {
+      "method": "exact_integer_rational_bounds_then_python_decimal_refinement",
+      "bound_scale_exponent": 21,
+      "decimal_guard_scaled_units": 1000000,
+      "zero_target_nonnegative_shortcut": false,
+      "bound_proven_at_or_above_count": 1342,
+      "bound_proven_below_count": 24278,
+      "exact_decimal_refinement_count": 1,
+      "exact_decimal_at_or_above_count": 1,
+      "partition_candidate_count": 25621
+     }
+    },
+    {
+     "minimum_support_articles": 5,
+     "endpoint_a_article_support": 1512,
+     "target_c_article_support": 1042,
+     "direct_ac_article_count": 0,
+     "eligible_candidate_count": 25985,
+     "target_persisted_score": "0.410992730353311",
+     "target_worst_tie_rank": 1343,
+     "target_rank_fraction": "0.05168366365210698479892245526265152972869",
+     "target_top_5_percent": false,
+     "target_below_median": false,
+     "target_bridge_count": 1259,
+     "top_target_bridges": [
+      {
+       "descriptor_ui": "D051819",
+       "descriptor_label": "Immunoglobulin J Recombination Signal Sequence-Binding Protein",
+       "ab_article_count": 98,
+       "bc_article_count": 5,
+       "jaccard_ab": "0.05496354458777341559169938306225462703309",
+       "jaccard_bc": "0.003556187766714082503556187766714082503556",
+       "path_contribution": "0.003556187766714"
+      },
+      {
+       "descriptor_ui": "D038042",
+       "descriptor_label": "Myelopoiesis",
+       "ab_article_count": 5,
+       "bc_article_count": 5,
+       "jaccard_ab": "0.002714440825190010857763300760043431053203",
+       "jaccard_bc": "0.003644314868804664723032069970845481049563",
+       "path_contribution": "0.002714440825190"
+      },
+      {
+       "descriptor_ui": "D050881",
+       "descriptor_label": "E1A-Associated p300 Protein",
+       "ab_article_count": 7,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.003367003367003367003367003367003367003367",
+       "jaccard_bc": "0.002481389578163771712158808933002481389578",
+       "path_contribution": "0.002481389578164"
+      },
+      {
+       "descriptor_ui": "D015533",
+       "descriptor_label": "Transcriptional Activation",
+       "ab_article_count": 64,
+       "bc_article_count": 148,
+       "jaccard_ab": "0.002347331743994131670640014670823399963323",
+       "jaccard_bc": "0.005540788439219797087342293437160720302497",
+       "path_contribution": "0.002347331743994"
+      },
+      {
+       "descriptor_ui": "D052002",
+       "descriptor_label": "NF-kappa B p50 Subunit",
+       "ab_article_count": 6,
+       "bc_article_count": 10,
+       "jaccard_ab": "0.002273588480485032209170140204622963243653",
+       "jaccard_bc": "0.004618937644341801385681293302540415704388",
+       "path_contribution": "0.002273588480485"
+      },
+      {
+       "descriptor_ui": "D047369",
+       "descriptor_label": "Chromatin Immunoprecipitation",
+       "ab_article_count": 15,
+       "bc_article_count": 54,
+       "jaccard_ab": "0.002208155454143971735610186957161784189607",
+       "jaccard_bc": "0.008593252705283259070655633354551241247613",
+       "path_contribution": "0.002208155454144"
+      },
+      {
+       "descriptor_ui": "D014157",
+       "descriptor_label": "Transcription Factors",
+       "ab_article_count": 529,
+       "bc_article_count": 221,
+       "jaccard_ab": "0.005245361969638377408255743621778663572994",
+       "jaccard_bc": "0.002194877295434456594066879202296179324455",
+       "path_contribution": "0.002194877295434"
+      },
+      {
+       "descriptor_ui": "D060588",
+       "descriptor_label": "LIM Domain Proteins",
+       "ab_article_count": 8,
+       "bc_article_count": 5,
+       "jaccard_ab": "0.002831858407079646017699115044247787610619",
+       "jaccard_bc": "0.002120441051738761662425784563189143341815",
+       "path_contribution": "0.002120441051739"
+      },
+      {
+       "descriptor_ui": "D008156",
+       "descriptor_label": "Luciferases",
+       "ab_article_count": 34,
+       "bc_article_count": 46,
+       "jaccard_ab": "0.002101099987640588307996539364726239031022",
+       "jaccard_bc": "0.002929936305732484076433121019108280254777",
+       "path_contribution": "0.002101099987641"
+      },
+      {
+       "descriptor_ui": "D034741",
+       "descriptor_label": "RNA, Small Interfering",
+       "ab_article_count": 74,
+       "bc_article_count": 59,
+       "jaccard_ab": "0.002584791644835656152852003213524747633518",
+       "jaccard_bc": "0.002094129339106978064882515794704337332292",
+       "path_contribution": "0.002094129339107"
+      },
+      {
+       "descriptor_ui": "D055785",
+       "descriptor_label": "Gene Knockdown Techniques",
+       "ab_article_count": 18,
+       "bc_article_count": 14,
+       "jaccard_ab": "0.002516778523489932885906040268456375838926",
+       "jaccard_bc": "0.002093927609931199521387974872868680825606",
+       "path_contribution": "0.002093927609931"
+      },
+      {
+       "descriptor_ui": "D050989",
+       "descriptor_label": "GATA2 Transcription Factor",
+       "ab_article_count": 4,
+       "bc_article_count": 3,
+       "jaccard_ab": "0.002034587995930824008138351983723296032553",
+       "jaccard_bc": "0.002004008016032064128256513026052104208417",
+       "path_contribution": "0.002004008016032"
+      },
+      {
+       "descriptor_ui": "D051996",
+       "descriptor_label": "Transcription Factor RelA",
+       "ab_article_count": 9,
+       "bc_article_count": 18,
+       "jaccard_ab": "0.001970227670753064798598949211908931698774",
+       "jaccard_bc": "0.004402054292002934702861335289801907556860",
+       "path_contribution": "0.001970227670753"
+      },
+      {
+       "descriptor_ui": "D050659",
+       "descriptor_label": "Core Binding Factor Alpha 1 Subunit",
+       "ab_article_count": 6,
+       "bc_article_count": 10,
+       "jaccard_ab": "0.001962708537782139352306182531894013738960",
+       "jaccard_bc": "0.003871467286101432442895857530003871467286",
+       "path_contribution": "0.001962708537782"
+      },
+      {
+       "descriptor_ui": "D022423",
+       "descriptor_label": "Myeloid Cells",
+       "ab_article_count": 7,
+       "bc_article_count": 6,
+       "jaccard_ab": "0.001976842699802315730019768426998023157300",
+       "jaccard_bc": "0.001953125",
+       "path_contribution": "0.001953125000000"
+      },
+      {
+       "descriptor_ui": "D038362",
+       "descriptor_label": "Glycogen Synthase Kinase 3",
+       "ab_article_count": 17,
+       "bc_article_count": 10,
+       "jaccard_ab": "0.002898550724637681159420289855072463768116",
+       "jaccard_bc": "0.001851166234727878563495001851166234727879",
+       "path_contribution": "0.001851166234728"
+      },
+      {
+       "descriptor_ui": "D030161",
+       "descriptor_label": "Avian Proteins",
+       "ab_article_count": 12,
+       "bc_article_count": 5,
+       "jaccard_ab": "0.003735990037359900373599003735990037359900",
+       "jaccard_bc": "0.001818843215714805383775918515823935976719",
+       "path_contribution": "0.001818843215715"
+      },
+      {
+       "descriptor_ui": "D002454",
+       "descriptor_label": "Cell Differentiation",
+       "ab_article_count": 421,
+       "bc_article_count": 210,
+       "jaccard_ab": "0.003630624881422584039048621052450025009055",
+       "jaccard_bc": "0.001815054581284194331843836161073129413392",
+       "path_contribution": "0.001815054581284"
+      },
+      {
+       "descriptor_ui": "D041681",
+       "descriptor_label": "NIH 3T3 Cells",
+       "ab_article_count": 20,
+       "bc_article_count": 15,
+       "jaccard_ab": "0.002284148012791228871630881681132937414344",
+       "jaccard_bc": "0.001809190688698588831262815100711615004221",
+       "path_contribution": "0.001809190688699"
+      },
+      {
+       "descriptor_ui": "D015534",
+       "descriptor_label": "Trans-Activators",
+       "ab_article_count": 64,
+       "bc_article_count": 88,
+       "jaccard_ab": "0.001806939778085208503910330613512521527993",
+       "jaccard_bc": "0.002519685039370078740157480314960629921260",
+       "path_contribution": "0.001806939778085"
+      }
+     ],
+     "rank_proof": {
+      "method": "exact_integer_rational_bounds_then_python_decimal_refinement",
+      "bound_scale_exponent": 21,
+      "decimal_guard_scaled_units": 1000000,
+      "zero_target_nonnegative_shortcut": false,
+      "bound_proven_at_or_above_count": 1342,
+      "bound_proven_below_count": 24642,
+      "exact_decimal_refinement_count": 1,
+      "exact_decimal_at_or_above_count": 1,
+      "partition_candidate_count": 25985
+     }
+    }
+   ]
+  },
+  {
+   "id": "lion-cxcl12-thyroid-cancer",
+   "kind": "source_labeled_positive",
+   "split": "development",
+   "label_scope": "source_labeled_lion_reproduction_case_not_independently_validated_discovery_truth",
+   "cutoff": "2012-12-31",
+   "endpoint_a": {
+    "descriptor_ui": "D054377",
+    "descriptor_label": "Chemokine CXCL12"
+   },
+   "target_c": {
+    "descriptor_ui": "D013964",
+    "descriptor_label": "Thyroid Neoplasms"
+   },
+   "support_runs": [
+    {
+     "minimum_support_articles": 10,
+     "endpoint_a_article_support": 3379,
+     "target_c_article_support": 20235,
+     "direct_ac_article_count": 5,
+     "eligible_candidate_count": 25923,
+     "target_persisted_score": "0.579269604436441",
+     "target_worst_tie_rank": 1677,
+     "target_rank_fraction": "0.06469158662191875940284689272074991320449",
+     "target_top_5_percent": false,
+     "target_below_median": false,
+     "target_bridge_count": 2827,
+     "top_target_bridges": [
+      {
+       "descriptor_ui": "D049109",
+       "descriptor_label": "Cell Proliferation",
+       "ab_article_count": 318,
+       "bc_article_count": 348,
+       "jaccard_ab": "0.003410187667560321715817694369973190348525",
+       "jaccard_bc": "0.003161452087648533740324866455903194156764",
+       "path_contribution": "0.003161452087649"
+      },
+      {
+       "descriptor_ui": "D009361",
+       "descriptor_label": "Neoplasm Invasiveness",
+       "ab_article_count": 128,
+       "bc_article_count": 741,
+       "jaccard_ab": "0.003034110033896698034939673359091663308602",
+       "jaccard_bc": "0.01268184151976724285469792914598665069314",
+       "path_contribution": "0.003034110033897"
+      },
+      {
+       "descriptor_ui": "D045744",
+       "descriptor_label": "Cell Line, Tumor",
+       "ab_article_count": 417,
+       "bc_article_count": 741,
+       "jaccard_ab": "0.003028630361837804860334384033235042052206",
+       "jaccard_bc": "0.004804886589114111193245924600241216978563",
+       "path_contribution": "0.003028630361838"
+      },
+      {
+       "descriptor_ui": "D014183",
+       "descriptor_label": "Transplantation, Heterologous",
+       "ab_article_count": 64,
+       "bc_article_count": 103,
+       "jaccard_ab": "0.002770083102493074792243767313019390581717",
+       "jaccard_bc": "0.002580095688985746850028806893614889406578",
+       "path_contribution": "0.002580095688986"
+      },
+      {
+       "descriptor_ui": "D015972",
+       "descriptor_label": "Gene Expression Regulation, Neoplastic",
+       "ab_article_count": 141,
+       "bc_article_count": 637,
+       "jaccard_ab": "0.002509521944968497490478055031502509521945",
+       "jaccard_bc": "0.008780635734568411766327571471893695034874",
+       "path_contribution": "0.002509521944968"
+      },
+      {
+       "descriptor_ui": "D051057",
+       "descriptor_label": "Proto-Oncogene Proteins c-akt",
+       "ab_article_count": 126,
+       "bc_article_count": 99,
+       "jaccard_ab": "0.005556045506658435488138283799276832172149",
+       "jaccard_bc": "0.002502464548418897398953514825206642905892",
+       "path_contribution": "0.002502464548419"
+      },
+      {
+       "descriptor_ui": "D009389",
+       "descriptor_label": "Neovascularization, Pathologic",
+       "ab_article_count": 119,
+       "bc_article_count": 97,
+       "jaccard_ab": "0.005018132748587332377498524078603356666948",
+       "jaccard_bc": "0.002389633425305478912100906582577847851793",
+       "path_contribution": "0.002389633425305"
+      },
+      {
+       "descriptor_ui": "D020133",
+       "descriptor_label": "Reverse Transcriptase Polymerase Chain Reaction",
+       "ab_article_count": 300,
+       "bc_article_count": 578,
+       "jaccard_ab": "0.002354178274073434667629264005398915508542",
+       "jaccard_bc": "0.004013582295796848851823819013825332787079",
+       "path_contribution": "0.002354178274073"
+      },
+      {
+       "descriptor_ui": "D002454",
+       "descriptor_label": "Cell Differentiation",
+       "ab_article_count": 288,
+       "bc_article_count": 460,
+       "jaccard_ab": "0.002283050726533330162429546481485885514519",
+       "jaccard_bc": "0.003220589367854317340073233401712513389950",
+       "path_contribution": "0.002283050726533"
+      },
+      {
+       "descriptor_ui": "D009362",
+       "descriptor_label": "Neoplasm Metastasis",
+       "ab_article_count": 95,
+       "bc_article_count": 928,
+       "jaccard_ab": "0.002233612338944794507664817078905294836829",
+       "jaccard_bc": "0.01584834770728375032021176671505422252583",
+       "path_contribution": "0.002233612338945"
+      },
+      {
+       "descriptor_ui": "D011505",
+       "descriptor_label": "Protein-Tyrosine Kinases",
+       "ab_article_count": 57,
+       "bc_article_count": 178,
+       "jaccard_ab": "0.002024291497975708502024291497975708502024",
+       "jaccard_bc": "0.003964983404985187000200476689016104960684",
+       "path_contribution": "0.002024291497976"
+      },
+      {
+       "descriptor_ui": "D042461",
+       "descriptor_label": "Vascular Endothelial Growth Factor A",
+       "ab_article_count": 243,
+       "bc_article_count": 92,
+       "jaccard_ab": "0.008404523916577318161380693805554594818940",
+       "jaccard_bc": "0.002003484320557491289198606271777003484321",
+       "path_contribution": "0.002003484320557"
+      },
+      {
+       "descriptor_ui": "D008819",
+       "descriptor_label": "Mice, Nude",
+       "ab_article_count": 86,
+       "bc_article_count": 281,
+       "jaccard_ab": "0.001983577820832180090414244856536580865393",
+       "jaccard_bc": "0.004682006764749987503540663478681040371895",
+       "path_contribution": "0.001983577820832"
+      },
+      {
+       "descriptor_ui": "D015536",
+       "descriptor_label": "Down-Regulation",
+       "ab_article_count": 145,
+       "bc_article_count": 133,
+       "jaccard_ab": "0.002818160615719505558578869626059239679701",
+       "jaccard_bc": "0.001946721311475409836065573770491803278689",
+       "path_contribution": "0.001946721311475"
+      },
+      {
+       "descriptor_ui": "D019869",
+       "descriptor_label": "Phosphatidylinositol 3-Kinases",
+       "ab_article_count": 138,
+       "bc_article_count": 76,
+       "jaccard_ab": "0.005920967949543055734328742437894194877076",
+       "jaccard_bc": "0.001889372280919825978868862647607209446861",
+       "path_contribution": "0.001889372280920"
+      },
+      {
+       "descriptor_ui": "D005434",
+       "descriptor_label": "Flow Cytometry",
+       "ab_article_count": 352,
+       "bc_article_count": 212,
+       "jaccard_ab": "0.003679122027697935719885027436634439508754",
+       "jaccard_bc": "0.001881584436101570057956350791241756973844",
+       "path_contribution": "0.001881584436102"
+      },
+      {
+       "descriptor_ui": "D019859",
+       "descriptor_label": "Proto-Oncogene Proteins c-met",
+       "ab_article_count": 11,
+       "bc_article_count": 44,
+       "jaccard_ab": "0.001837007348029392117568470273881095524382",
+       "jaccard_bc": "0.001928893954670992065231686467055368024199",
+       "path_contribution": "0.001837007348029"
+      },
+      {
+       "descriptor_ui": "D046888",
+       "descriptor_label": "Tissue Array Analysis",
+       "ab_article_count": 12,
+       "bc_article_count": 43,
+       "jaccard_ab": "0.001729106628242074927953890489913544668588",
+       "jaccard_bc": "0.001809383547233326320218809173153797601515",
+       "path_contribution": "0.001729106628242"
+      },
+      {
+       "descriptor_ui": "D047428",
+       "descriptor_label": "Protein Kinase Inhibitors",
+       "ab_article_count": 33,
+       "bc_article_count": 61,
+       "jaccard_ab": "0.001731011330255979857322702475870751154008",
+       "jaccard_bc": "0.001699543073665440766744678479884096734648",
+       "path_contribution": "0.001699543073665"
+      },
+      {
+       "descriptor_ui": "D034741",
+       "descriptor_label": "RNA, Small Interfering",
+       "ab_article_count": 91,
+       "bc_article_count": 86,
+       "jaccard_ab": "0.002538000278901129549574675777436898619439",
+       "jaccard_bc": "0.001631383261248956673495712876546020183625",
+       "path_contribution": "0.001631383261249"
+      }
+     ],
+     "rank_proof": {
+      "method": "exact_integer_rational_bounds_then_python_decimal_refinement",
+      "bound_scale_exponent": 21,
+      "decimal_guard_scaled_units": 1000000,
+      "zero_target_nonnegative_shortcut": false,
+      "bound_proven_at_or_above_count": 1676,
+      "bound_proven_below_count": 24246,
+      "exact_decimal_refinement_count": 1,
+      "exact_decimal_at_or_above_count": 1,
+      "partition_candidate_count": 25923
+     }
+    },
+    {
+     "minimum_support_articles": 5,
+     "endpoint_a_article_support": 3379,
+     "target_c_article_support": 20235,
+     "direct_ac_article_count": 5,
+     "eligible_candidate_count": 26238,
+     "target_persisted_score": "0.579269604436441",
+     "target_worst_tie_rank": 1677,
+     "target_rank_fraction": "0.06391493254058998399268236908300937571461",
+     "target_top_5_percent": false,
+     "target_below_median": false,
+     "target_bridge_count": 2827,
+     "top_target_bridges": [
+      {
+       "descriptor_ui": "D049109",
+       "descriptor_label": "Cell Proliferation",
+       "ab_article_count": 318,
+       "bc_article_count": 348,
+       "jaccard_ab": "0.003410187667560321715817694369973190348525",
+       "jaccard_bc": "0.003161452087648533740324866455903194156764",
+       "path_contribution": "0.003161452087649"
+      },
+      {
+       "descriptor_ui": "D009361",
+       "descriptor_label": "Neoplasm Invasiveness",
+       "ab_article_count": 128,
+       "bc_article_count": 741,
+       "jaccard_ab": "0.003034110033896698034939673359091663308602",
+       "jaccard_bc": "0.01268184151976724285469792914598665069314",
+       "path_contribution": "0.003034110033897"
+      },
+      {
+       "descriptor_ui": "D045744",
+       "descriptor_label": "Cell Line, Tumor",
+       "ab_article_count": 417,
+       "bc_article_count": 741,
+       "jaccard_ab": "0.003028630361837804860334384033235042052206",
+       "jaccard_bc": "0.004804886589114111193245924600241216978563",
+       "path_contribution": "0.003028630361838"
+      },
+      {
+       "descriptor_ui": "D014183",
+       "descriptor_label": "Transplantation, Heterologous",
+       "ab_article_count": 64,
+       "bc_article_count": 103,
+       "jaccard_ab": "0.002770083102493074792243767313019390581717",
+       "jaccard_bc": "0.002580095688985746850028806893614889406578",
+       "path_contribution": "0.002580095688986"
+      },
+      {
+       "descriptor_ui": "D015972",
+       "descriptor_label": "Gene Expression Regulation, Neoplastic",
+       "ab_article_count": 141,
+       "bc_article_count": 637,
+       "jaccard_ab": "0.002509521944968497490478055031502509521945",
+       "jaccard_bc": "0.008780635734568411766327571471893695034874",
+       "path_contribution": "0.002509521944968"
+      },
+      {
+       "descriptor_ui": "D051057",
+       "descriptor_label": "Proto-Oncogene Proteins c-akt",
+       "ab_article_count": 126,
+       "bc_article_count": 99,
+       "jaccard_ab": "0.005556045506658435488138283799276832172149",
+       "jaccard_bc": "0.002502464548418897398953514825206642905892",
+       "path_contribution": "0.002502464548419"
+      },
+      {
+       "descriptor_ui": "D009389",
+       "descriptor_label": "Neovascularization, Pathologic",
+       "ab_article_count": 119,
+       "bc_article_count": 97,
+       "jaccard_ab": "0.005018132748587332377498524078603356666948",
+       "jaccard_bc": "0.002389633425305478912100906582577847851793",
+       "path_contribution": "0.002389633425305"
+      },
+      {
+       "descriptor_ui": "D020133",
+       "descriptor_label": "Reverse Transcriptase Polymerase Chain Reaction",
+       "ab_article_count": 300,
+       "bc_article_count": 578,
+       "jaccard_ab": "0.002354178274073434667629264005398915508542",
+       "jaccard_bc": "0.004013582295796848851823819013825332787079",
+       "path_contribution": "0.002354178274073"
+      },
+      {
+       "descriptor_ui": "D002454",
+       "descriptor_label": "Cell Differentiation",
+       "ab_article_count": 288,
+       "bc_article_count": 460,
+       "jaccard_ab": "0.002283050726533330162429546481485885514519",
+       "jaccard_bc": "0.003220589367854317340073233401712513389950",
+       "path_contribution": "0.002283050726533"
+      },
+      {
+       "descriptor_ui": "D009362",
+       "descriptor_label": "Neoplasm Metastasis",
+       "ab_article_count": 95,
+       "bc_article_count": 928,
+       "jaccard_ab": "0.002233612338944794507664817078905294836829",
+       "jaccard_bc": "0.01584834770728375032021176671505422252583",
+       "path_contribution": "0.002233612338945"
+      },
+      {
+       "descriptor_ui": "D011505",
+       "descriptor_label": "Protein-Tyrosine Kinases",
+       "ab_article_count": 57,
+       "bc_article_count": 178,
+       "jaccard_ab": "0.002024291497975708502024291497975708502024",
+       "jaccard_bc": "0.003964983404985187000200476689016104960684",
+       "path_contribution": "0.002024291497976"
+      },
+      {
+       "descriptor_ui": "D042461",
+       "descriptor_label": "Vascular Endothelial Growth Factor A",
+       "ab_article_count": 243,
+       "bc_article_count": 92,
+       "jaccard_ab": "0.008404523916577318161380693805554594818940",
+       "jaccard_bc": "0.002003484320557491289198606271777003484321",
+       "path_contribution": "0.002003484320557"
+      },
+      {
+       "descriptor_ui": "D008819",
+       "descriptor_label": "Mice, Nude",
+       "ab_article_count": 86,
+       "bc_article_count": 281,
+       "jaccard_ab": "0.001983577820832180090414244856536580865393",
+       "jaccard_bc": "0.004682006764749987503540663478681040371895",
+       "path_contribution": "0.001983577820832"
+      },
+      {
+       "descriptor_ui": "D015536",
+       "descriptor_label": "Down-Regulation",
+       "ab_article_count": 145,
+       "bc_article_count": 133,
+       "jaccard_ab": "0.002818160615719505558578869626059239679701",
+       "jaccard_bc": "0.001946721311475409836065573770491803278689",
+       "path_contribution": "0.001946721311475"
+      },
+      {
+       "descriptor_ui": "D019869",
+       "descriptor_label": "Phosphatidylinositol 3-Kinases",
+       "ab_article_count": 138,
+       "bc_article_count": 76,
+       "jaccard_ab": "0.005920967949543055734328742437894194877076",
+       "jaccard_bc": "0.001889372280919825978868862647607209446861",
+       "path_contribution": "0.001889372280920"
+      },
+      {
+       "descriptor_ui": "D005434",
+       "descriptor_label": "Flow Cytometry",
+       "ab_article_count": 352,
+       "bc_article_count": 212,
+       "jaccard_ab": "0.003679122027697935719885027436634439508754",
+       "jaccard_bc": "0.001881584436101570057956350791241756973844",
+       "path_contribution": "0.001881584436102"
+      },
+      {
+       "descriptor_ui": "D019859",
+       "descriptor_label": "Proto-Oncogene Proteins c-met",
+       "ab_article_count": 11,
+       "bc_article_count": 44,
+       "jaccard_ab": "0.001837007348029392117568470273881095524382",
+       "jaccard_bc": "0.001928893954670992065231686467055368024199",
+       "path_contribution": "0.001837007348029"
+      },
+      {
+       "descriptor_ui": "D046888",
+       "descriptor_label": "Tissue Array Analysis",
+       "ab_article_count": 12,
+       "bc_article_count": 43,
+       "jaccard_ab": "0.001729106628242074927953890489913544668588",
+       "jaccard_bc": "0.001809383547233326320218809173153797601515",
+       "path_contribution": "0.001729106628242"
+      },
+      {
+       "descriptor_ui": "D047428",
+       "descriptor_label": "Protein Kinase Inhibitors",
+       "ab_article_count": 33,
+       "bc_article_count": 61,
+       "jaccard_ab": "0.001731011330255979857322702475870751154008",
+       "jaccard_bc": "0.001699543073665440766744678479884096734648",
+       "path_contribution": "0.001699543073665"
+      },
+      {
+       "descriptor_ui": "D034741",
+       "descriptor_label": "RNA, Small Interfering",
+       "ab_article_count": 91,
+       "bc_article_count": 86,
+       "jaccard_ab": "0.002538000278901129549574675777436898619439",
+       "jaccard_bc": "0.001631383261248956673495712876546020183625",
+       "path_contribution": "0.001631383261249"
+      }
+     ],
+     "rank_proof": {
+      "method": "exact_integer_rational_bounds_then_python_decimal_refinement",
+      "bound_scale_exponent": 21,
+      "decimal_guard_scaled_units": 1000000,
+      "zero_target_nonnegative_shortcut": false,
+      "bound_proven_at_or_above_count": 1676,
+      "bound_proven_below_count": 24561,
+      "exact_decimal_refinement_count": 1,
+      "exact_decimal_at_or_above_count": 1,
+      "partition_candidate_count": 26238
+     }
+    }
+   ]
+  },
+  {
+   "id": "generated-distant-2012-01-d011651-d013783",
+   "kind": "distant_negative",
+   "split": "development",
+   "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+   "cutoff": "2011-12-31",
+   "endpoint_a": {
+    "descriptor_ui": "D011651",
+    "descriptor_label": "Pulmonary Artery"
+   },
+   "target_c": {
+    "descriptor_ui": "D013783",
+    "descriptor_label": "Textile Industry"
+   },
+   "support_runs": [
+    {
+     "minimum_support_articles": 10,
+     "endpoint_a_article_support": 20722,
+     "target_c_article_support": 1613,
+     "direct_ac_article_count": 0,
+     "eligible_candidate_count": 25621,
+     "target_persisted_score": "0.165088004762485",
+     "target_worst_tie_rank": 10536,
+     "target_rank_fraction": "0.4112251668553140002341828968424339409078",
+     "target_top_5_percent": false,
+     "target_below_median": false,
+     "target_bridge_count": 1304,
+     "top_target_bridges": [
+      {
+       "descriptor_ui": "D012129",
+       "descriptor_label": "Respiratory Function Tests",
+       "ab_article_count": 214,
+       "bc_article_count": 56,
+       "jaccard_ab": "0.005269508261308512471990347442811061042575",
+       "jaccard_bc": "0.002585410895660203139427516158818097876270",
+       "path_contribution": "0.002585410895660"
+      },
+      {
+       "descriptor_ui": "D004731",
+       "descriptor_label": "Endotoxins",
+       "ab_article_count": 131,
+       "bc_article_count": 41,
+       "jaccard_ab": "0.003716101214115511176670827187109951208442",
+       "jaccard_bc": "0.002525719213946898293599457894412616275488",
+       "path_contribution": "0.002525719213947"
+      },
+      {
+       "descriptor_ui": "D006861",
+       "descriptor_label": "Hydrogen Peroxide",
+       "ab_article_count": 160,
+       "bc_article_count": 71,
+       "jaccard_ab": "0.003018810965830833380502254674440104903681",
+       "jaccard_bc": "0.002089402901621494364497807598363791530561",
+       "path_contribution": "0.002089402901621"
+      },
+      {
+       "descriptor_ui": "D016877",
+       "descriptor_label": "Oxidants",
+       "ab_article_count": 56,
+       "bc_article_count": 26,
+       "jaccard_ab": "0.001919912232583653318705430608886450905101",
+       "jaccard_bc": "0.002577064129249677866983843790266627019526",
+       "path_contribution": "0.001919912232584"
+      },
+      {
+       "descriptor_ui": "D005541",
+       "descriptor_label": "Forced Expiratory Volume",
+       "ab_article_count": 59,
+       "bc_article_count": 51,
+       "jaccard_ab": "0.001628394789136674762640759549569441377788",
+       "jaccard_bc": "0.002977059132566691961940342069931702761076",
+       "path_contribution": "0.001628394789137"
+      },
+      {
+       "descriptor_ui": "D008171",
+       "descriptor_label": "Lung Diseases",
+       "ab_article_count": 341,
+       "bc_article_count": 35,
+       "jaccard_ab": "0.008264262517570646115069555523241723619795",
+       "jaccard_bc": "0.001558395298098757736319515561690191014738",
+       "path_contribution": "0.001558395298099"
+      },
+      {
+       "descriptor_ui": "D014797",
+       "descriptor_label": "Vital Capacity",
+       "ab_article_count": 45,
+       "bc_article_count": 32,
+       "jaccard_ab": "0.001542998216979838156631463448086682210945",
+       "jaccard_bc": "0.003178386968613428684942391736193881605085",
+       "path_contribution": "0.001542998216980"
+      },
+      {
+       "descriptor_ui": "D001991",
+       "descriptor_label": "Bronchitis",
+       "ab_article_count": 40,
+       "bc_article_count": 23,
+       "jaccard_ab": "0.001495606655449616750794541035707608898860",
+       "jaccard_bc": "0.003005357376192342872076309943812883836404",
+       "path_contribution": "0.001495606655450"
+      },
+      {
+       "descriptor_ui": "D008751",
+       "descriptor_label": "Methylene Blue",
+       "ab_article_count": 47,
+       "bc_article_count": 7,
+       "jaccard_ab": "0.001877146736959821071970604680885054716830",
+       "jaccard_bc": "0.001172725749706818562573295359356676160161",
+       "path_contribution": "0.001172725749707"
+      },
+      {
+       "descriptor_ui": "D014109",
+       "descriptor_label": "Total Lung Capacity",
+       "ab_article_count": 24,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.001072625698324022346368715083798882681564",
+       "jaccard_bc": "0.001217285453438831405964698721850273889227",
+       "path_contribution": "0.001072625698324"
+      },
+      {
+       "descriptor_ui": "D006862",
+       "descriptor_label": "Hydrogen Sulfide",
+       "ab_article_count": 25,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.001093326336044782646724394297209831190414",
+       "jaccard_bc": "0.001058761249338274219163578613022763366861",
+       "path_contribution": "0.001058761249338"
+      },
+      {
+       "descriptor_ui": "D013147",
+       "descriptor_label": "Spirometry",
+       "ab_article_count": 28,
+       "bc_article_count": 14,
+       "jaccard_ab": "0.0009916067570917590395580267025533873995113",
+       "jaccard_bc": "0.001531393568147013782542113323124042879020",
+       "path_contribution": "0.000991606757092"
+      },
+      {
+       "descriptor_ui": "D004812",
+       "descriptor_label": "Epidemiologic Methods",
+       "ab_article_count": 36,
+       "bc_article_count": 19,
+       "jaccard_ab": "0.0009316529075334489273051939649594989777697",
+       "jaccard_bc": "0.0009719167220829709959588725766023837536447",
+       "path_contribution": "0.000931652907533"
+      },
+      {
+       "descriptor_ui": "D010100",
+       "descriptor_label": "Oxygen",
+       "ab_article_count": 1105,
+       "bc_article_count": 77,
+       "jaccard_ab": "0.01079881945937493892070441530011922678498",
+       "jaccard_bc": "0.0009140008309098462816784378894889904445368",
+       "path_contribution": "0.000914000830910"
+      },
+      {
+       "descriptor_ui": "D006863",
+       "descriptor_label": "Hydrogen-Ion Concentration",
+       "ab_article_count": 168,
+       "bc_article_count": 178,
+       "jaccard_ab": "0.0009039839865693807709691999741718860980177",
+       "jaccard_bc": "0.001067626330784225521067626330784225521068",
+       "path_contribution": "0.000903983986569"
+      },
+      {
+       "descriptor_ui": "D004417",
+       "descriptor_label": "Dyspnea",
+       "ab_article_count": 126,
+       "bc_article_count": 7,
+       "jaccard_ab": "0.004657351962741184298070525615435795076514",
+       "jaccard_bc": "0.0008680555555555555555555555555555555555556",
+       "path_contribution": "0.000868055555556"
+      },
+      {
+       "descriptor_ui": "D010084",
+       "descriptor_label": "Oxidation-Reduction",
+       "ab_article_count": 99,
+       "bc_article_count": 121,
+       "jaccard_ab": "0.0008469646157004996235712819108890561905414",
+       "jaccard_bc": "0.001237763024642736581523573759423877573984",
+       "path_contribution": "0.000846964615700"
+      },
+      {
+       "descriptor_ui": "D012907",
+       "descriptor_label": "Smoking",
+       "ab_article_count": 64,
+       "bc_article_count": 71,
+       "jaccard_ab": "0.0007119337901575153510723502714247574975527",
+       "jaccard_bc": "0.001003108222661768861260243006499011020062",
+       "path_contribution": "0.000711933790158"
+      },
+      {
+       "descriptor_ui": "D000336",
+       "descriptor_label": "Aerosols",
+       "ab_article_count": 36,
+       "bc_article_count": 10,
+       "jaccard_ab": "0.001070727499851287847242876687882933793350",
+       "jaccard_bc": "0.0006878052135635188114725909622394937753628",
+       "path_contribution": "0.000687805213564"
+      },
+      {
+       "descriptor_ui": "D012123",
+       "descriptor_label": "Pulmonary Ventilation",
+       "ab_article_count": 57,
+       "bc_article_count": 6,
+       "jaccard_ab": "0.002051392787734830490174908227164759231268",
+       "jaccard_bc": "0.0006874427131072410632447296058661778185151",
+       "path_contribution": "0.000687442713107"
+      }
+     ],
+     "rank_proof": {
+      "method": "exact_integer_rational_bounds_then_python_decimal_refinement",
+      "bound_scale_exponent": 21,
+      "decimal_guard_scaled_units": 1000000,
+      "zero_target_nonnegative_shortcut": false,
+      "bound_proven_at_or_above_count": 10535,
+      "bound_proven_below_count": 15085,
+      "exact_decimal_refinement_count": 1,
+      "exact_decimal_at_or_above_count": 1,
+      "partition_candidate_count": 25621
+     }
+    },
+    {
+     "minimum_support_articles": 5,
+     "endpoint_a_article_support": 20722,
+     "target_c_article_support": 1613,
+     "direct_ac_article_count": 0,
+     "eligible_candidate_count": 25985,
+     "target_persisted_score": "0.165088004762485",
+     "target_worst_tie_rank": 10536,
+     "target_rank_fraction": "0.4054646911679815278045025976524918222051",
+     "target_top_5_percent": false,
+     "target_below_median": false,
+     "target_bridge_count": 1304,
+     "top_target_bridges": [
+      {
+       "descriptor_ui": "D012129",
+       "descriptor_label": "Respiratory Function Tests",
+       "ab_article_count": 214,
+       "bc_article_count": 56,
+       "jaccard_ab": "0.005269508261308512471990347442811061042575",
+       "jaccard_bc": "0.002585410895660203139427516158818097876270",
+       "path_contribution": "0.002585410895660"
+      },
+      {
+       "descriptor_ui": "D004731",
+       "descriptor_label": "Endotoxins",
+       "ab_article_count": 131,
+       "bc_article_count": 41,
+       "jaccard_ab": "0.003716101214115511176670827187109951208442",
+       "jaccard_bc": "0.002525719213946898293599457894412616275488",
+       "path_contribution": "0.002525719213947"
+      },
+      {
+       "descriptor_ui": "D006861",
+       "descriptor_label": "Hydrogen Peroxide",
+       "ab_article_count": 160,
+       "bc_article_count": 71,
+       "jaccard_ab": "0.003018810965830833380502254674440104903681",
+       "jaccard_bc": "0.002089402901621494364497807598363791530561",
+       "path_contribution": "0.002089402901621"
+      },
+      {
+       "descriptor_ui": "D016877",
+       "descriptor_label": "Oxidants",
+       "ab_article_count": 56,
+       "bc_article_count": 26,
+       "jaccard_ab": "0.001919912232583653318705430608886450905101",
+       "jaccard_bc": "0.002577064129249677866983843790266627019526",
+       "path_contribution": "0.001919912232584"
+      },
+      {
+       "descriptor_ui": "D005541",
+       "descriptor_label": "Forced Expiratory Volume",
+       "ab_article_count": 59,
+       "bc_article_count": 51,
+       "jaccard_ab": "0.001628394789136674762640759549569441377788",
+       "jaccard_bc": "0.002977059132566691961940342069931702761076",
+       "path_contribution": "0.001628394789137"
+      },
+      {
+       "descriptor_ui": "D008171",
+       "descriptor_label": "Lung Diseases",
+       "ab_article_count": 341,
+       "bc_article_count": 35,
+       "jaccard_ab": "0.008264262517570646115069555523241723619795",
+       "jaccard_bc": "0.001558395298098757736319515561690191014738",
+       "path_contribution": "0.001558395298099"
+      },
+      {
+       "descriptor_ui": "D014797",
+       "descriptor_label": "Vital Capacity",
+       "ab_article_count": 45,
+       "bc_article_count": 32,
+       "jaccard_ab": "0.001542998216979838156631463448086682210945",
+       "jaccard_bc": "0.003178386968613428684942391736193881605085",
+       "path_contribution": "0.001542998216980"
+      },
+      {
+       "descriptor_ui": "D001991",
+       "descriptor_label": "Bronchitis",
+       "ab_article_count": 40,
+       "bc_article_count": 23,
+       "jaccard_ab": "0.001495606655449616750794541035707608898860",
+       "jaccard_bc": "0.003005357376192342872076309943812883836404",
+       "path_contribution": "0.001495606655450"
+      },
+      {
+       "descriptor_ui": "D008751",
+       "descriptor_label": "Methylene Blue",
+       "ab_article_count": 47,
+       "bc_article_count": 7,
+       "jaccard_ab": "0.001877146736959821071970604680885054716830",
+       "jaccard_bc": "0.001172725749706818562573295359356676160161",
+       "path_contribution": "0.001172725749707"
+      },
+      {
+       "descriptor_ui": "D014109",
+       "descriptor_label": "Total Lung Capacity",
+       "ab_article_count": 24,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.001072625698324022346368715083798882681564",
+       "jaccard_bc": "0.001217285453438831405964698721850273889227",
+       "path_contribution": "0.001072625698324"
+      },
+      {
+       "descriptor_ui": "D006862",
+       "descriptor_label": "Hydrogen Sulfide",
+       "ab_article_count": 25,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.001093326336044782646724394297209831190414",
+       "jaccard_bc": "0.001058761249338274219163578613022763366861",
+       "path_contribution": "0.001058761249338"
+      },
+      {
+       "descriptor_ui": "D013147",
+       "descriptor_label": "Spirometry",
+       "ab_article_count": 28,
+       "bc_article_count": 14,
+       "jaccard_ab": "0.0009916067570917590395580267025533873995113",
+       "jaccard_bc": "0.001531393568147013782542113323124042879020",
+       "path_contribution": "0.000991606757092"
+      },
+      {
+       "descriptor_ui": "D004812",
+       "descriptor_label": "Epidemiologic Methods",
+       "ab_article_count": 36,
+       "bc_article_count": 19,
+       "jaccard_ab": "0.0009316529075334489273051939649594989777697",
+       "jaccard_bc": "0.0009719167220829709959588725766023837536447",
+       "path_contribution": "0.000931652907533"
+      },
+      {
+       "descriptor_ui": "D010100",
+       "descriptor_label": "Oxygen",
+       "ab_article_count": 1105,
+       "bc_article_count": 77,
+       "jaccard_ab": "0.01079881945937493892070441530011922678498",
+       "jaccard_bc": "0.0009140008309098462816784378894889904445368",
+       "path_contribution": "0.000914000830910"
+      },
+      {
+       "descriptor_ui": "D006863",
+       "descriptor_label": "Hydrogen-Ion Concentration",
+       "ab_article_count": 168,
+       "bc_article_count": 178,
+       "jaccard_ab": "0.0009039839865693807709691999741718860980177",
+       "jaccard_bc": "0.001067626330784225521067626330784225521068",
+       "path_contribution": "0.000903983986569"
+      },
+      {
+       "descriptor_ui": "D004417",
+       "descriptor_label": "Dyspnea",
+       "ab_article_count": 126,
+       "bc_article_count": 7,
+       "jaccard_ab": "0.004657351962741184298070525615435795076514",
+       "jaccard_bc": "0.0008680555555555555555555555555555555555556",
+       "path_contribution": "0.000868055555556"
+      },
+      {
+       "descriptor_ui": "D010084",
+       "descriptor_label": "Oxidation-Reduction",
+       "ab_article_count": 99,
+       "bc_article_count": 121,
+       "jaccard_ab": "0.0008469646157004996235712819108890561905414",
+       "jaccard_bc": "0.001237763024642736581523573759423877573984",
+       "path_contribution": "0.000846964615700"
+      },
+      {
+       "descriptor_ui": "D012907",
+       "descriptor_label": "Smoking",
+       "ab_article_count": 64,
+       "bc_article_count": 71,
+       "jaccard_ab": "0.0007119337901575153510723502714247574975527",
+       "jaccard_bc": "0.001003108222661768861260243006499011020062",
+       "path_contribution": "0.000711933790158"
+      },
+      {
+       "descriptor_ui": "D000336",
+       "descriptor_label": "Aerosols",
+       "ab_article_count": 36,
+       "bc_article_count": 10,
+       "jaccard_ab": "0.001070727499851287847242876687882933793350",
+       "jaccard_bc": "0.0006878052135635188114725909622394937753628",
+       "path_contribution": "0.000687805213564"
+      },
+      {
+       "descriptor_ui": "D012123",
+       "descriptor_label": "Pulmonary Ventilation",
+       "ab_article_count": 57,
+       "bc_article_count": 6,
+       "jaccard_ab": "0.002051392787734830490174908227164759231268",
+       "jaccard_bc": "0.0006874427131072410632447296058661778185151",
+       "path_contribution": "0.000687442713107"
+      }
+     ],
+     "rank_proof": {
+      "method": "exact_integer_rational_bounds_then_python_decimal_refinement",
+      "bound_scale_exponent": 21,
+      "decimal_guard_scaled_units": 1000000,
+      "zero_target_nonnegative_shortcut": false,
+      "bound_proven_at_or_above_count": 10535,
+      "bound_proven_below_count": 15449,
+      "exact_decimal_refinement_count": 1,
+      "exact_decimal_at_or_above_count": 1,
+      "partition_candidate_count": 25985
+     }
+    }
+   ]
+  },
+  {
+   "id": "generated-distant-2012-03-d009008-d008888",
+   "kind": "distant_negative",
+   "split": "development",
+   "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+   "cutoff": "2011-12-31",
+   "endpoint_a": {
+    "descriptor_ui": "D009008",
+    "descriptor_label": "Abnormalities, Severe Teratoid"
+   },
+   "target_c": {
+    "descriptor_ui": "D008888",
+    "descriptor_label": "Military Nursing"
+   },
+   "support_runs": [
+    {
+     "minimum_support_articles": 10,
+     "endpoint_a_article_support": 175,
+     "target_c_article_support": 380,
+     "direct_ac_article_count": 0,
+     "eligible_candidate_count": 25621,
+     "target_persisted_score": "0.008557535174006",
+     "target_worst_tie_rank": 10658,
+     "target_rank_fraction": "0.4159868857577768236993091604543148198743",
+     "target_top_5_percent": false,
+     "target_below_median": false,
+     "target_bridge_count": 51,
+     "top_target_bridges": [
+      {
+       "descriptor_ui": "D012425",
+       "descriptor_label": "Russia (Pre-1917)",
+       "ab_article_count": 1,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.002450980392156862745098039215686274509804",
+       "jaccard_bc": "0.003267973856209150326797385620915032679739",
+       "path_contribution": "0.002450980392157"
+      },
+      {
+       "descriptor_ui": "D009144",
+       "descriptor_label": "Museums",
+       "ab_article_count": 3,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.004511278195488721804511278195488721804511",
+       "jaccard_bc": "0.001146788990825688073394495412844036697248",
+       "path_contribution": "0.001146788990826"
+      },
+      {
+       "descriptor_ui": "D049672",
+       "descriptor_label": "History, 19th Century",
+       "ab_article_count": 11,
+       "bc_article_count": 47,
+       "jaccard_ab": "0.0006086090516764412968905610268894544649773",
+       "jaccard_bc": "0.002576330647371594584224085950775639971496",
+       "path_contribution": "0.000608609051676"
+      },
+      {
+       "descriptor_ui": "D007493",
+       "descriptor_label": "Iraq",
+       "ab_article_count": 1,
+       "bc_article_count": 13,
+       "jaccard_ab": "0.0005973715651135005973715651135005973715651",
+       "jaccard_bc": "0.006963042313872522763792179967862881628281",
+       "path_contribution": "0.000597371565114"
+      },
+      {
+       "descriptor_ui": "D049691",
+       "descriptor_label": "History, Medieval",
+       "ab_article_count": 5,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.001501952538299789726644638029438269750676",
+       "jaccard_bc": "0.0005654509471303364433135425501837715578174",
+       "path_contribution": "0.000565450947130"
+      },
+      {
+       "descriptor_ui": "D049668",
+       "descriptor_label": "History, 15th Century",
+       "ab_article_count": 3,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.001565762004175365344467640918580375782881",
+       "jaccard_bc": "0.0004710315591144606688648139425341497880358",
+       "path_contribution": "0.000471031559114"
+      },
+      {
+       "descriptor_ui": "D005197",
+       "descriptor_label": "Famous Persons",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0004440497335701598579040852575488454706927",
+       "jaccard_bc": "0.0004070004070004070004070004070004070004070",
+       "path_contribution": "0.000407000407000"
+      },
+      {
+       "descriptor_ui": "D012068",
+       "descriptor_label": "Religion and Medicine",
+       "ab_article_count": 1,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.0003952569169960474308300395256916996047431",
+       "jaccard_bc": "0.0007315288953913679590343818580833942940746",
+       "path_contribution": "0.000395256916996"
+      },
+      {
+       "descriptor_ui": "D049670",
+       "descriptor_label": "History, 17th Century",
+       "ab_article_count": 4,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0009483167377904220009483167377904220009483",
+       "jaccard_bc": "0.0002259376412110257568910980569362855851785",
+       "path_contribution": "0.000225937641211"
+      },
+      {
+       "descriptor_ui": "D049673",
+       "descriptor_label": "History, 20th Century",
+       "ab_article_count": 6,
+       "bc_article_count": 86,
+       "jaccard_ab": "0.0001882175795219273480143045360436664784491",
+       "jaccard_bc": "0.002687248070493391244570821485485735712277",
+       "path_contribution": "0.000188217579522"
+      },
+      {
+       "descriptor_ui": "D049690",
+       "descriptor_label": "History, Ancient",
+       "ab_article_count": 3,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0004607587160190446935954538473352787590232",
+       "jaccard_bc": "0.0001488538255433164632331050908008335814230",
+       "path_contribution": "0.000148853825543"
+      },
+      {
+       "descriptor_ui": "D049671",
+       "descriptor_label": "History, 18th Century",
+       "ab_article_count": 8,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.001178203240058910162002945508100147275405",
+       "jaccard_bc": "0.0001428163381890888317623536132533561839474",
+       "path_contribution": "0.000142816338189"
+      },
+      {
+       "descriptor_ui": "D005060",
+       "descriptor_label": "Europe",
+       "ab_article_count": 4,
+       "bc_article_count": 5,
+       "jaccard_ab": "0.0001421666192777935740688086437304520898493",
+       "jaccard_bc": "0.0001764290755116443189837685250529287226535",
+       "path_contribution": "0.000142166619278"
+      },
+      {
+       "descriptor_ui": "D009790",
+       "descriptor_label": "Occupations",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0001145869141744012833734387532943737825140",
+       "jaccard_bc": "0.0001119570085087326466636811464397671294223",
+       "path_contribution": "0.000111957008509"
+      },
+      {
+       "descriptor_ui": "D011295",
+       "descriptor_label": "Prenatal Care",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0001060332944544587000318099883363376100095",
+       "jaccard_bc": "0.0001037775010377750103777501037775010377750",
+       "path_contribution": "0.000103777501038"
+      },
+      {
+       "descriptor_ui": "D013785",
+       "descriptor_label": "Thailand",
+       "ab_article_count": 2,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0001573069057731634418750983168161082271512",
+       "jaccard_bc": "0.00007739938080495356037151702786377708978328",
+       "path_contribution": "0.000077399380805"
+      },
+      {
+       "descriptor_ui": "D013019",
+       "descriptor_label": "South Africa",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.00006850253459377996985888477873681326209070",
+       "jaccard_bc": "0.00006755387421468621225427278254407890292508",
+       "path_contribution": "0.000067553874215"
+      },
+      {
+       "descriptor_ui": "D004739",
+       "descriptor_label": "England",
+       "ab_article_count": 2,
+       "bc_article_count": 11,
+       "jaccard_ab": "0.00006694784762669880163352748209145075985807",
+       "jaccard_bc": "0.0003658131027602261390089790488859328234120",
+       "path_contribution": "0.000066947847627"
+      },
+      {
+       "descriptor_ui": "D005858",
+       "descriptor_label": "Germany",
+       "ab_article_count": 2,
+       "bc_article_count": 6,
+       "jaccard_ab": "0.00005415944540727902946273830155979202772964",
+       "jaccard_bc": "0.0001615987503029976568181206065339761372512",
+       "path_contribution": "0.000054159445407"
+      },
+      {
+       "descriptor_ui": "D003710",
+       "descriptor_label": "Demography",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.00005175179837499353102520312580862184960927",
+       "jaccard_bc": "0.00005120852109791069233920524375256042605490",
+       "path_contribution": "0.000051208521098"
+      }
+     ],
+     "rank_proof": {
+      "method": "exact_integer_rational_bounds_then_python_decimal_refinement",
+      "bound_scale_exponent": 21,
+      "decimal_guard_scaled_units": 1000000,
+      "zero_target_nonnegative_shortcut": false,
+      "bound_proven_at_or_above_count": 10657,
+      "bound_proven_below_count": 14963,
+      "exact_decimal_refinement_count": 1,
+      "exact_decimal_at_or_above_count": 1,
+      "partition_candidate_count": 25621
+     }
+    },
+    {
+     "minimum_support_articles": 5,
+     "endpoint_a_article_support": 175,
+     "target_c_article_support": 380,
+     "direct_ac_article_count": 0,
+     "eligible_candidate_count": 25985,
+     "target_persisted_score": "0.008557535174006",
+     "target_worst_tie_rank": 10658,
+     "target_rank_fraction": "0.4101597075235712911294977871849143736771",
+     "target_top_5_percent": false,
+     "target_below_median": false,
+     "target_bridge_count": 51,
+     "top_target_bridges": [
+      {
+       "descriptor_ui": "D012425",
+       "descriptor_label": "Russia (Pre-1917)",
+       "ab_article_count": 1,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.002450980392156862745098039215686274509804",
+       "jaccard_bc": "0.003267973856209150326797385620915032679739",
+       "path_contribution": "0.002450980392157"
+      },
+      {
+       "descriptor_ui": "D009144",
+       "descriptor_label": "Museums",
+       "ab_article_count": 3,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.004511278195488721804511278195488721804511",
+       "jaccard_bc": "0.001146788990825688073394495412844036697248",
+       "path_contribution": "0.001146788990826"
+      },
+      {
+       "descriptor_ui": "D049672",
+       "descriptor_label": "History, 19th Century",
+       "ab_article_count": 11,
+       "bc_article_count": 47,
+       "jaccard_ab": "0.0006086090516764412968905610268894544649773",
+       "jaccard_bc": "0.002576330647371594584224085950775639971496",
+       "path_contribution": "0.000608609051676"
+      },
+      {
+       "descriptor_ui": "D007493",
+       "descriptor_label": "Iraq",
+       "ab_article_count": 1,
+       "bc_article_count": 13,
+       "jaccard_ab": "0.0005973715651135005973715651135005973715651",
+       "jaccard_bc": "0.006963042313872522763792179967862881628281",
+       "path_contribution": "0.000597371565114"
+      },
+      {
+       "descriptor_ui": "D049691",
+       "descriptor_label": "History, Medieval",
+       "ab_article_count": 5,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.001501952538299789726644638029438269750676",
+       "jaccard_bc": "0.0005654509471303364433135425501837715578174",
+       "path_contribution": "0.000565450947130"
+      },
+      {
+       "descriptor_ui": "D049668",
+       "descriptor_label": "History, 15th Century",
+       "ab_article_count": 3,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.001565762004175365344467640918580375782881",
+       "jaccard_bc": "0.0004710315591144606688648139425341497880358",
+       "path_contribution": "0.000471031559114"
+      },
+      {
+       "descriptor_ui": "D005197",
+       "descriptor_label": "Famous Persons",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0004440497335701598579040852575488454706927",
+       "jaccard_bc": "0.0004070004070004070004070004070004070004070",
+       "path_contribution": "0.000407000407000"
+      },
+      {
+       "descriptor_ui": "D012068",
+       "descriptor_label": "Religion and Medicine",
+       "ab_article_count": 1,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.0003952569169960474308300395256916996047431",
+       "jaccard_bc": "0.0007315288953913679590343818580833942940746",
+       "path_contribution": "0.000395256916996"
+      },
+      {
+       "descriptor_ui": "D049670",
+       "descriptor_label": "History, 17th Century",
+       "ab_article_count": 4,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0009483167377904220009483167377904220009483",
+       "jaccard_bc": "0.0002259376412110257568910980569362855851785",
+       "path_contribution": "0.000225937641211"
+      },
+      {
+       "descriptor_ui": "D049673",
+       "descriptor_label": "History, 20th Century",
+       "ab_article_count": 6,
+       "bc_article_count": 86,
+       "jaccard_ab": "0.0001882175795219273480143045360436664784491",
+       "jaccard_bc": "0.002687248070493391244570821485485735712277",
+       "path_contribution": "0.000188217579522"
+      },
+      {
+       "descriptor_ui": "D049690",
+       "descriptor_label": "History, Ancient",
+       "ab_article_count": 3,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0004607587160190446935954538473352787590232",
+       "jaccard_bc": "0.0001488538255433164632331050908008335814230",
+       "path_contribution": "0.000148853825543"
+      },
+      {
+       "descriptor_ui": "D049671",
+       "descriptor_label": "History, 18th Century",
+       "ab_article_count": 8,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.001178203240058910162002945508100147275405",
+       "jaccard_bc": "0.0001428163381890888317623536132533561839474",
+       "path_contribution": "0.000142816338189"
+      },
+      {
+       "descriptor_ui": "D005060",
+       "descriptor_label": "Europe",
+       "ab_article_count": 4,
+       "bc_article_count": 5,
+       "jaccard_ab": "0.0001421666192777935740688086437304520898493",
+       "jaccard_bc": "0.0001764290755116443189837685250529287226535",
+       "path_contribution": "0.000142166619278"
+      },
+      {
+       "descriptor_ui": "D009790",
+       "descriptor_label": "Occupations",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0001145869141744012833734387532943737825140",
+       "jaccard_bc": "0.0001119570085087326466636811464397671294223",
+       "path_contribution": "0.000111957008509"
+      },
+      {
+       "descriptor_ui": "D011295",
+       "descriptor_label": "Prenatal Care",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0001060332944544587000318099883363376100095",
+       "jaccard_bc": "0.0001037775010377750103777501037775010377750",
+       "path_contribution": "0.000103777501038"
+      },
+      {
+       "descriptor_ui": "D013785",
+       "descriptor_label": "Thailand",
+       "ab_article_count": 2,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0001573069057731634418750983168161082271512",
+       "jaccard_bc": "0.00007739938080495356037151702786377708978328",
+       "path_contribution": "0.000077399380805"
+      },
+      {
+       "descriptor_ui": "D013019",
+       "descriptor_label": "South Africa",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.00006850253459377996985888477873681326209070",
+       "jaccard_bc": "0.00006755387421468621225427278254407890292508",
+       "path_contribution": "0.000067553874215"
+      },
+      {
+       "descriptor_ui": "D004739",
+       "descriptor_label": "England",
+       "ab_article_count": 2,
+       "bc_article_count": 11,
+       "jaccard_ab": "0.00006694784762669880163352748209145075985807",
+       "jaccard_bc": "0.0003658131027602261390089790488859328234120",
+       "path_contribution": "0.000066947847627"
+      },
+      {
+       "descriptor_ui": "D005858",
+       "descriptor_label": "Germany",
+       "ab_article_count": 2,
+       "bc_article_count": 6,
+       "jaccard_ab": "0.00005415944540727902946273830155979202772964",
+       "jaccard_bc": "0.0001615987503029976568181206065339761372512",
+       "path_contribution": "0.000054159445407"
+      },
+      {
+       "descriptor_ui": "D003710",
+       "descriptor_label": "Demography",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.00005175179837499353102520312580862184960927",
+       "jaccard_bc": "0.00005120852109791069233920524375256042605490",
+       "path_contribution": "0.000051208521098"
+      }
+     ],
+     "rank_proof": {
+      "method": "exact_integer_rational_bounds_then_python_decimal_refinement",
+      "bound_scale_exponent": 21,
+      "decimal_guard_scaled_units": 1000000,
+      "zero_target_nonnegative_shortcut": false,
+      "bound_proven_at_or_above_count": 10657,
+      "bound_proven_below_count": 15327,
+      "exact_decimal_refinement_count": 1,
+      "exact_decimal_at_or_above_count": 1,
+      "partition_candidate_count": 25985
+     }
+    }
+   ]
+  },
+  {
+   "id": "generated-distant-2013-01-d008438-d057141",
+   "kind": "distant_negative",
+   "split": "development",
+   "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+   "cutoff": "2012-12-31",
+   "endpoint_a": {
+    "descriptor_ui": "D008438",
+    "descriptor_label": "Maxillary Artery"
+   },
+   "target_c": {
+    "descriptor_ui": "D057141",
+    "descriptor_label": "Food, Preserved"
+   },
+   "support_runs": [
+    {
+     "minimum_support_articles": 10,
+     "endpoint_a_article_support": 413,
+     "target_c_article_support": 173,
+     "direct_ac_article_count": 0,
+     "eligible_candidate_count": 25923,
+     "target_persisted_score": "0.002614083737150",
+     "target_worst_tie_rank": 20656,
+     "target_rank_fraction": "0.7968213555529838367472900513057902248968",
+     "target_top_5_percent": false,
+     "target_below_median": true,
+     "target_bridge_count": 73,
+     "top_target_bridges": [
+      {
+       "descriptor_ui": "D056910",
+       "descriptor_label": "Republic of Korea",
+       "ab_article_count": 1,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.0001904399162064368691677775661778708817368",
+       "jaccard_bc": "0.0007987220447284345047923322683706070287540",
+       "path_contribution": "0.000190439916206"
+      },
+      {
+       "descriptor_ui": "D009656",
+       "descriptor_label": "North America",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0001825483753194596568090543994158451989777",
+       "jaccard_bc": "0.0001909125620465826651393661702940053455517",
+       "path_contribution": "0.000182548375319"
+      },
+      {
+       "descriptor_ui": "D013785",
+       "descriptor_label": "Thailand",
+       "ab_article_count": 2,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.0001435338022104205540404765322233385962394",
+       "jaccard_bc": "0.0001460493646852636191032569008324813787060",
+       "path_contribution": "0.000143533802210"
+      },
+      {
+       "descriptor_ui": "D001530",
+       "descriptor_label": "Belgium",
+       "ab_article_count": 1,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.0001331735251032094819549873485151151950992",
+       "jaccard_bc": "0.0002751788662630709961474958723170060539351",
+       "path_contribution": "0.000133173525103"
+      },
+      {
+       "descriptor_ui": "D012965",
+       "descriptor_label": "Sodium Chloride",
+       "ab_article_count": 4,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.0001221299462628236443575964826575476306790",
+       "jaccard_bc": "0.0001230314960629921259842519685039370078740",
+       "path_contribution": "0.000122129946263"
+      },
+      {
+       "descriptor_ui": "D007235",
+       "descriptor_label": "Infant, Premature, Diseases",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0001134687393623056847838420515148076704868",
+       "jaccard_bc": "0.0001166452816983553015280531902484544500175",
+       "path_contribution": "0.000113468739362"
+      },
+      {
+       "descriptor_ui": "D000432",
+       "descriptor_label": "Methanol",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0001100473203477495322988885220644877297238",
+       "jaccard_bc": "0.0001130326664406013337854639990957386684752",
+       "path_contribution": "0.000110047320348"
+      },
+      {
+       "descriptor_ui": "D018592",
+       "descriptor_label": "Cross-Over Studies",
+       "ab_article_count": 3,
+       "bc_article_count": 3,
+       "jaccard_ab": "0.00009809371219304842559591930157276918549521",
+       "jaccard_bc": "0.00009886959100945852420657153214909534324226",
+       "path_contribution": "0.000098093712193"
+      },
+      {
+       "descriptor_ui": "D012606",
+       "descriptor_label": "Scotland",
+       "ab_article_count": 1,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.00008935751943526047716915378429094808328121",
+       "jaccard_bc": "0.0001826484018264840182648401826484018264840",
+       "path_contribution": "0.000089357519435"
+      },
+      {
+       "descriptor_ui": "D007723",
+       "descriptor_label": "Korea",
+       "ab_article_count": 2,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0001597954618088846276765739852988175135826",
+       "jaccard_bc": "0.00008145312372729494176101653498411664087318",
+       "path_contribution": "0.000081453123727"
+      },
+      {
+       "descriptor_ui": "D009520",
+       "descriptor_label": "New Zealand",
+       "ab_article_count": 1,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.00007372456502506635210852255971689767030375",
+       "jaccard_bc": "0.0001501163401636268107783532237484050138858",
+       "path_contribution": "0.000073724565025"
+      },
+      {
+       "descriptor_ui": "D012212",
+       "descriptor_label": "Rheology",
+       "ab_article_count": 1,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.00007350779182593354895618935607174360482211",
+       "jaccard_bc": "0.0001496669909451470478186036069744817780439",
+       "path_contribution": "0.000073507791826"
+      },
+      {
+       "descriptor_ui": "D009538",
+       "descriptor_label": "Nicotine",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.00007141326858530314932514461186888523887738",
+       "jaccard_bc": "0.00007265857734505558381166896752161592676015",
+       "path_contribution": "0.000071413268585"
+      },
+      {
+       "descriptor_ui": "D008855",
+       "descriptor_label": "Microscopy, Electron, Scanning",
+       "ab_article_count": 4,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.00006124448799608035276825085742283194512494",
+       "jaccard_bc": "0.00006147037128104253749692648143594787312515",
+       "path_contribution": "0.000061244487996"
+      },
+      {
+       "descriptor_ui": "D003365",
+       "descriptor_label": "Costs and Cost Analysis",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.00005503880235566074082227970719357146788486",
+       "jaccard_bc": "0.00005577555914998047855429750683250599587261",
+       "path_contribution": "0.000055038802356"
+      },
+      {
+       "descriptor_ui": "D005240",
+       "descriptor_label": "Feasibility Studies",
+       "ab_article_count": 3,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.00008198737394441256046568828400426334344511",
+       "jaccard_bc": "0.00005501760563380281690140845070422535211268",
+       "path_contribution": "0.000055017605634"
+      },
+      {
+       "descriptor_ui": "D010919",
+       "descriptor_label": "Placebos",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.00005331627212625293239496694391128172318192",
+       "jaccard_bc": "0.00005400734499891985310002160293799956794124",
+       "path_contribution": "0.000053316272126"
+      },
+      {
+       "descriptor_ui": "D019587",
+       "descriptor_label": "Dietary Supplements",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.00005270369979972594076104142510804258458944",
+       "jaccard_bc": "0.00005337888331376107611828760542329454467813",
+       "path_contribution": "0.000052703699800"
+      },
+      {
+       "descriptor_ui": "D004396",
+       "descriptor_label": "Coloring Agents",
+       "ab_article_count": 3,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0001416965803891932741356508596259210277725",
+       "jaccard_bc": "0.00004776917932549918792395146651380529282507",
+       "path_contribution": "0.000047769179325"
+      },
+      {
+       "descriptor_ui": "D002138",
+       "descriptor_label": "Calibration",
+       "ab_article_count": 1,
+       "bc_article_count": 3,
+       "jaccard_ab": "0.00004068844854945680921186475159702160556618",
+       "jaccard_bc": "0.0001232792274501746455722210807478939798644",
+       "path_contribution": "0.000040688448549"
+      }
+     ],
+     "rank_proof": {
+      "method": "exact_integer_rational_bounds_then_python_decimal_refinement",
+      "bound_scale_exponent": 21,
+      "decimal_guard_scaled_units": 1000000,
+      "zero_target_nonnegative_shortcut": false,
+      "bound_proven_at_or_above_count": 20655,
+      "bound_proven_below_count": 5267,
+      "exact_decimal_refinement_count": 1,
+      "exact_decimal_at_or_above_count": 1,
+      "partition_candidate_count": 25923
+     }
+    },
+    {
+     "minimum_support_articles": 5,
+     "endpoint_a_article_support": 413,
+     "target_c_article_support": 173,
+     "direct_ac_article_count": 0,
+     "eligible_candidate_count": 26238,
+     "target_persisted_score": "0.002614083737150",
+     "target_worst_tie_rank": 20662,
+     "target_rank_fraction": "0.7874838021190639530452016159768275020962",
+     "target_top_5_percent": false,
+     "target_below_median": true,
+     "target_bridge_count": 73,
+     "top_target_bridges": [
+      {
+       "descriptor_ui": "D056910",
+       "descriptor_label": "Republic of Korea",
+       "ab_article_count": 1,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.0001904399162064368691677775661778708817368",
+       "jaccard_bc": "0.0007987220447284345047923322683706070287540",
+       "path_contribution": "0.000190439916206"
+      },
+      {
+       "descriptor_ui": "D009656",
+       "descriptor_label": "North America",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0001825483753194596568090543994158451989777",
+       "jaccard_bc": "0.0001909125620465826651393661702940053455517",
+       "path_contribution": "0.000182548375319"
+      },
+      {
+       "descriptor_ui": "D013785",
+       "descriptor_label": "Thailand",
+       "ab_article_count": 2,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.0001435338022104205540404765322233385962394",
+       "jaccard_bc": "0.0001460493646852636191032569008324813787060",
+       "path_contribution": "0.000143533802210"
+      },
+      {
+       "descriptor_ui": "D001530",
+       "descriptor_label": "Belgium",
+       "ab_article_count": 1,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.0001331735251032094819549873485151151950992",
+       "jaccard_bc": "0.0002751788662630709961474958723170060539351",
+       "path_contribution": "0.000133173525103"
+      },
+      {
+       "descriptor_ui": "D012965",
+       "descriptor_label": "Sodium Chloride",
+       "ab_article_count": 4,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.0001221299462628236443575964826575476306790",
+       "jaccard_bc": "0.0001230314960629921259842519685039370078740",
+       "path_contribution": "0.000122129946263"
+      },
+      {
+       "descriptor_ui": "D007235",
+       "descriptor_label": "Infant, Premature, Diseases",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0001134687393623056847838420515148076704868",
+       "jaccard_bc": "0.0001166452816983553015280531902484544500175",
+       "path_contribution": "0.000113468739362"
+      },
+      {
+       "descriptor_ui": "D000432",
+       "descriptor_label": "Methanol",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0001100473203477495322988885220644877297238",
+       "jaccard_bc": "0.0001130326664406013337854639990957386684752",
+       "path_contribution": "0.000110047320348"
+      },
+      {
+       "descriptor_ui": "D018592",
+       "descriptor_label": "Cross-Over Studies",
+       "ab_article_count": 3,
+       "bc_article_count": 3,
+       "jaccard_ab": "0.00009809371219304842559591930157276918549521",
+       "jaccard_bc": "0.00009886959100945852420657153214909534324226",
+       "path_contribution": "0.000098093712193"
+      },
+      {
+       "descriptor_ui": "D012606",
+       "descriptor_label": "Scotland",
+       "ab_article_count": 1,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.00008935751943526047716915378429094808328121",
+       "jaccard_bc": "0.0001826484018264840182648401826484018264840",
+       "path_contribution": "0.000089357519435"
+      },
+      {
+       "descriptor_ui": "D007723",
+       "descriptor_label": "Korea",
+       "ab_article_count": 2,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0001597954618088846276765739852988175135826",
+       "jaccard_bc": "0.00008145312372729494176101653498411664087318",
+       "path_contribution": "0.000081453123727"
+      },
+      {
+       "descriptor_ui": "D009520",
+       "descriptor_label": "New Zealand",
+       "ab_article_count": 1,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.00007372456502506635210852255971689767030375",
+       "jaccard_bc": "0.0001501163401636268107783532237484050138858",
+       "path_contribution": "0.000073724565025"
+      },
+      {
+       "descriptor_ui": "D012212",
+       "descriptor_label": "Rheology",
+       "ab_article_count": 1,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.00007350779182593354895618935607174360482211",
+       "jaccard_bc": "0.0001496669909451470478186036069744817780439",
+       "path_contribution": "0.000073507791826"
+      },
+      {
+       "descriptor_ui": "D009538",
+       "descriptor_label": "Nicotine",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.00007141326858530314932514461186888523887738",
+       "jaccard_bc": "0.00007265857734505558381166896752161592676015",
+       "path_contribution": "0.000071413268585"
+      },
+      {
+       "descriptor_ui": "D008855",
+       "descriptor_label": "Microscopy, Electron, Scanning",
+       "ab_article_count": 4,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.00006124448799608035276825085742283194512494",
+       "jaccard_bc": "0.00006147037128104253749692648143594787312515",
+       "path_contribution": "0.000061244487996"
+      },
+      {
+       "descriptor_ui": "D003365",
+       "descriptor_label": "Costs and Cost Analysis",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.00005503880235566074082227970719357146788486",
+       "jaccard_bc": "0.00005577555914998047855429750683250599587261",
+       "path_contribution": "0.000055038802356"
+      },
+      {
+       "descriptor_ui": "D005240",
+       "descriptor_label": "Feasibility Studies",
+       "ab_article_count": 3,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.00008198737394441256046568828400426334344511",
+       "jaccard_bc": "0.00005501760563380281690140845070422535211268",
+       "path_contribution": "0.000055017605634"
+      },
+      {
+       "descriptor_ui": "D010919",
+       "descriptor_label": "Placebos",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.00005331627212625293239496694391128172318192",
+       "jaccard_bc": "0.00005400734499891985310002160293799956794124",
+       "path_contribution": "0.000053316272126"
+      },
+      {
+       "descriptor_ui": "D019587",
+       "descriptor_label": "Dietary Supplements",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.00005270369979972594076104142510804258458944",
+       "jaccard_bc": "0.00005337888331376107611828760542329454467813",
+       "path_contribution": "0.000052703699800"
+      },
+      {
+       "descriptor_ui": "D004396",
+       "descriptor_label": "Coloring Agents",
+       "ab_article_count": 3,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0001416965803891932741356508596259210277725",
+       "jaccard_bc": "0.00004776917932549918792395146651380529282507",
+       "path_contribution": "0.000047769179325"
+      },
+      {
+       "descriptor_ui": "D002138",
+       "descriptor_label": "Calibration",
+       "ab_article_count": 1,
+       "bc_article_count": 3,
+       "jaccard_ab": "0.00004068844854945680921186475159702160556618",
+       "jaccard_bc": "0.0001232792274501746455722210807478939798644",
+       "path_contribution": "0.000040688448549"
+      }
+     ],
+     "rank_proof": {
+      "method": "exact_integer_rational_bounds_then_python_decimal_refinement",
+      "bound_scale_exponent": 21,
+      "decimal_guard_scaled_units": 1000000,
+      "zero_target_nonnegative_shortcut": false,
+      "bound_proven_at_or_above_count": 20661,
+      "bound_proven_below_count": 5576,
+      "exact_decimal_refinement_count": 1,
+      "exact_decimal_at_or_above_count": 1,
+      "partition_candidate_count": 26238
+     }
+    }
+   ]
+  },
+  {
+   "id": "generated-distant-2013-03-d004620-d004581",
+   "kind": "distant_negative",
+   "split": "development",
+   "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+   "cutoff": "2012-12-31",
+   "endpoint_a": {
+    "descriptor_ui": "D004620",
+    "descriptor_label": "Embolism, Fat"
+   },
+   "target_c": {
+    "descriptor_ui": "D004581",
+    "descriptor_label": "Electronics"
+   },
+   "support_runs": [
+    {
+     "minimum_support_articles": 10,
+     "endpoint_a_article_support": 805,
+     "target_c_article_support": 3680,
+     "direct_ac_article_count": 0,
+     "eligible_candidate_count": 25923,
+     "target_persisted_score": "0.076544343430227",
+     "target_worst_tie_rank": 5079,
+     "target_rank_fraction": "0.1959263974077074412683717162365466959843",
+     "target_top_5_percent": false,
+     "target_below_median": false,
+     "target_bridge_count": 694,
+     "top_target_bridges": [
+      {
+       "descriptor_ui": "D019904",
+       "descriptor_label": "Polymethyl Methacrylate",
+       "ab_article_count": 11,
+       "bc_article_count": 9,
+       "jaccard_ab": "0.002198241406874500399680255795363709032774",
+       "jaccard_bc": "0.001141987057480015226494099733536353254663",
+       "path_contribution": "0.001141987057480"
+      },
+      {
+       "descriptor_ui": "D011312",
+       "descriptor_label": "Pressure",
+       "ab_article_count": 36,
+       "bc_article_count": 83,
+       "jaccard_ab": "0.0009048863864870299617936859038809571687110",
+       "jaccard_bc": "0.001947808129165493288275603116493006664789",
+       "path_contribution": "0.000904886386487"
+      },
+      {
+       "descriptor_ui": "D000063",
+       "descriptor_label": "Accidents, Traffic",
+       "ab_article_count": 41,
+       "bc_article_count": 17,
+       "jaccard_ab": "0.002309859154929577464788732394366197183099",
+       "jaccard_bc": "0.0008232844205530534166303452951716790159330",
+       "path_contribution": "0.000823284420553"
+      },
+      {
+       "descriptor_ui": "D003221",
+       "descriptor_label": "Confusion",
+       "ab_article_count": 3,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.001206272617611580217129071170084439083233",
+       "jaccard_bc": "0.0007461294534601753404215631412049990673382",
+       "path_contribution": "0.000746129453460"
+      },
+      {
+       "descriptor_ui": "D012588",
+       "descriptor_label": "Scintillation Counting",
+       "ab_article_count": 2,
+       "bc_article_count": 7,
+       "jaccard_ab": "0.0006734006734006734006734006734006734006734",
+       "jaccard_bc": "0.001198630136986301369863013698630136986301",
+       "path_contribution": "0.000673400673401"
+      },
+      {
+       "descriptor_ui": "D014618",
+       "descriptor_label": "Vacuum",
+       "ab_article_count": 2,
+       "bc_article_count": 12,
+       "jaccard_ab": "0.0005901445854234287400413101209796400118029",
+       "jaccard_bc": "0.001918771985929005436520626798848736808443",
+       "path_contribution": "0.000590144585423"
+      },
+      {
+       "descriptor_ui": "D010092",
+       "descriptor_label": "Oximetry",
+       "ab_article_count": 5,
+       "bc_article_count": 5,
+       "jaccard_ab": "0.0008155276463872125265046485075844071114011",
+       "jaccard_bc": "0.0005551854319342660448589829002886964246058",
+       "path_contribution": "0.000555185431934"
+      },
+      {
+       "descriptor_ui": "D020766",
+       "descriptor_label": "Intracranial Embolism",
+       "ab_article_count": 48,
+       "bc_article_count": 3,
+       "jaccard_ab": "0.01901743264659270998415213946117274167987",
+       "jaccard_bc": "0.0005510653930933137398971344599559147685525",
+       "path_contribution": "0.000551065393093"
+      },
+      {
+       "descriptor_ui": "D005374",
+       "descriptor_label": "Filtration",
+       "ab_article_count": 7,
+       "bc_article_count": 25,
+       "jaccard_ab": "0.0005475166210402815799765350019554165037153",
+       "jaccard_bc": "0.001598261091931978007927375015982610919320",
+       "path_contribution": "0.000547516621040"
+      },
+      {
+       "descriptor_ui": "D006874",
+       "descriptor_label": "Hydrostatic Pressure",
+       "ab_article_count": 6,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.001337494427106553722692822113241194828355",
+       "jaccard_bc": "0.0005432568246638598397392367241613472769252",
+       "path_contribution": "0.000543256824664"
+      },
+      {
+       "descriptor_ui": "D009821",
+       "descriptor_label": "Oils",
+       "ab_article_count": 4,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.0007968127490039840637450199203187250996016",
+       "jaccard_bc": "0.0005066497783407219759341355288157061431286",
+       "path_contribution": "0.000506649778341"
+      },
+      {
+       "descriptor_ui": "D010100",
+       "descriptor_label": "Oxygen",
+       "ab_article_count": 44,
+       "bc_article_count": 49,
+       "jaccard_ab": "0.0005024551787141715199269156103688477789197",
+       "jaccard_bc": "0.0005417956656346749226006191950464396284830",
+       "path_contribution": "0.000502455178714"
+      },
+      {
+       "descriptor_ui": "D006429",
+       "descriptor_label": "Hemiplegia",
+       "ab_article_count": 3,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.0005320092214931725483241709522965064727789",
+       "jaccard_bc": "0.0004698696111828967461529425584400328908728",
+       "path_contribution": "0.000469869611183"
+      },
+      {
+       "descriptor_ui": "D006615",
+       "descriptor_label": "Hip",
+       "ab_article_count": 2,
+       "bc_article_count": 3,
+       "jaccard_ab": "0.0005006257822277847309136420525657071339174",
+       "jaccard_bc": "0.0004367447954578541272383170767215024020964",
+       "path_contribution": "0.000436744795458"
+      },
+      {
+       "descriptor_ui": "D000060",
+       "descriptor_label": "Accidents, Aviation",
+       "ab_article_count": 3,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.001688238604389420371412492965672481710748",
+       "jaccard_bc": "0.0004298302170642596174511068128089404685149",
+       "path_contribution": "0.000429830217064"
+      },
+      {
+       "descriptor_ui": "D011782",
+       "descriptor_label": "Quadriplegia",
+       "ab_article_count": 2,
+       "bc_article_count": 9,
+       "jaccard_ab": "0.0004167534903104813502813086059595749114399",
+       "jaccard_bc": "0.001173862005999739141776444502412938567888",
+       "path_contribution": "0.000416753490310"
+      },
+      {
+       "descriptor_ui": "D002840",
+       "descriptor_label": "Chromates",
+       "ab_article_count": 1,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.0005076142131979695431472081218274111675127",
+       "jaccard_bc": "0.0004128819157720891824938067712634186622626",
+       "path_contribution": "0.000412881915772"
+      },
+      {
+       "descriptor_ui": "D008846",
+       "descriptor_label": "Micromanipulation",
+       "ab_article_count": 1,
+       "bc_article_count": 14,
+       "jaccard_ab": "0.0004086636697997548017981201471189211279117",
+       "jaccard_bc": "0.002637031456018082501412695422866829911471",
+       "path_contribution": "0.000408663669800"
+      },
+      {
+       "descriptor_ui": "D008851",
+       "descriptor_label": "Micropore Filters",
+       "ab_article_count": 1,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.0004868549172346640701071080817916260954236",
+       "jaccard_bc": "0.0004058441558441558441558441558441558441558",
+       "path_contribution": "0.000405844155844"
+      },
+      {
+       "descriptor_ui": "D014160",
+       "descriptor_label": "Transducers, Pressure",
+       "ab_article_count": 1,
+       "bc_article_count": 11,
+       "jaccard_ab": "0.0004014452027298273785628261742272179847451",
+       "jaccard_bc": "0.002053771471247199402539208364451082897685",
+       "path_contribution": "0.000401445202730"
+      }
+     ],
+     "rank_proof": {
+      "method": "exact_integer_rational_bounds_then_python_decimal_refinement",
+      "bound_scale_exponent": 21,
+      "decimal_guard_scaled_units": 1000000,
+      "zero_target_nonnegative_shortcut": false,
+      "bound_proven_at_or_above_count": 5078,
+      "bound_proven_below_count": 20844,
+      "exact_decimal_refinement_count": 1,
+      "exact_decimal_at_or_above_count": 1,
+      "partition_candidate_count": 25923
+     }
+    },
+    {
+     "minimum_support_articles": 5,
+     "endpoint_a_article_support": 805,
+     "target_c_article_support": 3680,
+     "direct_ac_article_count": 0,
+     "eligible_candidate_count": 26238,
+     "target_persisted_score": "0.076544343430227",
+     "target_worst_tie_rank": 5079,
+     "target_rank_fraction": "0.1935742053510176080493940086896867139264",
+     "target_top_5_percent": false,
+     "target_below_median": false,
+     "target_bridge_count": 694,
+     "top_target_bridges": [
+      {
+       "descriptor_ui": "D019904",
+       "descriptor_label": "Polymethyl Methacrylate",
+       "ab_article_count": 11,
+       "bc_article_count": 9,
+       "jaccard_ab": "0.002198241406874500399680255795363709032774",
+       "jaccard_bc": "0.001141987057480015226494099733536353254663",
+       "path_contribution": "0.001141987057480"
+      },
+      {
+       "descriptor_ui": "D011312",
+       "descriptor_label": "Pressure",
+       "ab_article_count": 36,
+       "bc_article_count": 83,
+       "jaccard_ab": "0.0009048863864870299617936859038809571687110",
+       "jaccard_bc": "0.001947808129165493288275603116493006664789",
+       "path_contribution": "0.000904886386487"
+      },
+      {
+       "descriptor_ui": "D000063",
+       "descriptor_label": "Accidents, Traffic",
+       "ab_article_count": 41,
+       "bc_article_count": 17,
+       "jaccard_ab": "0.002309859154929577464788732394366197183099",
+       "jaccard_bc": "0.0008232844205530534166303452951716790159330",
+       "path_contribution": "0.000823284420553"
+      },
+      {
+       "descriptor_ui": "D003221",
+       "descriptor_label": "Confusion",
+       "ab_article_count": 3,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.001206272617611580217129071170084439083233",
+       "jaccard_bc": "0.0007461294534601753404215631412049990673382",
+       "path_contribution": "0.000746129453460"
+      },
+      {
+       "descriptor_ui": "D012588",
+       "descriptor_label": "Scintillation Counting",
+       "ab_article_count": 2,
+       "bc_article_count": 7,
+       "jaccard_ab": "0.0006734006734006734006734006734006734006734",
+       "jaccard_bc": "0.001198630136986301369863013698630136986301",
+       "path_contribution": "0.000673400673401"
+      },
+      {
+       "descriptor_ui": "D014618",
+       "descriptor_label": "Vacuum",
+       "ab_article_count": 2,
+       "bc_article_count": 12,
+       "jaccard_ab": "0.0005901445854234287400413101209796400118029",
+       "jaccard_bc": "0.001918771985929005436520626798848736808443",
+       "path_contribution": "0.000590144585423"
+      },
+      {
+       "descriptor_ui": "D010092",
+       "descriptor_label": "Oximetry",
+       "ab_article_count": 5,
+       "bc_article_count": 5,
+       "jaccard_ab": "0.0008155276463872125265046485075844071114011",
+       "jaccard_bc": "0.0005551854319342660448589829002886964246058",
+       "path_contribution": "0.000555185431934"
+      },
+      {
+       "descriptor_ui": "D020766",
+       "descriptor_label": "Intracranial Embolism",
+       "ab_article_count": 48,
+       "bc_article_count": 3,
+       "jaccard_ab": "0.01901743264659270998415213946117274167987",
+       "jaccard_bc": "0.0005510653930933137398971344599559147685525",
+       "path_contribution": "0.000551065393093"
+      },
+      {
+       "descriptor_ui": "D005374",
+       "descriptor_label": "Filtration",
+       "ab_article_count": 7,
+       "bc_article_count": 25,
+       "jaccard_ab": "0.0005475166210402815799765350019554165037153",
+       "jaccard_bc": "0.001598261091931978007927375015982610919320",
+       "path_contribution": "0.000547516621040"
+      },
+      {
+       "descriptor_ui": "D006874",
+       "descriptor_label": "Hydrostatic Pressure",
+       "ab_article_count": 6,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.001337494427106553722692822113241194828355",
+       "jaccard_bc": "0.0005432568246638598397392367241613472769252",
+       "path_contribution": "0.000543256824664"
+      },
+      {
+       "descriptor_ui": "D009821",
+       "descriptor_label": "Oils",
+       "ab_article_count": 4,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.0007968127490039840637450199203187250996016",
+       "jaccard_bc": "0.0005066497783407219759341355288157061431286",
+       "path_contribution": "0.000506649778341"
+      },
+      {
+       "descriptor_ui": "D010100",
+       "descriptor_label": "Oxygen",
+       "ab_article_count": 44,
+       "bc_article_count": 49,
+       "jaccard_ab": "0.0005024551787141715199269156103688477789197",
+       "jaccard_bc": "0.0005417956656346749226006191950464396284830",
+       "path_contribution": "0.000502455178714"
+      },
+      {
+       "descriptor_ui": "D006429",
+       "descriptor_label": "Hemiplegia",
+       "ab_article_count": 3,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.0005320092214931725483241709522965064727789",
+       "jaccard_bc": "0.0004698696111828967461529425584400328908728",
+       "path_contribution": "0.000469869611183"
+      },
+      {
+       "descriptor_ui": "D006615",
+       "descriptor_label": "Hip",
+       "ab_article_count": 2,
+       "bc_article_count": 3,
+       "jaccard_ab": "0.0005006257822277847309136420525657071339174",
+       "jaccard_bc": "0.0004367447954578541272383170767215024020964",
+       "path_contribution": "0.000436744795458"
+      },
+      {
+       "descriptor_ui": "D000060",
+       "descriptor_label": "Accidents, Aviation",
+       "ab_article_count": 3,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.001688238604389420371412492965672481710748",
+       "jaccard_bc": "0.0004298302170642596174511068128089404685149",
+       "path_contribution": "0.000429830217064"
+      },
+      {
+       "descriptor_ui": "D011782",
+       "descriptor_label": "Quadriplegia",
+       "ab_article_count": 2,
+       "bc_article_count": 9,
+       "jaccard_ab": "0.0004167534903104813502813086059595749114399",
+       "jaccard_bc": "0.001173862005999739141776444502412938567888",
+       "path_contribution": "0.000416753490310"
+      },
+      {
+       "descriptor_ui": "D002840",
+       "descriptor_label": "Chromates",
+       "ab_article_count": 1,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.0005076142131979695431472081218274111675127",
+       "jaccard_bc": "0.0004128819157720891824938067712634186622626",
+       "path_contribution": "0.000412881915772"
+      },
+      {
+       "descriptor_ui": "D008846",
+       "descriptor_label": "Micromanipulation",
+       "ab_article_count": 1,
+       "bc_article_count": 14,
+       "jaccard_ab": "0.0004086636697997548017981201471189211279117",
+       "jaccard_bc": "0.002637031456018082501412695422866829911471",
+       "path_contribution": "0.000408663669800"
+      },
+      {
+       "descriptor_ui": "D008851",
+       "descriptor_label": "Micropore Filters",
+       "ab_article_count": 1,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.0004868549172346640701071080817916260954236",
+       "jaccard_bc": "0.0004058441558441558441558441558441558441558",
+       "path_contribution": "0.000405844155844"
+      },
+      {
+       "descriptor_ui": "D014160",
+       "descriptor_label": "Transducers, Pressure",
+       "ab_article_count": 1,
+       "bc_article_count": 11,
+       "jaccard_ab": "0.0004014452027298273785628261742272179847451",
+       "jaccard_bc": "0.002053771471247199402539208364451082897685",
+       "path_contribution": "0.000401445202730"
+      }
+     ],
+     "rank_proof": {
+      "method": "exact_integer_rational_bounds_then_python_decimal_refinement",
+      "bound_scale_exponent": 21,
+      "decimal_guard_scaled_units": 1000000,
+      "zero_target_nonnegative_shortcut": false,
+      "bound_proven_at_or_above_count": 5078,
+      "bound_proven_below_count": 21159,
+      "exact_decimal_refinement_count": 1,
+      "exact_decimal_at_or_above_count": 1,
+      "partition_candidate_count": 26238
+     }
+    }
+   ]
+  },
+  {
+   "id": "generated-hard-2012-01-d001174-d014143",
+   "kind": "hard_negative",
+   "split": "development",
+   "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+   "cutoff": "2011-12-31",
+   "endpoint_a": {
+    "descriptor_ui": "D001174",
+    "descriptor_label": "Arthrodesis"
+   },
+   "target_c": {
+    "descriptor_ui": "D014143",
+    "descriptor_label": "Traction"
+   },
+   "support_runs": [
+    {
+     "minimum_support_articles": 10,
+     "endpoint_a_article_support": 3734,
+     "target_c_article_support": 2239,
+     "direct_ac_article_count": 17,
+     "eligible_candidate_count": 25621,
+     "target_persisted_score": "0.691872166201951",
+     "target_worst_tie_rank": 108,
+     "target_rank_fraction": "0.004215292143163810936341282541665040396550",
+     "target_top_5_percent": true,
+     "target_below_median": false,
+     "target_bridge_count": 920,
+     "top_target_bridges": [
+      {
+       "descriptor_ui": "D001858",
+       "descriptor_label": "Bone Nails",
+       "ab_article_count": 276,
+       "bc_article_count": 137,
+       "jaccard_ab": "0.03033300362677217276623804813715792944280",
+       "jaccard_bc": "0.01769340049076585302854190882087046364458",
+       "path_contribution": "0.017693400490766"
+      },
+      {
+       "descriptor_ui": "D004204",
+       "descriptor_label": "Dislocations",
+       "ab_article_count": 200,
+       "bc_article_count": 260,
+       "jaccard_ab": "0.01530456075910621365166819712274257728803",
+       "jaccard_bc": "0.02258316685485972379049769825414748545123",
+       "path_contribution": "0.015304560759106"
+      },
+      {
+       "descriptor_ui": "D009984",
+       "descriptor_label": "Orthopedic Fixation Devices",
+       "ab_article_count": 78,
+       "bc_article_count": 70,
+       "jaccard_ab": "0.01256038647342995169082125603864734299517",
+       "jaccard_bc": "0.01482108829134024984120262544992589455854",
+       "path_contribution": "0.012560386473430"
+      },
+      {
+       "descriptor_ui": "D016267",
+       "descriptor_label": "External Fixators",
+       "ab_article_count": 152,
+       "bc_article_count": 64,
+       "jaccard_ab": "0.02197802197802197802197802197802197802198",
+       "jaccard_bc": "0.01161735342167362497730985659829370121619",
+       "path_contribution": "0.011617353421674"
+      },
+      {
+       "descriptor_ui": "D002370",
+       "descriptor_label": "Casts, Surgical",
+       "ab_article_count": 79,
+       "bc_article_count": 256,
+       "jaccard_ab": "0.01120567375886524822695035460992907801418",
+       "jaccard_bc": "0.04760133878765340275195239866121234659725",
+       "path_contribution": "0.011205673758865"
+      },
+      {
+       "descriptor_ui": "D005593",
+       "descriptor_label": "Fracture Fixation, Internal",
+       "ab_article_count": 203,
+       "bc_article_count": 170,
+       "jaccard_ab": "0.01178109221751494399628576402994602750856",
+       "jaccard_bc": "0.01078064557042298179973365463884837339083",
+       "path_contribution": "0.010780645570423"
+      },
+      {
+       "descriptor_ui": "D050723",
+       "descriptor_label": "Fractures, Bone",
+       "ab_article_count": 256,
+       "bc_article_count": 217,
+       "jaccard_ab": "0.01147518938544981845891792550091891165001",
+       "jaccard_bc": "0.01040617656931856327626720375965088956026",
+       "path_contribution": "0.010406176569319"
+      },
+      {
+       "descriptor_ui": "D001864",
+       "descriptor_label": "Bone Wires",
+       "ab_article_count": 150,
+       "bc_article_count": 52,
+       "jaccard_ab": "0.02185633105056097916363106513186653067172",
+       "jaccard_bc": "0.009513355287230150018294914013904134650567",
+       "path_contribution": "0.009513355287230"
+      },
+      {
+       "descriptor_ui": "D005594",
+       "descriptor_label": "Fracture Fixation, Intramedullary",
+       "ab_article_count": 60,
+       "bc_article_count": 79,
+       "jaccard_ab": "0.007586294095334429131369326084207864458212",
+       "jaccard_bc": "0.01235340109460516028146989835809225957780",
+       "path_contribution": "0.007586294095334"
+      },
+      {
+       "descriptor_ui": "D005383",
+       "descriptor_label": "Finger Injuries",
+       "ab_article_count": 63,
+       "bc_article_count": 45,
+       "jaccard_ab": "0.008411214953271028037383177570093457943925",
+       "jaccard_bc": "0.007483785132213537335772492931980708464993",
+       "path_contribution": "0.007483785132214"
+      },
+      {
+       "descriptor_ui": "D005592",
+       "descriptor_label": "Fracture Fixation",
+       "ab_article_count": 63,
+       "bc_article_count": 177,
+       "jaccard_ab": "0.007060405693152527176958422055362546228847",
+       "jaccard_bc": "0.02420016406890894175553732567678424938474",
+       "path_contribution": "0.007060405693153"
+      },
+      {
+       "descriptor_ui": "D017102",
+       "descriptor_label": "Fracture Healing",
+       "ab_article_count": 66,
+       "bc_article_count": 62,
+       "jaccard_ab": "0.006656580937972768532526475037821482602118",
+       "jaccard_bc": "0.007359924026590693257359924026590693257360",
+       "path_contribution": "0.006656580937973"
+      },
+      {
+       "descriptor_ui": "D010027",
+       "descriptor_label": "Osteotomy",
+       "ab_article_count": 320,
+       "bc_article_count": 104,
+       "jaccard_ab": "0.01891923850065034882345985574080643254109",
+       "jaccard_bc": "0.006651742884553885513271506236008954269268",
+       "path_contribution": "0.006651742884554"
+      },
+      {
+       "descriptor_ui": "D001268",
+       "descriptor_label": "Atlanto-Axial Joint",
+       "ab_article_count": 34,
+       "bc_article_count": 61,
+       "jaccard_ab": "0.006530925854782942758355743373031117940837",
+       "jaccard_bc": "0.01655808903365906623235613463626492942454",
+       "path_contribution": "0.006530925854783"
+      },
+      {
+       "descriptor_ui": "D006621",
+       "descriptor_label": "Hip Joint",
+       "ab_article_count": 125,
+       "bc_article_count": 86,
+       "jaccard_ab": "0.008272667107875579086697551290536068828590",
+       "jaccard_bc": "0.006298520580049802255749230994580342756701",
+       "path_contribution": "0.006298520580050"
+      },
+      {
+       "descriptor_ui": "D011885",
+       "descriptor_label": "Radius Fractures",
+       "ab_article_count": 45,
+       "bc_article_count": 34,
+       "jaccard_ab": "0.006197493458201349676353119405040628012670",
+       "jaccard_bc": "0.005885407651029946338930240609312792106630",
+       "path_contribution": "0.005885407651030"
+      },
+      {
+       "descriptor_ui": "D005597",
+       "descriptor_label": "Fractures, Open",
+       "ab_article_count": 36,
+       "bc_article_count": 37,
+       "jaccard_ab": "0.005821474773609314359637774902975420439845",
+       "jaccard_bc": "0.007892491467576791808873720136518771331058",
+       "path_contribution": "0.005821474773609"
+      },
+      {
+       "descriptor_ui": "D005384",
+       "descriptor_label": "Finger Joint",
+       "ab_article_count": 139,
+       "bc_article_count": 28,
+       "jaccard_ab": "0.02240851201031758826374334999193938416895",
+       "jaccard_bc": "0.005810334094210417098983191533513177007678",
+       "path_contribution": "0.005810334094210"
+      },
+      {
+       "descriptor_ui": "D013978",
+       "descriptor_label": "Tibial Fractures",
+       "ab_article_count": 57,
+       "bc_article_count": 82,
+       "jaccard_ab": "0.005627962085308056872037914691943127962085",
+       "jaccard_bc": "0.009526022304832713754646840148698884758364",
+       "path_contribution": "0.005627962085308"
+      },
+      {
+       "descriptor_ui": "D016268",
+       "descriptor_label": "Internal Fixators",
+       "ab_article_count": 123,
+       "bc_article_count": 33,
+       "jaccard_ab": "0.01681706316652994257588187038556193601313",
+       "jaccard_bc": "0.005584701303096970722626501946183787442884",
+       "path_contribution": "0.005584701303097"
+      }
+     ],
+     "rank_proof": {
+      "method": "exact_integer_rational_bounds_then_python_decimal_refinement",
+      "bound_scale_exponent": 21,
+      "decimal_guard_scaled_units": 1000000,
+      "zero_target_nonnegative_shortcut": false,
+      "bound_proven_at_or_above_count": 107,
+      "bound_proven_below_count": 25513,
+      "exact_decimal_refinement_count": 1,
+      "exact_decimal_at_or_above_count": 1,
+      "partition_candidate_count": 25621
+     }
+    },
+    {
+     "minimum_support_articles": 5,
+     "endpoint_a_article_support": 3734,
+     "target_c_article_support": 2239,
+     "direct_ac_article_count": 17,
+     "eligible_candidate_count": 25985,
+     "target_persisted_score": "0.691872166201951",
+     "target_worst_tie_rank": 108,
+     "target_rank_fraction": "0.004156243986915528189340003848374061958822",
+     "target_top_5_percent": true,
+     "target_below_median": false,
+     "target_bridge_count": 920,
+     "top_target_bridges": [
+      {
+       "descriptor_ui": "D001858",
+       "descriptor_label": "Bone Nails",
+       "ab_article_count": 276,
+       "bc_article_count": 137,
+       "jaccard_ab": "0.03033300362677217276623804813715792944280",
+       "jaccard_bc": "0.01769340049076585302854190882087046364458",
+       "path_contribution": "0.017693400490766"
+      },
+      {
+       "descriptor_ui": "D004204",
+       "descriptor_label": "Dislocations",
+       "ab_article_count": 200,
+       "bc_article_count": 260,
+       "jaccard_ab": "0.01530456075910621365166819712274257728803",
+       "jaccard_bc": "0.02258316685485972379049769825414748545123",
+       "path_contribution": "0.015304560759106"
+      },
+      {
+       "descriptor_ui": "D009984",
+       "descriptor_label": "Orthopedic Fixation Devices",
+       "ab_article_count": 78,
+       "bc_article_count": 70,
+       "jaccard_ab": "0.01256038647342995169082125603864734299517",
+       "jaccard_bc": "0.01482108829134024984120262544992589455854",
+       "path_contribution": "0.012560386473430"
+      },
+      {
+       "descriptor_ui": "D016267",
+       "descriptor_label": "External Fixators",
+       "ab_article_count": 152,
+       "bc_article_count": 64,
+       "jaccard_ab": "0.02197802197802197802197802197802197802198",
+       "jaccard_bc": "0.01161735342167362497730985659829370121619",
+       "path_contribution": "0.011617353421674"
+      },
+      {
+       "descriptor_ui": "D002370",
+       "descriptor_label": "Casts, Surgical",
+       "ab_article_count": 79,
+       "bc_article_count": 256,
+       "jaccard_ab": "0.01120567375886524822695035460992907801418",
+       "jaccard_bc": "0.04760133878765340275195239866121234659725",
+       "path_contribution": "0.011205673758865"
+      },
+      {
+       "descriptor_ui": "D005593",
+       "descriptor_label": "Fracture Fixation, Internal",
+       "ab_article_count": 203,
+       "bc_article_count": 170,
+       "jaccard_ab": "0.01178109221751494399628576402994602750856",
+       "jaccard_bc": "0.01078064557042298179973365463884837339083",
+       "path_contribution": "0.010780645570423"
+      },
+      {
+       "descriptor_ui": "D050723",
+       "descriptor_label": "Fractures, Bone",
+       "ab_article_count": 256,
+       "bc_article_count": 217,
+       "jaccard_ab": "0.01147518938544981845891792550091891165001",
+       "jaccard_bc": "0.01040617656931856327626720375965088956026",
+       "path_contribution": "0.010406176569319"
+      },
+      {
+       "descriptor_ui": "D001864",
+       "descriptor_label": "Bone Wires",
+       "ab_article_count": 150,
+       "bc_article_count": 52,
+       "jaccard_ab": "0.02185633105056097916363106513186653067172",
+       "jaccard_bc": "0.009513355287230150018294914013904134650567",
+       "path_contribution": "0.009513355287230"
+      },
+      {
+       "descriptor_ui": "D005594",
+       "descriptor_label": "Fracture Fixation, Intramedullary",
+       "ab_article_count": 60,
+       "bc_article_count": 79,
+       "jaccard_ab": "0.007586294095334429131369326084207864458212",
+       "jaccard_bc": "0.01235340109460516028146989835809225957780",
+       "path_contribution": "0.007586294095334"
+      },
+      {
+       "descriptor_ui": "D005383",
+       "descriptor_label": "Finger Injuries",
+       "ab_article_count": 63,
+       "bc_article_count": 45,
+       "jaccard_ab": "0.008411214953271028037383177570093457943925",
+       "jaccard_bc": "0.007483785132213537335772492931980708464993",
+       "path_contribution": "0.007483785132214"
+      },
+      {
+       "descriptor_ui": "D005592",
+       "descriptor_label": "Fracture Fixation",
+       "ab_article_count": 63,
+       "bc_article_count": 177,
+       "jaccard_ab": "0.007060405693152527176958422055362546228847",
+       "jaccard_bc": "0.02420016406890894175553732567678424938474",
+       "path_contribution": "0.007060405693153"
+      },
+      {
+       "descriptor_ui": "D017102",
+       "descriptor_label": "Fracture Healing",
+       "ab_article_count": 66,
+       "bc_article_count": 62,
+       "jaccard_ab": "0.006656580937972768532526475037821482602118",
+       "jaccard_bc": "0.007359924026590693257359924026590693257360",
+       "path_contribution": "0.006656580937973"
+      },
+      {
+       "descriptor_ui": "D010027",
+       "descriptor_label": "Osteotomy",
+       "ab_article_count": 320,
+       "bc_article_count": 104,
+       "jaccard_ab": "0.01891923850065034882345985574080643254109",
+       "jaccard_bc": "0.006651742884553885513271506236008954269268",
+       "path_contribution": "0.006651742884554"
+      },
+      {
+       "descriptor_ui": "D001268",
+       "descriptor_label": "Atlanto-Axial Joint",
+       "ab_article_count": 34,
+       "bc_article_count": 61,
+       "jaccard_ab": "0.006530925854782942758355743373031117940837",
+       "jaccard_bc": "0.01655808903365906623235613463626492942454",
+       "path_contribution": "0.006530925854783"
+      },
+      {
+       "descriptor_ui": "D006621",
+       "descriptor_label": "Hip Joint",
+       "ab_article_count": 125,
+       "bc_article_count": 86,
+       "jaccard_ab": "0.008272667107875579086697551290536068828590",
+       "jaccard_bc": "0.006298520580049802255749230994580342756701",
+       "path_contribution": "0.006298520580050"
+      },
+      {
+       "descriptor_ui": "D011885",
+       "descriptor_label": "Radius Fractures",
+       "ab_article_count": 45,
+       "bc_article_count": 34,
+       "jaccard_ab": "0.006197493458201349676353119405040628012670",
+       "jaccard_bc": "0.005885407651029946338930240609312792106630",
+       "path_contribution": "0.005885407651030"
+      },
+      {
+       "descriptor_ui": "D005597",
+       "descriptor_label": "Fractures, Open",
+       "ab_article_count": 36,
+       "bc_article_count": 37,
+       "jaccard_ab": "0.005821474773609314359637774902975420439845",
+       "jaccard_bc": "0.007892491467576791808873720136518771331058",
+       "path_contribution": "0.005821474773609"
+      },
+      {
+       "descriptor_ui": "D005384",
+       "descriptor_label": "Finger Joint",
+       "ab_article_count": 139,
+       "bc_article_count": 28,
+       "jaccard_ab": "0.02240851201031758826374334999193938416895",
+       "jaccard_bc": "0.005810334094210417098983191533513177007678",
+       "path_contribution": "0.005810334094210"
+      },
+      {
+       "descriptor_ui": "D013978",
+       "descriptor_label": "Tibial Fractures",
+       "ab_article_count": 57,
+       "bc_article_count": 82,
+       "jaccard_ab": "0.005627962085308056872037914691943127962085",
+       "jaccard_bc": "0.009526022304832713754646840148698884758364",
+       "path_contribution": "0.005627962085308"
+      },
+      {
+       "descriptor_ui": "D016268",
+       "descriptor_label": "Internal Fixators",
+       "ab_article_count": 123,
+       "bc_article_count": 33,
+       "jaccard_ab": "0.01681706316652994257588187038556193601313",
+       "jaccard_bc": "0.005584701303096970722626501946183787442884",
+       "path_contribution": "0.005584701303097"
+      }
+     ],
+     "rank_proof": {
+      "method": "exact_integer_rational_bounds_then_python_decimal_refinement",
+      "bound_scale_exponent": 21,
+      "decimal_guard_scaled_units": 1000000,
+      "zero_target_nonnegative_shortcut": false,
+      "bound_proven_at_or_above_count": 107,
+      "bound_proven_below_count": 25877,
+      "exact_decimal_refinement_count": 1,
+      "exact_decimal_at_or_above_count": 1,
+      "partition_candidate_count": 25985
+     }
+    }
+   ]
+  },
+  {
+   "id": "generated-hard-2012-03-d016496-d041382",
+   "kind": "hard_negative",
+   "split": "development",
+   "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+   "cutoff": "2011-12-31",
+   "endpoint_a": {
+    "descriptor_ui": "D016496",
+    "descriptor_label": "Incontinence Pads"
+   },
+   "target_c": {
+    "descriptor_ui": "D041382",
+    "descriptor_label": "Diapers, Adult"
+   },
+   "support_runs": [
+    {
+     "minimum_support_articles": 10,
+     "endpoint_a_article_support": 222,
+     "target_c_article_support": 38,
+     "direct_ac_article_count": 8,
+     "eligible_candidate_count": 25621,
+     "target_persisted_score": "0.056752306990434",
+     "target_worst_tie_rank": 1335,
+     "target_rank_fraction": "0.05210569454744155185199640919558174934624",
+     "target_top_5_percent": false,
+     "target_below_median": false,
+     "target_bridge_count": 164,
+     "top_target_bridges": [
+      {
+       "descriptor_ui": "D003963",
+       "descriptor_label": "Diaper Rash",
+       "ab_article_count": 4,
+       "bc_article_count": 3,
+       "jaccard_ab": "0.01015228426395939086294416243654822335025",
+       "jaccard_bc": "0.01421800947867298578199052132701421800948",
+       "path_contribution": "0.010152284263959"
+      },
+      {
+       "descriptor_ui": "D014039",
+       "descriptor_label": "Toilet Training",
+       "ab_article_count": 4,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.007889546351084812623274161735700197238659",
+       "jaccard_bc": "0.006153846153846153846153846153846153846154",
+       "path_contribution": "0.006153846153846"
+      },
+      {
+       "descriptor_ui": "D005242",
+       "descriptor_label": "Fecal Incontinence",
+       "ab_article_count": 21,
+       "bc_article_count": 15,
+       "jaccard_ab": "0.004683318465655664585191793041926851025870",
+       "jaccard_bc": "0.003483511379470506270320483046911286576869",
+       "path_contribution": "0.003483511379471"
+      },
+      {
+       "descriptor_ui": "D014549",
+       "descriptor_label": "Urinary Incontinence",
+       "ab_article_count": 140,
+       "bc_article_count": 26,
+       "jaccard_ab": "0.01602564102564102564102564102564102564103",
+       "jaccard_bc": "0.003000230786983614124163397184398799907685",
+       "path_contribution": "0.003000230786984"
+      },
+      {
+       "descriptor_ui": "D012752",
+       "descriptor_label": "Shame",
+       "ab_article_count": 3,
+       "bc_article_count": 5,
+       "jaccard_ab": "0.002700270027002700270027002700270027002700",
+       "jaccard_bc": "0.005405405405405405405405405405405405405405",
+       "path_contribution": "0.002700270027003"
+      },
+      {
+       "descriptor_ui": "D017592",
+       "descriptor_label": "Skin Care",
+       "ab_article_count": 3,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.002102312543798177995795374912403644008409",
+       "jaccard_bc": "0.003220611916264090177133655394524959742351",
+       "path_contribution": "0.002102312543798"
+      },
+      {
+       "descriptor_ui": "D014038",
+       "descriptor_label": "Toilet Facilities",
+       "ab_article_count": 4,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.005494505494505494505494505494505494505495",
+       "jaccard_bc": "0.001828153564899451553930530164533820840951",
+       "path_contribution": "0.001828153564899"
+      },
+      {
+       "descriptor_ui": "D007846",
+       "descriptor_label": "Laundering",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.001818181818181818181818181818181818181818",
+       "jaccard_bc": "0.002732240437158469945355191256830601092896",
+       "path_contribution": "0.001818181818182"
+      },
+      {
+       "descriptor_ui": "D004209",
+       "descriptor_label": "Disposable Equipment",
+       "ab_article_count": 8,
+       "bc_article_count": 3,
+       "jaccard_ab": "0.003917727717923604309500489715964740450539",
+       "jaccard_bc": "0.001610305958132045088566827697262479871176",
+       "path_contribution": "0.001610305958132"
+      },
+      {
+       "descriptor_ui": "D017743",
+       "descriptor_label": "Equipment Reuse",
+       "ab_article_count": 3,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.002100840336134453781512605042016806722689",
+       "jaccard_bc": "0.001606425702811244979919678714859437751004",
+       "path_contribution": "0.001606425702811"
+      },
+      {
+       "descriptor_ui": "D010577",
+       "descriptor_label": "Petrolatum",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.001481481481481481481481481481481481481481",
+       "jaccard_bc": "0.002036659877800407331975560081466395112016",
+       "path_contribution": "0.001481481481481"
+      },
+      {
+       "descriptor_ui": "D017453",
+       "descriptor_label": "Dermatitis, Irritant",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.001186239620403321470937129300118623962040",
+       "jaccard_bc": "0.001517450682852807283763277693474962063733",
+       "path_contribution": "0.001186239620403"
+      },
+      {
+       "descriptor_ui": "D017773",
+       "descriptor_label": "Pelvic Floor",
+       "ab_article_count": 12,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.005581395348837209302325581395348837209302",
+       "jaccard_bc": "0.001012145748987854251012145748987854251012",
+       "path_contribution": "0.001012145748988"
+      },
+      {
+       "descriptor_ui": "D053201",
+       "descriptor_label": "Urinary Bladder, Overactive",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0007570022710068130204390613171839515518547",
+       "jaccard_bc": "0.0008795074758135444151275285839929639401935",
+       "path_contribution": "0.000757002271007"
+      },
+      {
+       "descriptor_ui": "D012866",
+       "descriptor_label": "Skilled Nursing Facilities",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0007220216606498194945848375451263537906137",
+       "jaccard_bc": "0.0008326394671107410491257285595337218984180",
+       "path_contribution": "0.000722021660650"
+      },
+      {
+       "descriptor_ui": "D014546",
+       "descriptor_label": "Urinary Catheterization",
+       "ab_article_count": 16,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.002760524499654934437543133195307108350587",
+       "jaccard_bc": "0.0007112375533428165007112375533428165007112",
+       "path_contribution": "0.000711237553343"
+      },
+      {
+       "descriptor_ui": "D012656",
+       "descriptor_label": "Self-Help Devices",
+       "ab_article_count": 4,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.002329644729178800232964472917880023296447",
+       "jaccard_bc": "0.0006510416666666666666666666666666666666667",
+       "path_contribution": "0.000651041666667"
+      },
+      {
+       "descriptor_ui": "D013784",
+       "descriptor_label": "Textiles",
+       "ab_article_count": 3,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.001701644923425978445830969937606352807714",
+       "jaccard_bc": "0.0006325110689437065148640101201771030993042",
+       "path_contribution": "0.000632511068944"
+      },
+      {
+       "descriptor_ui": "D009730",
+       "descriptor_label": "Nursing Assessment",
+       "ab_article_count": 10,
+       "bc_article_count": 5,
+       "jaccard_ab": "0.001095890410958904109589041095890410958904",
+       "jaccard_bc": "0.0005589090096132349653476414039794321484462",
+       "path_contribution": "0.000558909009613"
+      },
+      {
+       "descriptor_ui": "D017276",
+       "descriptor_label": "Friction",
+       "ab_article_count": 2,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0009935419771485345255837059115747640337804",
+       "jaccard_bc": "0.0005464480874316939890710382513661202185792",
+       "path_contribution": "0.000546448087432"
+      }
+     ],
+     "rank_proof": {
+      "method": "exact_integer_rational_bounds_then_python_decimal_refinement",
+      "bound_scale_exponent": 21,
+      "decimal_guard_scaled_units": 1000000,
+      "zero_target_nonnegative_shortcut": false,
+      "bound_proven_at_or_above_count": 1334,
+      "bound_proven_below_count": 24286,
+      "exact_decimal_refinement_count": 1,
+      "exact_decimal_at_or_above_count": 1,
+      "partition_candidate_count": 25621
+     }
+    },
+    {
+     "minimum_support_articles": 5,
+     "endpoint_a_article_support": 222,
+     "target_c_article_support": 38,
+     "direct_ac_article_count": 8,
+     "eligible_candidate_count": 25985,
+     "target_persisted_score": "0.056752306990434",
+     "target_worst_tie_rank": 1335,
+     "target_rank_fraction": "0.05137579372715027900711949201462382143544",
+     "target_top_5_percent": false,
+     "target_below_median": false,
+     "target_bridge_count": 164,
+     "top_target_bridges": [
+      {
+       "descriptor_ui": "D003963",
+       "descriptor_label": "Diaper Rash",
+       "ab_article_count": 4,
+       "bc_article_count": 3,
+       "jaccard_ab": "0.01015228426395939086294416243654822335025",
+       "jaccard_bc": "0.01421800947867298578199052132701421800948",
+       "path_contribution": "0.010152284263959"
+      },
+      {
+       "descriptor_ui": "D014039",
+       "descriptor_label": "Toilet Training",
+       "ab_article_count": 4,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.007889546351084812623274161735700197238659",
+       "jaccard_bc": "0.006153846153846153846153846153846153846154",
+       "path_contribution": "0.006153846153846"
+      },
+      {
+       "descriptor_ui": "D005242",
+       "descriptor_label": "Fecal Incontinence",
+       "ab_article_count": 21,
+       "bc_article_count": 15,
+       "jaccard_ab": "0.004683318465655664585191793041926851025870",
+       "jaccard_bc": "0.003483511379470506270320483046911286576869",
+       "path_contribution": "0.003483511379471"
+      },
+      {
+       "descriptor_ui": "D014549",
+       "descriptor_label": "Urinary Incontinence",
+       "ab_article_count": 140,
+       "bc_article_count": 26,
+       "jaccard_ab": "0.01602564102564102564102564102564102564103",
+       "jaccard_bc": "0.003000230786983614124163397184398799907685",
+       "path_contribution": "0.003000230786984"
+      },
+      {
+       "descriptor_ui": "D012752",
+       "descriptor_label": "Shame",
+       "ab_article_count": 3,
+       "bc_article_count": 5,
+       "jaccard_ab": "0.002700270027002700270027002700270027002700",
+       "jaccard_bc": "0.005405405405405405405405405405405405405405",
+       "path_contribution": "0.002700270027003"
+      },
+      {
+       "descriptor_ui": "D017592",
+       "descriptor_label": "Skin Care",
+       "ab_article_count": 3,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.002102312543798177995795374912403644008409",
+       "jaccard_bc": "0.003220611916264090177133655394524959742351",
+       "path_contribution": "0.002102312543798"
+      },
+      {
+       "descriptor_ui": "D014038",
+       "descriptor_label": "Toilet Facilities",
+       "ab_article_count": 4,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.005494505494505494505494505494505494505495",
+       "jaccard_bc": "0.001828153564899451553930530164533820840951",
+       "path_contribution": "0.001828153564899"
+      },
+      {
+       "descriptor_ui": "D007846",
+       "descriptor_label": "Laundering",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.001818181818181818181818181818181818181818",
+       "jaccard_bc": "0.002732240437158469945355191256830601092896",
+       "path_contribution": "0.001818181818182"
+      },
+      {
+       "descriptor_ui": "D004209",
+       "descriptor_label": "Disposable Equipment",
+       "ab_article_count": 8,
+       "bc_article_count": 3,
+       "jaccard_ab": "0.003917727717923604309500489715964740450539",
+       "jaccard_bc": "0.001610305958132045088566827697262479871176",
+       "path_contribution": "0.001610305958132"
+      },
+      {
+       "descriptor_ui": "D017743",
+       "descriptor_label": "Equipment Reuse",
+       "ab_article_count": 3,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.002100840336134453781512605042016806722689",
+       "jaccard_bc": "0.001606425702811244979919678714859437751004",
+       "path_contribution": "0.001606425702811"
+      },
+      {
+       "descriptor_ui": "D010577",
+       "descriptor_label": "Petrolatum",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.001481481481481481481481481481481481481481",
+       "jaccard_bc": "0.002036659877800407331975560081466395112016",
+       "path_contribution": "0.001481481481481"
+      },
+      {
+       "descriptor_ui": "D017453",
+       "descriptor_label": "Dermatitis, Irritant",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.001186239620403321470937129300118623962040",
+       "jaccard_bc": "0.001517450682852807283763277693474962063733",
+       "path_contribution": "0.001186239620403"
+      },
+      {
+       "descriptor_ui": "D017773",
+       "descriptor_label": "Pelvic Floor",
+       "ab_article_count": 12,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.005581395348837209302325581395348837209302",
+       "jaccard_bc": "0.001012145748987854251012145748987854251012",
+       "path_contribution": "0.001012145748988"
+      },
+      {
+       "descriptor_ui": "D053201",
+       "descriptor_label": "Urinary Bladder, Overactive",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0007570022710068130204390613171839515518547",
+       "jaccard_bc": "0.0008795074758135444151275285839929639401935",
+       "path_contribution": "0.000757002271007"
+      },
+      {
+       "descriptor_ui": "D012866",
+       "descriptor_label": "Skilled Nursing Facilities",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0007220216606498194945848375451263537906137",
+       "jaccard_bc": "0.0008326394671107410491257285595337218984180",
+       "path_contribution": "0.000722021660650"
+      },
+      {
+       "descriptor_ui": "D014546",
+       "descriptor_label": "Urinary Catheterization",
+       "ab_article_count": 16,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.002760524499654934437543133195307108350587",
+       "jaccard_bc": "0.0007112375533428165007112375533428165007112",
+       "path_contribution": "0.000711237553343"
+      },
+      {
+       "descriptor_ui": "D012656",
+       "descriptor_label": "Self-Help Devices",
+       "ab_article_count": 4,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.002329644729178800232964472917880023296447",
+       "jaccard_bc": "0.0006510416666666666666666666666666666666667",
+       "path_contribution": "0.000651041666667"
+      },
+      {
+       "descriptor_ui": "D013784",
+       "descriptor_label": "Textiles",
+       "ab_article_count": 3,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.001701644923425978445830969937606352807714",
+       "jaccard_bc": "0.0006325110689437065148640101201771030993042",
+       "path_contribution": "0.000632511068944"
+      },
+      {
+       "descriptor_ui": "D009730",
+       "descriptor_label": "Nursing Assessment",
+       "ab_article_count": 10,
+       "bc_article_count": 5,
+       "jaccard_ab": "0.001095890410958904109589041095890410958904",
+       "jaccard_bc": "0.0005589090096132349653476414039794321484462",
+       "path_contribution": "0.000558909009613"
+      },
+      {
+       "descriptor_ui": "D017276",
+       "descriptor_label": "Friction",
+       "ab_article_count": 2,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.0009935419771485345255837059115747640337804",
+       "jaccard_bc": "0.0005464480874316939890710382513661202185792",
+       "path_contribution": "0.000546448087432"
+      }
+     ],
+     "rank_proof": {
+      "method": "exact_integer_rational_bounds_then_python_decimal_refinement",
+      "bound_scale_exponent": 21,
+      "decimal_guard_scaled_units": 1000000,
+      "zero_target_nonnegative_shortcut": false,
+      "bound_proven_at_or_above_count": 1334,
+      "bound_proven_below_count": 24650,
+      "exact_decimal_refinement_count": 1,
+      "exact_decimal_at_or_above_count": 1,
+      "partition_candidate_count": 25985
+     }
+    }
+   ]
+  },
+  {
+   "id": "generated-hard-2013-01-d004309-d007389",
+   "kind": "hard_negative",
+   "split": "development",
+   "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+   "cutoff": "2012-12-31",
+   "endpoint_a": {
+    "descriptor_ui": "D004309",
+    "descriptor_label": "Double Bind Interaction"
+   },
+   "target_c": {
+    "descriptor_ui": "D007389",
+    "descriptor_label": "Internal-External Control"
+   },
+   "support_runs": [
+    {
+     "minimum_support_articles": 10,
+     "endpoint_a_article_support": 52,
+     "target_c_article_support": 12285,
+     "direct_ac_article_count": 1,
+     "eligible_candidate_count": 25923,
+     "target_persisted_score": "0.081864130303279",
+     "target_worst_tie_rank": 21,
+     "target_rank_fraction": "0.0008100914246036338386760791575049184122208",
+     "target_top_5_percent": true,
+     "target_below_median": false,
+     "target_bridge_count": 306,
+     "top_target_bridges": [
+      {
+       "descriptor_ui": "D003073",
+       "descriptor_label": "Cognitive Dissonance",
+       "ab_article_count": 2,
+       "bc_article_count": 44,
+       "jaccard_ab": "0.005141388174807197943444730077120822622108",
+       "jaccard_bc": "0.003497615262321144674085850556438791732909",
+       "path_contribution": "0.003497615262321"
+      },
+      {
+       "descriptor_ui": "D007207",
+       "descriptor_label": "Individuation",
+       "ab_article_count": 2,
+       "bc_article_count": 97,
+       "jaccard_ab": "0.002089864158829676071055381400208986415883",
+       "jaccard_bc": "0.007407407407407407407407407407407407407407",
+       "path_contribution": "0.002089864158830"
+      },
+      {
+       "descriptor_ui": "D005196",
+       "descriptor_label": "Family Therapy",
+       "ab_article_count": 8,
+       "bc_article_count": 114,
+       "jaccard_ab": "0.002043944813490035769034236075625958099131",
+       "jaccard_bc": "0.007106788853562745464746586871142696839349",
+       "path_contribution": "0.002043944813490"
+      },
+      {
+       "descriptor_ui": "D035863",
+       "descriptor_label": "Moral Development",
+       "ab_article_count": 1,
+       "bc_article_count": 24,
+       "jaccard_ab": "0.002320185614849187935034802784222737819026",
+       "jaccard_bc": "0.001898583972786963056720196187010521319516",
+       "path_contribution": "0.001898583972787"
+      },
+      {
+       "descriptor_ui": "D005219",
+       "descriptor_label": "Father-Child Relations",
+       "ab_article_count": 3,
+       "bc_article_count": 80,
+       "jaccard_ab": "0.001872659176029962546816479400749063670412",
+       "jaccard_bc": "0.005814798662596307602849251344672190725396",
+       "path_contribution": "0.001872659176030"
+      },
+      {
+       "descriptor_ui": "D013598",
+       "descriptor_label": "Systems Theory",
+       "ab_article_count": 4,
+       "bc_article_count": 25,
+       "jaccard_ab": "0.002721088435374149659863945578231292517007",
+       "jaccard_bc": "0.001827218242946937582224820932612191200117",
+       "path_contribution": "0.001827218242947"
+      },
+      {
+       "descriptor_ui": "D011582",
+       "descriptor_label": "Psychological Theory",
+       "ab_article_count": 10,
+       "bc_article_count": 234,
+       "jaccard_ab": "0.001740644038294168842471714534377719756310",
+       "jaccard_bc": "0.01318012842176410949645150388644812436634",
+       "path_contribution": "0.001740644038294"
+      },
+      {
+       "descriptor_ui": "D018187",
+       "descriptor_label": "Personal Construct Theory",
+       "ab_article_count": 1,
+       "bc_article_count": 81,
+       "jaccard_ab": "0.001594896331738437001594896331738437001595",
+       "jaccard_bc": "0.006338028169014084507042253521126760563380",
+       "path_contribution": "0.001594896331738"
+      },
+      {
+       "descriptor_ui": "D003858",
+       "descriptor_label": "Dependency (Psychology)",
+       "ab_article_count": 2,
+       "bc_article_count": 95,
+       "jaccard_ab": "0.001536098310291858678955453149001536098310",
+       "jaccard_bc": "0.007067400684421961017705698556762386549621",
+       "path_contribution": "0.001536098310292"
+      },
+      {
+       "descriptor_ui": "D014167",
+       "descriptor_label": "Transference (Psychology)",
+       "ab_article_count": 3,
+       "bc_article_count": 55,
+       "jaccard_ab": "0.001456310679611650485436893203883495145631",
+       "jaccard_bc": "0.003862088336493223790464152798258549259181",
+       "path_contribution": "0.001456310679612"
+      },
+      {
+       "descriptor_ui": "D009341",
+       "descriptor_label": "Negativism",
+       "ab_article_count": 1,
+       "bc_article_count": 39,
+       "jaccard_ab": "0.001440922190201729106628242074927953890490",
+       "jaccard_bc": "0.003025835984172550236635891069904569788191",
+       "path_contribution": "0.001440922190202"
+      },
+      {
+       "descriptor_ui": "D011574",
+       "descriptor_label": "Psychoanalytic Theory",
+       "ab_article_count": 5,
+       "bc_article_count": 113,
+       "jaccard_ab": "0.001410437235543018335684062059238363892807",
+       "jaccard_bc": "0.007211231652839821314613911933631142310147",
+       "path_contribution": "0.001410437235543"
+      },
+      {
+       "descriptor_ui": "D012929",
+       "descriptor_label": "Social Distance",
+       "ab_article_count": 1,
+       "bc_article_count": 29,
+       "jaccard_ab": "0.001133786848072562358276643990929705215420",
+       "jaccard_bc": "0.002215939481928631466340643386566822037136",
+       "path_contribution": "0.001133786848073"
+      },
+      {
+       "descriptor_ui": "D008388",
+       "descriptor_label": "Marital Therapy",
+       "ab_article_count": 1,
+       "bc_article_count": 20,
+       "jaccard_ab": "0.001127395715896279594137542277339346110485",
+       "jaccard_bc": "0.001526601022822685291199145103427219296237",
+       "path_contribution": "0.001127395715896"
+      },
+      {
+       "descriptor_ui": "D012752",
+       "descriptor_label": "Shame",
+       "ab_article_count": 1,
+       "bc_article_count": 86,
+       "jaccard_ab": "0.0009960159362549800796812749003984063745020",
+       "jaccard_bc": "0.006538929440389294403892944038929440389294",
+       "path_contribution": "0.000996015936255"
+      },
+      {
+       "descriptor_ui": "D006380",
+       "descriptor_label": "Helplessness, Learned",
+       "ab_article_count": 1,
+       "bc_article_count": 142,
+       "jaccard_ab": "0.0009487666034155597722960151802656546489564",
+       "jaccard_bc": "0.01080176479537501901719154115320249505553",
+       "path_contribution": "0.000948766603416"
+      },
+      {
+       "descriptor_ui": "D003674",
+       "descriptor_label": "Defense Mechanisms",
+       "ab_article_count": 4,
+       "bc_article_count": 545,
+       "jaccard_ab": "0.0008972633467922835352175863615971287572903",
+       "jaccard_bc": "0.03374613003095975232198142414860681114551",
+       "path_contribution": "0.000897263346792"
+      },
+      {
+       "descriptor_ui": "D019260",
+       "descriptor_label": "Expressed Emotion",
+       "ab_article_count": 1,
+       "bc_article_count": 60,
+       "jaccard_ab": "0.0008795074758135444151275285839929639401935",
+       "jaccard_bc": "0.004507550146495379761099842235744872661708",
+       "path_contribution": "0.000879507475814"
+      },
+      {
+       "descriptor_ui": "D009013",
+       "descriptor_label": "Morale",
+       "ab_article_count": 1,
+       "bc_article_count": 55,
+       "jaccard_ab": "0.0008764241893076248904469763365468886941280",
+       "jaccard_bc": "0.004129129129129129129129129129129129129129",
+       "path_contribution": "0.000876424189308"
+      },
+      {
+       "descriptor_ui": "D011573",
+       "descriptor_label": "Psychoanalytic Interpretation",
+       "ab_article_count": 2,
+       "bc_article_count": 66,
+       "jaccard_ab": "0.0008565310492505353319057815845824411134904",
+       "jaccard_bc": "0.004550468836183121897407611693325979040265",
+       "path_contribution": "0.000856531049251"
+      }
+     ],
+     "rank_proof": {
+      "method": "exact_integer_rational_bounds_then_python_decimal_refinement",
+      "bound_scale_exponent": 21,
+      "decimal_guard_scaled_units": 1000000,
+      "zero_target_nonnegative_shortcut": false,
+      "bound_proven_at_or_above_count": 20,
+      "bound_proven_below_count": 25902,
+      "exact_decimal_refinement_count": 1,
+      "exact_decimal_at_or_above_count": 1,
+      "partition_candidate_count": 25923
+     }
+    },
+    {
+     "minimum_support_articles": 5,
+     "endpoint_a_article_support": 52,
+     "target_c_article_support": 12285,
+     "direct_ac_article_count": 1,
+     "eligible_candidate_count": 26238,
+     "target_persisted_score": "0.081864130303279",
+     "target_worst_tie_rank": 21,
+     "target_rank_fraction": "0.0008003658815458495312142693802881317173565",
+     "target_top_5_percent": true,
+     "target_below_median": false,
+     "target_bridge_count": 306,
+     "top_target_bridges": [
+      {
+       "descriptor_ui": "D003073",
+       "descriptor_label": "Cognitive Dissonance",
+       "ab_article_count": 2,
+       "bc_article_count": 44,
+       "jaccard_ab": "0.005141388174807197943444730077120822622108",
+       "jaccard_bc": "0.003497615262321144674085850556438791732909",
+       "path_contribution": "0.003497615262321"
+      },
+      {
+       "descriptor_ui": "D007207",
+       "descriptor_label": "Individuation",
+       "ab_article_count": 2,
+       "bc_article_count": 97,
+       "jaccard_ab": "0.002089864158829676071055381400208986415883",
+       "jaccard_bc": "0.007407407407407407407407407407407407407407",
+       "path_contribution": "0.002089864158830"
+      },
+      {
+       "descriptor_ui": "D005196",
+       "descriptor_label": "Family Therapy",
+       "ab_article_count": 8,
+       "bc_article_count": 114,
+       "jaccard_ab": "0.002043944813490035769034236075625958099131",
+       "jaccard_bc": "0.007106788853562745464746586871142696839349",
+       "path_contribution": "0.002043944813490"
+      },
+      {
+       "descriptor_ui": "D035863",
+       "descriptor_label": "Moral Development",
+       "ab_article_count": 1,
+       "bc_article_count": 24,
+       "jaccard_ab": "0.002320185614849187935034802784222737819026",
+       "jaccard_bc": "0.001898583972786963056720196187010521319516",
+       "path_contribution": "0.001898583972787"
+      },
+      {
+       "descriptor_ui": "D005219",
+       "descriptor_label": "Father-Child Relations",
+       "ab_article_count": 3,
+       "bc_article_count": 80,
+       "jaccard_ab": "0.001872659176029962546816479400749063670412",
+       "jaccard_bc": "0.005814798662596307602849251344672190725396",
+       "path_contribution": "0.001872659176030"
+      },
+      {
+       "descriptor_ui": "D013598",
+       "descriptor_label": "Systems Theory",
+       "ab_article_count": 4,
+       "bc_article_count": 25,
+       "jaccard_ab": "0.002721088435374149659863945578231292517007",
+       "jaccard_bc": "0.001827218242946937582224820932612191200117",
+       "path_contribution": "0.001827218242947"
+      },
+      {
+       "descriptor_ui": "D011582",
+       "descriptor_label": "Psychological Theory",
+       "ab_article_count": 10,
+       "bc_article_count": 234,
+       "jaccard_ab": "0.001740644038294168842471714534377719756310",
+       "jaccard_bc": "0.01318012842176410949645150388644812436634",
+       "path_contribution": "0.001740644038294"
+      },
+      {
+       "descriptor_ui": "D018187",
+       "descriptor_label": "Personal Construct Theory",
+       "ab_article_count": 1,
+       "bc_article_count": 81,
+       "jaccard_ab": "0.001594896331738437001594896331738437001595",
+       "jaccard_bc": "0.006338028169014084507042253521126760563380",
+       "path_contribution": "0.001594896331738"
+      },
+      {
+       "descriptor_ui": "D003858",
+       "descriptor_label": "Dependency (Psychology)",
+       "ab_article_count": 2,
+       "bc_article_count": 95,
+       "jaccard_ab": "0.001536098310291858678955453149001536098310",
+       "jaccard_bc": "0.007067400684421961017705698556762386549621",
+       "path_contribution": "0.001536098310292"
+      },
+      {
+       "descriptor_ui": "D014167",
+       "descriptor_label": "Transference (Psychology)",
+       "ab_article_count": 3,
+       "bc_article_count": 55,
+       "jaccard_ab": "0.001456310679611650485436893203883495145631",
+       "jaccard_bc": "0.003862088336493223790464152798258549259181",
+       "path_contribution": "0.001456310679612"
+      },
+      {
+       "descriptor_ui": "D009341",
+       "descriptor_label": "Negativism",
+       "ab_article_count": 1,
+       "bc_article_count": 39,
+       "jaccard_ab": "0.001440922190201729106628242074927953890490",
+       "jaccard_bc": "0.003025835984172550236635891069904569788191",
+       "path_contribution": "0.001440922190202"
+      },
+      {
+       "descriptor_ui": "D011574",
+       "descriptor_label": "Psychoanalytic Theory",
+       "ab_article_count": 5,
+       "bc_article_count": 113,
+       "jaccard_ab": "0.001410437235543018335684062059238363892807",
+       "jaccard_bc": "0.007211231652839821314613911933631142310147",
+       "path_contribution": "0.001410437235543"
+      },
+      {
+       "descriptor_ui": "D012929",
+       "descriptor_label": "Social Distance",
+       "ab_article_count": 1,
+       "bc_article_count": 29,
+       "jaccard_ab": "0.001133786848072562358276643990929705215420",
+       "jaccard_bc": "0.002215939481928631466340643386566822037136",
+       "path_contribution": "0.001133786848073"
+      },
+      {
+       "descriptor_ui": "D008388",
+       "descriptor_label": "Marital Therapy",
+       "ab_article_count": 1,
+       "bc_article_count": 20,
+       "jaccard_ab": "0.001127395715896279594137542277339346110485",
+       "jaccard_bc": "0.001526601022822685291199145103427219296237",
+       "path_contribution": "0.001127395715896"
+      },
+      {
+       "descriptor_ui": "D012752",
+       "descriptor_label": "Shame",
+       "ab_article_count": 1,
+       "bc_article_count": 86,
+       "jaccard_ab": "0.0009960159362549800796812749003984063745020",
+       "jaccard_bc": "0.006538929440389294403892944038929440389294",
+       "path_contribution": "0.000996015936255"
+      },
+      {
+       "descriptor_ui": "D006380",
+       "descriptor_label": "Helplessness, Learned",
+       "ab_article_count": 1,
+       "bc_article_count": 142,
+       "jaccard_ab": "0.0009487666034155597722960151802656546489564",
+       "jaccard_bc": "0.01080176479537501901719154115320249505553",
+       "path_contribution": "0.000948766603416"
+      },
+      {
+       "descriptor_ui": "D003674",
+       "descriptor_label": "Defense Mechanisms",
+       "ab_article_count": 4,
+       "bc_article_count": 545,
+       "jaccard_ab": "0.0008972633467922835352175863615971287572903",
+       "jaccard_bc": "0.03374613003095975232198142414860681114551",
+       "path_contribution": "0.000897263346792"
+      },
+      {
+       "descriptor_ui": "D019260",
+       "descriptor_label": "Expressed Emotion",
+       "ab_article_count": 1,
+       "bc_article_count": 60,
+       "jaccard_ab": "0.0008795074758135444151275285839929639401935",
+       "jaccard_bc": "0.004507550146495379761099842235744872661708",
+       "path_contribution": "0.000879507475814"
+      },
+      {
+       "descriptor_ui": "D009013",
+       "descriptor_label": "Morale",
+       "ab_article_count": 1,
+       "bc_article_count": 55,
+       "jaccard_ab": "0.0008764241893076248904469763365468886941280",
+       "jaccard_bc": "0.004129129129129129129129129129129129129129",
+       "path_contribution": "0.000876424189308"
+      },
+      {
+       "descriptor_ui": "D011573",
+       "descriptor_label": "Psychoanalytic Interpretation",
+       "ab_article_count": 2,
+       "bc_article_count": 66,
+       "jaccard_ab": "0.0008565310492505353319057815845824411134904",
+       "jaccard_bc": "0.004550468836183121897407611693325979040265",
+       "path_contribution": "0.000856531049251"
+      }
+     ],
+     "rank_proof": {
+      "method": "exact_integer_rational_bounds_then_python_decimal_refinement",
+      "bound_scale_exponent": 21,
+      "decimal_guard_scaled_units": 1000000,
+      "zero_target_nonnegative_shortcut": false,
+      "bound_proven_at_or_above_count": 20,
+      "bound_proven_below_count": 26217,
+      "exact_decimal_refinement_count": 1,
+      "exact_decimal_at_or_above_count": 1,
+      "partition_candidate_count": 26238
+     }
+    }
+   ]
+  },
+  {
+   "id": "generated-hard-2013-03-d016082-d055609",
+   "kind": "hard_negative",
+   "split": "development",
+   "label_scope": "ontology_generated_structural_control_proposal_not_verified_absence_of_a_relationship",
+   "cutoff": "2012-12-31",
+   "endpoint_a": {
+    "descriptor_ui": "D016082",
+    "descriptor_label": "Solar System"
+   },
+   "target_c": {
+    "descriptor_ui": "D055609",
+    "descriptor_label": "Stars, Celestial"
+   },
+   "support_runs": [
+    {
+     "minimum_support_articles": 10,
+     "endpoint_a_article_support": 307,
+     "target_c_article_support": 36,
+     "direct_ac_article_count": 3,
+     "eligible_candidate_count": 25923,
+     "target_persisted_score": "0.201379289224312",
+     "target_worst_tie_rank": 25,
+     "target_rank_fraction": "0.0009643945530995640936619989970296647764533",
+     "target_top_5_percent": true,
+     "target_below_median": false,
+     "target_bridge_count": 104,
+     "top_target_bridges": [
+      {
+       "descriptor_ui": "D019419",
+       "descriptor_label": "Evolution, Planetary",
+       "ab_article_count": 24,
+       "bc_article_count": 8,
+       "jaccard_ab": "0.05063291139240506329113924050632911392405",
+       "jaccard_bc": "0.03652968036529680365296803652968036529680",
+       "path_contribution": "0.036529680365297"
+      },
+      {
+       "descriptor_ui": "D016083",
+       "descriptor_label": "Planets",
+       "ab_article_count": 37,
+       "bc_article_count": 7,
+       "jaccard_ab": "0.08371040723981900452488687782805429864253",
+       "jaccard_bc": "0.03482587064676616915422885572139303482587",
+       "path_contribution": "0.034825870646766"
+      },
+      {
+       "descriptor_ui": "D018559",
+       "descriptor_label": "Exobiology",
+       "ab_article_count": 27,
+       "bc_article_count": 9,
+       "jaccard_ab": "0.03958944281524926686217008797653958944282",
+       "jaccard_bc": "0.02097902097902097902097902097902097902098",
+       "path_contribution": "0.020979020979021"
+      },
+      {
+       "descriptor_ui": "D001256",
+       "descriptor_label": "Astronomy",
+       "ab_article_count": 32,
+       "bc_article_count": 7,
+       "jaccard_ab": "0.04833836858006042296072507552870090634441",
+       "jaccard_bc": "0.01682692307692307692307692307692307692308",
+       "path_contribution": "0.016826923076923"
+      },
+      {
+       "descriptor_ui": "D019443",
+       "descriptor_label": "Cosmic Dust",
+       "ab_article_count": 13,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.03241895261845386533665835411471321695761",
+       "jaccard_bc": "0.01418439716312056737588652482269503546099",
+       "path_contribution": "0.014184397163121"
+      },
+      {
+       "descriptor_ui": "D005118",
+       "descriptor_label": "Extraterrestrial Environment",
+       "ab_article_count": 75,
+       "bc_article_count": 17,
+       "jaccard_ab": "0.05307855626326963906581740976645435244161",
+       "jaccard_bc": "0.01416666666666666666666666666666666666667",
+       "path_contribution": "0.014166666666667"
+      },
+      {
+       "descriptor_ui": "D019110",
+       "descriptor_label": "Meteoroids",
+       "ab_article_count": 27,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.04515050167224080267558528428093645484950",
+       "jaccard_bc": "0.005681818181818181818181818181818181818182",
+       "path_contribution": "0.005681818181818"
+      },
+      {
+       "descriptor_ui": "D018561",
+       "descriptor_label": "Space Simulation",
+       "ab_article_count": 3,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.005628517823639774859287054409005628517824",
+       "jaccard_bc": "0.007604562737642585551330798479087452471483",
+       "path_contribution": "0.005628517823640"
+      },
+      {
+       "descriptor_ui": "D019418",
+       "descriptor_label": "Evolution, Chemical",
+       "ab_article_count": 4,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.0064",
+       "jaccard_bc": "0.005617977528089887640449438202247191011236",
+       "path_contribution": "0.005617977528090"
+      },
+      {
+       "descriptor_ui": "D003359",
+       "descriptor_label": "Cosmic Radiation",
+       "ab_article_count": 9,
+       "bc_article_count": 3,
+       "jaccard_ab": "0.009857612267250821467688937568455640744797",
+       "jaccard_bc": "0.004629629629629629629629629629629629629630",
+       "path_contribution": "0.004629629629630"
+      },
+      {
+       "descriptor_ui": "D018531",
+       "descriptor_label": "Spacecraft",
+       "ab_article_count": 8,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.007017543859649122807017543859649122807018",
+       "jaccard_bc": "0.004581901489117983963344788087056128293242",
+       "path_contribution": "0.004581901489118"
+      },
+      {
+       "descriptor_ui": "D055580",
+       "descriptor_label": "Astronomical Phenomena",
+       "ab_article_count": 21,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.04142011834319526627218934911242603550296",
+       "jaccard_bc": "0.00390625",
+       "path_contribution": "0.003906250000000"
+      },
+      {
+       "descriptor_ui": "D019445",
+       "descriptor_label": "Solar Activity",
+       "ab_article_count": 8,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.01486988847583643122676579925650557620818",
+       "jaccard_bc": "0.003649635036496350364963503649635036496350",
+       "path_contribution": "0.003649635036496"
+      },
+      {
+       "descriptor_ui": "D055608",
+       "descriptor_label": "Galaxies",
+       "ab_article_count": 1,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.003125",
+       "jaccard_bc": "0.04166666666666666666666666666666666666667",
+       "path_contribution": "0.003125000000000"
+      },
+      {
+       "descriptor_ui": "D061351",
+       "descriptor_label": "Telescopes",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.003076923076923076923076923076923076923077",
+       "jaccard_bc": "0.01851851851851851851851851851851851851852",
+       "path_contribution": "0.003076923076923"
+      },
+      {
+       "descriptor_ui": "D018534",
+       "descriptor_label": "Earth (Planet)",
+       "ab_article_count": 34,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.03756906077348066298342541436464088397790",
+       "jaccard_bc": "0.003003003003003003003003003003003003003003",
+       "path_contribution": "0.003003003003003"
+      },
+      {
+       "descriptor_ui": "D016081",
+       "descriptor_label": "Moon",
+       "ab_article_count": 18,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.02917341977309562398703403565640194489465",
+       "jaccard_bc": "0.002754820936639118457300275482093663911846",
+       "path_contribution": "0.002754820936639"
+      },
+      {
+       "descriptor_ui": "D001678",
+       "descriptor_label": "Biogenesis",
+       "ab_article_count": 21,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.01174496644295302013422818791946308724832",
+       "jaccard_bc": "0.002607561929595827900912646675358539765319",
+       "path_contribution": "0.002607561929596"
+      },
+      {
+       "descriptor_ui": "D055871",
+       "descriptor_label": "Tidal Waves",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.002252252252252252252252252252252252252252",
+       "jaccard_bc": "0.005780346820809248554913294797687861271676",
+       "path_contribution": "0.002252252252252"
+      },
+      {
+       "descriptor_ui": "D019369",
+       "descriptor_label": "Life",
+       "ab_article_count": 12,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.01509433962264150943396226415094339622642",
+       "jaccard_bc": "0.001869158878504672897196261682242990654206",
+       "path_contribution": "0.001869158878505"
+      }
+     ],
+     "rank_proof": {
+      "method": "exact_integer_rational_bounds_then_python_decimal_refinement",
+      "bound_scale_exponent": 21,
+      "decimal_guard_scaled_units": 1000000,
+      "zero_target_nonnegative_shortcut": false,
+      "bound_proven_at_or_above_count": 24,
+      "bound_proven_below_count": 25898,
+      "exact_decimal_refinement_count": 1,
+      "exact_decimal_at_or_above_count": 1,
+      "partition_candidate_count": 25923
+     }
+    },
+    {
+     "minimum_support_articles": 5,
+     "endpoint_a_article_support": 307,
+     "target_c_article_support": 36,
+     "direct_ac_article_count": 3,
+     "eligible_candidate_count": 26238,
+     "target_persisted_score": "0.201379289224312",
+     "target_worst_tie_rank": 25,
+     "target_rank_fraction": "0.0009528165256498208704931778336763472825673",
+     "target_top_5_percent": true,
+     "target_below_median": false,
+     "target_bridge_count": 104,
+     "top_target_bridges": [
+      {
+       "descriptor_ui": "D019419",
+       "descriptor_label": "Evolution, Planetary",
+       "ab_article_count": 24,
+       "bc_article_count": 8,
+       "jaccard_ab": "0.05063291139240506329113924050632911392405",
+       "jaccard_bc": "0.03652968036529680365296803652968036529680",
+       "path_contribution": "0.036529680365297"
+      },
+      {
+       "descriptor_ui": "D016083",
+       "descriptor_label": "Planets",
+       "ab_article_count": 37,
+       "bc_article_count": 7,
+       "jaccard_ab": "0.08371040723981900452488687782805429864253",
+       "jaccard_bc": "0.03482587064676616915422885572139303482587",
+       "path_contribution": "0.034825870646766"
+      },
+      {
+       "descriptor_ui": "D018559",
+       "descriptor_label": "Exobiology",
+       "ab_article_count": 27,
+       "bc_article_count": 9,
+       "jaccard_ab": "0.03958944281524926686217008797653958944282",
+       "jaccard_bc": "0.02097902097902097902097902097902097902098",
+       "path_contribution": "0.020979020979021"
+      },
+      {
+       "descriptor_ui": "D001256",
+       "descriptor_label": "Astronomy",
+       "ab_article_count": 32,
+       "bc_article_count": 7,
+       "jaccard_ab": "0.04833836858006042296072507552870090634441",
+       "jaccard_bc": "0.01682692307692307692307692307692307692308",
+       "path_contribution": "0.016826923076923"
+      },
+      {
+       "descriptor_ui": "D019443",
+       "descriptor_label": "Cosmic Dust",
+       "ab_article_count": 13,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.03241895261845386533665835411471321695761",
+       "jaccard_bc": "0.01418439716312056737588652482269503546099",
+       "path_contribution": "0.014184397163121"
+      },
+      {
+       "descriptor_ui": "D005118",
+       "descriptor_label": "Extraterrestrial Environment",
+       "ab_article_count": 75,
+       "bc_article_count": 17,
+       "jaccard_ab": "0.05307855626326963906581740976645435244161",
+       "jaccard_bc": "0.01416666666666666666666666666666666666667",
+       "path_contribution": "0.014166666666667"
+      },
+      {
+       "descriptor_ui": "D019110",
+       "descriptor_label": "Meteoroids",
+       "ab_article_count": 27,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.04515050167224080267558528428093645484950",
+       "jaccard_bc": "0.005681818181818181818181818181818181818182",
+       "path_contribution": "0.005681818181818"
+      },
+      {
+       "descriptor_ui": "D018561",
+       "descriptor_label": "Space Simulation",
+       "ab_article_count": 3,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.005628517823639774859287054409005628517824",
+       "jaccard_bc": "0.007604562737642585551330798479087452471483",
+       "path_contribution": "0.005628517823640"
+      },
+      {
+       "descriptor_ui": "D019418",
+       "descriptor_label": "Evolution, Chemical",
+       "ab_article_count": 4,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.0064",
+       "jaccard_bc": "0.005617977528089887640449438202247191011236",
+       "path_contribution": "0.005617977528090"
+      },
+      {
+       "descriptor_ui": "D003359",
+       "descriptor_label": "Cosmic Radiation",
+       "ab_article_count": 9,
+       "bc_article_count": 3,
+       "jaccard_ab": "0.009857612267250821467688937568455640744797",
+       "jaccard_bc": "0.004629629629629629629629629629629629629630",
+       "path_contribution": "0.004629629629630"
+      },
+      {
+       "descriptor_ui": "D018531",
+       "descriptor_label": "Spacecraft",
+       "ab_article_count": 8,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.007017543859649122807017543859649122807018",
+       "jaccard_bc": "0.004581901489117983963344788087056128293242",
+       "path_contribution": "0.004581901489118"
+      },
+      {
+       "descriptor_ui": "D055580",
+       "descriptor_label": "Astronomical Phenomena",
+       "ab_article_count": 21,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.04142011834319526627218934911242603550296",
+       "jaccard_bc": "0.00390625",
+       "path_contribution": "0.003906250000000"
+      },
+      {
+       "descriptor_ui": "D019445",
+       "descriptor_label": "Solar Activity",
+       "ab_article_count": 8,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.01486988847583643122676579925650557620818",
+       "jaccard_bc": "0.003649635036496350364963503649635036496350",
+       "path_contribution": "0.003649635036496"
+      },
+      {
+       "descriptor_ui": "D055608",
+       "descriptor_label": "Galaxies",
+       "ab_article_count": 1,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.003125",
+       "jaccard_bc": "0.04166666666666666666666666666666666666667",
+       "path_contribution": "0.003125000000000"
+      },
+      {
+       "descriptor_ui": "D061351",
+       "descriptor_label": "Telescopes",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.003076923076923076923076923076923076923077",
+       "jaccard_bc": "0.01851851851851851851851851851851851851852",
+       "path_contribution": "0.003076923076923"
+      },
+      {
+       "descriptor_ui": "D018534",
+       "descriptor_label": "Earth (Planet)",
+       "ab_article_count": 34,
+       "bc_article_count": 2,
+       "jaccard_ab": "0.03756906077348066298342541436464088397790",
+       "jaccard_bc": "0.003003003003003003003003003003003003003003",
+       "path_contribution": "0.003003003003003"
+      },
+      {
+       "descriptor_ui": "D016081",
+       "descriptor_label": "Moon",
+       "ab_article_count": 18,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.02917341977309562398703403565640194489465",
+       "jaccard_bc": "0.002754820936639118457300275482093663911846",
+       "path_contribution": "0.002754820936639"
+      },
+      {
+       "descriptor_ui": "D001678",
+       "descriptor_label": "Biogenesis",
+       "ab_article_count": 21,
+       "bc_article_count": 4,
+       "jaccard_ab": "0.01174496644295302013422818791946308724832",
+       "jaccard_bc": "0.002607561929595827900912646675358539765319",
+       "path_contribution": "0.002607561929596"
+      },
+      {
+       "descriptor_ui": "D055871",
+       "descriptor_label": "Tidal Waves",
+       "ab_article_count": 1,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.002252252252252252252252252252252252252252",
+       "jaccard_bc": "0.005780346820809248554913294797687861271676",
+       "path_contribution": "0.002252252252252"
+      },
+      {
+       "descriptor_ui": "D019369",
+       "descriptor_label": "Life",
+       "ab_article_count": 12,
+       "bc_article_count": 1,
+       "jaccard_ab": "0.01509433962264150943396226415094339622642",
+       "jaccard_bc": "0.001869158878504672897196261682242990654206",
+       "path_contribution": "0.001869158878505"
+      }
+     ],
+     "rank_proof": {
+      "method": "exact_integer_rational_bounds_then_python_decimal_refinement",
+      "bound_scale_exponent": 21,
+      "decimal_guard_scaled_units": 1000000,
+      "zero_target_nonnegative_shortcut": false,
+      "bound_proven_at_or_above_count": 24,
+      "bound_proven_below_count": 26213,
+      "exact_decimal_refinement_count": 1,
+      "exact_decimal_at_or_above_count": 1,
+      "partition_candidate_count": 26238
+     }
+    }
+   ]
+  }
+ ],
+ "development_summary": {
+  "10": {
+   "source_labeled_positive": {
+    "case_count": 3,
+    "top_5_percent_count": 0,
+    "below_median_count": 0
+   },
+   "hard_negative": {
+    "case_count": 4,
+    "top_5_percent_count": 3,
+    "below_median_count": 0
+   },
+   "distant_negative": {
+    "case_count": 4,
+    "top_5_percent_count": 0,
+    "below_median_count": 1
+   }
+  },
+  "5": {
+   "source_labeled_positive": {
+    "case_count": 3,
+    "top_5_percent_count": 0,
+    "below_median_count": 0
+   },
+   "hard_negative": {
+    "case_count": 4,
+    "top_5_percent_count": 3,
+    "below_median_count": 0
+   },
+   "distant_negative": {
+    "case_count": 4,
+    "top_5_percent_count": 0,
+    "below_median_count": 1
+   }
+  }
+ },
+ "runtime": {
+  "scoring_elapsed_seconds": 114.185,
+  "generated_cache_bytes": 810668332,
+  "compiler_version": "g++.EXE (MinGW-W64 x86_64-msvcrt-posix-seh, built by Brecht Sanders, r3) 16.1.0",
+  "command": "python -m pipeline.benchmark.bioasq_v2_development"
+ },
+ "limitations": [
+  "Only development cases were scored; the output is not held-out validation.",
+  "Case identities and source counts were known before the source-informed successor and formula freezes.",
+  "The graph uses article-level MeSH co-occurrence rather than LION's sentence-level heterogeneous entity graph.",
+  "Native integer rational bounds only screen rank comparisons; the target and every boundary-intersecting candidate use the frozen Python Decimal order, and no native numeric value is persisted as a score.",
+  "Source-labelled positives are not independently adjudicated discovery truth.",
+  "Ontology-generated controls are not verified absences of relationships or non-academic knowledge.",
+  "No result contributes metric-v3 readiness or authorizes an LLM interpretation layer."
+ ]
+}

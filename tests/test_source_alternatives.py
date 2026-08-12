@@ -45,6 +45,12 @@ def test_current_alternatives_keep_original_readiness_at_zero():
         "bioasq-2013-semantics.json"
     )
     assert bioasq["pilot_protocol"]["path"].endswith("bioasq-pilot.json")
+    assert bioasq["pilot_development_measurement"]["path"].endswith(
+        "bioasq-v2-development-084cc2a9e381.json"
+    )
+    assert bioasq["pilot_graph_cache_manifest"]["path"].endswith(
+        "bioasq-v2-graph-cache-084cc2a9e381-8ebd0c227d93.json"
+    )
 
 
 def test_alternative_cannot_claim_original_gate_readiness(tmp_path):
@@ -155,6 +161,28 @@ def test_bioasq_initial_formula_is_checksum_pinned(tmp_path):
     with pytest.raises(
         SourceAlternativeContractError,
         match="formula contract checksum mismatch",
+    ):
+        audit_source_alternatives(_write_payload(tmp_path, payload))
+
+
+def test_bioasq_development_measurement_is_checksum_pinned(tmp_path):
+    payload = json.loads(ALTERNATIVES_PATH.read_text(encoding="utf-8"))
+    payload["alternatives"][0]["pilot_development_measurement"]["sha256"] = "0" * 64
+
+    with pytest.raises(
+        SourceAlternativeContractError,
+        match="development measurement checksum mismatch",
+    ):
+        audit_source_alternatives(_write_payload(tmp_path, payload))
+
+
+def test_bioasq_graph_manifest_is_checksum_pinned(tmp_path):
+    payload = json.loads(ALTERNATIVES_PATH.read_text(encoding="utf-8"))
+    payload["alternatives"][0]["pilot_graph_cache_manifest"]["sha256"] = "0" * 64
+
+    with pytest.raises(
+        SourceAlternativeContractError,
+        match="graph manifest checksum mismatch",
     ):
         audit_source_alternatives(_write_payload(tmp_path, payload))
 

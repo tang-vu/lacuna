@@ -1,0 +1,96 @@
+{
+ "schema_version": 1,
+ "purpose": "case_blind_graph_cache_without_metric_output",
+ "formula_contract": {
+  "path": "benchmarks/v3/bioasq-formula-v2-initial.json",
+  "sha256": "084cc2a9e3810119f10190fcc5fdccb48f05195d2ecf17b2115214bc07e7342e",
+  "bytes": 9036
+ },
+ "successor_protocol": {
+  "path": "benchmarks/v3/bioasq-pilot-v2.json",
+  "sha256": "48e8a9b932dfee884a4062bbe4a32da2353b74f6305bdf5e255810ed19cef833",
+  "bytes": 8840
+ },
+ "builder_source": {
+  "path": "pipeline/benchmark/bioasq_v2_development.py",
+  "sha256": "8ebd0c227d93b1d717e856402484a67650091b909c62926b0e0b7971a4ac82de",
+  "bytes": 52910
+ },
+ "native_pair_counter_source": {
+  "path": "pipeline/benchmark/native/bioasq_pair_counts.cpp",
+  "sha256": "ab8264e9ec8a68ff47abcb4cca220ff37a95a594ca585f3b5daa1de31747d841",
+  "bytes": 8880
+ },
+ "native_rank_screener_source": {
+  "path": "pipeline/benchmark/native/bioasq_score_bounds.cpp",
+  "sha256": "069ce4afcf01c90b56e429ce4c1ac71838e105488ca58066f2daf7b280c49c59",
+  "bytes": 8702
+ },
+ "source_snapshot": {
+  "sha256": "c4f738af8835b9fc300488d484efd633fd4137b149cd852b66a839651e328f68",
+  "bytes": 5471741580
+ },
+ "descriptor_vocabulary": {
+  "sha256": "c928973ae228ebd03ceeec8950b31f63a867fc9dc2699ae1578e506f25739740",
+  "bytes": 16103897
+ },
+ "compiler_version": "g++.EXE (MinGW-W64 x86_64-msvcrt-posix-seh, built by Brecht Sanders, r3) 16.1.0",
+ "node_count": 26853,
+ "cutoff_years": [
+  2011,
+  2012
+ ],
+ "edge_headers": {
+  "2011": {
+   "node_count": 26853,
+   "cutoff_year": 2011,
+   "edge_count": 30875964,
+   "bytes": 247115146,
+   "sha256": "8111b27184fb545b01b0a3164a806b317339816c3c3977d8ea4f8cd1a5236259",
+   "native_stdout": "documents=10864645\nnodes=26853\npairs=360528378\nedges_2011=30875964\nedges_2012=31895136"
+  },
+  "2012": {
+   "node_count": 26853,
+   "cutoff_year": 2012,
+   "edge_count": 31895136,
+   "bytes": 255268522,
+   "sha256": "a0e1d042aea07377d6a5a3bf8584a86f00037100dedd1dc3c83f1c16edf7a6c4"
+  }
+ },
+ "generated_files": {
+  "development-cutoffs.corpus.bin": {
+   "sha256": "ce3f8d942e8f63c8621a6e399d7c424b899cc051c956aee2b973451f123a378b",
+   "bytes": 305145230
+  },
+  "nodes.json": {
+   "sha256": "eee141bbdc2a27c31783438ccfa851d437a7f0a3d1da6162ba123ac764aecbb0",
+   "bytes": 2968532
+  },
+  "native-build.json": {
+   "sha256": "e2ec523b218989d0a1573c932c3c5cecaff21af4535207974af36e598ce915d3",
+   "bytes": 814
+  },
+  "bioasq_pair_counts.exe": {
+   "sha256": "f8b4fabe012fbb8f8ba95c1efe191e59057f7d6f740cd285c3fed9ca06bfd4df",
+   "bytes": 83667
+  },
+  "score-bounds-native-build.json": {
+   "sha256": "ac203b5f3840a722bbf90ff4a5c9d62b94113cb370a36e8c35aa4c9d42adf6cc",
+   "bytes": 816
+  },
+  "bioasq_score_bounds.exe": {
+   "sha256": "7e7c9fb03193c505176011c94efcc0274d356a46b8262faffc283a64c283a217",
+   "bytes": 85605
+  },
+  "edges-2011.bin": {
+   "sha256": "8111b27184fb545b01b0a3164a806b317339816c3c3977d8ea4f8cd1a5236259",
+   "bytes": 247115146
+  },
+  "edges-2012.bin": {
+   "sha256": "a0e1d042aea07377d6a5a3bf8584a86f00037100dedd1dc3c83f1c16edf7a6c4",
+   "bytes": 255268522
+  }
+ },
+ "case_identities_or_labels_stored": false,
+ "metric_outputs_materialized": false
+}

@@ -24,6 +24,10 @@ from pipeline.benchmark.bioasq_semantics import (
 )
 from pipeline.benchmark.bioasq_pilot_compatibility import audit_compatibility_manifest
 from pipeline.benchmark.validate_bioasq_formula_v2 import audit_bioasq_formula_v2
+from pipeline.benchmark.validate_bioasq_v2_development import (
+    audit_bioasq_v2_graph_manifest,
+    audit_bioasq_v2_development,
+)
 from pipeline.benchmark.validate_bioasq_pilot import audit_bioasq_pilot
 from pipeline.benchmark.validate_bioasq_pilot_v2 import audit_bioasq_pilot_v2
 from pipeline.paths import REPO_ROOT
@@ -106,7 +110,10 @@ def _audit_public_sample_reference(value: object, context: str) -> None:
     sample = audit.get("bioasq_public_sample")
     mesh = audit.get("mesh_vocabulary")
     comparison = audit.get("maintained_current_pubmed_comparison")
-    _require(isinstance(sample, dict) and sample.get("article_count") == 5, f"{context}: wrong sample")
+    _require(
+        isinstance(sample, dict) and sample.get("article_count") == 5,
+        f"{context}: wrong sample",
+    )
     _require(
         isinstance(mesh, dict)
         and mesh.get("year") == 2013
@@ -329,6 +336,47 @@ def _audit_bioasq_formula_v2_reference(value: object, context: str) -> None:
     )
 
 
+def _audit_bioasq_v2_development_reference(value: object, context: str) -> None:
+    _require(isinstance(value, dict), f"{context}: missing development measurement")
+    _require(set(value) == {"path", "sha256"}, f"{context}: malformed measurement reference")
+    relative = Path(str(value["path"]))
+    _require(not relative.is_absolute() and ".." not in relative.parts, f"{context}: unsafe path")
+    path = REPO_ROOT / relative
+    _require(path.is_file(), f"{context}: referenced development measurement is missing")
+    _require(
+        isinstance(value.get("sha256"), str)
+        and len(value["sha256"]) == 64
+        and _sha256_file(path) == value["sha256"],
+        f"{context}: development measurement checksum mismatch",
+    )
+    audit = audit_bioasq_v2_development(path)
+    _require(
+        audit.status == "development_metric_output_initial_formula"
+        and audit.case_count == 11
+        and audit.heldout_case_count_computed == 0
+        and audit.primary_top_5_percent_count == 3
+        and audit.sensitivity_top_5_percent_count == 3
+        and audit.readiness_contribution == 0,
+        f"{context}: development measurement scope drifted",
+    )
+
+
+def _audit_bioasq_v2_graph_reference(value: object, context: str) -> None:
+    _require(isinstance(value, dict), f"{context}: missing graph manifest")
+    _require(set(value) == {"path", "sha256"}, f"{context}: malformed graph reference")
+    relative = Path(str(value["path"]))
+    _require(not relative.is_absolute() and ".." not in relative.parts, f"{context}: unsafe path")
+    path = REPO_ROOT / relative
+    _require(path.is_file(), f"{context}: referenced graph manifest is missing")
+    _require(
+        isinstance(value.get("sha256"), str)
+        and len(value["sha256"]) == 64
+        and _sha256_file(path) == value["sha256"],
+        f"{context}: graph manifest checksum mismatch",
+    )
+    audit_bioasq_v2_graph_manifest(path)
+
+
 def _audit_snapshot_reference(value: object, context: str) -> dict:
     _require(isinstance(value, dict), f"{context}: missing full snapshot audit")
     _require(set(value) == {"path", "sha256"}, f"{context}: malformed snapshot reference")
@@ -527,6 +575,14 @@ def audit_source_alternatives(
                     _audit_bioasq_formula_v2_reference(
                         entry.get("pilot_initial_formula_contract"),
                         f"{entry_id}.pilot_initial_formula_contract",
+                    )
+                    _audit_bioasq_v2_graph_reference(
+                        entry.get("pilot_graph_cache_manifest"),
+                        f"{entry_id}.pilot_graph_cache_manifest",
+                    )
+                    _audit_bioasq_v2_development_reference(
+                        entry.get("pilot_development_measurement"),
+                        f"{entry_id}.pilot_development_measurement",
                     )
                     _require(
                         snapshot["measured"]["article_count"] == declared["article_count"]

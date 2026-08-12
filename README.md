@@ -328,15 +328,24 @@ replaced, no formula or score was computed, and the result contributes zero metr
 that audit but still before any BioASQ formula or metric output. It preserves all 21 cases and
 splits, discloses that case-level source counts are known, and replaces the infeasible sensitivity
 20 with lower-support sensitivity 5 while retaining primary support 10. Its held-out layer is only
-score-unseen—not identity-, source-, or analyst-blinded. The next permitted action is to pin a
-separate initial formula contract before development output; v2 also contributes zero readiness.
+score-unseen—not identity-, source-, or analyst-blinded. Its initial formula and development
+measurement are now separately pinned; v2 still contributes zero readiness.
 
 That formula is now checksum-frozen in `benchmarks/v3/bioasq-formula-v2-initial.json`. It adapts
 LION's default open-discovery configuration to article-level MeSH: Jaccard edge weights, the minimum
 edge weight along each A–B–C path, and a sum across B. Direct A–C articles remain in the corpus and
 do not exclude a candidate. Decimal precision, score quantization, candidate universe, worst-tie
-ranking, feature exclusions, and held-out isolation are all fixed before development output. The
-next run is limited to 11 development cases at support 10 and 5; no held-out metric output exists.
+ranking, feature exclusions, and held-out isolation were all fixed before development output. The
+development-only run is now checksum-pinned for all 11 cases at support 10 and 5. None of the three
+source-labelled positives reaches the top 5% (their primary rank fractions are 5.24% to 6.86%),
+while three of four ontology-generated hard controls do (0.08% to 0.42%). Lowering support from 10
+to 5 changes no target score or bridge count in any case. This is poor development discrimination
+and a pattern consistent with structural-proximity confounding; it is not held-out validation, a
+successful gap metric, or metric-v3 readiness. Exactly zero held-out cases were computed. A
+committed case-blind graph manifest pins the compact corpus, both cutoff edge files, compiler, and
+executor identities so every exported count is auditable from a clean clone and replayable against
+the checksum-pinned local source without committing the 810 MB cache. A separately pinned
+post-development formula decision is required before held-out execution.
 
 ## Deployment
 

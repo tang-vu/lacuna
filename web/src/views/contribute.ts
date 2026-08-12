@@ -538,6 +538,8 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
   const compatibility = status.source_alternatives.bioasq_pilot_compatibility_audit;
   const pilotV2 = status.source_alternatives.bioasq_pilot_successor_protocol;
   const initialFormula = status.source_alternatives.bioasq_initial_formula_contract;
+  const development = status.source_alternatives.bioasq_development_measurement;
+  const primaryDevelopment = development.development_summary['10'];
   const sensitivityBlockerId = compatibility.decision.heldout_sensitivity_blockers['20'][0];
   const sensitivityBlocker = compatibility.measurement.cases.find(
     (entry) => entry.id === sensitivityBlockerId,
@@ -599,9 +601,17 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
           `${pilotV2.source_compatibility.primary_minimum_support_articles} plus sensitivity ` +
           `${pilotV2.source_compatibility.support_sensitivity_articles.join(', ')}. Its initial ` +
           `formula is now frozen as ${initialFormula.edge_weight.name} edge weights, minimum ` +
-          'A–B–C path aggregation, and sum accumulation across B. The next permitted run is the ' +
-          '11 development cases only; held-out output remains prohibited until a final formula ' +
-          'freeze. No metric output exists, and every BioASQ layer still contributes zero readiness.',
+          'A-B-C path aggregation, and sum accumulation across B. The development-only run is ' +
+          `complete for ${development.execution_isolation.case_count} cases at support 10 and 5: ` +
+          `${primaryDevelopment.source_labeled_positive.top_5_percent_count} of ` +
+          `${primaryDevelopment.source_labeled_positive.case_count} source-labelled positives ` +
+          `reached the top 5%, while ${primaryDevelopment.hard_negative.top_5_percent_count} of ` +
+          `${primaryDevelopment.hard_negative.case_count} ontology-generated hard controls did. ` +
+          'This is poor development discrimination and a pattern consistent with ' +
+          'structural-proximity confounding, not metric success. Held-out output remains ' +
+          'prohibited until a final ' +
+          `contract is frozen; ${development.execution_isolation.heldout_case_count_computed} ` +
+          'held-out cases were computed, and every BioASQ layer still contributes zero readiness.',
         progress(
           pinnedSources,
           sourceStatuses.length,

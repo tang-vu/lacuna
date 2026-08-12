@@ -381,6 +381,38 @@ export interface ProjectStatus {
       };
       execution_isolation: { revision_budget: 1 };
     };
+    bioasq_development_measurement: {
+      status: 'development_metric_output_initial_formula';
+      readiness_contribution: 0;
+      execution_isolation: {
+        split: 'development';
+        case_count: 11;
+        heldout_case_count_computed: 0;
+        heldout_scores_ranks_orderings_or_bridges_materialized: false;
+        formula_revision_budget_consumed: 0;
+      };
+      development_summary: Record<
+        '10' | '5',
+        Record<
+          'source_labeled_positive' | 'hard_negative' | 'distant_negative',
+          { case_count: number; top_5_percent_count: number; below_median_count: number }
+        >
+      >;
+      cases: Array<{
+        id: string;
+        kind: 'source_labeled_positive' | 'hard_negative' | 'distant_negative';
+        split: 'development';
+        support_runs: Array<{
+          minimum_support_articles: 10 | 5;
+          target_persisted_score: string;
+          target_worst_tie_rank: number;
+          eligible_candidate_count: number;
+          target_top_5_percent: boolean;
+          target_below_median: boolean;
+          target_bridge_count: number;
+        }>;
+      }>;
+    };
   };
   candidate_intake: {
     counts: { accepted: number; proposed: number; rejected: number };

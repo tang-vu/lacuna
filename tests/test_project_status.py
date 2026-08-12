@@ -12,7 +12,7 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 15
+    assert status["schema_version"] == 16
     assert status["status"] == "not_ready"
     assert status["historical_sources"] == {
         "ready": False,
@@ -148,6 +148,36 @@ def test_project_status_exposes_validator_results_without_claiming_readiness():
     )
     assert formula["execution_isolation"]["revision_budget"] == 1
     assert formula["claim_boundary"]["readiness_contribution"] == 0
+    development = status["source_alternatives"]["bioasq_development_measurement"]
+    assert development["status"] == "development_metric_output_initial_formula"
+    assert development["execution_isolation"] == {
+        "split": "development",
+        "case_count": 11,
+        "heldout_case_count_computed": 0,
+        "heldout_scores_ranks_orderings_or_bridges_materialized": False,
+        "formula_revision_budget_consumed": 0,
+    }
+    assert development["development_summary"]["10"] == {
+        "source_labeled_positive": {
+            "case_count": 3,
+            "top_5_percent_count": 0,
+            "below_median_count": 0,
+        },
+        "hard_negative": {
+            "case_count": 4,
+            "top_5_percent_count": 3,
+            "below_median_count": 0,
+        },
+        "distant_negative": {
+            "case_count": 4,
+            "top_5_percent_count": 0,
+            "below_median_count": 1,
+        },
+    }
+    assert development["development_summary"]["5"] == development[
+        "development_summary"
+    ]["10"]
+    assert development["readiness_contribution"] == 0
     assert len(status["source_alternatives"]["entries"]) == 3
     assert status["candidate_intake"]["counts"] == {
         "accepted": 2,
@@ -241,6 +271,7 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
         "bioasq_pilot_compatibility_audit",
         "bioasq_pilot_successor_protocol",
         "bioasq_initial_formula_contract",
+        "bioasq_development_measurement",
         "historical_inventories",
         "mbr_preservation_capture",
         "candidate_intake",
