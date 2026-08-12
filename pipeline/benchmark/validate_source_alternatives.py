@@ -31,6 +31,9 @@ from pipeline.benchmark.validate_bioasq_v2_development import (
     audit_bioasq_v2_graph_manifest,
     audit_bioasq_v2_development,
 )
+from pipeline.benchmark.validate_bioasq_v2_revision_development import (
+    audit_bioasq_v2_revision_development,
+)
 from pipeline.benchmark.validate_bioasq_pilot import audit_bioasq_pilot
 from pipeline.benchmark.validate_bioasq_pilot_v2 import audit_bioasq_pilot_v2
 from pipeline.paths import REPO_ROOT
@@ -387,6 +390,36 @@ def _audit_bioasq_v2_revision_reference(value: object, context: str) -> None:
     )
 
 
+def _audit_bioasq_v2_revision_development_reference(value: object, context: str) -> None:
+    _require(isinstance(value, dict), f"{context}: missing revision development measurement")
+    _require(
+        set(value) == {"path", "sha256"},
+        f"{context}: malformed revision development reference",
+    )
+    relative = Path(str(value["path"]))
+    _require(not relative.is_absolute() and ".." not in relative.parts, f"{context}: unsafe path")
+    path = REPO_ROOT / relative
+    _require(path.is_file(), f"{context}: referenced revision development result is missing")
+    _require(
+        isinstance(value.get("sha256"), str)
+        and len(value["sha256"]) == 64
+        and _sha256_file(path) == value["sha256"],
+        f"{context}: revision development checksum mismatch",
+    )
+    audit = audit_bioasq_v2_revision_development(path)
+    _require(
+        audit.case_count == 11
+        and audit.heldout_case_count_computed == 0
+        and audit.primary_positive_top5 == 1
+        and audit.primary_hard_top5 == 1
+        and audit.primary_distant_below_median == 1
+        and audit.gate_passed is False
+        and audit.mechanical_action == "terminate_pilot_before_heldout"
+        and audit.readiness_contribution == 0,
+        f"{context}: revision development terminal outcome drifted",
+    )
+
+
 def _audit_bioasq_v2_graph_reference(value: object, context: str) -> None:
     _require(isinstance(value, dict), f"{context}: missing graph manifest")
     _require(set(value) == {"path", "sha256"}, f"{context}: malformed graph reference")
@@ -613,6 +646,10 @@ def audit_source_alternatives(
                     _audit_bioasq_v2_revision_reference(
                         entry.get("pilot_revision_formula_contract"),
                         f"{entry_id}.pilot_revision_formula_contract",
+                    )
+                    _audit_bioasq_v2_revision_development_reference(
+                        entry.get("pilot_revision_development_measurement"),
+                        f"{entry_id}.pilot_revision_development_measurement",
                     )
                     _require(
                         snapshot["measured"]["article_count"] == declared["article_count"]

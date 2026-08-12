@@ -443,6 +443,49 @@ export interface ProjectStatus {
         fail_action: string;
       };
     };
+    bioasq_revision_development_measurement: {
+      status: 'revision_development_gate_failed_terminate_before_heldout';
+      readiness_contribution: 0;
+      execution_isolation: {
+        split: 'development';
+        case_count: 11;
+        heldout_case_count_computed: 0;
+        heldout_scores_ranks_orderings_or_bridges_materialized: false;
+        revision_number: 1;
+        revision_budget_consumed: 1;
+        revision_budget_remaining: 0;
+      };
+      revision_development_summary: Record<
+        '10' | '5',
+        Record<
+          'source_labeled_positive' | 'hard_negative' | 'distant_negative',
+          { case_count: number; top_5_percent_count: number; below_median_count: number }
+        >
+      >;
+      pre_registered_revision_development_decision: {
+        pre_registered_gate_passed: false;
+        support_checks: Record<
+          '10' | '5',
+          {
+            all_11_cases_evaluable: boolean;
+            positive_top_5_percent_count: number;
+            positive_requirement_at_least: number;
+            positive_requirement_passed: boolean;
+            hard_control_top_5_percent_count: number;
+            hard_control_requirement_allowed: number;
+            hard_control_requirement_passed: boolean;
+            distant_control_below_median_count: number;
+            distant_control_requirement_required: number;
+            distant_control_requirement_passed: boolean;
+            all_three_separation_requirements_passed: boolean;
+          }
+        >;
+        sensitivity_agreement_required: true;
+        sensitivity_agreement_passed: true;
+        mechanical_action: 'terminate_pilot_before_heldout';
+        readiness_contribution: 0;
+      };
+    };
   };
   candidate_intake: {
     counts: { accepted: number; proposed: number; rejected: number };

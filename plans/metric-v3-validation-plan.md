@@ -130,7 +130,16 @@ Jaccard edge weights, minimum aggregation along A-B-C paths, and sum accumulatio
 not an exact LION replication: the co-occurrence unit and entity graph differ, and direct A-C
 articles are retained. Decimal arithmetic, quantization, candidate and bridge sets, feature
 exclusions, worst-tie ranking, one-revision budget, and held-out isolation are fixed. The first run
-may include only the 11 development cases at support 10 and 5.
+included only the 11 development cases at support 10 and 5. It showed poor discrimination: 0/3
+source-labelled positives and 3/4 ontology-generated hard controls reached the top 5% at both
+supports. The single permitted revision was frozen after this output and before revision scores.
+It divided the unchanged indirect score by `1 + n_AC`, consuming the full revision budget.
+
+That revision has now failed its preregistered development gate at both supports: 1/3 positives
+reached the top 5% versus 2 required, 1/4 hard controls reached the top 5% versus 0 allowed, and
+1/4 distant controls fell below the median versus 4 required. The mechanical action is
+`terminate_pilot_before_heldout`. No held-out score, rank, ordering, or bridge was computed; no
+further revision is permitted; and the pilot remains at zero readiness.
 
 Primary documentation:
 
@@ -238,11 +247,13 @@ after seeing them.
    its score-free 21-case audit found primary support adequate but sensitivity 20 unevaluable for
    one held-out hard control. Preserve this terminal pre-metric result without replacing cases or
    selecting a formula. A separately named source-informed successor is now frozen with the known
-   counts disclosed and all cases unchanged. Its initial Jaccard-sum-min formula contract is now
-   checksum-pinned before development output.
-5. For v2 only, implement the frozen formula and run development cases, make at most one documented
-   revision, then freeze the final formula before held-out output.
-6. Run held-out cases and the manual audit.
-7. Only after a pass, design the LLM interpretation schema and pair-detail UI.
+   counts disclosed and all cases unchanged. Its initial Jaccard-sum-min formula failed development;
+   its one permitted direct-penalized revision then failed all three frozen separation requirements.
+   Preserve the resulting terminal action and never compute this pilot's held-out layer.
+5. Treat the BioASQ v2 branch as closed. A future metric family requires its own preregistration
+   after the historical-source and human-adjudicated benchmark gates advance; it cannot inherit a
+   pass, held-out authorization, or readiness from this pilot.
+6. Only after a replacement metric passes its preregistered benchmark, design the LLM
+   interpretation schema and pair-detail UI.
 
 No API credits, frontend expansion, or hypothesis generation are required before step 4.

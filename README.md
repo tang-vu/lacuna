@@ -347,17 +347,20 @@ executor identities so every exported count is auditable from a clean clone and 
 the checksum-pinned local source without committing the 810 MB cache. A separately pinned
 post-development formula decision is required before held-out execution.
 
-That single permitted decision is now frozen in
-`benchmarks/v3/bioasq-formula-v2-revision-1.json`, still before any revision-formula or held-out
-score. It preserves the graph and indirect Jaccard–minimum–sum calculation, then divides every
-candidate's indirect score by `1 + n_AC`, where `n_AC` is its exact direct co-occurrence count at
-the case cutoff. The additive one is fixed additive-one smoothing rather than a fitted parameter. This
-revision was selected after inspecting the initial development failure, consumes the entire
-revision budget, and is not independent formula selection or an exact LION replication. Before
-revision output, the contract also freezes a mechanical development gate at both support settings:
-at least 2/3 positives in the top 5%, 0/4 hard controls in the top 5%, and 4/4 distant controls
-below the median. Passing requires a separate final freeze before one held-out run; failing stops
-the pilot without computing held-out output. No further formula revision is permitted.
+That single permitted decision was frozen in
+`benchmarks/v3/bioasq-formula-v2-revision-1.json` before revision-formula or held-out scores. It
+preserves the graph and indirect Jaccard–minimum–sum calculation, then divides every candidate's
+indirect score by `1 + n_AC`, where `n_AC` is its exact direct co-occurrence count at the case
+cutoff. The additive one is fixed additive-one smoothing rather than a fitted parameter. This
+revision was selected after inspecting the initial development failure, consumed the entire
+revision budget, and is neither independent formula selection nor an exact LION replication. Its
+development-only result is now checksum-pinned: at both support settings, 1/3 positives reached
+the top 5%, 1/4 hard controls remained in the top 5%, and only 1/4 distant controls fell below the
+median. Thus all three preregistered separation requirements failed. The first two descriptive
+counts moved in the intended direction relative to the initial formula (0 to 1 positive and 3 to 1
+hard controls), but the distant-control result remained 1/4 and the method failed its gate. The
+mechanical outcome is terminal: zero held-out cases were computed, no further formula revision is
+permitted, and the BioASQ pilot contributes zero readiness.
 
 ## Deployment
 

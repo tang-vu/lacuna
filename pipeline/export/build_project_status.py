@@ -45,6 +45,10 @@ from pipeline.benchmark.validate_bioasq_v2_development import (
     DEVELOPMENT_PATH as BIOASQ_V2_DEVELOPMENT_PATH,
     audit_bioasq_v2_development,
 )
+from pipeline.benchmark.validate_bioasq_v2_revision_development import (
+    REVISION_DEVELOPMENT_PATH as BIOASQ_V2_REVISION_DEVELOPMENT_PATH,
+    audit_bioasq_v2_revision_development,
+)
 from pipeline.benchmark.validate_bioasq_pilot import (
     PILOT_PATH as BIOASQ_PILOT_PATH,
     audit_bioasq_pilot,
@@ -107,6 +111,10 @@ def build_project_status() -> dict:
     bioasq_formula_v2_revision = json.loads(
         BIOASQ_FORMULA_V2_REVISION_PATH.read_text(encoding="utf-8")
     )
+    audit_bioasq_v2_revision_development()
+    bioasq_v2_revision_development = json.loads(
+        BIOASQ_V2_REVISION_DEVELOPMENT_PATH.read_text(encoding="utf-8")
+    )
     candidates = audit_candidates()
     negative_queue = audit_queue()
     audit_review_context()
@@ -124,7 +132,7 @@ def build_project_status() -> dict:
     negative_protocol = load_protocol()
 
     return {
-        "schema_version": 17,
+        "schema_version": 18,
         "status": "ready" if ready else "not_ready",
         "inputs": {
             "historical_sources": _input_identity(SOURCES_PATH),
@@ -144,6 +152,9 @@ def build_project_status() -> dict:
             "bioasq_development_measurement": _input_identity(BIOASQ_V2_DEVELOPMENT_PATH),
             "bioasq_revision_formula_contract": _input_identity(
                 BIOASQ_FORMULA_V2_REVISION_PATH
+            ),
+            "bioasq_revision_development_measurement": _input_identity(
+                BIOASQ_V2_REVISION_DEVELOPMENT_PATH
             ),
             "historical_inventories": _input_identity(INVENTORIES_PATH),
             "mbr_preservation_capture": _input_identity(MBR_CAPTURE_PATH),
@@ -195,6 +206,7 @@ def build_project_status() -> dict:
             "bioasq_initial_formula_contract": bioasq_formula_v2,
             "bioasq_development_measurement": bioasq_v2_development,
             "bioasq_revision_formula_contract": bioasq_formula_v2_revision,
+            "bioasq_revision_development_measurement": bioasq_v2_revision_development,
             "entries": list(alternatives.entries),
         },
         "candidate_intake": {

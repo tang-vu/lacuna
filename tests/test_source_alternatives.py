@@ -54,6 +54,9 @@ def test_current_alternatives_keep_original_readiness_at_zero():
     assert bioasq["pilot_revision_formula_contract"]["path"].endswith(
         "bioasq-formula-v2-revision-1.json"
     )
+    assert bioasq["pilot_revision_development_measurement"]["path"].endswith(
+        "bioasq-v2-revision-1-development-7a41b3e1ddf6.json"
+    )
 
 
 def test_alternative_cannot_claim_original_gate_readiness(tmp_path):
@@ -197,6 +200,19 @@ def test_bioasq_revision_formula_is_checksum_pinned(tmp_path):
     with pytest.raises(
         SourceAlternativeContractError,
         match="revision formula checksum mismatch",
+    ):
+        audit_source_alternatives(_write_payload(tmp_path, payload))
+
+
+def test_bioasq_revision_development_result_is_checksum_pinned(tmp_path):
+    payload = json.loads(ALTERNATIVES_PATH.read_text(encoding="utf-8"))
+    payload["alternatives"][0]["pilot_revision_development_measurement"][
+        "sha256"
+    ] = "0" * 64
+
+    with pytest.raises(
+        SourceAlternativeContractError,
+        match="revision development checksum mismatch",
     ):
         audit_source_alternatives(_write_payload(tmp_path, payload))
 

@@ -12,7 +12,7 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 17
+    assert status["schema_version"] == 18
     assert status["status"] == "not_ready"
     assert status["historical_sources"] == {
         "ready": False,
@@ -211,6 +211,48 @@ def test_project_status_exposes_validator_results_without_claiming_readiness():
         "bioasq_heldout_scores_ranks_orderings_or_bridges_seen"
     ] is False
     assert revision["claim_boundary"]["readiness_contribution"] == 0
+    revision_development = status["source_alternatives"][
+        "bioasq_revision_development_measurement"
+    ]
+    assert revision_development["status"] == (
+        "revision_development_gate_failed_terminate_before_heldout"
+    )
+    assert revision_development["execution_isolation"] == {
+        "split": "development",
+        "case_count": 11,
+        "heldout_case_count_computed": 0,
+        "heldout_scores_ranks_orderings_or_bridges_materialized": False,
+        "revision_number": 1,
+        "revision_budget_consumed": 1,
+        "revision_budget_remaining": 0,
+    }
+    assert revision_development["revision_development_summary"]["10"] == {
+        "source_labeled_positive": {
+            "case_count": 3,
+            "top_5_percent_count": 1,
+            "below_median_count": 0,
+        },
+        "hard_negative": {
+            "case_count": 4,
+            "top_5_percent_count": 1,
+            "below_median_count": 1,
+        },
+        "distant_negative": {
+            "case_count": 4,
+            "top_5_percent_count": 0,
+            "below_median_count": 1,
+        },
+    }
+    assert revision_development["revision_development_summary"]["5"] == (
+        revision_development["revision_development_summary"]["10"]
+    )
+    decision = revision_development[
+        "pre_registered_revision_development_decision"
+    ]
+    assert decision["pre_registered_gate_passed"] is False
+    assert decision["sensitivity_agreement_passed"] is True
+    assert decision["mechanical_action"] == "terminate_pilot_before_heldout"
+    assert revision_development["readiness_contribution"] == 0
     assert len(status["source_alternatives"]["entries"]) == 3
     assert status["candidate_intake"]["counts"] == {
         "accepted": 2,
@@ -306,6 +348,7 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
         "bioasq_initial_formula_contract",
         "bioasq_development_measurement",
         "bioasq_revision_formula_contract",
+        "bioasq_revision_development_measurement",
         "historical_inventories",
         "mbr_preservation_capture",
         "candidate_intake",

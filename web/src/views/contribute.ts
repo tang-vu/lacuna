@@ -541,6 +541,11 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
   const development = status.source_alternatives.bioasq_development_measurement;
   const primaryDevelopment = development.development_summary['10'];
   const revision = status.source_alternatives.bioasq_revision_formula_contract;
+  const revisionDevelopment =
+    status.source_alternatives.bioasq_revision_development_measurement;
+  const revisionPrimary = revisionDevelopment.revision_development_summary['10'];
+  const revisionDecision =
+    revisionDevelopment.pre_registered_revision_development_decision;
   const sensitivityBlockerId = compatibility.decision.heldout_sensitivity_blockers['20'][0];
   const sensitivityBlocker = compatibility.measurement.cases.find(
     (entry) => entry.id === sensitivityBlockerId,
@@ -609,15 +614,20 @@ export function renderContributionMissions(status: ProjectStatus): HTMLElement {
           `reached the top 5%, while ${primaryDevelopment.hard_negative.top_5_percent_count} of ` +
           `${primaryDevelopment.hard_negative.case_count} ontology-generated hard controls did. ` +
           'This is poor development discrimination and a pattern consistent with ' +
-          'structural-proximity confounding, not metric success. The one permitted revision is ' +
-          `now frozen as ${revision.score_contract.revised_candidate_score}; its budget remaining ` +
-          `is ${revision.revision_accounting.budget_remaining}. Revision development must satisfy ` +
-          `${revision.pre_registered_revision_development_gate.positive_requirement} ` +
-          `${revision.pre_registered_revision_development_gate.hard_control_requirement} ` +
-          `${revision.pre_registered_revision_development_gate.distant_control_requirement} ` +
-          'Failure terminates the pilot before held-out. Revision output does not yet exist; ' +
-          `${development.execution_isolation.heldout_case_count_computed} ` +
-          'held-out cases were computed, and every BioASQ layer still contributes zero readiness.',
+          'structural-proximity confounding, not metric success. The one permitted revision, ' +
+          `${revision.score_contract.revised_candidate_score}, consumed the full revision budget. ` +
+          'Its development-only result is now complete: ' +
+          `${revisionPrimary.source_labeled_positive.top_5_percent_count} of ` +
+          `${revisionPrimary.source_labeled_positive.case_count} positives reached the top 5%, ` +
+          `${revisionPrimary.hard_negative.top_5_percent_count} of ` +
+          `${revisionPrimary.hard_negative.case_count} hard controls still did, and only ` +
+          `${revisionPrimary.distant_negative.below_median_count} of ` +
+          `${revisionPrimary.distant_negative.case_count} distant controls fell below the median. ` +
+          `The preregistered gate failed at support 10 and 5, so the mechanical action is ` +
+          `${revisionDecision.mechanical_action.replaceAll('_', ' ')}. ` +
+          `${revisionDevelopment.execution_isolation.heldout_case_count_computed} held-out cases ` +
+          'were computed; no further formula revision is permitted, and every BioASQ layer still ' +
+          'contributes zero readiness.',
         progress(
           pinnedSources,
           sourceStatuses.length,

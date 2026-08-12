@@ -106,6 +106,10 @@
         "path": "benchmarks/v3/bioasq-formula-v2-revision-1.json",
         "sha256": "7a41b3e1ddf66a477a52b0a2ef4e2fc91c2fc92e035556ee98d54050efb91be0"
       },
+      "pilot_revision_development_measurement": {
+        "path": "benchmarks/v3/manifests/bioasq-v2-revision-1-development-7a41b3e1ddf6.json",
+        "sha256": "fa70477dd68a42f86c6b0986eeb676095ddd1ccfe8f1dc42d3e54a097ef6c90f"
+      },
       "potential_role": "A separately pre-registered pilot over the measured secondary corpus after a successor semantics protocol explicitly handles its observed publication-year scope. It may support post-snapshot discovery cases but is not an NLM baseline substitute.",
       "blockers": [
         "The acquired payload matches all three published aggregate counts, but its measured publication-year scope does not match the reported post-1949 scope: 280 records are dated 1946-1949. All years are parseable, although 751,238 values are not plain YYYY.",
@@ -117,11 +121,12 @@
         "V2's initial formula is frozen before development output: article-level MeSH Jaccard edge weights, minimum aggregation along A-B-C paths, and sum accumulation across B. It is literature-grounded in LION's default but differs materially in graph and co-occurrence unit, retains direct A-C articles, and forbids held-out execution before a final formula freeze.",
         "The initial-formula development measurement is complete for all 11 cases at support 10 and 5, with zero held-out cases computed. None of the three source-labelled positives reaches the top 5%, while three of four ontology-generated hard controls do at both supports. The lower-support run changes no target score or bridge count. This is evidence of poor development discrimination and likely structural-proximity confounding, not held-out validation or a successful gap metric.",
         "The single permitted post-development revision is now checksum-frozen before revision output. It keeps the graph and indirect Jaccard-sum-min score unchanged, divides every candidate score by one plus its exact direct A-C count, consumes the full revision budget, and pre-registers a mechanical development pass-or-terminate gate. It uses no case kind, ontology relation, or held-out metric output; held-out identities and source counts were already known. It contributes zero readiness.",
+        "The revision development gate failed at both support settings: 1 of 3 source-labelled positives reached the top 5% versus 2 required, 1 of 4 hard controls reached the top 5% versus 0 allowed, and only 1 of 4 distant controls fell below the median versus all 4 required. The first two descriptive counts moved in the intended direction from 0 and 3 under the initial formula, but did not satisfy any separation requirement. The frozen mechanical action is terminate_pilot_before_heldout; zero held-out cases were computed, no further revision is permitted, and readiness remains zero.",
         "The measured secondary corpus is not the complete 21,508,439-record 2013 NLM baseline, and the two totals are not a measured coverage fraction.",
         "Only a 2013 snapshot is relevant here, so it cannot supply the missing 2007, 2011, and 2012 releases.",
         "Using it changes the experimental population and therefore requires a new pre-registration rather than a source-status flip."
       ],
-      "next_action": "Run the checksum-frozen direct-penalized revision on all 11 development cases at support 10 and 5 into a new refusal-to-overwrite artifact. Apply its pre-registered gate mechanically: pass freezes this exact revision in a separate final contract before one held-out run; failure terminates the pilot without held-out execution. No further formula revision is permitted."
+      "next_action": "Preserve this BioASQ v2 pilot as a terminal development failure and do not compute its held-out layer. Resume core metric work only through a separately pre-registered metric family after the historical-source and human-adjudicated benchmark gates advance; this terminated pilot does not authorize an LLM interpretation layer."
     },
     {
       "id": "current-pubmed-frozen-surrogate",
