@@ -29,13 +29,16 @@ from pipeline.benchmark.validate_autonomous_candidate_universe import (
     MANIFEST_PATH as CANDIDATE_UNIVERSE_PATH,
     audit_candidate_universe,
 )
+from pipeline.benchmark.validate_autonomous_metric_v1 import (
+    CONTRACT_PATH as METRIC_V1_PATH,
+    audit_autonomous_metric_v1,
+)
 from pipeline.paths import REPO_ROOT
 
 PROTOCOL_PATH = REPO_ROOT / "benchmarks" / "autonomous-prospective-v1.json"
 EXPECTED_ID = "autonomous-prospective-pubmed-link-emergence-v1"
 EXPECTED_STATUS = "frozen_before_t0_source_acquisition_and_metric"
 EXPECTED_BLOCKERS = (
-    "no autonomous metric formula is frozen",
     "no T0 predictions are sealed",
     "the three-release prospective outcome window has not matured",
 )
@@ -238,6 +241,23 @@ def audit_autonomous_prospective(path: Path = PROTOCOL_PATH) -> AutonomousProspe
         },
         "candidate-universe artifact identity drifted",
     )
+    metric = audit_autonomous_metric_v1(METRIC_V1_PATH)
+    metric_inputs = json.loads(METRIC_V1_PATH.read_text(encoding="utf-8"))["sealed_inputs"]
+    _require(
+        payload.get("metric_contract_artifact")
+        == {
+            "path": "autonomous/metric-v1.json",
+            "sha256": metric.sha256,
+            "canonicalisation": "canonical-json-v1",
+            "status": metric.status,
+            "primary_formula": metric.primary_formula,
+            "candidate_pair_count": metric.candidate_pair_count,
+            "formula_source_sha256": metric_inputs["formula_source"]["file_sha256"],
+            "dependency_lock_sha256": metric_inputs["dependency_lock"]["file_sha256"],
+            "readiness_contribution": 0,
+        },
+        "metric-v1 contract identity drifted",
+    )
 
     seal = payload.get("prediction_seal")
     _require(isinstance(seal, dict), "prediction seal missing")
@@ -341,7 +361,7 @@ def audit_autonomous_prospective(path: Path = PROTOCOL_PATH) -> AutonomousProspe
         and current.get("t0_source_pinned") is True
         and current.get("candidate_index_contract_frozen") is True
         and current.get("candidate_universe_sealed") is True
-        and current.get("metric_frozen") is False
+        and current.get("metric_frozen") is True
         and current.get("predictions_sealed") is False
         and current.get("t1_source_pinned") is False
         and current.get("outcome_window_mature") is False
@@ -352,8 +372,8 @@ def audit_autonomous_prospective(path: Path = PROTOCOL_PATH) -> AutonomousProspe
     blockers = current.get("blockers")
     _require(blockers == list(EXPECTED_BLOCKERS), "current blocker list drifted")
     _require(
-        "sealed exhaustive T0 candidate universe" in current.get("next_machine_action", "")
-        and "Freeze one deterministic metric" in current.get("next_machine_action", "")
+        "Execute the frozen metric exhaustively" in current.get("next_machine_action", "")
+        and "D-drive artifact contract" in current.get("next_machine_action", "")
         and "refusal-to-overwrite" in current.get("next_machine_action", ""),
         "next machine action drifted",
     )

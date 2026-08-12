@@ -64,7 +64,8 @@ python -m pipeline.benchmark.autonomous_t0 seal \
 ```
 
 These acquisition commands document reproducibility; rerunning them does not advance the current
-state. The active next transition is the exhaustive candidate-universe and metric/prediction seal.
+state. The candidate universe and metric formula are now frozen; the active next transition is
+exhaustive scoring and the refusal-to-overwrite prediction seal.
 The score-free construction contract is frozen at
 [`benchmarks/autonomous/t0-candidate-index-v1.json`](benchmarks/autonomous/t0-candidate-index-v1.json);
 validate it with `python -m pipeline.benchmark.validate_autonomous_candidate_index`. Never weaken
@@ -111,8 +112,13 @@ python -m pipeline.benchmark.validate_autonomous_candidate_universe \
   --verify-local /data/lacuna/t0-2026/candidate-index-v1
 ```
 
-This closes candidate construction only. The next transition is to freeze one metric and its
-prediction-seal contract before computing any candidate score.
+This closes candidate construction only. The metric was subsequently frozen, still before any
+candidate score, at [`benchmarks/autonomous/metric-v1.json`](benchmarks/autonomous/metric-v1.json).
+Validate it with `python -m pipeline.benchmark.validate_autonomous_metric_v1`. The selected primary
+formula is fixed-point Adamic–Adar on an exact positive-association backbone; the contract also
+pins every baseline, tie rule, artifact format, D-drive requirement, and abstention condition.
+Do not alter its formula source or parameters after scoring begins. A frozen formula contributes
+zero readiness until exhaustive predictions and prospective outcomes pass their gates.
 
 ## Archived v3 campaign
 

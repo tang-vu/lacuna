@@ -23,6 +23,7 @@ description: Run lacuna's complete validation workflow and report metric drift, 
    python -m pipeline.benchmark.autonomous_t0 audit-sealed
    python -m pipeline.benchmark.validate_autonomous_candidate_index
    python -m pipeline.benchmark.validate_autonomous_candidate_universe
+   python -m pipeline.benchmark.validate_autonomous_metric_v1
    python -m pipeline.benchmark.validate_autonomous_prospective
    python -m pipeline.benchmark.validate_autonomous_prospective --require-ready
    python -m pipeline.benchmark.source_inventories

@@ -1018,7 +1018,7 @@ def main() -> None:
             print(f"PubMed rows: {result.pubmed_record_count}")
             print(f"MeSH descriptors: {result.mesh_descriptor_count}")
             print(f"state: {result.state}")
-            print("readiness contribution: 0 (no metric or outcome result)")
+            print("readiness contribution: 0 (source identity is not a metric or outcome result)")
         elif args.command == "download":
             if args.minimum_free_gib < 0:
                 raise AutonomousT0Error("minimum free GiB cannot be negative")
@@ -1063,7 +1063,7 @@ def main() -> None:
             print(f"sealed T0: {args.output}")
             print(f"PubMed files: {result['pubmed_baseline']['file_count']}")
             print(f"PubMed rows: {result['total_record_count']}")
-            print("state: awaiting_frozen_metric")
+            print("sealed transition target: awaiting_frozen_metric")
     except (AutonomousT0Error, OSError, json.JSONDecodeError) as exc:
         raise SystemExit(str(exc)) from None
 

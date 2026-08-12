@@ -38,6 +38,10 @@ from pipeline.benchmark.validate_autonomous_candidate_universe import (
     MANIFEST_PATH as AUTONOMOUS_CANDIDATE_UNIVERSE_PATH,
     audit_candidate_universe,
 )
+from pipeline.benchmark.validate_autonomous_metric_v1 import (
+    CONTRACT_PATH as AUTONOMOUS_METRIC_V1_PATH,
+    audit_autonomous_metric_v1,
+)
 from pipeline.benchmark.autonomous_t0 import (
     REMOTE_INVENTORY_PATH as AUTONOMOUS_T0_REMOTE_INVENTORY_PATH,
     SEALED_T0_PATH as AUTONOMOUS_T0_PATH,
@@ -114,6 +118,7 @@ def build_project_status() -> dict:
     autonomous_t0 = audit_sealed_t0()
     autonomous_candidate_index = audit_candidate_index_contract()
     autonomous_candidate_universe = audit_candidate_universe()
+    autonomous_metric = audit_autonomous_metric_v1()
     autonomous_payload = json.loads(AUTONOMOUS_PROSPECTIVE_PATH.read_text(encoding="utf-8"))
     alternatives = audit_source_alternatives()
     bioasq_snapshot = json.loads(BIOASQ_SNAPSHOT_MANIFEST_PATH.read_text(encoding="utf-8"))
@@ -164,7 +169,7 @@ def build_project_status() -> dict:
     negative_protocol = load_protocol()
 
     return {
-        "schema_version": 24,
+        "schema_version": 25,
         "status": "ready" if ready else "not_ready",
         "active_validation_track": autonomous.protocol_id,
         "inputs": {
@@ -179,6 +184,7 @@ def build_project_status() -> dict:
             "autonomous_candidate_universe": _input_identity(
                 AUTONOMOUS_CANDIDATE_UNIVERSE_PATH
             ),
+            "autonomous_metric_contract": _input_identity(AUTONOMOUS_METRIC_V1_PATH),
             "historical_sources": _input_identity(SOURCES_PATH),
             "source_alternatives": _input_identity(ALTERNATIVES_PATH),
             "bioasq_snapshot_audit": _input_identity(BIOASQ_SNAPSHOT_MANIFEST_PATH),
@@ -257,6 +263,14 @@ def build_project_status() -> dict:
                 "pair_observation_count": autonomous_candidate_universe.pair_observation_count,
                 "candidate_pair_count": autonomous_candidate_universe.candidate_pair_count,
                 "readiness_contribution": autonomous_candidate_universe.readiness_contribution,
+            },
+            "metric_contract": {
+                "id": autonomous_metric.metric_id,
+                "status": autonomous_metric.status,
+                "canonical_sha256": autonomous_metric.sha256,
+                "primary_formula": autonomous_metric.primary_formula,
+                "candidate_pair_count": autonomous_metric.candidate_pair_count,
+                "readiness_contribution": autonomous_metric.readiness_contribution,
             },
         },
         "historical_sources": {

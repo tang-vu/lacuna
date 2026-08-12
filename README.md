@@ -18,10 +18,11 @@ Details in [the validation report](plans/reports/validation-260727-1140-swanson-
 The active replacement is a no-human prospective PubMed/MeSH link-emergence benchmark. Its 2026
 source baseline is sealed, and its score-free candidate construction contract was frozen before
 descriptor supports or pair counts were measured. The exact full-baseline reducer has now sealed
-7,310,895 score-free candidate pairs from 39,994,988 unique PubMed records. No metric, prediction,
-or prospective outcome has been sealed. The candidate count is an exact maintained-current
-PubMed/MeSH index measurement, not a discovery or validated gap; scientific and metric readiness
-remain zero.
+7,310,895 score-free candidate pairs from 39,994,988 unique PubMed records. Adamic–Adar v1 and its
+five baselines are now frozen before any candidate score, but no score, prediction, or prospective
+outcome has been sealed. The candidate count is an exact maintained-current PubMed/MeSH index
+measurement and the formula is unvalidated; neither is a discovery or validated gap, and
+scientific readiness remains zero.
 
 ---
 
@@ -216,10 +217,10 @@ The active validation contract now has no human label, review, or adjudication d
 54,267,874,919 compressed bytes, 39,994,988 parsed records, and the matching 31,110-descriptor MeSH
 transport against the versioned
 [`remote inventory`](benchmarks/autonomous/t0-2026-remote-inventory.json). This closes the source
-gate but contributes no metric or scientific result. The highest-impact work is now streaming the
-exhaustive exact candidate universe, freezing one deterministic metric, refusal-to-overwrite
-prediction sealing, and deterministic future-outcome evaluation. No human review or adjudication
-is an active dependency. Read
+gate but contributes no metric or scientific result. The candidate universe and deterministic
+metric are now frozen; the highest-impact work is exhaustive D-drive scoring,
+refusal-to-overwrite prediction sealing, and deterministic future-outcome evaluation. No human
+review or adjudication is an active dependency. Read
 [`CONTRIBUTING.md`](CONTRIBUTING.md) before changing the pipeline. The live site's **Open work**
 board is generated from
 `artifacts/project-status.json`; its counts and contract fingerprints are rebuilt from the same
@@ -244,7 +245,11 @@ The score-free construction rules for the next machine step are frozen in
 descriptor support or pair count was measured. They require all 39,994,988 PMIDs, exact positive
 co-occurrence counts, an exhaustive exact-zero candidate stream, deterministic binary hashes, and
 automatic abstention on duplicate PMIDs, unknown descriptors, source drift, or incomplete shards.
-This contract contains no metric, score, rank, or prediction.
+This construction contract contains no metric, score, rank, or prediction. The later, separately
+frozen [`metric-v1.json`](benchmarks/autonomous/metric-v1.json) pins a positive-association MeSH
+backbone, Adamic–Adar Q48 as the primary formula, five baselines, exact integer/fixed-point
+arithmetic, total ordering, D-drive artifact formats, and automatic abstention. It is a
+pre-computation contract, not a score result or validation.
 
 `python -m pipeline.benchmark.autonomous_t0 download` now performs resumable, checksum-gated
 acquisition directly on a chosen data volume; see [`data/README.md`](data/README.md). A successful

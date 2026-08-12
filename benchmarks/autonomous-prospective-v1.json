@@ -159,6 +159,17 @@
     "score_free": true,
     "readiness_contribution": 0
   },
+  "metric_contract_artifact": {
+    "path": "autonomous/metric-v1.json",
+    "sha256": "c223cf82e2644992b2799f6fbada5216b9087787e9896896fe08ee0463c8b2db",
+    "canonicalisation": "canonical-json-v1",
+    "status": "frozen_before_any_t0_candidate_score",
+    "primary_formula": "adamic_adar_q48",
+    "candidate_pair_count": 7310895,
+    "formula_source_sha256": "2347607abc20600af76d82d741135bfd043a6f4fb4afee5d1517732135583246",
+    "dependency_lock_sha256": "443b00eef325cd6e4ac6ab0033ea51c6713f4566401c46a89201ae9f49bc33ea",
+    "readiness_contribution": 0
+  },
   "prediction_seal": {
     "required_before_t1": [
       "metric source SHA-256",
@@ -268,17 +279,16 @@
     "t0_source_pinned": true,
     "candidate_index_contract_frozen": true,
     "candidate_universe_sealed": true,
-    "metric_frozen": false,
+    "metric_frozen": true,
     "predictions_sealed": false,
     "t1_source_pinned": false,
     "outcome_window_mature": false,
     "verdict": "not_ready",
     "readiness_contribution": 0,
     "blockers": [
-      "no autonomous metric formula is frozen",
       "no T0 predictions are sealed",
       "the three-release prospective outcome window has not matured"
     ],
-    "next_machine_action": "Freeze one deterministic metric and refusal-to-overwrite prediction contract against the sealed exhaustive T0 candidate universe before producing any score."
+    "next_machine_action": "Execute the frozen metric exhaustively on the sealed T0 candidate universe using the D-drive artifact contract, then audit and refusal-to-overwrite seal every score and the primary total order before T1."
   }
 }

@@ -12,7 +12,7 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 24
+    assert status["schema_version"] == 25
     assert status["status"] == "not_ready"
     assert status["active_validation_track"] == (
         "autonomous-prospective-pubmed-link-emergence-v1"
@@ -62,7 +62,15 @@ def test_project_status_exposes_validator_results_without_claiming_readiness():
         "candidate_pair_count": 7_310_895,
         "readiness_contribution": 0,
     }
-    assert len(autonomous["readiness_blockers"]) == 3
+    assert autonomous["metric_contract"] == {
+        "id": "autonomous-prospective-metric-v1",
+        "status": "frozen_before_any_t0_candidate_score",
+        "canonical_sha256": "c223cf82e2644992b2799f6fbada5216b9087787e9896896fe08ee0463c8b2db",
+        "primary_formula": "adamic_adar_q48",
+        "candidate_pair_count": 7_310_895,
+        "readiness_contribution": 0,
+    }
+    assert len(autonomous["readiness_blockers"]) == 2
     assert autonomous["protocol"]["machine_outcomes"][
         "llm_or_manual_labels_allowed"
     ] is False
@@ -413,6 +421,7 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
         "autonomous_t0_manifest",
         "autonomous_candidate_index_contract",
         "autonomous_candidate_universe",
+        "autonomous_metric_contract",
         "historical_sources",
         "source_alternatives",
         "bioasq_snapshot_audit",

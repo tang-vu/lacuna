@@ -210,7 +210,7 @@ def main() -> None:
     print(f"source files: {audit.source_file_count}")
     print(f"source rows: {audit.source_record_count}")
     print(f"MeSH descriptors: {audit.descriptor_count}")
-    print("readiness contribution: 0 (no counts, candidates, scores, or predictions yet)")
+    print("readiness contribution: 0 (this contract contains no counts, candidates, scores, or predictions)")
 
 
 if __name__ == "__main__":

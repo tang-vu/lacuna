@@ -715,6 +715,7 @@ export function renderAutonomousMissions(status: ProjectStatus): HTMLElement {
   const sealedT0 = active.sealed_t0;
   const candidateIndex = active.candidate_index_contract;
   const candidateUniverse = active.candidate_universe;
+  const metricContract = active.metric_contract;
   const sourceReady = current.state !== 'awaiting_t0_baseline';
   const predictionsSealed = [
     'predictions_sealed_waiting_for_outcome',
@@ -729,6 +730,7 @@ export function renderAutonomousMissions(status: ProjectStatus): HTMLElement {
   const inventoryUrl = `${REPOSITORY}/blob/main/benchmarks/autonomous/t0-2026-remote-inventory.json`;
   const t0Url = `${REPOSITORY}/blob/main/benchmarks/autonomous/t0-2026.json`;
   const candidateUniverseUrl = `${REPOSITORY}/blob/main/benchmarks/autonomous/t0-candidate-universe-v1.json`;
+  const metricUrl = `${REPOSITORY}/blob/main/benchmarks/autonomous/metric-v1.json`;
 
   return el('section', { class: 'contribution-missions', id: 'contribute' }, [
     el('div', { class: 'section-kicker' }, ['AUTONOMOUS VALIDATION']),
@@ -771,13 +773,20 @@ export function renderAutonomousMissions(status: ProjectStatus): HTMLElement {
         'Freeze one formula and every prediction',
         `The score-free contract ${candidateIndex.canonical_sha256.slice(0, 12)}… produced and sealed ` +
           `${candidateUniverse.candidate_pair_count.toLocaleString()} exhaustive exact-zero T0 candidates ` +
-          `from ${candidateUniverse.distinct_pmid_count.toLocaleString()} unique PubMed records. This is an ` +
-          'exact count/index artifact with zero metric or scientific readiness. The formula, ' +
-          'parameters, total ordering, tie policy, and prediction artifact must be sealed before ' +
-          'future outcomes exist. After sealing, overwrite and revision are forbidden.',
-        progress(predictionsSealed ? 2 : 1, 2, 'Candidate universe + prediction seal'),
-        'Inspect the sealed score-free universe',
-        candidateUniverseUrl,
+          `from ${candidateUniverse.distinct_pmid_count.toLocaleString()} unique PubMed records. ` +
+          `Metric ${metricContract.primary_formula} is frozen at ` +
+          `${metricContract.canonical_sha256.slice(0, 12)}… before any candidate score. ` +
+          'It remains an unvalidated formula with zero scientific readiness. Every exhaustive score ' +
+          'and the total order must now be refusal-to-overwrite sealed before future outcomes exist.',
+        progress(
+          predictionsSealed ? 3 : current.metric_frozen ? 2 : 1,
+          3,
+          'Universe + metric + predictions',
+        ),
+        current.metric_frozen
+          ? 'Inspect the frozen metric contract'
+          : 'Inspect the sealed score-free universe',
+        current.metric_frozen ? metricUrl : candidateUniverseUrl,
       ),
       mission(
         '03',

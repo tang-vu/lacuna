@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "id": "autonomous-prospective-metric-v1-dependencies",
+  "reference_formula_runtime": {
+    "implementation": "CPython",
+    "minimum_version": "3.11",
+    "external_packages": [],
+    "standard_library_requirements": [
+      "decimal.Decimal.ln",
+      "decimal.localcontext"
+    ]
+  },
+  "full_corpus_engine": {
+    "language_standard": "C++17",
+    "external_libraries": [],
+    "conformance_requirement": "Every edge predicate, degree weight, candidate score, and total-order key must equal the Python reference formula on exhaustive synthetic fixtures before full-corpus execution."
+  },
+  "runtime_capture_required_in_prediction_seal": [
+    "Python implementation and version",
+    "native compiler identity and version",
+    "native binary SHA-256",
+    "generated degree-weight table SHA-256"
+  ]
+}

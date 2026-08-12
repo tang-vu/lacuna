@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "id": "autonomous-prospective-metric-v1",
+  "status": "frozen_before_any_t0_candidate_score",
+  "frozen_on": "2026-08-13",
+  "protocol": {
+    "path": "../autonomous-prospective-v1.json",
+    "id": "autonomous-prospective-pubmed-link-emergence-v1"
+  },
+  "sealed_inputs": {
+    "t0_manifest": {
+      "path": "t0-2026.json",
+      "canonical_json_sha256": "6ec0372008bb8efe0e17f72695a07bb03816f2b41881d6518d35077ecdac5066"
+    },
+    "candidate_universe": {
+      "path": "t0-candidate-universe-v1.json",
+      "canonical_json_sha256": "2313dcc1837d620394f96e5e4c150661c8a2be9e7472c1b5eccad19c13d57f84",
+      "candidate_pair_count": 7310895
+    },
+    "formula_source": {
+      "path": "../../pipeline/benchmark/autonomous_metric_v1_formula.py",
+      "file_sha256": "2347607abc20600af76d82d741135bfd043a6f4fb4afee5d1517732135583246"
+    },
+    "dependency_lock": {
+      "path": "metric-v1-dependencies.lock.json",
+      "file_sha256": "443b00eef325cd6e4ac6ab0033ea51c6713f4566401c46a89201ae9f49bc33ea"
+    },
+    "design_evidence": {
+      "path": "../../plans/reports/research-260813-autonomous-mesh-link-prediction.md",
+      "file_sha256": "c2f46523932e6c02673d33be2034d3b0d8d231c1c19d882923ba16834b68b1fb"
+    }
+  },
+  "graph_backbone": {
+    "nodes": "all 31110 descriptors in the sealed descriptor table",
+    "source_rows": "every globally distinct positive T0 descriptor-pair row",
+    "undirected": true,
+    "weighted": false,
+    "edge_rule": "include (u,v) exactly when c_uv * N > support_u * support_v",
+    "edge_rule_operands": {
+      "c_uv": "exact direct T0 co-index count",
+      "N": 39994988,
+      "support_u": "exact T0 endpoint support",
+      "support_v": "exact T0 endpoint support"
+    },
+    "arithmetic": "non-negative integer products evaluated in at least 128 unsigned bits; equality is excluded",
+    "additional_count_threshold": 0,
+    "self_edges_allowed": false,
+    "parallel_edges_allowed": false,
+    "edge_weights_used_by_metric": false
+  },
+  "primary_formula": {
+    "name": "adamic_adar_q48",
+    "common_neighbor_set": "the exact intersection of the sorted unweighted backbone neighbors of candidate endpoints u and v",
+    "degree": "unweighted backbone degree",
+    "scale": 281474976710656,
+    "decimal_precision": 80,
+    "decimal_rounding": "ROUND_HALF_EVEN",
+    "per_neighbor_weight": "floor(2^48 / Decimal(degree).ln()) after ln and division at precision 80",
+    "score": "checked uint64 sum of per-neighbor weights; an empty intersection scores zero",
+    "missing_nonfinite_or_overflow_action": "abstain_without_prediction_seal"
+  },
+  "frozen_baselines": {
+    "prevalence": {
+      "score": "support_u * support_v",
+      "arithmetic": "checked uint64 integer"
+    },
+    "common_neighbors": {
+      "score": "cardinality of the primary common-neighbor set",
+      "arithmetic": "checked uint32 integer"
+    },
+    "resource_allocation_q48": {
+      "scale": 281474976710656,
+      "per_neighbor_weight": "floor(2^48 / degree)",
+      "score": "checked uint64 sum of per-neighbor weights"
+    },
+    "jaccard": {
+      "numerator": "common_neighbors",
+      "denominator": "max(1, degree_u + degree_v - common_neighbors)",
+      "ordering": "exact descending rational comparison by cross multiplication"
+    },
+    "preferential_attachment": {
+      "score": "degree_u * degree_v",
+      "arithmetic": "checked uint64 integer"
+    }
+  },
+  "total_order": {
+    "primary": [
+      "adamic_adar_q48 descending",
+      "splitmix64(pair_key XOR 0x7a6b4d2f19c3e805) ascending",
+      "pair_key ascending"
+    ],
+    "integer_baselines": [
+      "baseline score descending",
+      "the same splitmix64 tie key ascending",
+      "pair_key ascending"
+    ],
+    "jaccard_baseline": [
+      "exact rational value descending",
+      "the same splitmix64 tie key ascending",
+      "pair_key ascending"
+    ],
+    "splitmix64_definition": "add 0x9e3779b97f4a7c15; xor-shift 30 then multiply 0xbf58476d1ce4e5b9; xor-shift 27 then multiply 0x94d049bb133111eb; xor-shift 31; every operation modulo 2^64",
+    "future_outcomes_or_descriptor_labels_used": false
+  },
+  "exhaustive_execution": {
+    "sampling_allowed": false,
+    "required_candidate_rows": 7310895,
+    "one_primary_score_per_candidate": true,
+    "one_baseline_score_tuple_per_candidate": true,
+    "maximum_resident_working_set_bytes": 2147483648,
+    "large_artifact_volume": "explicit non-system volume; the active Windows run must remain under D:\\lacuna-storage",
+    "minimum_free_bytes_before_execution": 21474836480,
+    "missing_duplicate_or_extra_candidate_action": "abstain_without_prediction_seal"
+  },
+  "artifact_contract": {
+    "degree_weights": {
+      "format": "degree-aa-q48-ra-q48-u64-v1",
+      "rows": 31111,
+      "row_layout": "little-endian adamic_adar_q48 uint64, resource_allocation_q48 uint64; degrees 0 and 1 contain zero"
+    },
+    "backbone_offsets": {
+      "format": "csr-offset-u64-v1",
+      "rows": 31111
+    },
+    "backbone_neighbors": {
+      "format": "csr-neighbor-u32-v1",
+      "rows": "twice the measured backbone edge count"
+    },
+    "candidate_scores": {
+      "format": "candidate-score-record-v1",
+      "rows": 7310895,
+      "row_bytes": 48,
+      "row_layout": "little-endian pair_key u64, adamic_adar_q48 u64, resource_allocation_q48 u64, prevalence u64, common_neighbors u32, jaccard_denominator u32, preferential_attachment u64",
+      "order": "strict pair_key ascending"
+    },
+    "primary_order": {
+      "format": "ranked-pair-key-u64-v1",
+      "rows": 7310895,
+      "order": "the frozen primary total order"
+    },
+    "prediction_manifest": {
+      "format": "canonical-json-v1",
+      "repository_path": "benchmarks/autonomous/t0-predictions-v1.json",
+      "must_pin": [
+        "every sealed input identity",
+        "formula, dependency-lock, engine-source, compiler, binary, and degree-weight hashes",
+        "every output path, format, row count, byte count, and SHA-256",
+        "measured backbone edge and degree statistics",
+        "all integrity and refusal-to-overwrite gates"
+      ]
+    }
+  },
+  "prediction_seal_policy": {
+    "score_artifacts_written_to_repository": false,
+    "final_manifest_written_once": true,
+    "overwrite_or_revision_allowed": false,
+    "partial_files_are_not_predictions": true,
+    "existing_complete_artifact_action": "audit exact bytes; never rewrite",
+    "any_hash_order_count_or_formula_drift_action": "abstain_without_prediction_seal",
+    "llm_or_human_scoring_ranking_filtering_or_labels_allowed": false
+  },
+  "scientific_claim_boundary": "A frozen unvalidated ranking formula for future direct PubMed/MeSH database-link emergence only; not a score result, prediction artifact, discovery, validated gap, scientific truth, importance estimate, or evidence of absent knowledge.",
+  "readiness_contribution": 0
+}

@@ -307,7 +307,7 @@ def main() -> None:
     print(f"positive pair rows: {audit.positive_pair_count}")
     print(f"candidate pairs: {audit.candidate_pair_count}")
     print(f"local bytes verified: {'yes' if audit.local_bytes_verified else 'not requested'}")
-    print("readiness contribution: 0 (no metric, prediction, or outcome result)")
+    print("readiness contribution: 0 (no metric result, prediction, or outcome result)")
 
 
 if __name__ == "__main__":

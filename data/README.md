@@ -36,6 +36,11 @@ pair observations, and 7,310,895 score-free candidate keys. The small committed 
 five final artifacts; `validate_autonomous_candidate_universe --verify-local` rechecks their bytes,
 ordering, sums, and candidate exhaustiveness from the D-drive copy.
 
+Metric v1 is frozen in Git, but every generated backbone, degree table, score row, rank order,
+checkpoint, compiler output, and `.part` file must stay under the same D-drive tree. The active
+contract refuses scoring when the selected non-system volume has less than 20 GiB free and limits
+the working set to 2 GiB. Only the final small hash manifest will be committed.
+
 This directory holds regenerable API caches, the fetched OpenAlex taxonomy, and co-occurrence
 rows. It also holds trimmed PubMed metadata fetched for benchmark mapping audits. Those files are
 intentionally ignored: the current pre-1986 pilot is tens of megabytes and the replacement MEDLINE

@@ -11,7 +11,7 @@ from pipeline.benchmark.validate_autonomous_prospective import (
 )
 
 
-def test_active_protocol_has_sealed_t0_no_human_dependency_and_no_metric_claim():
+def test_active_protocol_has_frozen_metric_no_human_dependency_and_no_result_claim():
     audit = audit_autonomous_prospective()
 
     assert audit.protocol_id == "autonomous-prospective-pubmed-link-emergence-v1"
@@ -19,7 +19,7 @@ def test_active_protocol_has_sealed_t0_no_human_dependency_and_no_metric_claim()
     assert audit.verdict == "not_ready"
     assert audit.human_dependency_count == 0
     assert audit.readiness_contribution == 0
-    assert len(audit.blockers) == 3
+    assert len(audit.blockers) == 2
     assert audit.ready is False
 
 
@@ -91,6 +91,22 @@ def test_protocol_rejects_candidate_universe_identity_or_state_drift(tmp_path):
     path = tmp_path / "protocol-universe.json"
     path.write_text(json.dumps(payload), encoding="utf-8")
     with pytest.raises(AutonomousProspectiveContractError, match="candidate-universe artifact"):
+        audit_autonomous_prospective(path)
+
+
+def test_protocol_rejects_metric_contract_identity_or_state_drift(tmp_path):
+    payload = json.loads(PROTOCOL_PATH.read_text(encoding="utf-8"))
+    payload["metric_contract_artifact"]["primary_formula"] = "changed"
+    path = tmp_path / "protocol-metric.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(AutonomousProspectiveContractError, match="metric-v1 contract"):
+        audit_autonomous_prospective(path)
+
+    payload = json.loads(PROTOCOL_PATH.read_text(encoding="utf-8"))
+    payload["current_state"]["metric_frozen"] = False
+    path = tmp_path / "protocol-state.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(AutonomousProspectiveContractError, match="current autonomous state"):
         audit_autonomous_prospective(path)
 
     payload = json.loads(PROTOCOL_PATH.read_text(encoding="utf-8"))
