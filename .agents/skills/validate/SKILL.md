@@ -24,6 +24,7 @@ description: Run lacuna's complete validation workflow and report metric drift, 
    python -m pipeline.benchmark.validate_autonomous_candidate_index
    python -m pipeline.benchmark.validate_autonomous_candidate_universe
    python -m pipeline.benchmark.validate_autonomous_metric_v1
+   python -m pipeline.benchmark.validate_autonomous_predictions_v1
    python -m pipeline.benchmark.validate_autonomous_prospective
    python -m pipeline.benchmark.validate_autonomous_prospective --require-ready
    python -m pipeline.benchmark.source_inventories
@@ -41,6 +42,12 @@ description: Run lacuna's complete validation workflow and report metric drift, 
    D:\lacuna-storage\autonomous\t0-2026\candidate-index-v1`. Report a missing local index as a
    skipped byte-level check, never as a structural pass or drift.
 
+   When the sealed prediction outputs are mounted, also run
+   `python -m pipeline.benchmark.validate_autonomous_predictions_v1 --verify-local
+   D:\lacuna-storage\autonomous\t0-2026\metric-v1 --scan-dir
+   D:\lacuna-storage\autonomous\t0-2026\candidate-index-v1`. This rehashes and independently
+   recomputes the backbone, every score tuple, and the full total order.
+
    When network access is available, replay both preservation probes and report reachability or
    drift separately from scientific readiness:
 
@@ -55,13 +62,15 @@ description: Run lacuna's complete validation workflow and report metric drift, 
 
    The remote-inventory audit must report 1,334 PubMed files, 31,110 MeSH descriptors, and zero
    readiness. The sealed-T0 audit must report the same file and descriptor counts plus 39,994,988
-   parsed PubMed rows, state `awaiting_frozen_metric`, and zero metric/scientific readiness. All
-   three `--require-ready` commands are expected to fail while the active metric and predictions
-   are absent, historical inputs are unavailable, and the archived v3 benchmark is a
-   draft. Record their blockers and exit codes; never change a status merely to make the workflow
-   green. The active track must report zero human dependencies and must abstain on missing source,
-   integrity, outcome, or power evidence. Proposed and rejected legacy intake entries contribute
-   zero cases to readiness.
+   parsed PubMed rows, its historical transition target `awaiting_frozen_metric`, and zero
+   metric/scientific readiness. The active prospective validator must separately report
+   `predictions_sealed_waiting_for_outcome`, exactly one outcome-window blocker, and zero readiness.
+   All three `--require-ready` commands are expected to fail while the active outcome window is
+   immature, historical inputs are unavailable, and the archived v3 benchmark is a draft. Record
+   their blockers and exit codes; never change a status merely to make the workflow green. The
+   active track must report zero human dependencies and must abstain on missing source, integrity,
+   outcome, or power evidence. Proposed and rejected legacy intake entries contribute zero cases
+   to readiness.
 4. Run fast tests:
 
    ```bash

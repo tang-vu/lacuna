@@ -258,7 +258,7 @@ def main() -> None:
     print(f"canonical JSON SHA-256: {audit.sha256}")
     print(f"primary formula: {audit.primary_formula}")
     print(f"required candidate scores: {audit.candidate_pair_count}")
-    print("readiness contribution: 0 (no prediction or prospective outcome result)")
+    print("readiness contribution: 0 (the formula contract is not a prediction or outcome result)")
 
 
 if __name__ == "__main__":

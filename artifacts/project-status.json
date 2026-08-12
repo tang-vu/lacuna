@@ -1,11 +1,11 @@
 {
- "schema_version": 25,
+ "schema_version": 26,
  "status": "not_ready",
  "active_validation_track": "autonomous-prospective-pubmed-link-emergence-v1",
  "inputs": {
   "autonomous_prospective_protocol": {
    "path": "benchmarks/autonomous-prospective-v1.json",
-   "sha256": "8deef16ed9da14b8f405ed7a04bd07b1836873e5650d49083e04d655d7d78874",
+   "sha256": "b0921b1977a15b3a45e5fd262d1037e577d719d7c751a2ec4f4fb01e86222e1d",
    "canonicalisation": "canonical-json-v1"
   },
   "autonomous_t0_remote_inventory": {
@@ -31,6 +31,11 @@
   "autonomous_metric_contract": {
    "path": "benchmarks/autonomous/metric-v1.json",
    "sha256": "c223cf82e2644992b2799f6fbada5216b9087787e9896896fe08ee0463c8b2db",
+   "canonicalisation": "canonical-json-v1"
+  },
+  "autonomous_t0_predictions": {
+   "path": "benchmarks/autonomous/t0-predictions-v1.json",
+   "sha256": "994e9697e2e7673a077335808d53911ceab674dac18031a3b7f847200caab591",
    "canonicalisation": "canonical-json-v1"
   },
   "historical_sources": {
@@ -313,6 +318,18 @@
     "dependency_lock_sha256": "443b00eef325cd6e4ac6ab0033ea51c6713f4566401c46a89201ae9f49bc33ea",
     "readiness_contribution": 0
    },
+   "t0_prediction_artifact": {
+    "path": "autonomous/t0-predictions-v1.json",
+    "sha256": "994e9697e2e7673a077335808d53911ceab674dac18031a3b7f847200caab591",
+    "canonicalisation": "canonical-json-v1",
+    "status": "sealed_before_t1",
+    "primary_formula": "adamic_adar_q48",
+    "backbone_edge_count": 31760211,
+    "candidate_score_count": 7310895,
+    "nonzero_primary_score_count": 7310826,
+    "overwrite_allowed": false,
+    "readiness_contribution": 0
+   },
    "prediction_seal": {
     "required_before_t1": [
      "metric source SHA-256",
@@ -417,31 +434,29 @@
     "automatic_abstention_visible": true
    },
    "current_state": {
-    "state": "awaiting_frozen_metric",
+    "state": "predictions_sealed_waiting_for_outcome",
     "t0_remote_inventory_pinned": true,
     "t0_source_pinned": true,
     "candidate_index_contract_frozen": true,
     "candidate_universe_sealed": true,
     "metric_frozen": true,
-    "predictions_sealed": false,
+    "predictions_sealed": true,
     "t1_source_pinned": false,
     "outcome_window_mature": false,
     "verdict": "not_ready",
     "readiness_contribution": 0,
     "blockers": [
-     "no T0 predictions are sealed",
      "the three-release prospective outcome window has not matured"
     ],
-    "next_machine_action": "Execute the frozen metric exhaustively on the sealed T0 candidate universe using the D-drive artifact contract, then audit and refusal-to-overwrite seal every score and the primary total order before T1."
+    "next_machine_action": "Wait for three subsequent complete annual PubMed baseline release identifiers, then pin and locally seal the official T1 source before any outcome evaluation; do not revise the T0 formula, scores, or total order."
    }
   },
-  "state": "awaiting_frozen_metric",
+  "state": "predictions_sealed_waiting_for_outcome",
   "verdict": "not_ready",
   "ready": false,
   "human_dependency_count": 0,
   "readiness_contribution": 0,
   "readiness_blockers": [
-   "no T0 predictions are sealed",
    "the three-release prospective outcome window has not matured"
   ],
   "remote_inventory": {
@@ -488,6 +503,16 @@
    "canonical_sha256": "c223cf82e2644992b2799f6fbada5216b9087787e9896896fe08ee0463c8b2db",
    "primary_formula": "adamic_adar_q48",
    "candidate_pair_count": 7310895,
+   "readiness_contribution": 0
+  },
+  "predictions": {
+   "id": "autonomous-t0-predictions-v1",
+   "status": "sealed_before_t1",
+   "canonical_sha256": "994e9697e2e7673a077335808d53911ceab674dac18031a3b7f847200caab591",
+   "primary_formula": "adamic_adar_q48",
+   "backbone_edge_count": 31760211,
+   "candidate_score_count": 7310895,
+   "nonzero_primary_score_count": 7310826,
    "readiness_contribution": 0
   }
  },

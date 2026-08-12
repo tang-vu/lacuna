@@ -42,6 +42,10 @@ from pipeline.benchmark.validate_autonomous_metric_v1 import (
     CONTRACT_PATH as AUTONOMOUS_METRIC_V1_PATH,
     audit_autonomous_metric_v1,
 )
+from pipeline.benchmark.validate_autonomous_predictions_v1 import (
+    MANIFEST_PATH as AUTONOMOUS_PREDICTIONS_V1_PATH,
+    audit_predictions_v1,
+)
 from pipeline.benchmark.autonomous_t0 import (
     REMOTE_INVENTORY_PATH as AUTONOMOUS_T0_REMOTE_INVENTORY_PATH,
     SEALED_T0_PATH as AUTONOMOUS_T0_PATH,
@@ -119,6 +123,7 @@ def build_project_status() -> dict:
     autonomous_candidate_index = audit_candidate_index_contract()
     autonomous_candidate_universe = audit_candidate_universe()
     autonomous_metric = audit_autonomous_metric_v1()
+    autonomous_predictions = audit_predictions_v1()
     autonomous_payload = json.loads(AUTONOMOUS_PROSPECTIVE_PATH.read_text(encoding="utf-8"))
     alternatives = audit_source_alternatives()
     bioasq_snapshot = json.loads(BIOASQ_SNAPSHOT_MANIFEST_PATH.read_text(encoding="utf-8"))
@@ -169,7 +174,7 @@ def build_project_status() -> dict:
     negative_protocol = load_protocol()
 
     return {
-        "schema_version": 25,
+        "schema_version": 26,
         "status": "ready" if ready else "not_ready",
         "active_validation_track": autonomous.protocol_id,
         "inputs": {
@@ -185,6 +190,7 @@ def build_project_status() -> dict:
                 AUTONOMOUS_CANDIDATE_UNIVERSE_PATH
             ),
             "autonomous_metric_contract": _input_identity(AUTONOMOUS_METRIC_V1_PATH),
+            "autonomous_t0_predictions": _input_identity(AUTONOMOUS_PREDICTIONS_V1_PATH),
             "historical_sources": _input_identity(SOURCES_PATH),
             "source_alternatives": _input_identity(ALTERNATIVES_PATH),
             "bioasq_snapshot_audit": _input_identity(BIOASQ_SNAPSHOT_MANIFEST_PATH),
@@ -271,6 +277,16 @@ def build_project_status() -> dict:
                 "primary_formula": autonomous_metric.primary_formula,
                 "candidate_pair_count": autonomous_metric.candidate_pair_count,
                 "readiness_contribution": autonomous_metric.readiness_contribution,
+            },
+            "predictions": {
+                "id": autonomous_predictions.prediction_id,
+                "status": autonomous_predictions.status,
+                "canonical_sha256": autonomous_predictions.sha256,
+                "primary_formula": autonomous_predictions.primary_formula,
+                "backbone_edge_count": autonomous_predictions.backbone_edge_count,
+                "candidate_score_count": autonomous_predictions.candidate_score_count,
+                "nonzero_primary_score_count": autonomous_predictions.nonzero_score_count,
+                "readiness_contribution": autonomous_predictions.readiness_contribution,
             },
         },
         "historical_sources": {

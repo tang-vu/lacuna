@@ -12,14 +12,14 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 25
+    assert status["schema_version"] == 26
     assert status["status"] == "not_ready"
     assert status["active_validation_track"] == (
         "autonomous-prospective-pubmed-link-emergence-v1"
     )
     autonomous = status["autonomous_validation"]
     assert autonomous["active"] is True
-    assert autonomous["state"] == "awaiting_frozen_metric"
+    assert autonomous["state"] == "predictions_sealed_waiting_for_outcome"
     assert autonomous["verdict"] == "not_ready"
     assert autonomous["ready"] is False
     assert autonomous["human_dependency_count"] == 0
@@ -70,7 +70,17 @@ def test_project_status_exposes_validator_results_without_claiming_readiness():
         "candidate_pair_count": 7_310_895,
         "readiness_contribution": 0,
     }
-    assert len(autonomous["readiness_blockers"]) == 2
+    assert autonomous["predictions"] == {
+        "id": "autonomous-t0-predictions-v1",
+        "status": "sealed_before_t1",
+        "canonical_sha256": "994e9697e2e7673a077335808d53911ceab674dac18031a3b7f847200caab591",
+        "primary_formula": "adamic_adar_q48",
+        "backbone_edge_count": 31_760_211,
+        "candidate_score_count": 7_310_895,
+        "nonzero_primary_score_count": 7_310_826,
+        "readiness_contribution": 0,
+    }
+    assert len(autonomous["readiness_blockers"]) == 1
     assert autonomous["protocol"]["machine_outcomes"][
         "llm_or_manual_labels_allowed"
     ] is False
@@ -422,6 +432,7 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
         "autonomous_candidate_index_contract",
         "autonomous_candidate_universe",
         "autonomous_metric_contract",
+        "autonomous_t0_predictions",
         "historical_sources",
         "source_alternatives",
         "bioasq_snapshot_audit",

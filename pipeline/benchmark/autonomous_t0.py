@@ -1017,7 +1017,7 @@ def main() -> None:
             print(f"PubMed bytes: {result.pubmed_bytes}")
             print(f"PubMed rows: {result.pubmed_record_count}")
             print(f"MeSH descriptors: {result.mesh_descriptor_count}")
-            print(f"state: {result.state}")
+            print(f"sealed transition target: {result.state}")
             print("readiness contribution: 0 (source identity is not a metric or outcome result)")
         elif args.command == "download":
             if args.minimum_free_gib < 0:

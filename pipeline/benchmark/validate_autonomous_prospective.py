@@ -1,7 +1,7 @@
 """Validate the no-human prospective link-emergence protocol and current state.
 
-This is a protocol validator, not a metric result. A sealed T0 closes only the source gate; the
-track remains not ready while its metric, sealed predictions, and future outcome window are absent.
+This is a protocol validator, not a metric result. T0 sources, metric, and predictions are sealed;
+the track remains not ready while its future outcome window is absent.
 
 Run:
     python -m pipeline.benchmark.validate_autonomous_prospective
@@ -33,13 +33,16 @@ from pipeline.benchmark.validate_autonomous_metric_v1 import (
     CONTRACT_PATH as METRIC_V1_PATH,
     audit_autonomous_metric_v1,
 )
+from pipeline.benchmark.validate_autonomous_predictions_v1 import (
+    MANIFEST_PATH as PREDICTIONS_V1_PATH,
+    audit_predictions_v1,
+)
 from pipeline.paths import REPO_ROOT
 
 PROTOCOL_PATH = REPO_ROOT / "benchmarks" / "autonomous-prospective-v1.json"
 EXPECTED_ID = "autonomous-prospective-pubmed-link-emergence-v1"
 EXPECTED_STATUS = "frozen_before_t0_source_acquisition_and_metric"
 EXPECTED_BLOCKERS = (
-    "no T0 predictions are sealed",
     "the three-release prospective outcome window has not matured",
 )
 
@@ -258,6 +261,23 @@ def audit_autonomous_prospective(path: Path = PROTOCOL_PATH) -> AutonomousProspe
         },
         "metric-v1 contract identity drifted",
     )
+    predictions = audit_predictions_v1(PREDICTIONS_V1_PATH)
+    _require(
+        payload.get("t0_prediction_artifact")
+        == {
+            "path": "autonomous/t0-predictions-v1.json",
+            "sha256": predictions.sha256,
+            "canonicalisation": "canonical-json-v1",
+            "status": predictions.status,
+            "primary_formula": predictions.primary_formula,
+            "backbone_edge_count": predictions.backbone_edge_count,
+            "candidate_score_count": predictions.candidate_score_count,
+            "nonzero_primary_score_count": predictions.nonzero_score_count,
+            "overwrite_allowed": False,
+            "readiness_contribution": 0,
+        },
+        "prediction-v1 artifact identity drifted",
+    )
 
     seal = payload.get("prediction_seal")
     _require(isinstance(seal, dict), "prediction seal missing")
@@ -356,13 +376,13 @@ def audit_autonomous_prospective(path: Path = PROTOCOL_PATH) -> AutonomousProspe
     current = payload.get("current_state")
     _require(isinstance(current, dict), "current state missing")
     _require(
-        current.get("state") == "awaiting_frozen_metric"
+        current.get("state") == "predictions_sealed_waiting_for_outcome"
         and current.get("t0_remote_inventory_pinned") is True
         and current.get("t0_source_pinned") is True
         and current.get("candidate_index_contract_frozen") is True
         and current.get("candidate_universe_sealed") is True
         and current.get("metric_frozen") is True
-        and current.get("predictions_sealed") is False
+        and current.get("predictions_sealed") is True
         and current.get("t1_source_pinned") is False
         and current.get("outcome_window_mature") is False
         and current.get("verdict") == "not_ready"
@@ -372,9 +392,11 @@ def audit_autonomous_prospective(path: Path = PROTOCOL_PATH) -> AutonomousProspe
     blockers = current.get("blockers")
     _require(blockers == list(EXPECTED_BLOCKERS), "current blocker list drifted")
     _require(
-        "Execute the frozen metric exhaustively" in current.get("next_machine_action", "")
-        and "D-drive artifact contract" in current.get("next_machine_action", "")
-        and "refusal-to-overwrite" in current.get("next_machine_action", ""),
+        "Wait for three subsequent complete annual PubMed baseline" in current.get(
+            "next_machine_action", ""
+        )
+        and "official T1 source" in current.get("next_machine_action", "")
+        and "do not revise" in current.get("next_machine_action", ""),
         "next machine action drifted",
     )
 

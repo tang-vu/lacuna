@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "id": "autonomous-t0-predictions-v1",
+  "status": "sealed_before_t1",
+  "sealed_on": "2026-08-13",
+  "protocol_id": "autonomous-prospective-pubmed-link-emergence-v1",
+  "sealed_inputs": {
+    "t0_manifest_canonical_json_sha256": "6ec0372008bb8efe0e17f72695a07bb03816f2b41881d6518d35077ecdac5066",
+    "candidate_universe": {
+      "canonical_json_sha256": "2313dcc1837d620394f96e5e4c150661c8a2be9e7472c1b5eccad19c13d57f84",
+      "candidate_stream_sha256": "ed3c015515ac3e9bb69f7bc98f7663941d7fe57311165d68d72d1979e7b945b4",
+      "candidate_pair_count": 7310895
+    },
+    "metric_contract": {
+      "canonical_json_sha256": "c223cf82e2644992b2799f6fbada5216b9087787e9896896fe08ee0463c8b2db",
+      "formula_source_sha256": "2347607abc20600af76d82d741135bfd043a6f4fb4afee5d1517732135583246",
+      "dependency_lock_sha256": "443b00eef325cd6e4ac6ab0033ea51c6713f4566401c46a89201ae9f49bc33ea"
+    },
+    "support_vector_sha256": "e207f5f25633820281992d0a17f0e93266bf62b28d677b8b06d0d09400eb9a22",
+    "positive_cooccurrence_index_sha256": "8b656c29bfa3d4fb5df8e7591598a968c5d677a8ad29171908a771efe9e6cced"
+  },
+  "runtime": {
+    "python_implementation": "cpython",
+    "python_version": "3.14.4",
+    "numpy_version": "2.4.4",
+    "native_language_standard": "C++17",
+    "compiler_executable": "g++.EXE",
+    "compiler_version": "g++.EXE (MinGW-W64 x86_64-msvcrt-posix-seh, built by Brecht Sanders, r3) 16.1.0",
+    "compile_flags": [
+      "-std=c++17",
+      "-O3",
+      "-DNDEBUG",
+      "-Wall",
+      "-Wextra",
+      "-Werror"
+    ],
+    "orchestrator_source": {
+      "path": "pipeline/benchmark/autonomous_metric_v1.py",
+      "sha256": "d4c7ab23c225694f4442cc50fa59f9e8fdd295953b10420bb0eb4fc0838beabd"
+    },
+    "engine_source": {
+      "path": "pipeline/benchmark/native/autonomous_metric_v1_engine.cpp",
+      "sha256": "9f293bac9ac22b7b4a173e7128f2e886f8192f7c7962511f02e46d1aeef44e35"
+    },
+    "engine_binary": {
+      "path": "engine/metric-v1-9f293bac9ac22b7b.exe",
+      "format": "native-executable",
+      "rows": 1,
+      "bytes": 162304,
+      "sha256": "d5d54ccd0333af5ea59ba39b191aed059d334b2eba0157d215bfb7cf8c582237"
+    },
+    "native_conformance": {
+      "path": "conformance/5c33a01ddbadefe2/conformance.json",
+      "format": "canonical-json-v1",
+      "rows": 1,
+      "bytes": 427,
+      "sha256": "9152e46dca5a120d86ad02dae73ab3dc1f3fbc25a0860a84e843bbd9e50f9a33",
+      "passed": true,
+      "edge_rows_checked": 7,
+      "candidate_score_rows_checked": 3
+    }
+  },
+  "measurements": {
+    "positive_source_rows_audited": 51128229,
+    "backbone_edges": 31760211,
+    "backbone_neighbor_rows": 63520422,
+    "degree_minimum": 0,
+    "degree_median_nearest_rank": 1611,
+    "degree_p90_nearest_rank": 4330,
+    "degree_p99_nearest_rank": 8038,
+    "degree_maximum": 17979,
+    "candidate_score_rows": 7310895,
+    "candidate_primary_score_zero_rows": 69,
+    "candidate_primary_score_nonzero_rows": 7310826,
+    "candidate_primary_score_minimum_q48": "0",
+    "candidate_primary_score_maximum_q48": "166267025613987885",
+    "maximum_candidate_common_neighbors": 4607,
+    "primary_order_rows": 7310895
+  },
+  "artifacts": {
+    "degree_weights": {
+      "path": "degree-weights.u64u64.bin",
+      "format": "degree-aa-q48-ra-q48-u64-v1",
+      "rows": 31111,
+      "bytes": 497776,
+      "sha256": "63bdda58604dcd3d450742d94a95ebafda6efc09368c5b724952e64c401499fb"
+    },
+    "backbone_offsets": {
+      "path": "backbone-offsets.u64.bin",
+      "format": "csr-offset-u64-v1",
+      "rows": 31111,
+      "bytes": 248888,
+      "sha256": "53abe247d873b4e8070d4071c83197ee41d705d3cdbe5c5009b73c17d250d5b9"
+    },
+    "backbone_neighbors": {
+      "path": "backbone-neighbors.u32.bin",
+      "format": "csr-neighbor-u32-v1",
+      "rows": 63520422,
+      "bytes": 254081688,
+      "sha256": "f1fb2618bd8cb6868732582be3b58b946c0d6bbc50b221a47bd47ce323489297"
+    },
+    "candidate_scores": {
+      "path": "candidate-scores.v1.bin",
+      "format": "candidate-score-record-v1",
+      "rows": 7310895,
+      "bytes": 350922960,
+      "sha256": "4c9c8731bad27d9d951d2bd1da5d62113667ac1aee84f72cbcb99a1f9ccca58d"
+    },
+    "primary_order": {
+      "path": "primary-order.u64.bin",
+      "format": "ranked-pair-key-u64-v1",
+      "rows": 7310895,
+      "bytes": 58487160,
+      "sha256": "b13794e463e91a8e8a9fe1c7be04b3cc0e5f912e06956b2856b5202d443af828"
+    }
+  },
+  "integrity_gates": {
+    "all_candidate_universe_local_hashes_and_invariants_match": true,
+    "native_engine_matches_python_reference_fixture": true,
+    "every_positive_source_row_reapplied_to_backbone": true,
+    "backbone_csr_exact_symmetric_sorted_duplicate_free": true,
+    "one_exact_score_tuple_for_every_candidate": true,
+    "score_pair_keys_equal_candidate_stream_in_order": true,
+    "primary_total_order_recomputed_and_equal": true,
+    "missing_duplicate_extra_nonfinite_or_overflow_rows": 0,
+    "human_or_llm_scoring_ranking_filtering_or_labels": false,
+    "t1_source_or_outcomes_inspected": false
+  },
+  "seal_policy": {
+    "overwrite_allowed": false,
+    "formula_revision_allowed": false,
+    "prediction_artifact_revision_allowed": false,
+    "future_integrity_drift_action": "abstain"
+  },
+  "claim_boundary": "Exhaustive machine-ranked future PubMed/MeSH database-link candidates from a frozen unvalidated method; not discoveries, validated gaps, scientific truths, importance estimates, or evidence of absent academic or non-academic knowledge.",
+  "readiness_contribution": 0
+}

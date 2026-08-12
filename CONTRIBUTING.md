@@ -133,9 +133,8 @@ python -m pipeline.benchmark.autonomous_metric_v1 build \
 
 The build rechecks all candidate-universe bytes, recomputes the exact positive-association
 backbone from all 51,128,229 positive rows, scores every candidate, reconstructs the total order,
-and refuses existing partial or mismatched outputs. Completion is still an unsealed local
-prediction run with zero readiness until the small immutable prediction manifest passes its own
-validator and is committed.
+and refuses existing partial or mismatched outputs. A newly completed run is still unsealed and
+has zero readiness until the small immutable prediction manifest passes its own validator.
 
 Only after the complete build audit passes, create that manifest once:
 
@@ -147,6 +146,15 @@ python -m pipeline.benchmark.autonomous_metric_v1 seal \
 
 The seal command deliberately re-runs the full byte, backbone, score, and order audit. It refuses
 an existing manifest rather than updating any prediction after the fact.
+
+The active run is now sealed at
+[`benchmarks/autonomous/t0-predictions-v1.json`](benchmarks/autonomous/t0-predictions-v1.json), so
+the command above will and must refuse to run again against the committed manifest. Validate the
+small manifest anywhere with `python -m pipeline.benchmark.validate_autonomous_predictions_v1`.
+Where the D-drive artifacts are mounted, add `--verify-local /path/to/metric-v1 --scan-dir
+/path/to/candidate-index-v1` to rehash and recompute everything. The remaining active transition
+cannot be accelerated with current data: wait for three subsequent complete annual baselines,
+then pin T1 before inspecting any outcome.
 
 ## Archived v3 campaign
 

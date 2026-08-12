@@ -716,6 +716,7 @@ export function renderAutonomousMissions(status: ProjectStatus): HTMLElement {
   const candidateIndex = active.candidate_index_contract;
   const candidateUniverse = active.candidate_universe;
   const metricContract = active.metric_contract;
+  const predictions = active.predictions;
   const sourceReady = current.state !== 'awaiting_t0_baseline';
   const predictionsSealed = [
     'predictions_sealed_waiting_for_outcome',
@@ -731,6 +732,7 @@ export function renderAutonomousMissions(status: ProjectStatus): HTMLElement {
   const t0Url = `${REPOSITORY}/blob/main/benchmarks/autonomous/t0-2026.json`;
   const candidateUniverseUrl = `${REPOSITORY}/blob/main/benchmarks/autonomous/t0-candidate-universe-v1.json`;
   const metricUrl = `${REPOSITORY}/blob/main/benchmarks/autonomous/metric-v1.json`;
+  const predictionsUrl = `${REPOSITORY}/blob/main/benchmarks/autonomous/t0-predictions-v1.json`;
 
   return el('section', { class: 'contribution-missions', id: 'contribute' }, [
     el('div', { class: 'section-kicker' }, ['AUTONOMOUS VALIDATION']),
@@ -776,17 +778,21 @@ export function renderAutonomousMissions(status: ProjectStatus): HTMLElement {
           `from ${candidateUniverse.distinct_pmid_count.toLocaleString()} unique PubMed records. ` +
           `Metric ${metricContract.primary_formula} is frozen at ` +
           `${metricContract.canonical_sha256.slice(0, 12)}… before any candidate score. ` +
-          'It remains an unvalidated formula with zero scientific readiness. Every exhaustive score ' +
-          'and the total order must now be refusal-to-overwrite sealed before future outcomes exist.',
+          `${predictions.candidate_score_count.toLocaleString()} score tuples and their total order ` +
+          `are refusal-to-overwrite sealed at ${predictions.canonical_sha256.slice(0, 12)}…. ` +
+          'They remain predictions from an unvalidated formula with zero scientific readiness; ' +
+          'future complete releases must decide the registered test.',
         progress(
           predictionsSealed ? 3 : current.metric_frozen ? 2 : 1,
           3,
           'Universe + metric + predictions',
         ),
-        current.metric_frozen
-          ? 'Inspect the frozen metric contract'
-          : 'Inspect the sealed score-free universe',
-        current.metric_frozen ? metricUrl : candidateUniverseUrl,
+        predictionsSealed
+          ? 'Inspect the immutable prediction seal'
+          : current.metric_frozen
+            ? 'Inspect the frozen metric contract'
+            : 'Inspect the sealed score-free universe',
+        predictionsSealed ? predictionsUrl : current.metric_frozen ? metricUrl : candidateUniverseUrl,
       ),
       mission(
         '03',

@@ -25,14 +25,17 @@ the expense of gap detection, validation, or traceability.
 - The active replacement is `benchmarks/autonomous-prospective-v1.json`: a no-human prospective
   PubMed link-emergence benchmark. Its sealed 2026 T0 pins 1,334 official PubMed transports,
   39,994,988 parsed records, and the matching 31,110-descriptor MeSH transport. This closes only the
-  source gate; the track remains not ready until sealed predictions and the three-release outcome
-  window pass machine-verifiable gates.
+  source gate; the track remains not ready until the three-release outcome window passes its
+  machine-verifiable gates.
 - The score-free T0 construction has sealed 7,310,895 exhaustive exact-zero candidates from
   39,994,988 unique PMIDs. This is an exact maintained-current PubMed/MeSH count/index artifact
   with zero metric or scientific readiness.
 - `autonomous-prospective-metric-v1` is frozen before any candidate score. It is an unvalidated
   Adamic–Adar Q48 link-ranking formula with zero readiness, not a result or permission to describe
   candidates as scientific gaps.
+- T0 predictions are refusal-to-overwrite sealed for all 7,310,895 candidates. The seal proves
+  computation and ordering integrity only; it contributes zero readiness until prospective
+  outcomes exist and pass the registered evaluation.
 - A pass on the active track validates only future PubMed MeSH link-emergence ranking. Never call it
   a validated knowledge-gap detector, autonomous scientific discovery, or evidence of absent
   human knowledge.
@@ -65,6 +68,7 @@ python -m pipeline.benchmark.autonomous_t0 download --help
 python -m pipeline.benchmark.validate_autonomous_candidate_index
 python -m pipeline.benchmark.validate_autonomous_candidate_universe
 python -m pipeline.benchmark.validate_autonomous_metric_v1
+python -m pipeline.benchmark.validate_autonomous_predictions_v1
 python -m pipeline.benchmark.autonomous_metric_v1 conformance --help
 python -m pipeline.benchmark.autonomous_metric_v1 build --help
 python -m pipeline.benchmark.autonomous_metric_v1 seal --help

@@ -47,6 +47,12 @@ passes a byte-exact synthetic Python conformance fixture, and audits the complet
 candidate score stream, and total order. No native binary or generated score belongs on C or in
 Git.
 
+The active artifacts have been sealed by
+`benchmarks/autonomous/t0-predictions-v1.json`. Do not delete, move, regenerate, or overwrite the
+D-drive `metric-v1` directory: future evaluation must verify those exact hashes. Structural seal
+checks work without local data; `validate_autonomous_predictions_v1 --verify-local ... --scan-dir
+...` performs the expensive byte and computation audit when this volume is mounted.
+
 This directory holds regenerable API caches, the fetched OpenAlex taxonomy, and co-occurrence
 rows. It also holds trimmed PubMed metadata fetched for benchmark mapping audits. Those files are
 intentionally ignored: the current pre-1986 pilot is tens of megabytes and the replacement MEDLINE

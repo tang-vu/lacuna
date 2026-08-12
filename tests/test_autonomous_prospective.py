@@ -15,11 +15,11 @@ def test_active_protocol_has_frozen_metric_no_human_dependency_and_no_result_cla
     audit = audit_autonomous_prospective()
 
     assert audit.protocol_id == "autonomous-prospective-pubmed-link-emergence-v1"
-    assert audit.state == "awaiting_frozen_metric"
+    assert audit.state == "predictions_sealed_waiting_for_outcome"
     assert audit.verdict == "not_ready"
     assert audit.human_dependency_count == 0
     assert audit.readiness_contribution == 0
-    assert len(audit.blockers) == 2
+    assert len(audit.blockers) == 1
     assert audit.ready is False
 
 
@@ -100,6 +100,22 @@ def test_protocol_rejects_metric_contract_identity_or_state_drift(tmp_path):
     path = tmp_path / "protocol-metric.json"
     path.write_text(json.dumps(payload), encoding="utf-8")
     with pytest.raises(AutonomousProspectiveContractError, match="metric-v1 contract"):
+        audit_autonomous_prospective(path)
+
+
+def test_protocol_rejects_prediction_identity_or_state_drift(tmp_path):
+    payload = json.loads(PROTOCOL_PATH.read_text(encoding="utf-8"))
+    payload["t0_prediction_artifact"]["candidate_score_count"] = 1
+    path = tmp_path / "protocol-predictions.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(AutonomousProspectiveContractError, match="prediction-v1 artifact"):
+        audit_autonomous_prospective(path)
+
+    payload = json.loads(PROTOCOL_PATH.read_text(encoding="utf-8"))
+    payload["current_state"]["predictions_sealed"] = False
+    path = tmp_path / "protocol-state.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(AutonomousProspectiveContractError, match="current autonomous state"):
         audit_autonomous_prospective(path)
 
     payload = json.loads(PROTOCOL_PATH.read_text(encoding="utf-8"))
