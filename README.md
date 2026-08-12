@@ -241,7 +241,14 @@ inherit its bridge-publication and independent-replication requirements.
 `python -m pipeline.benchmark.negative_review_context --build` derives a separate, checksum-pinned
 review aid from the 2012 and 2013 MeSH archives. It adds official scope notes, entry terms, tree
 paths, and hard-negative parent labels to the public review desk while contributing zero readiness
-and making no adjudication decision.
+and making no adjudication decision. The separately frozen
+[`negative-adjudication-protocol.json`](benchmarks/v3/negative-adjudication-protocol.json) now
+turns that context into two reproducible PubMed review links per proposal and distinguishes the
+control constructs: substantive adjacency is expected for hard negatives, while distant negatives
+must survive a substantive-distance review. The protocol was written after the terminal BioASQ v2
+pilot output and says so explicitly; it contains no candidate decision, remains metric-v3 blind,
+and cannot prove reviewer blindness. PubMed links use maintained-current indexing and literal
+title/abstract phrases, so they are review leads—not historical reconstruction or absence evidence.
 The live **Metric-blind review desk** publishes all 14 contract-validated intake records directly
 from that ledger, including their evidence links, mapping limitations, adjudication rationale, and
 unresolved questions. Structural validity is not scientific acceptance: it defaults to the ten
@@ -345,7 +352,7 @@ successful gap metric, or metric-v3 readiness. Exactly zero held-out cases were 
 committed case-blind graph manifest pins the compact corpus, both cutoff edge files, compiler, and
 executor identities so every exported count is auditable from a clean clone and replayable against
 the checksum-pinned local source without committing the 810 MB cache. A separately pinned
-post-development formula decision is required before held-out execution.
+post-development formula decision was required before any held-out execution.
 
 That single permitted decision was frozen in
 `benchmarks/v3/bioasq-formula-v2-revision-1.json` before revision-formula or held-out scores. It

@@ -1,11 +1,16 @@
 {
- "schema_version": 1,
+ "schema_version": 2,
  "status": "generated_review_aid",
  "readiness_contribution": 0,
- "warning": "Pinned vocabulary context is a generated review aid, not human adjudication, evidence that a relationship is absent, or benchmark readiness.",
+ "warning": "Pinned vocabulary context and live PubMed links form a generated review aid, not human adjudication, evidence that a relationship is absent, or benchmark readiness.",
  "queue": {
   "path": "artifacts/negative-candidates.json",
   "sha256": "459948e23ba3d3cfe800be917ea16ce546e835d883953d42d112da05d970c152",
+  "canonicalisation": "canonical-json-v1"
+ },
+ "adjudication_protocol": {
+  "path": "benchmarks/v3/negative-adjudication-protocol.json",
+  "sha256": "706216a7a6fa15e23475c156e100296cc557169b1b433816e382574da79b73d7",
   "canonicalisation": "canonical-json-v1"
  },
  "sources": [
@@ -64,7 +69,23 @@
       "SPEC: SPEC qualif; DF: TEXTILE INDUST"
      ]
     }
-   }
+   },
+   "literature_queries": [
+    {
+     "id": "maintained_pubmed_mesh_pair_before_cutoff",
+     "label": "Exact MeSH pair through cutoff (maintained indexing)",
+     "query": "\"Pulmonary Artery\"[mh:noexp] AND \"Textile Industry\"[mh:noexp] AND 1800/01/01:2011/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Pulmonary+Artery%22%5Bmh%3Anoexp%5D+AND+%22Textile+Industry%22%5Bmh%3Anoexp%5D+AND+1800%2F01%2F01%3A2011%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Live maintained-current PubMed review aid; not period-appropriate indexing."
+    },
+    {
+     "id": "pubmed_exact_phrase_pair_before_cutoff",
+     "label": "Exact title/abstract phrases through cutoff",
+     "query": "\"Pulmonary Artery\"[tiab] AND \"Textile Industry\"[tiab] AND 1800/01/01:2011/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Pulmonary+Artery%22%5Btiab%5D+AND+%22Textile+Industry%22%5Btiab%5D+AND+1800%2F01%2F01%3A2011%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Reproducible literal-phrase lead; not a complete synonym search or absence test."
+    }
+   ]
   },
   {
    "candidate_id": "generated-distant-2012-02-d047229-d011337",
@@ -101,7 +122,23 @@
       "no qualif"
      ]
     }
-   }
+   },
+   "literature_queries": [
+    {
+     "id": "maintained_pubmed_mesh_pair_before_cutoff",
+     "label": "Exact MeSH pair through cutoff (maintained indexing)",
+     "query": "\"Plakortis\"[mh:noexp] AND \"Probability Learning\"[mh:noexp] AND 1800/01/01:2011/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Plakortis%22%5Bmh%3Anoexp%5D+AND+%22Probability+Learning%22%5Bmh%3Anoexp%5D+AND+1800%2F01%2F01%3A2011%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Live maintained-current PubMed review aid; not period-appropriate indexing."
+    },
+    {
+     "id": "pubmed_exact_phrase_pair_before_cutoff",
+     "label": "Exact title/abstract phrases through cutoff",
+     "query": "\"Plakortis\"[tiab] AND \"Probability Learning\"[tiab] AND 1800/01/01:2011/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Plakortis%22%5Btiab%5D+AND+%22Probability+Learning%22%5Btiab%5D+AND+1800%2F01%2F01%3A2011%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Reproducible literal-phrase lead; not a complete synonym search or absence test."
+    }
+   ]
   },
   {
    "candidate_id": "generated-distant-2012-03-d009008-d008888",
@@ -146,7 +183,23 @@
       "SPEC: SPEC qualif; specify country"
      ]
     }
-   }
+   },
+   "literature_queries": [
+    {
+     "id": "maintained_pubmed_mesh_pair_before_cutoff",
+     "label": "Exact MeSH pair through cutoff (maintained indexing)",
+     "query": "\"Abnormalities, Severe Teratoid\"[mh:noexp] AND \"Military Nursing\"[mh:noexp] AND 1800/01/01:2011/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Abnormalities%2C+Severe+Teratoid%22%5Bmh%3Anoexp%5D+AND+%22Military+Nursing%22%5Bmh%3Anoexp%5D+AND+1800%2F01%2F01%3A2011%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Live maintained-current PubMed review aid; not period-appropriate indexing."
+    },
+    {
+     "id": "pubmed_exact_phrase_pair_before_cutoff",
+     "label": "Exact title/abstract phrases through cutoff",
+     "query": "\"Abnormalities, Severe Teratoid\"[tiab] AND \"Military Nursing\"[tiab] AND 1800/01/01:2011/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Abnormalities%2C+Severe+Teratoid%22%5Btiab%5D+AND+%22Military+Nursing%22%5Btiab%5D+AND+1800%2F01%2F01%3A2011%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Reproducible literal-phrase lead; not a complete synonym search or absence test."
+    }
+   ]
   },
   {
    "candidate_id": "generated-distant-2012-04-d008524-d055700",
@@ -190,7 +243,23 @@
      ],
      "annotations": []
     }
-   }
+   },
+   "literature_queries": [
+    {
+     "id": "maintained_pubmed_mesh_pair_before_cutoff",
+     "label": "Exact MeSH pair through cutoff (maintained indexing)",
+     "query": "\"Medrogestone\"[mh:noexp] AND \"Cremation\"[mh:noexp] AND 1800/01/01:2011/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Medrogestone%22%5Bmh%3Anoexp%5D+AND+%22Cremation%22%5Bmh%3Anoexp%5D+AND+1800%2F01%2F01%3A2011%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Live maintained-current PubMed review aid; not period-appropriate indexing."
+    },
+    {
+     "id": "pubmed_exact_phrase_pair_before_cutoff",
+     "label": "Exact title/abstract phrases through cutoff",
+     "query": "\"Medrogestone\"[tiab] AND \"Cremation\"[tiab] AND 1800/01/01:2011/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Medrogestone%22%5Btiab%5D+AND+%22Cremation%22%5Btiab%5D+AND+1800%2F01%2F01%3A2011%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Reproducible literal-phrase lead; not a complete synonym search or absence test."
+    }
+   ]
   },
   {
    "candidate_id": "generated-distant-2013-01-d008438-d057141",
@@ -237,7 +306,23 @@
       "FOOD PRESERVATION and FOOD PRESERVATIVES is also available"
      ]
     }
-   }
+   },
+   "literature_queries": [
+    {
+     "id": "maintained_pubmed_mesh_pair_before_cutoff",
+     "label": "Exact MeSH pair through cutoff (maintained indexing)",
+     "query": "\"Maxillary Artery\"[mh:noexp] AND \"Food, Preserved\"[mh:noexp] AND 1800/01/01:2012/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Maxillary+Artery%22%5Bmh%3Anoexp%5D+AND+%22Food%2C+Preserved%22%5Bmh%3Anoexp%5D+AND+1800%2F01%2F01%3A2012%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Live maintained-current PubMed review aid; not period-appropriate indexing."
+    },
+    {
+     "id": "pubmed_exact_phrase_pair_before_cutoff",
+     "label": "Exact title/abstract phrases through cutoff",
+     "query": "\"Maxillary Artery\"[tiab] AND \"Food, Preserved\"[tiab] AND 1800/01/01:2012/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Maxillary+Artery%22%5Btiab%5D+AND+%22Food%2C+Preserved%22%5Btiab%5D+AND+1800%2F01%2F01%3A2012%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Reproducible literal-phrase lead; not a complete synonym search or absence test."
+    }
+   ]
   },
   {
    "candidate_id": "generated-distant-2013-02-d029902-d003887",
@@ -280,7 +365,23 @@
       "a behavior ther technique; DF: DESENSITIZATION PSYCHOL"
      ]
     }
-   }
+   },
+   "literature_queries": [
+    {
+     "id": "maintained_pubmed_mesh_pair_before_cutoff",
+     "label": "Exact MeSH pair through cutoff (maintained indexing)",
+     "query": "\"Medicago\"[mh:noexp] AND \"Desensitization, Psychologic\"[mh:noexp] AND 1800/01/01:2012/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Medicago%22%5Bmh%3Anoexp%5D+AND+%22Desensitization%2C+Psychologic%22%5Bmh%3Anoexp%5D+AND+1800%2F01%2F01%3A2012%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Live maintained-current PubMed review aid; not period-appropriate indexing."
+    },
+    {
+     "id": "pubmed_exact_phrase_pair_before_cutoff",
+     "label": "Exact title/abstract phrases through cutoff",
+     "query": "\"Medicago\"[tiab] AND \"Desensitization, Psychologic\"[tiab] AND 1800/01/01:2012/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Medicago%22%5Btiab%5D+AND+%22Desensitization%2C+Psychologic%22%5Btiab%5D+AND+1800%2F01%2F01%3A2012%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Reproducible literal-phrase lead; not a complete synonym search or absence test."
+    }
+   ]
   },
   {
    "candidate_id": "generated-distant-2013-03-d004620-d004581",
@@ -317,7 +418,23 @@
      ],
      "annotations": []
     }
-   }
+   },
+   "literature_queries": [
+    {
+     "id": "maintained_pubmed_mesh_pair_before_cutoff",
+     "label": "Exact MeSH pair through cutoff (maintained indexing)",
+     "query": "\"Embolism, Fat\"[mh:noexp] AND \"Electronics\"[mh:noexp] AND 1800/01/01:2012/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Embolism%2C+Fat%22%5Bmh%3Anoexp%5D+AND+%22Electronics%22%5Bmh%3Anoexp%5D+AND+1800%2F01%2F01%3A2012%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Live maintained-current PubMed review aid; not period-appropriate indexing."
+    },
+    {
+     "id": "pubmed_exact_phrase_pair_before_cutoff",
+     "label": "Exact title/abstract phrases through cutoff",
+     "query": "\"Embolism, Fat\"[tiab] AND \"Electronics\"[tiab] AND 1800/01/01:2012/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Embolism%2C+Fat%22%5Btiab%5D+AND+%22Electronics%22%5Btiab%5D+AND+1800%2F01%2F01%3A2012%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Reproducible literal-phrase lead; not a complete synonym search or absence test."
+    }
+   ]
   },
   {
    "candidate_id": "generated-distant-2013-04-d011372-d013177",
@@ -379,7 +496,23 @@
       "SPORTS is the activity, SPORTS MEDICINE is the specialty"
      ]
     }
-   }
+   },
+   "literature_queries": [
+    {
+     "id": "maintained_pubmed_mesh_pair_before_cutoff",
+     "label": "Exact MeSH pair through cutoff (maintained indexing)",
+     "query": "\"Progestins\"[mh:noexp] AND \"Sports\"[mh:noexp] AND 1800/01/01:2012/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Progestins%22%5Bmh%3Anoexp%5D+AND+%22Sports%22%5Bmh%3Anoexp%5D+AND+1800%2F01%2F01%3A2012%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Live maintained-current PubMed review aid; not period-appropriate indexing."
+    },
+    {
+     "id": "pubmed_exact_phrase_pair_before_cutoff",
+     "label": "Exact title/abstract phrases through cutoff",
+     "query": "\"Progestins\"[tiab] AND \"Sports\"[tiab] AND 1800/01/01:2012/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Progestins%22%5Btiab%5D+AND+%22Sports%22%5Btiab%5D+AND+1800%2F01%2F01%3A2012%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Reproducible literal-phrase lead; not a complete synonym search or absence test."
+    }
+   ]
   },
   {
    "candidate_id": "generated-hard-2012-01-d001174-d014143",
@@ -415,6 +548,22 @@
      "annotations": []
     }
    },
+   "literature_queries": [
+    {
+     "id": "maintained_pubmed_mesh_pair_before_cutoff",
+     "label": "Exact MeSH pair through cutoff (maintained indexing)",
+     "query": "\"Arthrodesis\"[mh:noexp] AND \"Traction\"[mh:noexp] AND 1800/01/01:2011/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Arthrodesis%22%5Bmh%3Anoexp%5D+AND+%22Traction%22%5Bmh%3Anoexp%5D+AND+1800%2F01%2F01%3A2011%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Live maintained-current PubMed review aid; not period-appropriate indexing."
+    },
+    {
+     "id": "pubmed_exact_phrase_pair_before_cutoff",
+     "label": "Exact title/abstract phrases through cutoff",
+     "query": "\"Arthrodesis\"[tiab] AND \"Traction\"[tiab] AND 1800/01/01:2011/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Arthrodesis%22%5Btiab%5D+AND+%22Traction%22%5Btiab%5D+AND+1800%2F01%2F01%3A2011%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Reproducible literal-phrase lead; not a complete synonym search or absence test."
+    }
+   ],
    "shared_parent": {
     "descriptor_ui": "D019637",
     "descriptor_label": "Orthopedic Procedures",
@@ -457,6 +606,22 @@
      ]
     }
    },
+   "literature_queries": [
+    {
+     "id": "maintained_pubmed_mesh_pair_before_cutoff",
+     "label": "Exact MeSH pair through cutoff (maintained indexing)",
+     "query": "\"Decanoic Acids\"[mh:noexp] AND \"Palmitic Acids\"[mh:noexp] AND 1800/01/01:2011/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Decanoic+Acids%22%5Bmh%3Anoexp%5D+AND+%22Palmitic+Acids%22%5Bmh%3Anoexp%5D+AND+1800%2F01%2F01%3A2011%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Live maintained-current PubMed review aid; not period-appropriate indexing."
+    },
+    {
+     "id": "pubmed_exact_phrase_pair_before_cutoff",
+     "label": "Exact title/abstract phrases through cutoff",
+     "query": "\"Decanoic Acids\"[tiab] AND \"Palmitic Acids\"[tiab] AND 1800/01/01:2011/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Decanoic+Acids%22%5Btiab%5D+AND+%22Palmitic+Acids%22%5Btiab%5D+AND+1800%2F01%2F01%3A2011%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Reproducible literal-phrase lead; not a complete synonym search or absence test."
+    }
+   ],
    "shared_parent": {
     "descriptor_ui": "D005227",
     "descriptor_label": "Fatty Acids",
@@ -501,6 +666,22 @@
      "annotations": []
     }
    },
+   "literature_queries": [
+    {
+     "id": "maintained_pubmed_mesh_pair_before_cutoff",
+     "label": "Exact MeSH pair through cutoff (maintained indexing)",
+     "query": "\"Incontinence Pads\"[mh:noexp] AND \"Diapers, Adult\"[mh:noexp] AND 1800/01/01:2011/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Incontinence+Pads%22%5Bmh%3Anoexp%5D+AND+%22Diapers%2C+Adult%22%5Bmh%3Anoexp%5D+AND+1800%2F01%2F01%3A2011%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Live maintained-current PubMed review aid; not period-appropriate indexing."
+    },
+    {
+     "id": "pubmed_exact_phrase_pair_before_cutoff",
+     "label": "Exact title/abstract phrases through cutoff",
+     "query": "\"Incontinence Pads\"[tiab] AND \"Diapers, Adult\"[tiab] AND 1800/01/01:2011/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Incontinence+Pads%22%5Btiab%5D+AND+%22Diapers%2C+Adult%22%5Btiab%5D+AND+1800%2F01%2F01%3A2011%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Reproducible literal-phrase lead; not a complete synonym search or absence test."
+    }
+   ],
    "shared_parent": {
     "descriptor_ui": "D041342",
     "descriptor_label": "Absorbent Pads",
@@ -544,6 +725,22 @@
      "annotations": []
     }
    },
+   "literature_queries": [
+    {
+     "id": "maintained_pubmed_mesh_pair_before_cutoff",
+     "label": "Exact MeSH pair through cutoff (maintained indexing)",
+     "query": "\"Stereotypic Movement Disorder\"[mh:noexp] AND \"Elimination Disorders\"[mh:noexp] AND 1800/01/01:2011/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Stereotypic+Movement+Disorder%22%5Bmh%3Anoexp%5D+AND+%22Elimination+Disorders%22%5Bmh%3Anoexp%5D+AND+1800%2F01%2F01%3A2011%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Live maintained-current PubMed review aid; not period-appropriate indexing."
+    },
+    {
+     "id": "pubmed_exact_phrase_pair_before_cutoff",
+     "label": "Exact title/abstract phrases through cutoff",
+     "query": "\"Stereotypic Movement Disorder\"[tiab] AND \"Elimination Disorders\"[tiab] AND 1800/01/01:2011/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Stereotypic+Movement+Disorder%22%5Btiab%5D+AND+%22Elimination+Disorders%22%5Btiab%5D+AND+1800%2F01%2F01%3A2011%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Reproducible literal-phrase lead; not a complete synonym search or absence test."
+    }
+   ],
    "shared_parent": {
     "descriptor_ui": "D019952",
     "descriptor_label": "Mental Disorders Diagnosed in Childhood",
@@ -597,6 +794,22 @@
      ]
     }
    },
+   "literature_queries": [
+    {
+     "id": "maintained_pubmed_mesh_pair_before_cutoff",
+     "label": "Exact MeSH pair through cutoff (maintained indexing)",
+     "query": "\"Double Bind Interaction\"[mh:noexp] AND \"Internal-External Control\"[mh:noexp] AND 1800/01/01:2012/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Double+Bind+Interaction%22%5Bmh%3Anoexp%5D+AND+%22Internal-External+Control%22%5Bmh%3Anoexp%5D+AND+1800%2F01%2F01%3A2012%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Live maintained-current PubMed review aid; not period-appropriate indexing."
+    },
+    {
+     "id": "pubmed_exact_phrase_pair_before_cutoff",
+     "label": "Exact title/abstract phrases through cutoff",
+     "query": "\"Double Bind Interaction\"[tiab] AND \"Internal-External Control\"[tiab] AND 1800/01/01:2012/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Double+Bind+Interaction%22%5Btiab%5D+AND+%22Internal-External+Control%22%5Btiab%5D+AND+1800%2F01%2F01%3A2012%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Reproducible literal-phrase lead; not a complete synonym search or absence test."
+    }
+   ],
    "shared_parent": {
     "descriptor_ui": "D011593",
     "descriptor_label": "Psychology, Social",
@@ -639,6 +852,22 @@
      "annotations": []
     }
    },
+   "literature_queries": [
+    {
+     "id": "maintained_pubmed_mesh_pair_before_cutoff",
+     "label": "Exact MeSH pair through cutoff (maintained indexing)",
+     "query": "\"Electric Conductivity\"[mh:noexp] AND \"Electric Capacitance\"[mh:noexp] AND 1800/01/01:2012/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Electric+Conductivity%22%5Bmh%3Anoexp%5D+AND+%22Electric+Capacitance%22%5Bmh%3Anoexp%5D+AND+1800%2F01%2F01%3A2012%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Live maintained-current PubMed review aid; not period-appropriate indexing."
+    },
+    {
+     "id": "pubmed_exact_phrase_pair_before_cutoff",
+     "label": "Exact title/abstract phrases through cutoff",
+     "query": "\"Electric Conductivity\"[tiab] AND \"Electric Capacitance\"[tiab] AND 1800/01/01:2012/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Electric+Conductivity%22%5Btiab%5D+AND+%22Electric+Capacitance%22%5Btiab%5D+AND+1800%2F01%2F01%3A2012%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Reproducible literal-phrase lead; not a complete synonym search or absence test."
+    }
+   ],
    "shared_parent": {
     "descriptor_ui": "D004560",
     "descriptor_label": "Electricity",
@@ -686,6 +915,22 @@
      "annotations": []
     }
    },
+   "literature_queries": [
+    {
+     "id": "maintained_pubmed_mesh_pair_before_cutoff",
+     "label": "Exact MeSH pair through cutoff (maintained indexing)",
+     "query": "\"Solar System\"[mh:noexp] AND \"Stars, Celestial\"[mh:noexp] AND 1800/01/01:2012/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Solar+System%22%5Bmh%3Anoexp%5D+AND+%22Stars%2C+Celestial%22%5Bmh%3Anoexp%5D+AND+1800%2F01%2F01%3A2012%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Live maintained-current PubMed review aid; not period-appropriate indexing."
+    },
+    {
+     "id": "pubmed_exact_phrase_pair_before_cutoff",
+     "label": "Exact title/abstract phrases through cutoff",
+     "query": "\"Solar System\"[tiab] AND \"Stars, Celestial\"[tiab] AND 1800/01/01:2012/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Solar+System%22%5Btiab%5D+AND+%22Stars%2C+Celestial%22%5Btiab%5D+AND+1800%2F01%2F01%3A2012%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Reproducible literal-phrase lead; not a complete synonym search or absence test."
+    }
+   ],
    "shared_parent": {
     "descriptor_ui": "D055587",
     "descriptor_label": "Astronomical Objects",
@@ -726,6 +971,22 @@
      ]
     }
    },
+   "literature_queries": [
+    {
+     "id": "maintained_pubmed_mesh_pair_before_cutoff",
+     "label": "Exact MeSH pair through cutoff (maintained indexing)",
+     "query": "\"Galactans\"[mh:noexp] AND \"Oligosaccharides\"[mh:noexp] AND 1800/01/01:2012/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Galactans%22%5Bmh%3Anoexp%5D+AND+%22Oligosaccharides%22%5Bmh%3Anoexp%5D+AND+1800%2F01%2F01%3A2012%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Live maintained-current PubMed review aid; not period-appropriate indexing."
+    },
+    {
+     "id": "pubmed_exact_phrase_pair_before_cutoff",
+     "label": "Exact title/abstract phrases through cutoff",
+     "query": "\"Galactans\"[tiab] AND \"Oligosaccharides\"[tiab] AND 1800/01/01:2012/12/31[dp]",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/?term=%22Galactans%22%5Btiab%5D+AND+%22Oligosaccharides%22%5Btiab%5D+AND+1800%2F01%2F01%3A2012%2F12%2F31%5Bdp%5D",
+     "evidence_scope": "Reproducible literal-phrase lead; not a complete synonym search or absence test."
+    }
+   ],
    "shared_parent": {
     "descriptor_ui": "D011134",
     "descriptor_label": "Polysaccharides",

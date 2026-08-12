@@ -323,12 +323,20 @@ function renderCandidateDesk(status: ProjectStatus): HTMLElement {
   return node;
 }
 
-function negativeCard(candidate: NegativeCandidate, selected: boolean): HTMLElement {
+function negativeCard(
+  candidate: NegativeCandidate,
+  selected: boolean,
+  protocol: ProjectStatus['negative_candidate_queue']['adjudication_protocol'],
+): HTMLElement {
   const evidence = candidate.kind === 'hard_negative'
     ? `shared parent ${candidate.selection_evidence.shared_parent} · ` +
       `${candidate.selection_evidence.sibling_group_size} eligible siblings`
     : `fixed branch stratum ${candidate.selection_evidence.branch_stratum?.join(' × ')}`;
   const issue = candidate.kind === 'hard_negative' ? 4 : 3;
+  const reviewChecks = [
+    ...protocol.common_review_checks,
+    ...protocol.kind_specific_review_checks[candidate.kind],
+  ];
 
   return el('details', {
     class: 'candidate-card negative-card',
@@ -377,10 +385,10 @@ function negativeCard(candidate: NegativeCandidate, selected: boolean): HTMLElem
         el('h4', {}, ['Why it entered the review queue']),
         el('p', {}, [candidate.negative_rationale]),
         el('h4', {}, ['Human review required']),
-        el('ol', {}, candidate.review_required.map((item) => el('li', {}, [item]))),
+        el('ol', {}, reviewChecks.map((item) => el('li', {}, [item]))),
       ]),
       el('details', { class: 'candidate-context' }, [
-        el('summary', {}, ['Inspect pinned MeSH review context']),
+        el('summary', {}, ['Inspect pinned MeSH context and review queries']),
         el('p', { class: 'candidate-context-warning' }, [
           'Generated vocabulary context; zero readiness; not human adjudication.',
         ]),
@@ -406,6 +414,20 @@ function negativeCard(candidate: NegativeCandidate, selected: boolean): HTMLElem
               `Shared parent: ${candidate.review_context.shared_parent.descriptor_label} · ${candidate.review_context.shared_parent.tree_number}`,
             ])
           : null,
+        el('h4', {}, ['Reproducible literature review leads']),
+        el('p', { class: 'candidate-context-warning' }, [
+          protocol.literature_query_contract.limitations[0],
+        ]),
+        el('ul', {}, candidate.review_context.literature_queries.map((query) =>
+          el('li', {}, [
+            el('a', {
+              href: query.url,
+              target: '_blank',
+              rel: 'noreferrer',
+            }, [`${query.label} ↗`]),
+            el('small', {}, [query.evidence_scope]),
+          ]),
+        )),
       ].filter((node): node is HTMLElement => node !== null)),
       el('div', { class: 'candidate-decision' }, [
         el('p', {}, [
@@ -472,7 +494,11 @@ function renderNegativeQueue(status: ProjectStatus): HTMLElement {
         return a.id.localeCompare(b.id);
       });
     list.replaceChildren(
-      ...matching.map((candidate) => negativeCard(candidate, candidate.id === selectedId)),
+      ...matching.map((candidate) => negativeCard(
+        candidate,
+        candidate.id === selectedId,
+        status.negative_candidate_queue.adjudication_protocol,
+      )),
     );
     resultCount.textContent = `${matching.length} generated ${activeKind.replace('_', ' ')} proposals`;
     empty.hidden = matching.length > 0;
@@ -493,10 +519,14 @@ function renderNegativeQueue(status: ProjectStatus): HTMLElement {
         el('div', { class: 'section-kicker' }, ['METRIC-BLIND CONTROL QUEUE']),
         el('h3', {}, ['Review generated negatives before they count.']),
         el('p', {}, [status.negative_candidate_queue.warning]),
+        el('p', { class: 'candidate-context-warning' }, [
+          status.negative_candidate_queue.adjudication_protocol.authoring_timing.disclosure,
+        ]),
       ]),
       el('div', { class: 'chips' }, [
         provenanceChip('generated'),
         el('span', { class: 'chip chip-candidate-proposed' }, ['16 proposals · 0 readiness']),
+        el('span', { class: 'chip chip-mapping' }, ['metric-v3 blind · post-BioASQ']),
       ]),
     ]),
     el('div', { class: 'candidate-controls' }, [

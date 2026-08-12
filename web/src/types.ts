@@ -504,6 +504,35 @@ export interface ProjectStatus {
     heldout_counts: Record<NegativeCandidate['kind'], number>;
     readiness_contribution: 0;
     protocol_status: 'frozen_before_v3_metric';
+    adjudication_protocol: {
+      status: 'frozen_before_human_adjudication_after_bioasq_terminal_result';
+      metric_v3_blind: true;
+      readiness_contribution: 0;
+      authoring_timing: {
+        metric_v3_formula_or_outputs_seen: false;
+        bioasq_v2_pilot_outputs_seen: true;
+        human_negative_control_decisions_seen: false;
+        disclosure: string;
+      };
+      reviewer_blinding: {
+        requirement: string;
+        public_attestation_required: true;
+        enforcement_limit: string;
+      };
+      literature_query_contract: {
+        documentation_url: string;
+        limitations: [string, ...string[]];
+      };
+      common_review_checks: string[];
+      kind_specific_review_checks: Record<NegativeCandidate['kind'], string[]>;
+      decision_contract: {
+        allowed_decisions: ['accept', 'reject', 'defer'];
+        acceptance_requires: string[];
+        reject_or_defer_effect: string;
+        validator_limit: string;
+      };
+      claim_boundary: string;
+    };
     warning: string;
     context_warning: string;
     entries: NegativeCandidate[];
@@ -561,6 +590,15 @@ export interface NegativeCandidate {
       descriptor_label: string;
       tree_number: string;
     };
+    literature_queries: Array<{
+      id:
+        | 'maintained_pubmed_mesh_pair_before_cutoff'
+        | 'pubmed_exact_phrase_pair_before_cutoff';
+      label: string;
+      query: string;
+      url: string;
+      evidence_scope: string;
+    }>;
   };
 }
 

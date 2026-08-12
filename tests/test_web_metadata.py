@@ -160,9 +160,12 @@ def test_candidate_review_desk_keeps_proposals_curated_and_out_of_readiness():
     assert "candidate.mapping_audit.limitation" in view_source
     assert "candidate.open_questions" in view_source
     assert "candidate.evidence.map" in view_source
-    assert "Inspect pinned MeSH review context" in view_source
+    assert "Inspect pinned MeSH context and review queries" in view_source
     assert "Generated vocabulary context; zero readiness" in view_source
     assert "candidate.review_context.shared_parent" in view_source
+    assert "protocol.kind_specific_review_checks[candidate.kind]" in view_source
+    assert "candidate.review_context.literature_queries" in view_source
+    assert "metric-v3 blind · post-BioASQ" in view_source
 
 
 def test_source_recovery_copy_keeps_preservation_metadata_out_of_raw_readiness():

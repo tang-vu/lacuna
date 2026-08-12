@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "status": "frozen_before_human_adjudication_after_bioasq_terminal_result",
+  "frozen_on": "2026-08-12",
+  "metric_v3_blind": true,
+  "readiness_contribution": 0,
+  "purpose": "Turn the frozen negative-control proposals into reviewer-ready evidence packets without accepting, rejecting, replacing, or scoring any candidate.",
+  "inputs": {
+    "selection_protocol": {
+      "path": "benchmarks/v3/negative-selection.json",
+      "sha256": "f3c983cc7eadb9e97708773750322b53c7b5de980790b51a233b5aade570a22a",
+      "canonicalisation": "canonical-json-v1"
+    },
+    "candidate_queue": {
+      "path": "artifacts/negative-candidates.json",
+      "sha256": "459948e23ba3d3cfe800be917ea16ce546e835d883953d42d112da05d970c152",
+      "canonicalisation": "canonical-json-v1"
+    }
+  },
+  "authoring_timing": {
+    "metric_v3_formula_or_outputs_seen": false,
+    "bioasq_v2_pilot_outputs_seen": true,
+    "human_negative_control_decisions_seen": false,
+    "disclosure": "This protocol was written after the terminal BioASQ v2 development result, which reused these proposed controls. It does not claim that its author was blind to those pilot outputs and encodes no candidate-level decision."
+  },
+  "reviewer_blinding": {
+    "requirement": "Each decision must be made by a reviewer who has not inspected any lacuna score, rank, ordering, bridge, or BioASQ case output for that candidate.",
+    "public_attestation_required": true,
+    "enforcement_limit": "Repository validation can require the attestation and direct public decision link, but cannot prove what a reviewer previously saw."
+  },
+  "literature_query_contract": {
+    "service": "PubMed",
+    "service_url": "https://pubmed.ncbi.nlm.nih.gov/",
+    "documentation_url": "https://pubmed.ncbi.nlm.nih.gov/help/#searching-by-a-specific-field",
+    "mesh_pair_before_cutoff_template": "\"{label_a}\"[mh:noexp] AND \"{label_c}\"[mh:noexp] AND 1800/01/01:{cutoff_slash}[dp]",
+    "exact_phrase_pair_before_cutoff_template": "\"{label_a}\"[tiab] AND \"{label_c}\"[tiab] AND 1800/01/01:{cutoff_slash}[dp]",
+    "limitations": [
+      "PubMed applies maintained indexing and current search translation; these links do not reconstruct the pinned production-year citation baseline.",
+      "A zero-result query is not evidence that a relationship is absent from academic literature or from non-academic, craft, practitioner, or indigenous knowledge.",
+      "The exact-phrase title/abstract query is a reproducible review lead, not a complete synonym search.",
+      "Search result counts are live and are not persisted or presented as measured facts by this artifact."
+    ]
+  },
+  "common_review_checks": [
+    "Verify both frozen descriptor identities against the pinned scope notes, entry terms, annotations, and tree paths.",
+    "Inspect both generated PubMed queries before consulting any lacuna metric output; follow relevant citations and add public evidence links to the decision.",
+    "Treat maintained-current PubMed retrieval as a review aid, not period-appropriate historical indexing or proof of absent knowledge.",
+    "State whether the proposal fits its intended control construct and identify any ambiguity, polysemy, or domain-specific linkage.",
+    "Keep the proposal at zero readiness unless an explicit public decision is later copied into cases.json through the existing validator path."
+  ],
+  "kind_specific_review_checks": {
+    "hard_negative": [
+      "Substantive adjacency is expected: the shared immediate MeSH parent is the confounder this cohort is designed to test, so relatedness alone is not a rejection reason.",
+      "Accept only if the pair is a credible ontology-adjacent or classification-overlap non-discovery control whose high structural proximity should not be interpreted as a hidden discovery.",
+      "Reject or defer if either descriptor is ambiguous, the shared-parent relation does not capture their practical relationship, or public evidence supports a meaningful LBD-style discovery claim for the pair."
+    ],
+    "distant_negative": [
+      "Cross-branch placement is only a sampling hypothesis; verify that the terms remain substantively distant after reading their scope notes and entry terms.",
+      "Accept only if no obvious scientific, clinical, industrial, social, or historical linkage makes the pair an unsuitable unrelated control.",
+      "Reject or defer generic, polysemous, culturally contingent, or plausibly related pairs rather than converting a weak search result into an absence claim."
+    ]
+  },
+  "decision_contract": {
+    "allowed_decisions": [
+      "accept",
+      "reject",
+      "defer"
+    ],
+    "acceptance_requires": [
+      "a direct public issue-comment URL",
+      "an explicit metric-output-blindness attestation",
+      "a kind-specific rationale addressing every applicable check",
+      "at least one public evidence URL beyond the generated query links",
+      "preservation of the frozen candidate ID, kind, split, cutoff, and descriptor identities"
+    ],
+    "reject_or_defer_effect": "The proposal remains outside cases.json and contributes zero readiness; replacement requires a separately regenerated pre-metric selection record.",
+    "validator_limit": "Structural validation cannot substitute for expert judgment or verify the truth of a public rationale."
+  },
+  "claim_boundary": "This is a post-BioASQ, metric-v3-blind review protocol and generated-query contract. It is not human adjudication, evidence of absent knowledge, benchmark readiness, or authorization to run a replacement metric."
+}

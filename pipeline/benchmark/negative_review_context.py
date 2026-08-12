@@ -1,8 +1,9 @@
 """Build and validate pinned MeSH context for metric-blind negative-control review.
 
 This artifact is a generated review aid. It extracts vocabulary definitions, entry terms, tree
-paths, and hard-negative parent labels from checksum-verified production-year MeSH archives. It
-does not adjudicate proposals and contributes zero benchmark readiness.
+paths, and hard-negative parent labels from checksum-verified production-year MeSH archives, then
+derives live PubMed query links under a separately frozen review protocol. It does not adjudicate
+proposals and contributes zero benchmark readiness.
 
 Run:
     python -m pipeline.benchmark.negative_review_context --build
@@ -15,6 +16,7 @@ import argparse
 import gzip
 import json
 from pathlib import Path
+from urllib.parse import urlencode
 from xml.etree import ElementTree
 
 from pipeline.benchmark.audit_mesh import pinned_file
@@ -22,14 +24,18 @@ from pipeline.benchmark.metric_blind import find_forbidden_fields
 from pipeline.benchmark.negative_controls import OUTPUT_PATH as QUEUE_PATH, audit_queue
 from pipeline.benchmark.pin_mesh import inspect_descriptor_archive
 from pipeline.benchmark.validate_sources import SOURCES_PATH
+from pipeline.benchmark.validate_negative_adjudication_protocol import (
+    ADJUDICATION_PROTOCOL_PATH,
+    audit_negative_adjudication_protocol,
+)
 from pipeline.paths import ARTIFACTS_DIR, MESH_CACHE_DIR, REPO_ROOT
 from pipeline.provenance import sha256_payload
 
 OUTPUT_PATH = ARTIFACTS_DIR / "negative-review-context.json"
 STATUS = "generated_review_aid"
 WARNING = (
-    "Pinned vocabulary context is a generated review aid, not human adjudication, evidence that "
-    "a relationship is absent, or benchmark readiness."
+    "Pinned vocabulary context and live PubMed links form a generated review aid, not human "
+    "adjudication, evidence that a relationship is absent, or benchmark readiness."
 )
 
 
@@ -82,6 +88,55 @@ def read_context(
     return by_ui, by_tree
 
 
+def _input_identity(path: Path) -> dict[str, str]:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    return {
+        "path": path.relative_to(REPO_ROOT).as_posix(),
+        "sha256": sha256_payload(payload),
+        "canonicalisation": "canonical-json-v1",
+    }
+
+
+def _literature_queries(candidate: dict, protocol: dict) -> list[dict[str, str]]:
+    contract = protocol["literature_query_contract"]
+    labels = {
+        "label_a": candidate["concepts"]["a"]["descriptor_label"],
+        "label_c": candidate["concepts"]["c"]["descriptor_label"],
+        "cutoff_slash": candidate["cutoff"].replace("-", "/"),
+    }
+    _require(
+        '"' not in labels["label_a"] and '"' not in labels["label_c"],
+        f"{candidate['id']}: descriptor label cannot be safely quoted",
+    )
+    specifications = (
+        (
+            "maintained_pubmed_mesh_pair_before_cutoff",
+            "Exact MeSH pair through cutoff (maintained indexing)",
+            contract["mesh_pair_before_cutoff_template"],
+            "Live maintained-current PubMed review aid; not period-appropriate indexing.",
+        ),
+        (
+            "pubmed_exact_phrase_pair_before_cutoff",
+            "Exact title/abstract phrases through cutoff",
+            contract["exact_phrase_pair_before_cutoff_template"],
+            "Reproducible literal-phrase lead; not a complete synonym search or absence test.",
+        ),
+    )
+    queries = []
+    for query_id, label, template, evidence_scope in specifications:
+        query = template.format(**labels)
+        queries.append(
+            {
+                "id": query_id,
+                "label": label,
+                "query": query,
+                "url": f"{contract['service_url']}?{urlencode({'term': query})}",
+                "evidence_scope": evidence_scope,
+            }
+        )
+    return queries
+
+
 def build_review_context(
     *,
     queue_path: Path = QUEUE_PATH,
@@ -89,7 +144,11 @@ def build_review_context(
     sources_path: Path = SOURCES_PATH,
 ) -> dict:
     audit_queue(queue_path)
+    audit_negative_adjudication_protocol()
     queue = json.loads(queue_path.read_text(encoding="utf-8"))
+    adjudication_protocol = json.loads(
+        ADJUDICATION_PROTOCOL_PATH.read_text(encoding="utf-8")
+    )
     by_year: dict[int, list[dict]] = {}
     for candidate in queue["candidates"]:
         by_year.setdefault(candidate["baseline_release_year"], []).append(candidate)
@@ -145,7 +204,11 @@ def build_review_context(
                 f"{candidate['id']}.{role}: context differs from frozen proposal",
             )
             concepts[role] = context
-        entry = {"candidate_id": candidate["id"], "concepts": concepts}
+        entry = {
+            "candidate_id": candidate["id"],
+            "concepts": concepts,
+            "literature_queries": _literature_queries(candidate, adjudication_protocol),
+        }
         if candidate["kind"] == "hard_negative":
             parent_tree = candidate["selection_evidence"]["shared_parent"]
             parent = tree_context.get(parent_tree)
@@ -154,7 +217,7 @@ def build_review_context(
         entries.append(entry)
 
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "status": STATUS,
         "readiness_contribution": 0,
         "warning": WARNING,
@@ -163,6 +226,7 @@ def build_review_context(
             "sha256": sha256_payload(queue),
             "canonicalisation": "canonical-json-v1",
         },
+        "adjudication_protocol": _input_identity(ADJUDICATION_PROTOCOL_PATH),
         "sources": source_entries,
         "entries": entries,
     }
@@ -184,9 +248,13 @@ def audit_review_context(
     sources_path: Path = SOURCES_PATH,
 ) -> dict:
     audit_queue(queue_path)
+    audit_negative_adjudication_protocol()
     queue = json.loads(queue_path.read_text(encoding="utf-8"))
+    adjudication_protocol = json.loads(
+        ADJUDICATION_PROTOCOL_PATH.read_text(encoding="utf-8")
+    )
     payload = json.loads(path.read_text(encoding="utf-8"))
-    _require(payload.get("schema_version") == 1, "unsupported review-context schema")
+    _require(payload.get("schema_version") == 2, "unsupported review-context schema")
     _require(payload.get("status") == STATUS, "review context has the wrong status")
     _require(payload.get("readiness_contribution") == 0, "review context cannot add readiness")
     _require(payload.get("warning") == WARNING, "review-context warning changed")
@@ -199,6 +267,11 @@ def audit_review_context(
             "canonicalisation": "canonical-json-v1",
         },
         "review context does not pin the frozen queue",
+    )
+    _require(
+        payload.get("adjudication_protocol")
+        == _input_identity(ADJUDICATION_PROTOCOL_PATH),
+        "review context does not pin the adjudication protocol",
     )
 
     expected_sources = {
@@ -250,6 +323,11 @@ def audit_review_context(
             )
             for field in ("entry_terms", "scope_notes", "annotations"):
                 _validate_text_list(context.get(field), f"{candidate['id']}.{role}.{field}")
+        _require(
+            entry.get("literature_queries")
+            == _literature_queries(candidate, adjudication_protocol),
+            f"{candidate['id']}: literature query contract drift",
+        )
         if candidate["kind"] == "hard_negative":
             parent = entry.get("shared_parent")
             _require(isinstance(parent, dict), f"{candidate['id']}: parent context missing")
@@ -263,6 +341,7 @@ def audit_review_context(
             _require("shared_parent" not in entry, f"{candidate['id']}: unexpected parent context")
     return {
         "entries": len(entries),
+        "queries": sum(len(entry["literature_queries"]) for entry in entries),
         "sources": len(sources),
         "readiness_contribution": 0,
     }
@@ -277,9 +356,11 @@ def main() -> None:
         OUTPUT_PATH.write_text(json.dumps(payload, indent=1), encoding="utf-8")
         print(f"wrote {OUTPUT_PATH.relative_to(REPO_ROOT).as_posix()}")
     audit = audit_review_context()
-    print("negative review context: 16 generated aids · 0 readiness")
+    print(
+        "negative review context: "
+        f"{audit['entries']} packets · {audit['queries']} query links · 0 readiness"
+    )
 
 
 if __name__ == "__main__":
     main()
-

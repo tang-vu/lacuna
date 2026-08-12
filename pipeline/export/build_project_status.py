@@ -22,6 +22,10 @@ from pipeline.benchmark.negative_review_context import (
     OUTPUT_PATH as NEGATIVE_REVIEW_CONTEXT_PATH,
     audit_review_context,
 )
+from pipeline.benchmark.validate_negative_adjudication_protocol import (
+    ADJUDICATION_PROTOCOL_PATH as NEGATIVE_ADJUDICATION_PROTOCOL_PATH,
+    audit_negative_adjudication_protocol,
+)
 from pipeline.benchmark.bioasq_semantics import (
     DEFAULT_AUDIT_PATH as BIOASQ_SEMANTICS_AUDIT_PATH,
     PROTOCOL_PATH as BIOASQ_SEMANTICS_PROTOCOL_PATH,
@@ -117,6 +121,7 @@ def build_project_status() -> dict:
     )
     candidates = audit_candidates()
     negative_queue = audit_queue()
+    audit_negative_adjudication_protocol()
     audit_review_context()
     benchmark = audit_benchmark()
     ready = sources.ready and benchmark.ready
@@ -125,6 +130,9 @@ def build_project_status() -> dict:
     negative_context_payload = json.loads(
         NEGATIVE_REVIEW_CONTEXT_PATH.read_text(encoding="utf-8")
     )
+    negative_adjudication_protocol = json.loads(
+        NEGATIVE_ADJUDICATION_PROTOCOL_PATH.read_text(encoding="utf-8")
+    )
     negative_context = {
         entry["candidate_id"]: entry
         for entry in negative_context_payload["entries"]
@@ -132,7 +140,7 @@ def build_project_status() -> dict:
     negative_protocol = load_protocol()
 
     return {
-        "schema_version": 18,
+        "schema_version": 19,
         "status": "ready" if ready else "not_ready",
         "inputs": {
             "historical_sources": _input_identity(SOURCES_PATH),
@@ -161,6 +169,9 @@ def build_project_status() -> dict:
             "candidate_intake": _input_identity(CANDIDATES_PATH),
             "negative_selection_protocol": _input_identity(NEGATIVE_PROTOCOL_PATH),
             "negative_candidate_queue": _input_identity(NEGATIVE_QUEUE_PATH),
+            "negative_adjudication_protocol": _input_identity(
+                NEGATIVE_ADJUDICATION_PROTOCOL_PATH
+            ),
             "negative_review_context": _input_identity(NEGATIVE_REVIEW_CONTEXT_PATH),
             "benchmark": _input_identity(BENCHMARK_PATH),
         },
@@ -225,6 +236,7 @@ def build_project_status() -> dict:
             "heldout_counts": negative_queue["heldout_counts"],
             "readiness_contribution": negative_queue["readiness_contribution"],
             "protocol_status": negative_protocol["status"],
+            "adjudication_protocol": negative_adjudication_protocol,
             "warning": negative_payload["warning"],
             "context_warning": negative_context_payload["warning"],
             "entries": [

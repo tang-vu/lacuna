@@ -194,6 +194,15 @@ generated proposal ID, a commit-pinned queue link, and a direct public issue-com
 the benchmark validator audits the frozen queue and rejects drift in kind, split, cutoff, or
 descriptor identity.
 
+A separate negative-adjudication protocol was frozen on 2026-08-12, after the terminal BioASQ v2
+pilot output but before any metric-v3 formula or human negative-control decision. It cannot claim
+its author was blind to the BioASQ output, so it encodes no candidate-level judgment and requires
+an independently metric-output-blind reviewer plus a public attestation. It supplies reproducible
+maintained-current PubMed and exact-phrase query leads while explicitly rejecting their use as
+period-appropriate reconstruction or absence evidence. Its kind-specific checks treat ontology
+adjacency as expected for hard negatives, whereas distant negatives must survive substantive
+distance review. The protocol and generated packets contribute zero readiness.
+
 ## Candidate families
 
 Evaluate these as separately pre-registered candidates:

@@ -47,6 +47,12 @@ def _benchmark_with_negative() -> tuple[dict, dict]:
                     "role": "metric_blind_adjudication",
                     "label": "Public review decision",
                     "url": "https://github.com/tang-vu/lacuna/issues/4#issuecomment-1",
+                    "metric_output_blind_attestation": True,
+                },
+                {
+                    "role": "review_evidence",
+                    "label": "Reviewer-supplied public evidence",
+                    "url": "https://pubmed.ncbi.nlm.nih.gov/12345678/",
                 },
             ],
             "concepts": {
@@ -163,15 +169,42 @@ def test_negative_case_rejects_descriptor_or_adjudication_drift(tmp_path):
         audit_benchmark(path)
 
     payload, _ = _benchmark_with_negative()
-    payload["cases"][-1]["evidence"] = payload["cases"][-1]["evidence"][:1]
+    payload["cases"][-1]["evidence"] = [
+        source
+        for source in payload["cases"][-1]["evidence"]
+        if source["role"] != "metric_blind_adjudication"
+    ]
     path.write_text(json.dumps(payload), encoding="utf-8")
     with pytest.raises(BenchmarkContractError, match="metric-blind adjudication"):
         audit_benchmark(path)
 
     payload, _ = _benchmark_with_negative()
-    payload["cases"][-1]["evidence"][-1]["url"] = (
-        "https://github.com/tang-vu/lacuna/issues/3#issuecomment-1"
+    adjudication = next(
+        source
+        for source in payload["cases"][-1]["evidence"]
+        if source["role"] == "metric_blind_adjudication"
     )
+    adjudication["metric_output_blind_attestation"] = False
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(BenchmarkContractError, match="metric-blind adjudication"):
+        audit_benchmark(path)
+
+    payload, _ = _benchmark_with_negative()
+    payload["cases"][-1]["evidence"] = [
+        source
+        for source in payload["cases"][-1]["evidence"]
+        if source["role"] != "review_evidence"
+    ]
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(BenchmarkContractError, match="public review evidence"):
+        audit_benchmark(path)
+
+    payload, _ = _benchmark_with_negative()
+    next(
+        source
+        for source in payload["cases"][-1]["evidence"]
+        if source["role"] == "metric_blind_adjudication"
+    )["url"] = "https://github.com/tang-vu/lacuna/issues/3#issuecomment-1"
     path.write_text(json.dumps(payload), encoding="utf-8")
     with pytest.raises(BenchmarkContractError, match="metric-blind adjudication"):
         audit_benchmark(path)

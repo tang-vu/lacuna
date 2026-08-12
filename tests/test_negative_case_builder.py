@@ -33,6 +33,8 @@ def test_builder_preserves_frozen_identity_and_passes_v3_contract(
             f"https://github.com/tang-vu/lacuna/issues/{issue}#issuecomment-123"
         ),
         negative_rationale="Reviewer confirmed this pre-metric control rationale.",
+        review_evidence_urls=["https://pubmed.ncbi.nlm.nih.gov/12345678/"],
+        metric_output_blind_attestation=True,
     )
     benchmark = json.loads(BENCHMARK_PATH.read_text(encoding="utf-8"))
     benchmark["cases"].append(case)
@@ -59,6 +61,8 @@ def test_builder_rejects_unknown_candidates_and_wrong_issue_links():
                 "https://github.com/tang-vu/lacuna/issues/4#issuecomment-123"
             ),
             negative_rationale="Reviewed.",
+            review_evidence_urls=["https://pubmed.ncbi.nlm.nih.gov/12345678/"],
+            metric_output_blind_attestation=True,
         )
 
     proposal = _proposal("hard_negative")
@@ -69,6 +73,8 @@ def test_builder_rejects_unknown_candidates_and_wrong_issue_links():
                 "https://github.com/tang-vu/lacuna/issues/3#issuecomment-123"
             ),
             negative_rationale="Reviewed.",
+            review_evidence_urls=["https://pubmed.ncbi.nlm.nih.gov/12345678/"],
+            metric_output_blind_attestation=True,
         )
 
 
@@ -81,4 +87,30 @@ def test_builder_requires_a_reviewer_rationale():
                 "https://github.com/tang-vu/lacuna/issues/3#issuecomment-123"
             ),
             negative_rationale="Reviewed but too short.",
+            review_evidence_urls=["https://pubmed.ncbi.nlm.nih.gov/12345678/"],
+            metric_output_blind_attestation=True,
+        )
+
+
+def test_builder_requires_blindness_attestation_and_public_evidence():
+    proposal = _proposal("hard_negative")
+    kwargs = {
+        "adjudication_url": (
+            "https://github.com/tang-vu/lacuna/issues/4#issuecomment-123"
+        ),
+        "negative_rationale": "Reviewer confirmed this pre-metric control rationale.",
+    }
+    with pytest.raises(NegativeCaseBuildError, match="explicitly attest"):
+        build_negative_case(
+            proposal["id"],
+            **kwargs,
+            review_evidence_urls=["https://pubmed.ncbi.nlm.nih.gov/12345678/"],
+            metric_output_blind_attestation=False,
+        )
+    with pytest.raises(NegativeCaseBuildError, match="evidence URL"):
+        build_negative_case(
+            proposal["id"],
+            **kwargs,
+            review_evidence_urls=[],
+            metric_output_blind_attestation=True,
         )

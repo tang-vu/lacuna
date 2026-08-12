@@ -12,7 +12,7 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 18
+    assert status["schema_version"] == 19
     assert status["status"] == "not_ready"
     assert status["historical_sources"] == {
         "ready": False,
@@ -300,10 +300,30 @@ def test_project_status_exposes_validator_results_without_claiming_readiness():
     }
     assert negative_queue["readiness_contribution"] == 0
     assert negative_queue["protocol_status"] == "frozen_before_v3_metric"
+    adjudication_protocol = negative_queue["adjudication_protocol"]
+    assert adjudication_protocol["status"] == (
+        "frozen_before_human_adjudication_after_bioasq_terminal_result"
+    )
+    assert adjudication_protocol["metric_v3_blind"] is True
+    assert adjudication_protocol["readiness_contribution"] == 0
+    assert adjudication_protocol["authoring_timing"] == {
+        "metric_v3_formula_or_outputs_seen": False,
+        "bioasq_v2_pilot_outputs_seen": True,
+        "human_negative_control_decisions_seen": False,
+        "disclosure": (
+            "This protocol was written after the terminal BioASQ v2 development result, "
+            "which reused these proposed controls. It does not claim that its author was "
+            "blind to those pilot outputs and encodes no candidate-level decision."
+        ),
+    }
     assert len(negative_queue["entries"]) == 16
     assert all(entry["status"] == "proposed" for entry in negative_queue["entries"])
     assert "generated review aid" in negative_queue["context_warning"]
     assert all(entry["review_context"]["concepts"] for entry in negative_queue["entries"])
+    assert all(
+        len(entry["review_context"]["literature_queries"]) == 2
+        for entry in negative_queue["entries"]
+    )
     assert all(
         entry["review_context"].get("shared_parent")
         for entry in negative_queue["entries"]
@@ -354,6 +374,7 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
         "candidate_intake",
         "negative_selection_protocol",
         "negative_candidate_queue",
+        "negative_adjudication_protocol",
         "negative_review_context",
         "benchmark",
     }

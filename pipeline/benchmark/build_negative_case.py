@@ -7,6 +7,8 @@ Run:
     python -m pipeline.benchmark.build_negative_case \
       --candidate-id generated-hard-2012-01-d001174-d014143 \
       --adjudication-url https://github.com/tang-vu/lacuna/issues/4#issuecomment-123 \
+      --review-evidence-url https://pubmed.ncbi.nlm.nih.gov/EXAMPLE/ \
+      --attest-no-metric-output \
       --negative-rationale "Reviewer-authored rationale"
 """
 
@@ -45,11 +47,33 @@ def _validate_adjudication_url(url: str, kind: str) -> None:
     )
 
 
+def _validate_review_evidence_urls(urls: list[str], adjudication_url: str) -> list[str]:
+    cleaned = [url.strip() for url in urls]
+    _require(bool(cleaned), "at least one public review evidence URL is required")
+    _require(
+        all(cleaned) and len(cleaned) == len(set(cleaned)),
+        "review evidence URLs must be non-empty and unique",
+    )
+    for url in cleaned:
+        parts = urlsplit(url)
+        _require(
+            parts.scheme == "https" and bool(parts.netloc),
+            "review evidence URLs must use HTTPS",
+        )
+        _require(
+            url not in {adjudication_url, NEGATIVE_QUEUE_PUBLIC_URL},
+            "review evidence must be separate from the decision and frozen queue links",
+        )
+    return cleaned
+
+
 def build_negative_case(
     candidate_id: str,
     *,
     adjudication_url: str,
     negative_rationale: str,
+    review_evidence_urls: list[str],
+    metric_output_blind_attestation: bool,
     queue_path: Path = OUTPUT_PATH,
 ) -> dict:
     """Return a validator-ready case without changing the benchmark."""
@@ -60,6 +84,11 @@ def build_negative_case(
     proposal = matches[0]
     kind = proposal["kind"]
     _validate_adjudication_url(adjudication_url, kind)
+    _require(
+        metric_output_blind_attestation is True,
+        "reviewer must explicitly attest that no candidate metric output was inspected",
+    )
+    evidence_urls = _validate_review_evidence_urls(review_evidence_urls, adjudication_url)
     rationale = negative_rationale.strip()
     _require(
         len(rationale) >= 40,
@@ -92,7 +121,16 @@ def build_negative_case(
                 "role": "metric_blind_adjudication",
                 "label": "Public metric-blind review decision",
                 "url": adjudication_url,
+                "metric_output_blind_attestation": True,
             },
+            *[
+                {
+                    "role": "review_evidence",
+                    "label": f"Reviewer-supplied public evidence {index}",
+                    "url": url,
+                }
+                for index, url in enumerate(evidence_urls, start=1)
+            ],
         ],
         "concepts": {
             role: {
@@ -114,6 +152,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--candidate-id", required=True)
     parser.add_argument("--adjudication-url", required=True)
+    parser.add_argument("--review-evidence-url", action="append", default=[])
+    parser.add_argument("--attest-no-metric-output", action="store_true")
     parser.add_argument("--negative-rationale", required=True)
     parser.add_argument(
         "--output",
@@ -126,6 +166,8 @@ def main() -> None:
             args.candidate_id,
             adjudication_url=args.adjudication_url,
             negative_rationale=args.negative_rationale,
+            review_evidence_urls=args.review_evidence_url,
+            metric_output_blind_attestation=args.attest_no_metric_output,
         )
     except (OSError, ValueError) as exc:
         raise SystemExit(str(exc)) from None

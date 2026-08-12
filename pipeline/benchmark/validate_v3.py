@@ -159,6 +159,7 @@ def _has_public_adjudication(evidence: list[dict], issue: int) -> bool:
             and parts.hostname == "github.com"
             and parts.path == expected_path
             and re.fullmatch(r"issuecomment-\d+", parts.fragment)
+            and source.get("metric_output_blind_attestation") is True
         ):
             return True
     return False
@@ -280,6 +281,10 @@ def audit_benchmark(
                     4 if kind == "hard_negative" else 3,
                 ),
                 f"{case_id}: negative case needs a direct public metric-blind adjudication",
+            )
+            _require(
+                any(source.get("role") == "review_evidence" for source in evidence),
+                f"{case_id}: negative case needs public review evidence beyond generated queries",
             )
             _require(
                 split == proposal["proposed_split"],

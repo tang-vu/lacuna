@@ -46,7 +46,25 @@ python -m pipeline.benchmark.negative_review_context
 
 It exposes scope notes, entry terms, all descriptor tree paths, annotations, and hard-negative
 parent labels. It is a generated vocabulary aid with zero readiness—not a judgment that a pair is
-unrelated and not a substitute for public human adjudication.
+unrelated and not a substitute for public human adjudication. The generated artifact also pins the
+separate `negative-adjudication-protocol.json` and derives two exact PubMed review links for every
+proposal: an unexpanded MeSH-pair query and a literal title/abstract-pair query, both bounded by the
+proposal cutoff. These are live maintained-current review leads, not period-appropriate results;
+their counts are neither frozen nor exported.
+
+The adjudication protocol was frozen after the terminal BioASQ v2 pilot reused the proposals. It
+therefore discloses that its author was not blind to those outputs, encodes no candidate-level
+decision, and requires a reviewer who has not seen candidate scores, ranks, orderings, bridges, or
+BioASQ case output. Repository validation can require a public attestation but cannot prove what a
+reviewer saw. The kind-specific checks also correct an important review distinction: ontology
+adjacency is expected for hard negatives and is not by itself a rejection reason; distant controls
+must instead survive an explicit substantive-distance review.
+
+Validate the frozen protocol separately:
+
+```bash
+python -m pipeline.benchmark.validate_negative_adjudication_protocol
+```
 
 Human adjudication must happen without metric output. A reviewer may reject or replace a generic,
 polysemous, or substantively related pair; acceptance requires a public negative rationale and an
@@ -65,12 +83,15 @@ retyping frozen proposal fields:
 python -m pipeline.benchmark.build_negative_case \
   --candidate-id generated-hard-2012-01-d001174-d014143 \
   --adjudication-url https://github.com/tang-vu/lacuna/issues/4#issuecomment-COMMENT_ID \
+  --review-evidence-url https://pubmed.ncbi.nlm.nih.gov/PMID/ \
+  --attest-no-metric-output \
   --negative-rationale "Reviewer-authored rationale"
 ```
 
 This command prints JSON and never edits `cases.json`. It validates the queue, direct-comment URL
-shape, and a non-trivial rationale, but the cited human decision must still be inspected before the
-fragment is appended.
+shape, an explicit no-metric-output attestation, at least one separate public evidence URL, and a
+non-trivial rationale, but the cited human decision and evidence must still be inspected before the
+fragment is appended. Structural checks cannot prove reviewer blindness or scientific judgment.
 
 Historical inputs have their own dated access record:
 
