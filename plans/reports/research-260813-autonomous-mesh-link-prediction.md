@@ -1,7 +1,9 @@
 # Metric design evidence: prospective MeSH link prediction
 
-**Date:** 2026-08-13  
-**Status:** pre-formula research note; no lacuna score, rank, prediction, or metric selection exists  
+**Date:** 2026-08-13
+
+**Status:** pre-formula research note; no lacuna score, rank, prediction, or metric selection exists
+
 **Active target:** future direct PubMed/MeSH database-link emergence under
 `benchmarks/autonomous-prospective-v1.json`
 
