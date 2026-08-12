@@ -54,6 +54,7 @@ python -m pipeline.benchmark.source_inventories
 python -m pipeline.benchmark.mbr_capture
 python -m pipeline.benchmark.validate_source_alternatives
 python -m pipeline.benchmark.autonomous_t0 audit
+python -m pipeline.benchmark.autonomous_t0 download --help
 python -m pipeline.benchmark.validate_autonomous_prospective
 python -m pipeline.benchmark.validate_candidates
 python -m pipeline.benchmark.negative_controls
@@ -69,6 +70,8 @@ Use the repo skills for recurring workflows: `$validate`, `$gap`, and `$honest`.
 - Prefer static, versioned artifacts and boring technology suitable for one maintainer.
 - Add tests before trusting a number.
 - Keep generated data out of hand-edited source files.
+- Keep large regenerable source corpora and transfer `.part` files off the system volume; use an
+  ignored junction or symlink when code needs a stable repository-relative path.
 - Update README status and provenance documentation when pipeline behavior changes.
 - After each verified update group, commit it and push the current branch. Do not leave completed
   work uncommitted for a later session.

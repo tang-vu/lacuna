@@ -1,15 +1,20 @@
 """Discover and seal the autonomous prospective benchmark's T0 source.
 
 ``discover`` captures the complete official PubMed checksum listing and the matching MeSH
-descriptor transport. Its output is deliberately a zero-readiness remote inventory. ``seal`` is
-the machine gate: it accepts only a complete local release matching every official MD5, computes
-SHA-256 and record counts, verifies the descriptor vocabulary, and creates a manifest with
-exclusive-create semantics. Neither command can overwrite prior evidence.
+descriptor transport. Its output is deliberately a zero-readiness remote inventory. ``download``
+resumes into ``.part`` files on the destination volume, verifies every transport before promotion,
+and never replaces a conflicting complete file. ``seal`` is the machine gate: it accepts only a
+complete local release matching every official MD5, computes SHA-256 and record counts, verifies
+the descriptor vocabulary, and creates a manifest with exclusive-create semantics.
 
 Run:
     python -m pipeline.benchmark.autonomous_t0 audit
     python -m pipeline.benchmark.autonomous_t0 discover \
       --output benchmarks/autonomous/t0-2026-remote-inventory.json
+    python -m pipeline.benchmark.autonomous_t0 download \
+      --inventory benchmarks/autonomous/t0-2026-remote-inventory.json \
+      --baseline-dir D:/lacuna-storage/autonomous/t0-2026/pubmed-baseline \
+      --mesh D:/lacuna-storage/autonomous/t0-2026/mesh/desc2026.gz
     python -m pipeline.benchmark.autonomous_t0 seal \
       --inventory benchmarks/autonomous/t0-2026-remote-inventory.json \
       --baseline-dir D:/lacuna-sources/pubmed/baseline \
@@ -24,10 +29,12 @@ import gzip
 import hashlib
 import io
 import json
+import os
 import re
+import shutil
 import threading
 import time
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from datetime import date
 from html.parser import HTMLParser
@@ -64,6 +71,19 @@ class RemoteInventoryAudit:
     mesh_descriptor_count: int
     status: str
     readiness_contribution: int
+
+
+@dataclass(frozen=True)
+class DownloadAudit:
+    release_year: int
+    pubmed_file_count: int
+    transport_count: int
+    downloaded_count: int
+    reused_count: int
+    verified_bytes: int
+    baseline_dir: Path
+    mesh_path: Path
+    readiness_contribution: int = 0
 
 
 _SESSION_LOCAL = threading.local()
@@ -396,6 +416,262 @@ def audit_remote_inventory(
     )
 
 
+def _digest_file(path: Path, algorithm: str) -> str:
+    if algorithm == "md5":
+        digest = hashlib.md5(usedforsecurity=False)
+    elif algorithm == "sha256":
+        digest = hashlib.sha256()
+    else:
+        raise AutonomousT0Error(f"unsupported transport digest: {algorithm}")
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _iter_transport_bytes(response: requests.Response):
+    raw = getattr(response, "raw", None)
+    if raw is not None:
+        raw.decode_content = False
+        while True:
+            chunk = raw.read(1024 * 1024)
+            if not chunk:
+                return
+            yield chunk
+    iterator = getattr(response, "iter_content", None)
+    if callable(iterator):
+        for chunk in iterator(chunk_size=1024 * 1024):
+            if chunk:
+                yield chunk
+        return
+    content = getattr(response, "content", b"")
+    if content:
+        yield content
+
+
+def _promote_verified_part(part: Path, destination: Path) -> None:
+    try:
+        # The part lives beside its destination, so a hard link is both same-volume and an
+        # atomic no-clobber promotion. Path.rename() can replace an intervening destination on
+        # POSIX, violating the downloader's evidence-preservation contract.
+        os.link(part, destination)
+    except FileExistsError:
+        raise AutonomousT0Error(
+            f"refusing to replace a file that appeared during download: {destination}"
+        ) from None
+    except OSError as exc:
+        raise AutonomousT0Error(
+            f"atomic no-clobber promotion failed: {destination}"
+        ) from exc
+    part.unlink()
+
+
+def _download_verified_transport(
+    *,
+    url: str,
+    destination: Path,
+    algorithm: str,
+    expected_digest: str,
+    expected_bytes: int | None,
+    fetch: Callable[..., requests.Response],
+) -> tuple[str, int]:
+    """Download one immutable transport, retaining an interrupted ``.part`` on its volume."""
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    if destination.exists():
+        actual = _digest_file(destination, algorithm)
+        size = destination.stat().st_size
+        if actual != expected_digest or (
+            expected_bytes is not None and size != expected_bytes
+        ):
+            raise AutonomousT0Error(
+                f"refusing to overwrite conflicting complete file: {destination}"
+            )
+        return "reused", size
+
+    part = destination.with_name(f"{destination.name}.part")
+    if part.exists():
+        part_size = part.stat().st_size
+        if (
+            _digest_file(part, algorithm) == expected_digest
+            and (expected_bytes is None or part_size == expected_bytes)
+        ):
+            _promote_verified_part(part, destination)
+            return "downloaded", part_size
+
+    last_error: Exception | None = None
+    for attempt in range(3):
+        response = None
+        try:
+            offset = part.stat().st_size if part.exists() else 0
+            headers = {"User-Agent": USER_AGENT, "Accept-Encoding": "identity"}
+            if offset:
+                headers["Range"] = f"bytes={offset}-"
+            response = fetch(
+                url,
+                headers=headers,
+                timeout=120,
+                stream=True,
+            )
+            status_code = int(getattr(response, "status_code", 200))
+            if not (offset and status_code == 416):
+                response.raise_for_status()
+            if offset and status_code == 206:
+                content_range = str(getattr(response, "headers", {}).get("Content-Range", ""))
+                if not content_range.startswith(f"bytes {offset}-"):
+                    raise AutonomousT0Error(
+                        f"server resumed at an unexpected byte for {destination.name}"
+                    )
+                mode = "ab"
+            elif offset and status_code == 200:
+                offset = 0
+                mode = "wb"
+            elif offset and status_code == 416:
+                part.unlink()
+                continue
+            elif status_code == 200:
+                mode = "wb"
+            else:
+                raise AutonomousT0Error(
+                    f"unexpected HTTP status {status_code} for {destination.name}"
+                )
+
+            with part.open(mode) as handle:
+                for chunk in _iter_transport_bytes(response):
+                    handle.write(chunk)
+
+            size = part.stat().st_size
+            digest = _digest_file(part, algorithm)
+            size_matches = expected_bytes is None or size == expected_bytes
+            if digest == expected_digest and size_matches:
+                _promote_verified_part(part, destination)
+                return "downloaded", size
+            if attempt < 2:
+                part.unlink()
+                time.sleep(0.25 * (2**attempt))
+                continue
+            raise AutonomousT0Error(
+                f"downloaded transport checksum or byte count mismatch: {destination.name}"
+            )
+        except (OSError, requests.RequestException) as exc:
+            last_error = exc
+            if attempt == 2:
+                break
+            time.sleep(0.25 * (2**attempt))
+        finally:
+            close = getattr(response, "close", None)
+            if callable(close):
+                close()
+    raise AutonomousT0Error(f"download failed after retries: {destination.name}") from last_error
+
+
+def download_t0_sources(
+    inventory_path: Path,
+    baseline_dir: Path,
+    mesh_path: Path,
+    *,
+    workers: int = 4,
+    minimum_free_bytes: int = 40 * 1024**3,
+    fetch: Callable[..., requests.Response] | None = None,
+    progress: Callable[[int, int, str, str], None] | None = None,
+) -> DownloadAudit:
+    """Acquire every pinned T0 transport without using CWD or a system temporary directory."""
+    if not 1 <= workers <= 8:
+        raise AutonomousT0Error("download workers must be between 1 and 8")
+    if minimum_free_bytes < 0:
+        raise AutonomousT0Error("minimum free bytes cannot be negative")
+    payload = json.loads(inventory_path.read_text(encoding="utf-8"))
+    year, remote_files, remote_mesh = _validate_remote_inventory(payload)
+    if mesh_path.name != remote_mesh["filename"]:
+        raise AutonomousT0Error(
+            f"MeSH destination filename must be {remote_mesh['filename']}"
+        )
+    baseline_dir.mkdir(parents=True, exist_ok=True)
+    mesh_path.parent.mkdir(parents=True, exist_ok=True)
+    free_bytes = min(
+        shutil.disk_usage(baseline_dir).free,
+        shutil.disk_usage(mesh_path.parent).free,
+    )
+    if free_bytes < minimum_free_bytes:
+        raise AutonomousT0Error(
+            "destination volume has insufficient free space "
+            f"({free_bytes} < {minimum_free_bytes} bytes)"
+        )
+
+    expected_names = [item["filename"] for item in remote_files]
+    prefix = str(year)[-2:]
+    existing_names = sorted(
+        path.name
+        for path in baseline_dir.iterdir()
+        if path.is_file() and re.fullmatch(rf"pubmed{prefix}n\d{{4}}\.xml\.gz", path.name)
+    )
+    unexpected = sorted(set(existing_names) - set(expected_names))
+    if unexpected:
+        raise AutonomousT0Error(
+            f"destination contains unexpected release file: {unexpected[0]}"
+        )
+
+    fetch = fetch or _session_get
+    tasks = [
+        (
+            item["filename"],
+            item["url"],
+            baseline_dir / item["filename"],
+            "md5",
+            item["official_md5"],
+            None,
+        )
+        for item in remote_files
+    ]
+    tasks.append(
+        (
+            remote_mesh["filename"],
+            remote_mesh["url"],
+            mesh_path,
+            "sha256",
+            remote_mesh["observed_transport_sha256"],
+            remote_mesh["bytes"],
+        )
+    )
+    downloaded = reused = verified_bytes = completed = 0
+    with ThreadPoolExecutor(max_workers=workers) as executor:
+        futures = {
+            executor.submit(
+                _download_verified_transport,
+                url=url,
+                destination=destination,
+                algorithm=algorithm,
+                expected_digest=expected_digest,
+                expected_bytes=expected_bytes,
+                fetch=fetch,
+            ): filename
+            for filename, url, destination, algorithm, expected_digest, expected_bytes in tasks
+        }
+        for future in as_completed(futures):
+            filename = futures[future]
+            try:
+                outcome, size = future.result()
+            except Exception:
+                for pending in futures:
+                    pending.cancel()
+                raise
+            downloaded += int(outcome == "downloaded")
+            reused += int(outcome == "reused")
+            verified_bytes += size
+            completed += 1
+            if progress is not None:
+                progress(completed, len(tasks), filename, outcome)
+    return DownloadAudit(
+        release_year=year,
+        pubmed_file_count=len(remote_files),
+        transport_count=len(tasks),
+        downloaded_count=downloaded,
+        reused_count=reused,
+        verified_bytes=verified_bytes,
+        baseline_dir=baseline_dir,
+        mesh_path=mesh_path,
+    )
+
+
 def _hash_file(path: Path) -> tuple[str, str, int]:
     md5_digest = hashlib.md5(usedforsecurity=False)
     sha256_digest = hashlib.sha256()
@@ -550,6 +826,12 @@ def main() -> None:
     discover.add_argument("--output", type=Path, required=True)
     audit = subparsers.add_parser("audit")
     audit.add_argument("--inventory", type=Path, default=REMOTE_INVENTORY_PATH)
+    download = subparsers.add_parser("download")
+    download.add_argument("--inventory", type=Path, default=REMOTE_INVENTORY_PATH)
+    download.add_argument("--baseline-dir", type=Path, required=True)
+    download.add_argument("--mesh", type=Path, required=True)
+    download.add_argument("--workers", type=int, default=4)
+    download.add_argument("--minimum-free-gib", type=float, default=40.0)
     seal = subparsers.add_parser("seal")
     seal.add_argument("--inventory", type=Path, required=True)
     seal.add_argument("--baseline-dir", type=Path, required=True)
@@ -576,6 +858,31 @@ def main() -> None:
             print(f"PubMed files: {result.pubmed_file_count}")
             print(f"MeSH descriptors: {result.mesh_descriptor_count}")
             print("readiness contribution: 0 (local source bytes are not sealed)")
+        elif args.command == "download":
+            if args.minimum_free_gib < 0:
+                raise AutonomousT0Error("minimum free GiB cannot be negative")
+
+            def show_progress(completed: int, total: int, filename: str, outcome: str) -> None:
+                if completed % 25 == 0 or completed == total or filename.startswith("desc"):
+                    print(
+                        f"verified transports: {completed}/{total} · {filename} · {outcome}",
+                        flush=True,
+                    )
+
+            result = download_t0_sources(
+                args.inventory,
+                args.baseline_dir,
+                args.mesh,
+                workers=args.workers,
+                minimum_free_bytes=int(args.minimum_free_gib * 1024**3),
+                progress=show_progress,
+            )
+            print(f"release: {result.release_year}")
+            print(f"PubMed files verified: {result.pubmed_file_count}")
+            print(f"downloaded: {result.downloaded_count}")
+            print(f"reused: {result.reused_count}")
+            print(f"verified bytes: {result.verified_bytes}")
+            print("readiness contribution: 0 (run seal after complete acquisition)")
         else:
             result = seal_local_t0(
                 args.inventory,

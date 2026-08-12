@@ -1,5 +1,21 @@
 # Local pipeline state
 
+Large raw corpora should live on a non-system data volume, with an ignored junction or symlink
+under this directory when a stable repository-relative path is useful. The active prospective T0
+downloader is resumable, writes its ``.part`` files beside the final files on that same volume, and
+requires at least 40 GiB free by default:
+
+```bash
+python -m pipeline.benchmark.autonomous_t0 download \
+  --baseline-dir /data/lacuna/t0-2026/pubmed-baseline \
+  --mesh /data/lacuna/t0-2026/mesh/desc2026.gz
+```
+
+On Windows, use an explicit data drive such as `D:/lacuna-storage/autonomous/t0-2026/...`; do not
+stage this corpus in `%TEMP%` or on the system drive. The command verifies every PubMed MD5 and the
+pinned MeSH SHA-256 before promoting a `.part` file, but contributes zero readiness until `seal`
+parses and fingerprints the complete release.
+
 This directory holds regenerable API caches, the fetched OpenAlex taxonomy, and co-occurrence
 rows. It also holds trimmed PubMed metadata fetched for benchmark mapping audits. Those files are
 intentionally ignored: the current pre-1986 pilot is tens of megabytes and the replacement MEDLINE

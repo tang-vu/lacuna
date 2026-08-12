@@ -6,12 +6,16 @@ import json
 from datetime import date
 
 import pytest
+import requests
 
 from pipeline.benchmark.autonomous_t0 import (
     REMOTE_INVENTORY_PATH,
     AutonomousT0Error,
+    _download_verified_transport,
+    _promote_verified_part,
     audit_remote_inventory,
     discover_remote_inventory,
+    download_t0_sources,
     seal_local_t0,
     write_new_json,
 )
@@ -32,6 +36,30 @@ class _Response:
         self.content = content
 
     def raise_for_status(self) -> None:
+        return None
+
+
+class _StreamResponse:
+    def __init__(
+        self,
+        content: bytes,
+        *,
+        status_code: int = 200,
+        headers: dict[str, str] | None = None,
+    ) -> None:
+        self.content = content
+        self.status_code = status_code
+        self.headers = headers or {}
+
+    def raise_for_status(self) -> None:
+        if self.status_code >= 400:
+            raise RuntimeError(f"HTTP {self.status_code}")
+
+    def iter_content(self, chunk_size: int):
+        for start in range(0, len(self.content), chunk_size):
+            yield self.content[start : start + chunk_size]
+
+    def close(self) -> None:
         return None
 
 
@@ -65,6 +93,39 @@ The complete baseline consists of files pubmed26n0001.xml through pubmed26n0002.
         return _Response(responses[url])
 
     return fetch, files
+
+
+def _download_fixture(tmp_path):
+    discovery_fetch, files = _remote_fixture()
+    inventory = discover_remote_inventory(
+        release_year=2026,
+        observed_on=date(2026, 8, 12),
+        fetch=discovery_fetch,
+        workers=2,
+    )
+    inventory_path = tmp_path / "remote-inventory.json"
+    inventory_path.write_text(json.dumps(inventory), encoding="utf-8")
+    resources = {
+        item["url"]: files[item["filename"]]
+        for item in inventory["pubmed_baseline"]["files"]
+    }
+    resources[inventory["mesh_descriptor"]["url"]] = _mesh_bytes()
+    requests_seen: list[tuple[str, str | None]] = []
+
+    def fetch(url, *, headers, **_kwargs):
+        range_header = headers.get("Range")
+        requests_seen.append((url, range_header))
+        content = resources[url]
+        if range_header:
+            offset = int(range_header.removeprefix("bytes=").removesuffix("-"))
+            return _StreamResponse(
+                content[offset:],
+                status_code=206,
+                headers={"Content-Range": f"bytes {offset}-{len(content) - 1}/{len(content)}"},
+            )
+        return _StreamResponse(content)
+
+    return inventory_path, inventory, resources, fetch, requests_seen
 
 
 def test_remote_discovery_pins_complete_official_checksum_set_without_calling_it_t0():
@@ -119,6 +180,172 @@ def test_remote_discovery_rejects_an_incomplete_checksum_listing():
             observed_on=date(2026, 8, 12),
             fetch=fetch,
             workers=2,
+        )
+
+
+def test_downloader_acquires_every_transport_on_destination_and_reuses_verified_files(tmp_path):
+    inventory_path, inventory, resources, fetch, _requests_seen = _download_fixture(tmp_path)
+    baseline_dir = tmp_path / "storage" / "baseline"
+    mesh_path = tmp_path / "storage" / "mesh" / "desc2026.gz"
+
+    first = download_t0_sources(
+        inventory_path,
+        baseline_dir,
+        mesh_path,
+        workers=2,
+        minimum_free_bytes=0,
+        fetch=fetch,
+    )
+
+    assert first.transport_count == 3
+    assert first.downloaded_count == 3
+    assert first.reused_count == 0
+    assert first.readiness_contribution == 0
+    assert first.verified_bytes == sum(len(content) for content in resources.values())
+    for item in inventory["pubmed_baseline"]["files"]:
+        assert (baseline_dir / item["filename"]).read_bytes() == resources[item["url"]]
+        assert not (baseline_dir / f"{item['filename']}.part").exists()
+    assert mesh_path.read_bytes() == _mesh_bytes()
+
+    def no_network(_url, **_kwargs):
+        raise AssertionError("verified complete transports must not hit the network")
+
+    second = download_t0_sources(
+        inventory_path,
+        baseline_dir,
+        mesh_path,
+        workers=2,
+        minimum_free_bytes=0,
+        fetch=no_network,
+    )
+    assert second.downloaded_count == 0
+    assert second.reused_count == 3
+
+
+def test_downloader_resumes_part_file_with_an_http_range(tmp_path):
+    inventory_path, inventory, resources, fetch, requests_seen = _download_fixture(tmp_path)
+    baseline_dir = tmp_path / "baseline"
+    baseline_dir.mkdir()
+    first = inventory["pubmed_baseline"]["files"][0]
+    prefix = resources[first["url"]][:5]
+    (baseline_dir / f"{first['filename']}.part").write_bytes(prefix)
+    mesh_path = tmp_path / "mesh" / "desc2026.gz"
+
+    result = download_t0_sources(
+        inventory_path,
+        baseline_dir,
+        mesh_path,
+        workers=1,
+        minimum_free_bytes=0,
+        fetch=fetch,
+    )
+
+    assert result.downloaded_count == 3
+    assert (first["url"], "bytes=5-") in requests_seen
+    assert (baseline_dir / first["filename"]).read_bytes() == resources[first["url"]]
+
+
+def test_transport_resumes_after_an_interrupted_response(tmp_path):
+    content = b"a transport that survives a dropped connection"
+    destination = tmp_path / "transport.gz"
+    requests_seen: list[str | None] = []
+
+    class InterruptedResponse(_StreamResponse):
+        def iter_content(self, chunk_size: int):
+            yield self.content[:11]
+            raise requests.ConnectionError("connection dropped")
+
+    def fetch(_url, *, headers, **_kwargs):
+        range_header = headers.get("Range")
+        requests_seen.append(range_header)
+        if range_header is None:
+            return InterruptedResponse(content)
+        assert range_header == "bytes=11-"
+        return _StreamResponse(
+            content[11:],
+            status_code=206,
+            headers={"Content-Range": f"bytes 11-{len(content) - 1}/{len(content)}"},
+        )
+
+    outcome, size = _download_verified_transport(
+        url="https://example.test/transport.gz",
+        destination=destination,
+        algorithm="sha256",
+        expected_digest=hashlib.sha256(content).hexdigest(),
+        expected_bytes=len(content),
+        fetch=fetch,
+    )
+
+    assert (outcome, size) == ("downloaded", len(content))
+    assert requests_seen == [None, "bytes=11-"]
+    assert destination.read_bytes() == content
+    assert not destination.with_name("transport.gz.part").exists()
+
+
+def test_downloader_refuses_conflicting_complete_file_without_overwriting(tmp_path):
+    inventory_path, inventory, _resources, fetch, _requests_seen = _download_fixture(tmp_path)
+    baseline_dir = tmp_path / "baseline"
+    baseline_dir.mkdir()
+    first = inventory["pubmed_baseline"]["files"][0]
+    conflict = baseline_dir / first["filename"]
+    conflict.write_bytes(b"do not replace")
+
+    with pytest.raises(AutonomousT0Error, match="refusing to overwrite conflicting"):
+        download_t0_sources(
+            inventory_path,
+            baseline_dir,
+            tmp_path / "mesh" / "desc2026.gz",
+            workers=1,
+            minimum_free_bytes=0,
+            fetch=fetch,
+        )
+
+    assert conflict.read_bytes() == b"do not replace"
+
+
+def test_downloader_keeps_final_bad_part_and_never_promotes_it(tmp_path):
+    destination = tmp_path / "transport.gz"
+
+    def corrupt_fetch(_url, **_kwargs):
+        return _StreamResponse(b"corrupt")
+
+    with pytest.raises(AutonomousT0Error, match="checksum or byte count mismatch"):
+        _download_verified_transport(
+            url="https://example.test/transport.gz",
+            destination=destination,
+            algorithm="sha256",
+            expected_digest=hashlib.sha256(b"expected").hexdigest(),
+            expected_bytes=len(b"expected"),
+            fetch=corrupt_fetch,
+        )
+
+    assert not destination.exists()
+    assert destination.with_name("transport.gz.part").read_bytes() == b"corrupt"
+
+
+def test_promotion_refuses_a_destination_that_appears_after_download(tmp_path):
+    part = tmp_path / "transport.gz.part"
+    destination = tmp_path / "transport.gz"
+    part.write_bytes(b"verified bytes")
+    destination.write_bytes(b"concurrent evidence")
+
+    with pytest.raises(AutonomousT0Error, match="refusing to replace a file that appeared"):
+        _promote_verified_part(part, destination)
+
+    assert destination.read_bytes() == b"concurrent evidence"
+    assert part.read_bytes() == b"verified bytes"
+
+
+def test_downloader_checks_free_space_before_network_or_source_writes(tmp_path):
+    inventory_path, _inventory, _resources, _fetch, _requests_seen = _download_fixture(tmp_path)
+
+    with pytest.raises(AutonomousT0Error, match="insufficient free space"):
+        download_t0_sources(
+            inventory_path,
+            tmp_path / "baseline",
+            tmp_path / "mesh" / "desc2026.gz",
+            minimum_free_bytes=10**30,
+            fetch=lambda *_args, **_kwargs: pytest.fail("network must not be called"),
         )
 
 

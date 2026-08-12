@@ -230,6 +230,10 @@ detector or autonomous scientific discovery. Run
 `python -m pipeline.benchmark.validate_autonomous_prospective` to inspect the current machine
 blockers. The interpretation layer remains gated off.
 
+`python -m pipeline.benchmark.autonomous_t0 download` now performs resumable, checksum-gated
+acquisition directly on a chosen data volume; see [`data/README.md`](data/README.md). A successful
+download is still only local source acquisition, not a sealed T0 or a scientific result.
+
 ### Archived metric-v3 audit track
 
 The previous replacement experiment is documented in

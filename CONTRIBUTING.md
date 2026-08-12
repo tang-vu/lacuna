@@ -31,9 +31,21 @@ Audit it without network access:
 python -m pipeline.benchmark.autonomous_t0 audit
 ```
 
-After acquiring all named files to storage, run the fail-closed local gate. It verifies every
-official MD5, computes SHA-256 and record counts, parses the matching MeSH vocabulary, and refuses
-to overwrite an existing T0 manifest:
+Acquire all named files directly onto a non-system data volume. The downloader retains interrupted
+`.part` files on that volume, resumes with HTTP Range, verifies every transport before promotion,
+requires 40 GiB free by default, and refuses to replace a conflicting complete file:
+
+```bash
+python -m pipeline.benchmark.autonomous_t0 download \
+  --inventory benchmarks/autonomous/t0-2026-remote-inventory.json \
+  --baseline-dir /data/lacuna/t0-2026/pubmed-baseline \
+  --mesh /data/lacuna/t0-2026/mesh/desc2026.gz \
+  --workers 4
+```
+
+After acquisition, run the fail-closed local gate. It rechecks every official MD5, computes
+SHA-256 and record counts, parses the matching MeSH vocabulary, and refuses to overwrite an
+existing T0 manifest:
 
 ```bash
 python -m pipeline.benchmark.autonomous_t0 seal \
