@@ -52,7 +52,8 @@ python -m pipeline.benchmark.autonomous_t0 seal \
   --inventory benchmarks/autonomous/t0-2026-remote-inventory.json \
   --baseline-dir /path/to/pubmed/baseline \
   --mesh /path/to/mesh/desc2026.gz \
-  --output benchmarks/autonomous/t0-2026.json
+  --output benchmarks/autonomous/t0-2026.json \
+  --workers 4
 ```
 
 ## Archived v3 campaign

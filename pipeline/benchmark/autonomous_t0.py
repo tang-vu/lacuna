@@ -730,8 +730,13 @@ def seal_local_t0(
     baseline_dir: Path,
     mesh_path: Path,
     output: Path,
+    *,
+    workers: int = 4,
+    progress: Callable[[int, int, str], None] | None = None,
 ) -> dict:
     """Create the T0 manifest only after every local source passes the frozen machine gate."""
+    if not 1 <= workers <= 8:
+        raise AutonomousT0Error("seal workers must be between 1 and 8")
     if output.exists():
         raise AutonomousT0Error(f"refusing to overwrite existing evidence: {output}")
     inventory_bytes = inventory_path.read_bytes()
@@ -751,16 +756,13 @@ def seal_local_t0(
     if actual_names != expected_names:
         raise AutonomousT0Error("local PubMed files do not exactly cover the remote inventory")
 
-    sealed_files = []
-    total_records = 0
-    for remote in remote_files:
+    def seal_pubmed_file(remote: dict) -> tuple[dict, int]:
         path = baseline_dir / remote["filename"]
         measured_md5, sha256, size = _hash_file(path)
         if measured_md5 != remote["official_md5"]:
             raise AutonomousT0Error(f"{path.name}: official MD5 mismatch; abstaining")
         counts = _count_pubmed_rows(path)
-        total_records += counts["total_record_count"]
-        sealed_files.append(
+        return (
             {
                 "filename": path.name,
                 "url": remote["url"],
@@ -768,8 +770,22 @@ def seal_local_t0(
                 "sha256": sha256,
                 "bytes": size,
                 **counts,
-            }
+            },
+            counts["total_record_count"],
         )
+
+    sealed_files = []
+    total_records = 0
+    with ThreadPoolExecutor(max_workers=workers) as executor:
+        # map preserves inventory order, so concurrency cannot alter the manifest bytes.
+        for completed, (sealed, record_count) in enumerate(
+            executor.map(seal_pubmed_file, remote_files),
+            start=1,
+        ):
+            sealed_files.append(sealed)
+            total_records += record_count
+            if progress is not None:
+                progress(completed, len(remote_files), sealed["filename"])
 
     mesh_md5, mesh_sha256, mesh_bytes = _hash_file(mesh_path)
     del mesh_md5
@@ -837,6 +853,7 @@ def main() -> None:
     seal.add_argument("--baseline-dir", type=Path, required=True)
     seal.add_argument("--mesh", type=Path, required=True)
     seal.add_argument("--output", type=Path, required=True)
+    seal.add_argument("--workers", type=int, default=4)
     args = parser.parse_args()
     try:
         if args.command == "discover":
@@ -884,11 +901,20 @@ def main() -> None:
             print(f"verified bytes: {result.verified_bytes}")
             print("readiness contribution: 0 (run seal after complete acquisition)")
         else:
+            def show_seal_progress(completed: int, total: int, filename: str) -> None:
+                if completed % 25 == 0 or completed == total:
+                    print(
+                        f"sealed PubMed files: {completed}/{total} · {filename}",
+                        flush=True,
+                    )
+
             result = seal_local_t0(
                 args.inventory,
                 args.baseline_dir,
                 args.mesh,
                 args.output,
+                workers=args.workers,
+                progress=show_seal_progress,
             )
             print(f"sealed T0: {args.output}")
             print(f"PubMed files: {result['pubmed_baseline']['file_count']}")

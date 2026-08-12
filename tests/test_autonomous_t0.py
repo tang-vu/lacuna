@@ -387,7 +387,17 @@ def test_local_seal_requires_every_file_checks_hashes_and_refuses_overwrite(tmp_
     inventory_path = tmp_path / "remote-inventory.json"
     inventory_path.write_text(json.dumps(inventory), encoding="utf-8")
     output = tmp_path / "sealed-t0.json"
-    manifest = seal_local_t0(inventory_path, baseline_dir, mesh, output)
+    progress = []
+    manifest = seal_local_t0(
+        inventory_path,
+        baseline_dir,
+        mesh,
+        output,
+        workers=2,
+        progress=lambda completed, total, filename: progress.append(
+            (completed, total, filename)
+        ),
+    )
 
     assert manifest["status"] == "locally_verified_complete_t0"
     assert manifest["state_transition"] == {
@@ -395,6 +405,14 @@ def test_local_seal_requires_every_file_checks_hashes_and_refuses_overwrite(tmp_
         "to": "awaiting_frozen_metric",
     }
     assert manifest["total_record_count"] == 2
+    assert [item["filename"] for item in manifest["pubmed_baseline"]["files"]] == [
+        "pubmed26n0001.xml.gz",
+        "pubmed26n0002.xml.gz",
+    ]
+    assert progress == [
+        (1, 2, "pubmed26n0001.xml.gz"),
+        (2, 2, "pubmed26n0002.xml.gz"),
+    ]
     assert all(len(item["sha256"]) == 64 for item in manifest["pubmed_baseline"]["files"])
     with pytest.raises(AutonomousT0Error, match="refusing to overwrite"):
         seal_local_t0(inventory_path, baseline_dir, mesh, output)
@@ -420,6 +438,21 @@ def test_local_seal_abstains_on_transport_drift_before_writing(tmp_path):
 
     with pytest.raises(AutonomousT0Error, match="official MD5 mismatch"):
         seal_local_t0(inventory_path, baseline_dir, mesh, output)
+
+    assert not output.exists()
+
+
+def test_local_seal_rejects_an_unsafe_worker_count_before_writing(tmp_path):
+    output = tmp_path / "sealed-t0.json"
+
+    with pytest.raises(AutonomousT0Error, match="seal workers must be between 1 and 8"):
+        seal_local_t0(
+            tmp_path / "missing-inventory.json",
+            tmp_path / "missing-baseline",
+            tmp_path / "missing-mesh.gz",
+            output,
+            workers=9,
+        )
 
     assert not output.exists()
 
