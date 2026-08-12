@@ -26,6 +26,11 @@ Score-free candidate-index shards belong beside that corpus, for example under
 on C. Each source checkpoint pins its raw source SHA-256 plus support, positive-pair, and PMID shard
 hashes; an interrupted run reuses only a complete matching checkpoint.
 
+Global PMID and positive-pair merge passes also remain under that D-drive directory. Pair merging
+uses deterministic bounded fan-in and fixed numeric key ranges, so peak RAM does not grow with the
+complete positive-pair index. Only the final small, hash-pinned candidate-universe manifest belongs
+in `benchmarks/autonomous/`; none of these binary intermediates belong in Git or on C.
+
 This directory holds regenerable API caches, the fetched OpenAlex taxonomy, and co-occurrence
 rows. It also holds trimmed PubMed metadata fetched for benchmark mapping audits. Those files are
 intentionally ignored: the current pre-1986 pilot is tens of megabytes and the replacement MEDLINE

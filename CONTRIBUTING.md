@@ -83,6 +83,23 @@ python -m pipeline.benchmark.autonomous_candidate_index scan \
 Finishing this command is not candidate-index completion: global PMID uniqueness, exact external
 pair reduction, exclusion gates, and the final candidate-stream hash must still pass.
 
+After every source checkpoint exists, the build command re-audits them, proves global PMID
+uniqueness, performs deterministic fixed-key-range external reductions, applies only the frozen
+support/expectation/direct-count/taxonomy/term gates, and writes the small manifest only after an
+exhaustiveness audit:
+
+```bash
+python -m pipeline.benchmark.autonomous_candidate_reduce build \
+  --scan-dir /data/lacuna/t0-2026/candidate-index-v1 \
+  --mesh /data/lacuna/t0-2026/mesh/desc2026.gz \
+  --manifest benchmarks/autonomous/t0-candidate-universe-v1.json \
+  --fan-in 8
+```
+
+The merge runs, support vector, PMID vector, descriptor table, positive-pair index, candidate
+stream, checkpoints, and `.part` files all stay under `--scan-dir`. The manifest contains no score,
+rank, prediction label, interpretation, or scientific-readiness claim.
+
 ## Archived v3 campaign
 
 The [Metric v3 readiness milestone](https://github.com/tang-vu/lacuna/milestone/1) preserves the

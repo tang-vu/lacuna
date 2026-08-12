@@ -15,6 +15,13 @@ else.** The method lacuna was built around failed the test it was pre-registered
 curated layers work, the pipeline works, and the negative result is published rather than buried.
 Details in [the validation report](plans/reports/validation-260727-1140-swanson-reproduction-negative-result-report.md).
 
+The active replacement is a no-human prospective PubMed/MeSH link-emergence benchmark. Its 2026
+source baseline is sealed, and its score-free candidate construction contract was frozen before
+descriptor supports or pair counts were measured. The exact source scan and bounded external
+reducer now exist, but no candidate universe, metric, prediction, or prospective outcome has been
+sealed yet. This advances engineering traceability only; scientific and metric readiness remain
+zero.
+
 ---
 
 ## Three kinds of hole
