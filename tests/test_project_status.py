@@ -12,7 +12,7 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 27
+    assert status["schema_version"] == 28
     assert status["status"] == "not_ready"
     assert status["active_validation_track"] == (
         "autonomous-prospective-pubmed-link-emergence-v1"
@@ -91,6 +91,23 @@ def test_project_status_exposes_validator_results_without_claiming_readiness():
         "human_dependency_count": 0,
         "readiness_contribution": 0,
     }
+    evidence = status["empirical_evidence"]
+    assert evidence["active"] is True
+    assert evidence["state"] == "replicated_observations_published"
+    assert evidence["claim_type"] == "replicated_computational_observation"
+    assert evidence["tested_pair_count"] == 499_500
+    assert evidence["replicated_pair_count"] == 1_599
+    assert evidence["published_observation_count"] == 100
+    assert evidence["null_pass_count"] == 0
+    assert evidence["human_dependency_count"] == 0
+    assert evidence["readiness_contribution"] == 1
+    assert [cohort["sample_count"] for cohort in evidence["cohorts"]] == [1082, 1980]
+    assert [cohort["analyzable_gene_count"] for cohort in evidence["cohorts"]] == [997, 999]
+    assert evidence["gates"]["null_calibration"] == "passed"
+    assert evidence["numeric_bounds"]["p_value_floor"] > 0
+    assert evidence["artifact"]["full_pair_table_committed"] is False
+    assert len(evidence["artifact"]["canonical_sha256"]) == 64
+    assert len(evidence["artifact"]["full_pair_table_sha256"]) == 64
     assert len(autonomous["readiness_blockers"]) == 1
     assert autonomous["protocol"]["machine_outcomes"][
         "llm_or_manual_labels_allowed"
@@ -445,6 +462,10 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
         "autonomous_metric_contract",
         "autonomous_t0_predictions",
         "autonomous_release_watch_contract",
+        "empirical_evidence_protocol",
+        "empirical_evidence_source",
+        "empirical_evidence_candidate_universe",
+        "empirical_evidence_result",
         "historical_sources",
         "source_alternatives",
         "bioasq_snapshot_audit",

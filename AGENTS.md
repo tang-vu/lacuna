@@ -39,11 +39,13 @@ the expense of gap detection, validation, or traceability.
 - A source-pinned monthly machine watcher now observes only the next sequential official 2027–2029
   PubMed/MeSH release identity. It has zero human dependencies and zero readiness; missing,
   out-of-order, or conflicting release evidence forces machine abstention.
-- `benchmarks/evidence-v1.json` is a separate empirical track frozen before any pairwise result. It
-  tests a score-blind 1,000-gene subset across pinned TCGA and METABRIC breast-tumour expression
-  cohorts. Until its source, power, replication, and permuted-null gates execute, it has zero
-  readiness. A passing row may be called only a replicated computational observation in those two
-  cohorts, never causal, mechanistic, clinical, cell-intrinsic, or novel to humanity.
+- `benchmarks/evidence-v1.json` is a separate empirical track frozen before any pairwise result. Its
+  completed score-blind run tested 499,500 pairs across pinned TCGA and METABRIC breast-tumour
+  expression cohorts: 1,599 passed every frozen replication gate, the permuted-null pass count was
+  0, and the strongest 100 are published in `artifacts/evidence-v1.json`. The full table is
+  SHA-pinned off-repository. A passing row may be called only a replicated computational
+  observation in those two cohorts, never causal, mechanistic, clinical, cell-intrinsic, or novel
+  to humanity; underflowed p/q values are conservative positive bounds, not exact zeros.
 - A pass on the active track validates only future PubMed MeSH link-emergence ranking. Never call it
   a validated knowledge-gap detector, autonomous scientific discovery, or evidence of absent
   human knowledge.
@@ -81,6 +83,7 @@ python -m pipeline.benchmark.autonomous_release_watch audit
 python -m pipeline.benchmark.autonomous_release_watch status
 python -m pipeline.benchmark.autonomous_release_watch probe
 python -m pipeline.evidence.replicated_association_v1 audit-protocol
+python -m pipeline.evidence.replicated_association_v1 audit-result
 python -m pipeline.benchmark.autonomous_metric_v1 conformance --help
 python -m pipeline.benchmark.autonomous_metric_v1 build --help
 python -m pipeline.benchmark.autonomous_metric_v1 seal --help

@@ -276,13 +276,22 @@ download is still only local source acquisition, not a sealed T0 or a scientific
 ### Autonomous empirical evidence track
 
 [`benchmarks/evidence-v1.json`](benchmarks/evidence-v1.json) freezes a separate empirical test
-before any pairwise association was computed. It deterministically selects 1,000 common Entrez
-genes without reading expression values, tests all 499,500 unordered pairs in a pinned TCGA breast
-cohort, and requires same-direction replication in the independent, cross-platform METABRIC
-cohort. Source integrity, sample power, effect size, per-cohort Benjamini–Hochberg control, effect
-agreement, and an independently permuted null are machine gates; missing or failed evidence
-produces no claim and has no manual override. Run
-`python -m pipeline.evidence.replicated_association_v1 audit-protocol` to audit the frozen boundary.
+before any pairwise association was computed. Its score-free seal deterministically selected 1,000
+common Entrez genes without reading expression values, then tested all 499,500 unordered pairs in
+a pinned TCGA breast cohort and required same-direction replication in the independent,
+cross-platform METABRIC cohort. Source integrity, sample power, effect size, per-cohort
+Benjamini–Hochberg control, effect agreement, and an independently permuted null are machine gates;
+missing or failed evidence produces no claim and has no manual override.
+
+The completed run measured 1,599 passing pairs and publishes the strongest 100 in
+[`artifacts/evidence-v1.json`](artifacts/evidence-v1.json). TCGA contributed 1,082 samples and 997
+analyzable selected genes; METABRIC contributed 1,980 samples and 999 analyzable selected genes.
+Zero independently permuted-null pairs passed. The full deterministic 499,500-row table remains
+off-repository on the data volume and is pinned by SHA-256 in the small result artifact. Extremely
+small approximate p-values are clamped to the float64 smallest positive normal before adjustment;
+exported q-values are explicitly conservative rather than exact zeros. Run
+`python -m pipeline.evidence.replicated_association_v1 audit-result` for the clean-clone structural
+audit, and add `--full-table /path/to/replicated-association-v1-pairs.tsv.gz` for byte-level replay.
 
 Even a passing row is only a `replicated_computational_observation`: a cohort-level
 rank-expression association. It is not evidence of causality, mechanism, clinical utility,

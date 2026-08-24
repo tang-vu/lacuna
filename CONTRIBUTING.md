@@ -283,6 +283,8 @@ python -m pipeline.export.validate_curated
 python -m pipeline.benchmark.validate_sources
 python -m pipeline.benchmark.autonomous_t0 audit
 python -m pipeline.benchmark.validate_autonomous_prospective
+python -m pipeline.evidence.replicated_association_v1 audit-protocol
+python -m pipeline.evidence.replicated_association_v1 audit-result
 python -m pipeline.benchmark.validate_candidates
 python -m pipeline.benchmark.negative_controls
 python -m pipeline.benchmark.validate_v3

@@ -36,7 +36,9 @@ jobs:
           python -m pipeline.benchmark.autonomous_release_watch audit
           python -m pipeline.benchmark.autonomous_release_watch status
       - name: Validate frozen empirical evidence protocol
-        run: python -m pipeline.evidence.replicated_association_v1 audit-protocol
+        run: |
+          python -m pipeline.evidence.replicated_association_v1 audit-protocol
+          python -m pipeline.evidence.replicated_association_v1 audit-result
       - name: Run tests available in a clean clone
         run: python -m pytest -m "not slow"
       - name: Verify committed artifact integrity

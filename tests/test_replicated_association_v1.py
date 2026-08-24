@@ -14,6 +14,7 @@ from pipeline.evidence.replicated_association_v1 import (
     _gate_pairs,
     _rho_p_values,
     _write_new_json,
+    audit_result,
     audit_protocol,
     benjamini_hochberg,
     parse_expression_values,
@@ -126,3 +127,13 @@ def test_sealed_json_writer_refuses_overwrite(tmp_path):
         _write_new_json(path, {"first": False})
 
     assert json.loads(path.read_text(encoding="utf-8")) == {"first": True}
+
+
+def test_committed_result_is_bounded_machine_evidence():
+    result = audit_result()
+
+    assert result.state == "replicated_observations_published"
+    assert result.tested_pair_count == 499_500
+    assert result.claim_count == 100
+    assert result.null_pass_count == 0
+    assert result.readiness_contribution == 1

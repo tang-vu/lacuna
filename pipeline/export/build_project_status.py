@@ -57,6 +57,16 @@ from pipeline.benchmark.autonomous_t0 import (
     audit_remote_inventory,
     audit_sealed_t0,
 )
+from pipeline.evidence.replicated_association_v1 import (
+    PROTOCOL_PATH as EMPIRICAL_EVIDENCE_PROTOCOL_PATH,
+    RESULT_MANIFEST_PATH as EMPIRICAL_EVIDENCE_RESULT_PATH,
+    SOURCE_MANIFEST_PATH as EMPIRICAL_EVIDENCE_SOURCE_PATH,
+    UNIVERSE_MANIFEST_PATH as EMPIRICAL_EVIDENCE_UNIVERSE_PATH,
+    audit_candidate_universe as audit_empirical_candidate_universe,
+    audit_protocol as audit_empirical_evidence_protocol,
+    audit_result as audit_empirical_evidence_result,
+    audit_source_manifest as audit_empirical_evidence_source,
+)
 from pipeline.benchmark.bioasq_semantics import (
     DEFAULT_AUDIT_PATH as BIOASQ_SEMANTICS_AUDIT_PATH,
     PROTOCOL_PATH as BIOASQ_SEMANTICS_PROTOCOL_PATH,
@@ -131,6 +141,13 @@ def build_project_status() -> dict:
     autonomous_predictions = audit_predictions_v1()
     autonomous_release_watch = audit_release_window()
     audit_release_watch_contract()
+    audit_empirical_evidence_protocol()
+    audit_empirical_evidence_source()
+    audit_empirical_candidate_universe()
+    empirical_evidence = audit_empirical_evidence_result()
+    empirical_evidence_payload = json.loads(
+        EMPIRICAL_EVIDENCE_RESULT_PATH.read_text(encoding="utf-8")
+    )
     autonomous_payload = json.loads(AUTONOMOUS_PROSPECTIVE_PATH.read_text(encoding="utf-8"))
     alternatives = audit_source_alternatives()
     bioasq_snapshot = json.loads(BIOASQ_SNAPSHOT_MANIFEST_PATH.read_text(encoding="utf-8"))
@@ -181,7 +198,7 @@ def build_project_status() -> dict:
     negative_protocol = load_protocol()
 
     return {
-        "schema_version": 27,
+        "schema_version": 28,
         "status": "ready" if ready else "not_ready",
         "active_validation_track": autonomous.protocol_id,
         "inputs": {
@@ -201,6 +218,14 @@ def build_project_status() -> dict:
             "autonomous_release_watch_contract": _input_identity(
                 AUTONOMOUS_RELEASE_WATCH_PATH
             ),
+            "empirical_evidence_protocol": _input_identity(
+                EMPIRICAL_EVIDENCE_PROTOCOL_PATH
+            ),
+            "empirical_evidence_source": _input_identity(EMPIRICAL_EVIDENCE_SOURCE_PATH),
+            "empirical_evidence_candidate_universe": _input_identity(
+                EMPIRICAL_EVIDENCE_UNIVERSE_PATH
+            ),
+            "empirical_evidence_result": _input_identity(EMPIRICAL_EVIDENCE_RESULT_PATH),
             "historical_sources": _input_identity(SOURCES_PATH),
             "source_alternatives": _input_identity(ALTERNATIVES_PATH),
             "bioasq_snapshot_audit": _input_identity(BIOASQ_SNAPSHOT_MANIFEST_PATH),
@@ -306,6 +331,28 @@ def build_project_status() -> dict:
                 "readiness_blockers": list(autonomous_release_watch.blockers),
                 "human_dependency_count": autonomous_release_watch.human_dependency_count,
                 "readiness_contribution": autonomous_release_watch.readiness_contribution,
+            },
+        },
+        "empirical_evidence": {
+            "active": True,
+            "state": empirical_evidence.state,
+            "claim_type": "replicated_computational_observation",
+            "tested_pair_count": empirical_evidence.tested_pair_count,
+            "replicated_pair_count": empirical_evidence_payload["counts"]["replicated_pairs"],
+            "published_observation_count": empirical_evidence.claim_count,
+            "null_pass_count": empirical_evidence.null_pass_count,
+            "human_dependency_count": 0,
+            "readiness_contribution": empirical_evidence.readiness_contribution,
+            "cohorts": empirical_evidence_payload["cohorts"],
+            "gates": empirical_evidence_payload["gates"],
+            "numeric_bounds": empirical_evidence_payload["numeric_bounds"],
+            "claim_boundary": empirical_evidence_payload["claim_boundary"],
+            "limitations": empirical_evidence_payload["limitations"],
+            "artifact": {
+                "path": "evidence-v1.json",
+                "canonical_sha256": sha256_payload(empirical_evidence_payload),
+                "full_pair_table_sha256": empirical_evidence_payload["full_pair_table"]["sha256"],
+                "full_pair_table_committed": False,
             },
         },
         "historical_sources": {

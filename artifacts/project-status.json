@@ -1,5 +1,5 @@
 {
- "schema_version": 27,
+ "schema_version": 28,
  "status": "not_ready",
  "active_validation_track": "autonomous-prospective-pubmed-link-emergence-v1",
  "inputs": {
@@ -41,6 +41,26 @@
   "autonomous_release_watch_contract": {
    "path": "benchmarks/autonomous/release-watch-v1.json",
    "sha256": "12c1b5cd66573e83e72ea01971b19f79f29a086628615bcc24dda27048360948",
+   "canonicalisation": "canonical-json-v1"
+  },
+  "empirical_evidence_protocol": {
+   "path": "benchmarks/evidence-v1.json",
+   "sha256": "029b23a5e0a02755354e88b48177e13b90faee90a8b270fb9225790fa1e51d2f",
+   "canonicalisation": "canonical-json-v1"
+  },
+  "empirical_evidence_source": {
+   "path": "benchmarks/evidence/source-v1.json",
+   "sha256": "7547ae062bd65ea986491c6d5ac60c6435b66d728b7079e26334787635737233",
+   "canonicalisation": "canonical-json-v1"
+  },
+  "empirical_evidence_candidate_universe": {
+   "path": "benchmarks/evidence/candidate-universe-v1.json",
+   "sha256": "ce2c3ce250cc015bcd9b49e039887da1147fcbd9d82d67c2ca7c3d9b817e34c6",
+   "canonicalisation": "canonical-json-v1"
+  },
+  "empirical_evidence_result": {
+   "path": "artifacts/evidence-v1.json",
+   "sha256": "551fde0bcc248a5888b0f8179252d0392f02dddee8a0b8416248bed50684e8a0",
    "canonicalisation": "canonical-json-v1"
   },
   "historical_sources": {
@@ -534,6 +554,80 @@
    ],
    "human_dependency_count": 0,
    "readiness_contribution": 0
+  }
+ },
+ "empirical_evidence": {
+  "active": true,
+  "state": "replicated_observations_published",
+  "claim_type": "replicated_computational_observation",
+  "tested_pair_count": 499500,
+  "replicated_pair_count": 1599,
+  "published_observation_count": 100,
+  "null_pass_count": 0,
+  "human_dependency_count": 0,
+  "readiness_contribution": 1,
+  "cohorts": [
+   {
+    "id": "tcga_brca_pancan_2018_expression",
+    "study_id": "brca_tcga_pan_can_atlas_2018",
+    "platform": "batch_normalized_illumina_hiseq_rnaseqv2_rsem",
+    "sample_count": 1082,
+    "analyzable_gene_count": 997
+   },
+   {
+    "id": "metabric_brca_expression",
+    "study_id": "brca_metabric",
+    "platform": "illumina_ht12_v3_microarray_log2_intensity",
+    "sample_count": 1980,
+    "analyzable_gene_count": 999
+   }
+  ],
+  "gates": {
+   "source_integrity": "passed",
+   "sample_independence": "passed",
+   "power": "passed",
+   "null_calibration": "passed",
+   "null_pass_count": 0,
+   "maximum_null_pass_count": 5
+  },
+  "numeric_bounds": {
+   "p_value_floor": 2.2250738585072014e-308,
+   "policy": "p-values below the float64 smallest positive normal are clamped before BH; affected exported q-values are conservative, not exact zeros",
+   "measured_p_values_clamped": {
+    "tcga_brca_pancan_2018_expression": 25,
+    "metabric_brca_expression": 86
+   },
+   "permuted_null_p_values_clamped": {
+    "tcga_brca_pancan_2018_expression": 0,
+    "metabric_brca_expression": 0
+   }
+  },
+  "claim_boundary": {
+   "allowed_claim": "a bounded rank-expression association observed in both pinned cohorts under this frozen protocol",
+   "not_a_claim_of": [
+    "causality",
+    "mechanism",
+    "clinical utility or safety",
+    "cell-intrinsic regulation",
+    "novelty to humanity",
+    "absence of academic or non-academic knowledge",
+    "a validated knowledge-gap detector",
+    "a relation that generalizes beyond these cohorts",
+    "independence from tumour subtype, purity, batch, or cell-composition confounding"
+   ]
+  },
+  "limitations": [
+   "A replicated cohort-level correlation can be driven by tumour subtype, purity, batch, stromal or immune composition, copy number, or other shared causes.",
+   "Cross-platform agreement reduces platform-specific risk but does not establish a biological mechanism or cell-intrinsic regulation.",
+   "The deterministic 1,000-gene universe is a score-blind computational subset, not a representative sample of biology.",
+   "cBioPortal's pinned source metadata warns that the TCGA transport is preliminary and should be used with caution.",
+   "Academic corpora and expression cohorts omit or thinly represent non-academic, practitioner, craft, indigenous, historical, and other human knowledge."
+  ],
+  "artifact": {
+   "path": "evidence-v1.json",
+   "canonical_sha256": "551fde0bcc248a5888b0f8179252d0392f02dddee8a0b8416248bed50684e8a0",
+   "full_pair_table_sha256": "040b0f28a9b5a2978a250da634bf484d75eb796bdbc962a59a639f80a78f6452",
+   "full_pair_table_committed": false
   }
  },
  "historical_sources": {

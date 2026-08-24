@@ -53,6 +53,20 @@ D-drive `metric-v1` directory: future evaluation must verify those exact hashes.
 checks work without local data; `validate_autonomous_predictions_v1 --verify-local ... --scan-dir
 ...` performs the expensive byte and computation audit when this volume is mounted.
 
+The empirical evidence-v1 source transports and full 499,500-row result table also stay on a
+non-system volume, for example `D:/lacuna-storage/evidence-v1/`. The committed source audit pins
+the two cBioPortal transports by byte count and SHA-256; the committed candidate universe pins the
+score-free 1,000-gene selection; and `artifacts/evidence-v1.json` pins the gzip result table. Audit
+the local bytes without copying them into Git:
+
+```bash
+python -m pipeline.evidence.replicated_association_v1 audit-result \
+  --full-table /data/lacuna/evidence-v1/replicated-association-v1-pairs.tsv.gz
+```
+
+The refusal-to-overwrite outputs are part of the evidence trail. Do not regenerate them in place;
+use a separate directory for an independent replay and compare its hashes.
+
 This directory holds regenerable API caches, the fetched OpenAlex taxonomy, and co-occurrence
 rows. It also holds trimmed PubMed metadata fetched for benchmark mapping audits. Those files are
 intentionally ignored: the current pre-1986 pilot is tens of megabytes and the replacement MEDLINE

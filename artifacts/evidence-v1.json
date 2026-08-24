@@ -1,0 +1,2793 @@
+{
+ "schema_version": 1,
+ "id": "replicated-expression-evidence-v1-result",
+ "state": "replicated_observations_published",
+ "verdict": "measured",
+ "protocol": {
+  "id": "replicated-expression-association-v1",
+  "canonical_json_sha256": "029b23a5e0a02755354e88b48177e13b90faee90a8b270fb9225790fa1e51d2f"
+ },
+ "source_manifest": {
+  "path": "../benchmarks/evidence/source-v1.json",
+  "canonical_json_sha256": "7547ae062bd65ea986491c6d5ac60c6435b66d728b7079e26334787635737233"
+ },
+ "candidate_universe": {
+  "path": "../benchmarks/evidence/candidate-universe-v1.json",
+  "canonical_json_sha256": "ce2c3ce250cc015bcd9b49e039887da1147fcbd9d82d67c2ca7c3d9b817e34c6"
+ },
+ "full_pair_table": {
+  "filename": "replicated-association-v1-pairs.tsv.gz",
+  "sha256": "040b0f28a9b5a2978a250da634bf484d75eb796bdbc962a59a639f80a78f6452",
+  "row_count": 499500,
+  "committed": false,
+  "local_verification_required_for_byte_level_replay": true
+ },
+ "cohorts": [
+  {
+   "id": "tcga_brca_pancan_2018_expression",
+   "study_id": "brca_tcga_pan_can_atlas_2018",
+   "platform": "batch_normalized_illumina_hiseq_rnaseqv2_rsem",
+   "sample_count": 1082,
+   "analyzable_gene_count": 997
+  },
+  {
+   "id": "metabric_brca_expression",
+   "study_id": "brca_metabric",
+   "platform": "illumina_ht12_v3_microarray_log2_intensity",
+   "sample_count": 1980,
+   "analyzable_gene_count": 999
+  }
+ ],
+ "gates": {
+  "source_integrity": "passed",
+  "sample_independence": "passed",
+  "power": "passed",
+  "null_calibration": "passed",
+  "null_pass_count": 0,
+  "maximum_null_pass_count": 5
+ },
+ "numeric_bounds": {
+  "p_value_floor": 2.2250738585072014e-308,
+  "policy": "p-values below the float64 smallest positive normal are clamped before BH; affected exported q-values are conservative, not exact zeros",
+  "measured_p_values_clamped": {
+   "tcga_brca_pancan_2018_expression": 25,
+   "metabric_brca_expression": 86
+  },
+  "permuted_null_p_values_clamped": {
+   "tcga_brca_pancan_2018_expression": 0,
+   "metabric_brca_expression": 0
+  }
+ },
+ "counts": {
+  "tested_pairs": 499500,
+  "replicated_pairs": 1599,
+  "published_observations": 100
+ },
+ "observations": [
+  {
+   "rank": 1,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 9789,
+     "symbol": "SPCS2"
+    },
+    "b": {
+     "entrez_gene_id": 653566,
+     "symbol": "SPCS2P4"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.87462175,
+    "benjamini_hochberg_q_conservative": 4.4190500847679065e-304
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.89216618,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for SPCS2 (Entrez 9789) and SPCS2P4 (Entrez 653566) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 2,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 64333,
+     "symbol": "ARHGAP9"
+    },
+    "b": {
+     "entrez_gene_id": 83706,
+     "symbol": "FERMT3"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.9039092,
+    "benjamini_hochberg_q_conservative": 4.4190500847679065e-304
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.8709027,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for ARHGAP9 (Entrez 64333) and FERMT3 (Entrez 83706) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 3,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 699,
+     "symbol": "BUB1"
+    },
+    "b": {
+     "entrez_gene_id": 9833,
+     "symbol": "MELK"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.88189962,
+    "benjamini_hochberg_q_conservative": 4.4190500847679065e-304
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.86445659,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for BUB1 (Entrez 699) and MELK (Entrez 9833) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 4,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 9833,
+     "symbol": "MELK"
+    },
+    "b": {
+     "entrez_gene_id": 113130,
+     "symbol": "CDCA5"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.83928514,
+    "benjamini_hochberg_q_conservative": 4.4190500847679065e-304
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.88231924,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for MELK (Entrez 9833) and CDCA5 (Entrez 113130) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 5,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 3833,
+     "symbol": "KIFC1"
+    },
+    "b": {
+     "entrez_gene_id": 113130,
+     "symbol": "CDCA5"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.85943829,
+    "benjamini_hochberg_q_conservative": 4.4190500847679065e-304
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.82714065,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for KIFC1 (Entrez 3833) and CDCA5 (Entrez 113130) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 6,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 699,
+     "symbol": "BUB1"
+    },
+    "b": {
+     "entrez_gene_id": 113130,
+     "symbol": "CDCA5"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.8190936,
+    "benjamini_hochberg_q_conservative": 4.4190500847679065e-304
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.85047711,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for BUB1 (Entrez 699) and CDCA5 (Entrez 113130) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 7,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 83706,
+     "symbol": "FERMT3"
+    },
+    "b": {
+     "entrez_gene_id": 654817,
+     "symbol": "NCF1C"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.82746454,
+    "benjamini_hochberg_q_conservative": 4.4190500847679065e-304
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.80854843,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for FERMT3 (Entrez 83706) and NCF1C (Entrez 654817) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 8,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 3833,
+     "symbol": "KIFC1"
+    },
+    "b": {
+     "entrez_gene_id": 9833,
+     "symbol": "MELK"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.84454128,
+    "benjamini_hochberg_q_conservative": 4.4190500847679065e-304
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.80842275,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for KIFC1 (Entrez 3833) and MELK (Entrez 9833) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 9,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 64333,
+     "symbol": "ARHGAP9"
+    },
+    "b": {
+     "entrez_gene_id": 128346,
+     "symbol": "C1orf162"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.79975231,
+    "benjamini_hochberg_q_conservative": 9.565270685287502e-281
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.82291798,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for ARHGAP9 (Entrez 64333) and C1orf162 (Entrez 128346) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 10,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 3108,
+     "symbol": "HLA-DMA"
+    },
+    "b": {
+     "entrez_gene_id": 64333,
+     "symbol": "ARHGAP9"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.8287724,
+    "benjamini_hochberg_q_conservative": 4.4190500847679065e-304
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.79886119,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for HLA-DMA (Entrez 3108) and ARHGAP9 (Entrez 64333) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 11,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 56833,
+     "symbol": "SLAMF8"
+    },
+    "b": {
+     "entrez_gene_id": 83706,
+     "symbol": "FERMT3"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.79113573,
+    "benjamini_hochberg_q_conservative": 7.83012608588487e-269
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.8145179,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for SLAMF8 (Entrez 56833) and FERMT3 (Entrez 83706) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 12,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 699,
+     "symbol": "BUB1"
+    },
+    "b": {
+     "entrez_gene_id": 3833,
+     "symbol": "KIFC1"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.8091075,
+    "benjamini_hochberg_q_conservative": 1.9768846714425857e-294
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.79048752,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for BUB1 (Entrez 699) and KIFC1 (Entrez 3833) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 13,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 83706,
+     "symbol": "FERMT3"
+    },
+    "b": {
+     "entrez_gene_id": 128346,
+     "symbol": "C1orf162"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.80549797,
+    "benjamini_hochberg_q_conservative": 5.116727455085235e-289
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.78197431,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for FERMT3 (Entrez 83706) and C1orf162 (Entrez 128346) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 14,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 64333,
+     "symbol": "ARHGAP9"
+    },
+    "b": {
+     "entrez_gene_id": 654817,
+     "symbol": "NCF1C"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.79841088,
+    "benjamini_hochberg_q_conservative": 7.55149003350153e-279
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.78194204,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for ARHGAP9 (Entrez 64333) and NCF1C (Entrez 654817) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 15,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 63940,
+     "symbol": "GPSM3"
+    },
+    "b": {
+     "entrez_gene_id": 64333,
+     "symbol": "ARHGAP9"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.79712222,
+    "benjamini_hochberg_q_conservative": 4.830104835757919e-277
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.7762963,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for GPSM3 (Entrez 63940) and ARHGAP9 (Entrez 64333) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 16,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 699,
+     "symbol": "BUB1"
+    },
+    "b": {
+     "entrez_gene_id": 3161,
+     "symbol": "HMMR"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.81138061,
+    "benjamini_hochberg_q_conservative": 6.926614186045765e-298
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.77401718,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for BUB1 (Entrez 699) and HMMR (Entrez 3161) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 17,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 64333,
+     "symbol": "ARHGAP9"
+    },
+    "b": {
+     "entrez_gene_id": 89857,
+     "symbol": "KLHL6"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.80030518,
+    "benjamini_hochberg_q_conservative": 1.5840608442311052e-281
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.76477605,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for ARHGAP9 (Entrez 64333) and KLHL6 (Entrez 89857) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 18,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 699,
+     "symbol": "BUB1"
+    },
+    "b": {
+     "entrez_gene_id": 7153,
+     "symbol": "TOP2A"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.80445641,
+    "benjamini_hochberg_q_conservative": 1.7371741302121946e-287
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.76420701,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for BUB1 (Entrez 699) and TOP2A (Entrez 7153) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 19,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 3108,
+     "symbol": "HLA-DMA"
+    },
+    "b": {
+     "entrez_gene_id": 83706,
+     "symbol": "FERMT3"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.81127768,
+    "benjamini_hochberg_q_conservative": 9.660752126414421e-298
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.75802908,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for HLA-DMA (Entrez 3108) and FERMT3 (Entrez 83706) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 20,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 3108,
+     "symbol": "HLA-DMA"
+    },
+    "b": {
+     "entrez_gene_id": 128346,
+     "symbol": "C1orf162"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.78488756,
+    "benjamini_hochberg_q_conservative": 1.1263822231020313e-260
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.75741506,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for HLA-DMA (Entrez 3108) and C1orf162 (Entrez 128346) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 21,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 83706,
+     "symbol": "FERMT3"
+    },
+    "b": {
+     "entrez_gene_id": 126014,
+     "symbol": "OSCAR"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.76551594,
+    "benjamini_hochberg_q_conservative": 2.963923820217395e-237
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.75433595,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for FERMT3 (Entrez 83706) and OSCAR (Entrez 126014) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 22,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 3627,
+     "symbol": "CXCL10"
+    },
+    "b": {
+     "entrez_gene_id": 56833,
+     "symbol": "SLAMF8"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.7737836,
+    "benjamini_hochberg_q_conservative": 6.83215441159104e-247
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.7513853,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for CXCL10 (Entrez 3627) and SLAMF8 (Entrez 56833) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 23,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 6363,
+     "symbol": "CCL19"
+    },
+    "b": {
+     "entrez_gene_id": 51316,
+     "symbol": "PLAC8"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.77348133,
+    "benjamini_hochberg_q_conservative": 1.530559549684494e-246
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.74714295,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for CCL19 (Entrez 6363) and PLAC8 (Entrez 51316) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 24,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 63940,
+     "symbol": "GPSM3"
+    },
+    "b": {
+     "entrez_gene_id": 83706,
+     "symbol": "FERMT3"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.79114518,
+    "benjamini_hochberg_q_conservative": 7.772934241847037e-269
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.74476692,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for GPSM3 (Entrez 63940) and FERMT3 (Entrez 83706) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 25,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 7153,
+     "symbol": "TOP2A"
+    },
+    "b": {
+     "entrez_gene_id": 9833,
+     "symbol": "MELK"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.74291847,
+    "benjamini_hochberg_q_conservative": 3.153021819054646e-213
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.76881714,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for TOP2A (Entrez 7153) and MELK (Entrez 9833) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 26,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 4332,
+     "symbol": "MNDA"
+    },
+    "b": {
+     "entrez_gene_id": 54504,
+     "symbol": "CPVL"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.7405341,
+    "benjamini_hochberg_q_conservative": 7.172780921781629e-211
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.75677267,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for MNDA (Entrez 4332) and CPVL (Entrez 54504) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 27,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 958,
+     "symbol": "CD40"
+    },
+    "b": {
+     "entrez_gene_id": 83706,
+     "symbol": "FERMT3"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.77023546,
+    "benjamini_hochberg_q_conservative": 1.061173072645319e-242
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.73401036,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for CD40 (Entrez 958) and FERMT3 (Entrez 83706) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 28,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 3833,
+     "symbol": "KIFC1"
+    },
+    "b": {
+     "entrez_gene_id": 27338,
+     "symbol": "UBE2S"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.72974992,
+    "benjamini_hochberg_q_conservative": 1.3252844110414208e-200
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.74519125,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for KIFC1 (Entrez 3833) and UBE2S (Entrez 27338) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 29,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 83706,
+     "symbol": "FERMT3"
+    },
+    "b": {
+     "entrez_gene_id": 89857,
+     "symbol": "KLHL6"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.7827019,
+    "benjamini_hochberg_q_conservative": 6.933028120522975e-258
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.7295851,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for FERMT3 (Entrez 83706) and KLHL6 (Entrez 89857) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 30,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 1462,
+     "symbol": "VCAN"
+    },
+    "b": {
+     "entrez_gene_id": 57616,
+     "symbol": "TSHZ3"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.82612748,
+    "benjamini_hochberg_q_conservative": 4.4190500847679065e-304
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.72642347,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for VCAN (Entrez 1462) and TSHZ3 (Entrez 57616) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 31,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 56833,
+     "symbol": "SLAMF8"
+    },
+    "b": {
+     "entrez_gene_id": 654817,
+     "symbol": "NCF1C"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.72296547,
+    "benjamini_hochberg_q_conservative": 1.9796505751242577e-194
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.7462181,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for SLAMF8 (Entrez 56833) and NCF1C (Entrez 654817) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 32,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 27338,
+     "symbol": "UBE2S"
+    },
+    "b": {
+     "entrez_gene_id": 113130,
+     "symbol": "CDCA5"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.72151058,
+    "benjamini_hochberg_q_conservative": 3.858541399885692e-193
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.7465909,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for UBE2S (Entrez 27338) and CDCA5 (Entrez 113130) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 33,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 958,
+     "symbol": "CD40"
+    },
+    "b": {
+     "entrez_gene_id": 64333,
+     "symbol": "ARHGAP9"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.76866244,
+    "benjamini_hochberg_q_conservative": 7.18445562018202e-241
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.72113951,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for CD40 (Entrez 958) and ARHGAP9 (Entrez 64333) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 34,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 54504,
+     "symbol": "CPVL"
+    },
+    "b": {
+     "entrez_gene_id": 128346,
+     "symbol": "C1orf162"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.71336707,
+    "benjamini_hochberg_q_conservative": 4.3542459993853165e-186
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.73858699,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for CPVL (Entrez 54504) and C1orf162 (Entrez 128346) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 35,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 63940,
+     "symbol": "GPSM3"
+    },
+    "b": {
+     "entrez_gene_id": 128346,
+     "symbol": "C1orf162"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.7428741,
+    "benjamini_hochberg_q_conservative": 3.4607443869274535e-213
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.7129443,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for GPSM3 (Entrez 63940) and C1orf162 (Entrez 128346) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 36,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 3833,
+     "symbol": "KIFC1"
+    },
+    "b": {
+     "entrez_gene_id": 7153,
+     "symbol": "TOP2A"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.70986996,
+    "benjamini_hochberg_q_conservative": 3.7256899157986703e-183
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.77726075,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for KIFC1 (Entrez 3833) and TOP2A (Entrez 7153) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 37,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 89857,
+     "symbol": "KLHL6"
+    },
+    "b": {
+     "entrez_gene_id": 654817,
+     "symbol": "NCF1C"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.71655919,
+    "benjamini_hochberg_q_conservative": 8.05060643084806e-189
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.7082248,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for KLHL6 (Entrez 89857) and NCF1C (Entrez 654817) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 38,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 5157,
+     "symbol": "PDGFRL"
+    },
+    "b": {
+     "entrez_gene_id": 57616,
+     "symbol": "TSHZ3"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.70783159,
+    "benjamini_hochberg_q_conservative": 1.8102162877444352e-181
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.74046629,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for PDGFRL (Entrez 5157) and TSHZ3 (Entrez 57616) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 39,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 6793,
+     "symbol": "STK10"
+    },
+    "b": {
+     "entrez_gene_id": 83706,
+     "symbol": "FERMT3"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.70716962,
+    "benjamini_hochberg_q_conservative": 6.367179024108422e-181
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.71226293,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for STK10 (Entrez 6793) and FERMT3 (Entrez 83706) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 40,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 7293,
+     "symbol": "TNFRSF4"
+    },
+    "b": {
+     "entrez_gene_id": 83706,
+     "symbol": "FERMT3"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.70562136,
+    "benjamini_hochberg_q_conservative": 1.195169575438692e-179
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.72010452,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for TNFRSF4 (Entrez 7293) and FERMT3 (Entrez 83706) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 41,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 3627,
+     "symbol": "CXCL10"
+    },
+    "b": {
+     "entrez_gene_id": 64135,
+     "symbol": "IFIH1"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.70192037,
+    "benjamini_hochberg_q_conservative": 1.1197984540404001e-176
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.70128121,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for CXCL10 (Entrez 3627) and IFIH1 (Entrez 64135) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 42,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 51316,
+     "symbol": "PLAC8"
+    },
+    "b": {
+     "entrez_gene_id": 64333,
+     "symbol": "ARHGAP9"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.74807168,
+    "benjamini_hochberg_q_conservative": 2.068253703379106e-218
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.69936246,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for PLAC8 (Entrez 51316) and ARHGAP9 (Entrez 64333) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 43,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 89857,
+     "symbol": "KLHL6"
+    },
+    "b": {
+     "entrez_gene_id": 128346,
+     "symbol": "C1orf162"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.69541855,
+    "benjamini_hochberg_q_conservative": 1.4210683908357905e-171
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.72556544,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for KLHL6 (Entrez 89857) and C1orf162 (Entrez 128346) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 44,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 63940,
+     "symbol": "GPSM3"
+    },
+    "b": {
+     "entrez_gene_id": 654817,
+     "symbol": "NCF1C"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.69301436,
+    "benjamini_hochberg_q_conservative": 1.0038834092618604e-169
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.70775771,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for GPSM3 (Entrez 63940) and NCF1C (Entrez 654817) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 45,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 4332,
+     "symbol": "MNDA"
+    },
+    "b": {
+     "entrez_gene_id": 10346,
+     "symbol": "TRIM22"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.70517259,
+    "benjamini_hochberg_q_conservative": 2.758912034934907e-179
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.69143911,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for MNDA (Entrez 4332) and TRIM22 (Entrez 10346) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 46,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 10578,
+     "symbol": "GNLY"
+    },
+    "b": {
+     "entrez_gene_id": 83706,
+     "symbol": "FERMT3"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.68816832,
+    "benjamini_hochberg_q_conservative": 4.562433740947762e-166
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.69449998,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for GNLY (Entrez 10578) and FERMT3 (Entrez 83706) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 47,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 56833,
+     "symbol": "SLAMF8"
+    },
+    "b": {
+     "entrez_gene_id": 64333,
+     "symbol": "ARHGAP9"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.70463347,
+    "benjamini_hochberg_q_conservative": 7.456594575521454e-179
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.68560713,
+    "benjamini_hochberg_q_conservative": 2.7142400541875973e-301
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for SLAMF8 (Entrez 56833) and ARHGAP9 (Entrez 64333) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 48,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 7153,
+     "symbol": "TOP2A"
+    },
+    "b": {
+     "entrez_gene_id": 113130,
+     "symbol": "CDCA5"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.68514862,
+    "benjamini_hochberg_q_conservative": 7.834788620454503e-164
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.76317398,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for TOP2A (Entrez 7153) and CDCA5 (Entrez 113130) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 49,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 3627,
+     "symbol": "CXCL10"
+    },
+    "b": {
+     "entrez_gene_id": 10578,
+     "symbol": "GNLY"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.69909514,
+    "benjamini_hochberg_q_conservative": 1.9423113427336487e-174
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.6836491,
+    "benjamini_hochberg_q_conservative": 1.1812240490062355e-298
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for CXCL10 (Entrez 3627) and GNLY (Entrez 10578) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 50,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 54504,
+     "symbol": "CPVL"
+    },
+    "b": {
+     "entrez_gene_id": 89857,
+     "symbol": "KLHL6"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.74890173,
+    "benjamini_hochberg_q_conservative": 2.959301325240256e-219
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.68149243,
+    "benjamini_hochberg_q_conservative": 8.950315022130021e-296
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for CPVL (Entrez 54504) and KLHL6 (Entrez 89857) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 51,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 958,
+     "symbol": "CD40"
+    },
+    "b": {
+     "entrez_gene_id": 3108,
+     "symbol": "HLA-DMA"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.72158959,
+    "benjamini_hochberg_q_conservative": 3.303064520828958e-193
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.68019308,
+    "benjamini_hochberg_q_conservative": 4.6478701286517486e-294
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for CD40 (Entrez 958) and HLA-DMA (Entrez 3108) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 52,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 10578,
+     "symbol": "GNLY"
+    },
+    "b": {
+     "entrez_gene_id": 64333,
+     "symbol": "ARHGAP9"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.71547076,
+    "benjamini_hochberg_q_conservative": 6.922920298489455e-188
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.67976172,
+    "benjamini_hochberg_q_conservative": 1.7157116894446539e-293
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for GNLY (Entrez 10578) and ARHGAP9 (Entrez 64333) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 53,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 4332,
+     "symbol": "MNDA"
+    },
+    "b": {
+     "entrez_gene_id": 128346,
+     "symbol": "C1orf162"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.76894025,
+    "benjamini_hochberg_q_conservative": 3.453854088293591e-241
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.67949874,
+    "benjamini_hochberg_q_conservative": 3.747297660836222e-293
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for MNDA (Entrez 4332) and C1orf162 (Entrez 128346) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 54,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 9833,
+     "symbol": "MELK"
+    },
+    "b": {
+     "entrez_gene_id": 23234,
+     "symbol": "DNAJC9"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.6843292,
+    "benjamini_hochberg_q_conservative": 3.143613703161698e-163
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.67914228,
+    "benjamini_hochberg_q_conservative": 1.0972782053196342e-292
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for MELK (Entrez 9833) and DNAJC9 (Entrez 23234) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 55,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 128346,
+     "symbol": "C1orf162"
+    },
+    "b": {
+     "entrez_gene_id": 654817,
+     "symbol": "NCF1C"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.67614355,
+    "benjamini_hochberg_q_conservative": 2.3519976171527012e-157
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.70501384,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for C1orf162 (Entrez 128346) and NCF1C (Entrez 654817) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 56,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 330,
+     "symbol": "BIRC3"
+    },
+    "b": {
+     "entrez_gene_id": 64333,
+     "symbol": "ARHGAP9"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.67317001,
+    "benjamini_hochberg_q_conservative": 2.7858018502166457e-155
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.71774762,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for BIRC3 (Entrez 330) and ARHGAP9 (Entrez 64333) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 57,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 6363,
+     "symbol": "CCL19"
+    },
+    "b": {
+     "entrez_gene_id": 64333,
+     "symbol": "ARHGAP9"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.67282402,
+    "benjamini_hochberg_q_conservative": 4.851217575232666e-155
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.6772817,
+    "benjamini_hochberg_q_conservative": 2.9965863073497295e-290
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for CCL19 (Entrez 6363) and ARHGAP9 (Entrez 64333) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 58,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 958,
+     "symbol": "CD40"
+    },
+    "b": {
+     "entrez_gene_id": 654817,
+     "symbol": "NCF1C"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.67259979,
+    "benjamini_hochberg_q_conservative": 6.939075334101149e-155
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.68308956,
+    "benjamini_hochberg_q_conservative": 6.625542720329038e-298
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for CD40 (Entrez 958) and NCF1C (Entrez 654817) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 59,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 56833,
+     "symbol": "SLAMF8"
+    },
+    "b": {
+     "entrez_gene_id": 89857,
+     "symbol": "KLHL6"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.78601032,
+    "benjamini_hochberg_q_conservative": 4.2420303393580084e-262
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.6714251,
+    "benjamini_hochberg_q_conservative": 1.0390820818402236e-282
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for SLAMF8 (Entrez 56833) and KLHL6 (Entrez 89857) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 60,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 10578,
+     "symbol": "GNLY"
+    },
+    "b": {
+     "entrez_gene_id": 56833,
+     "symbol": "SLAMF8"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.67013184,
+    "benjamini_hochberg_q_conservative": 3.4706169574934455e-153
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.67877651,
+    "benjamini_hochberg_q_conservative": 3.2993138969857526e-292
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for GNLY (Entrez 10578) and SLAMF8 (Entrez 56833) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 61,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 7462,
+     "symbol": "LAT2"
+    },
+    "b": {
+     "entrez_gene_id": 64333,
+     "symbol": "ARHGAP9"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.80204388,
+    "benjamini_hochberg_q_conservative": 5.589980247631573e-284
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.66985266,
+    "benjamini_hochberg_q_conservative": 9.965667810790823e-281
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for LAT2 (Entrez 7462) and ARHGAP9 (Entrez 64333) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 62,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 7462,
+     "symbol": "LAT2"
+    },
+    "b": {
+     "entrez_gene_id": 83706,
+     "symbol": "FERMT3"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.80076082,
+    "benjamini_hochberg_q_conservative": 3.889034557368359e-282
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.66847153,
+    "benjamini_hochberg_q_conservative": 5.416440282722165e-279
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for LAT2 (Entrez 7462) and FERMT3 (Entrez 83706) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 63,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 89857,
+     "symbol": "KLHL6"
+    },
+    "b": {
+     "entrez_gene_id": 150365,
+     "symbol": "MEI1"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.78183516,
+    "benjamini_hochberg_q_conservative": 8.60294783617382e-257
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.66749436,
+    "benjamini_hochberg_q_conservative": 8.755693226049518e-278
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for KLHL6 (Entrez 89857) and MEI1 (Entrez 150365) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 64,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 3108,
+     "symbol": "HLA-DMA"
+    },
+    "b": {
+     "entrez_gene_id": 654817,
+     "symbol": "NCF1C"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.71306844,
+    "benjamini_hochberg_q_conservative": 7.78353603788277e-186
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.6662726,
+    "benjamini_hochberg_q_conservative": 2.841103496363214e-276
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for HLA-DMA (Entrez 3108) and NCF1C (Entrez 654817) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 65,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 64333,
+     "symbol": "ARHGAP9"
+    },
+    "b": {
+     "entrez_gene_id": 160365,
+     "symbol": "CLECL1"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.73522882,
+    "benjamini_hochberg_q_conservative": 9.762218839424653e-206
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.66616934,
+    "benjamini_hochberg_q_conservative": 3.78564773295796e-276
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for ARHGAP9 (Entrez 64333) and CLECL1 (Entrez 160365) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 66,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 1462,
+     "symbol": "VCAN"
+    },
+    "b": {
+     "entrez_gene_id": 5157,
+     "symbol": "PDGFRL"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.67152395,
+    "benjamini_hochberg_q_conservative": 3.854352890686958e-154
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.66436912,
+    "benjamini_hochberg_q_conservative": 6.218883076410111e-274
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for VCAN (Entrez 1462) and PDGFRL (Entrez 5157) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 67,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 958,
+     "symbol": "CD40"
+    },
+    "b": {
+     "entrez_gene_id": 89857,
+     "symbol": "KLHL6"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.70015447,
+    "benjamini_hochberg_q_conservative": 2.8371026854638954e-175
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.66378872,
+    "benjamini_hochberg_q_conservative": 3.1664347706538792e-273
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for CD40 (Entrez 958) and KLHL6 (Entrez 89857) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 68,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 958,
+     "symbol": "CD40"
+    },
+    "b": {
+     "entrez_gene_id": 128346,
+     "symbol": "C1orf162"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.70215272,
+    "benjamini_hochberg_q_conservative": 7.311115852109759e-177
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.6626611,
+    "benjamini_hochberg_q_conservative": 7.385237956685814e-272
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for CD40 (Entrez 958) and C1orf162 (Entrez 128346) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 69,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 51316,
+     "symbol": "PLAC8"
+    },
+    "b": {
+     "entrez_gene_id": 89857,
+     "symbol": "KLHL6"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.65917835,
+    "benjamini_hochberg_q_conservative": 7.205057674358229e-146
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.691279,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for PLAC8 (Entrez 51316) and KLHL6 (Entrez 89857) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 70,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 3161,
+     "symbol": "HMMR"
+    },
+    "b": {
+     "entrez_gene_id": 9833,
+     "symbol": "MELK"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.76821727,
+    "benjamini_hochberg_q_conservative": 2.3372117651507864e-240
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.65827625,
+    "benjamini_hochberg_q_conservative": 1.4118407798927462e-266
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for HMMR (Entrez 3161) and MELK (Entrez 9833) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 71,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 3108,
+     "symbol": "HLA-DMA"
+    },
+    "b": {
+     "entrez_gene_id": 89857,
+     "symbol": "KLHL6"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.70394679,
+    "benjamini_hochberg_q_conservative": 2.651352690993621e-178
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.65604421,
+    "benjamini_hochberg_q_conservative": 6.353943483979553e-264
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for HLA-DMA (Entrez 3108) and KLHL6 (Entrez 89857) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 72,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 6160,
+     "symbol": "RPL31"
+    },
+    "b": {
+     "entrez_gene_id": 6176,
+     "symbol": "RPLP1"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.65509485,
+    "benjamini_hochberg_q_conservative": 3.053268993770689e-143
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.73998846,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for RPL31 (Entrez 6160) and RPLP1 (Entrez 6176) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 73,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 56833,
+     "symbol": "SLAMF8"
+    },
+    "b": {
+     "entrez_gene_id": 126014,
+     "symbol": "OSCAR"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.65143705,
+    "benjamini_hochberg_q_conservative": 6.300927104779527e-141
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.67543929,
+    "benjamini_hochberg_q_conservative": 7.449742525898755e-288
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for SLAMF8 (Entrez 56833) and OSCAR (Entrez 126014) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 74,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 3161,
+     "symbol": "HMMR"
+    },
+    "b": {
+     "entrez_gene_id": 113130,
+     "symbol": "CDCA5"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.68399103,
+    "benjamini_hochberg_q_conservative": 5.5503725636526655e-163
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.65059633,
+    "benjamini_hochberg_q_conservative": 1.4500071425337768e-257
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for HMMR (Entrez 3161) and CDCA5 (Entrez 113130) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 75,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 63940,
+     "symbol": "GPSM3"
+    },
+    "b": {
+     "entrez_gene_id": 89857,
+     "symbol": "KLHL6"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.64875832,
+    "benjamini_hochberg_q_conservative": 2.9817175183002666e-139
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.68578639,
+    "benjamini_hochberg_q_conservative": 1.5644714784835335e-301
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for GPSM3 (Entrez 63940) and KLHL6 (Entrez 89857) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 76,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 958,
+     "symbol": "CD40"
+    },
+    "b": {
+     "entrez_gene_id": 56833,
+     "symbol": "SLAMF8"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.68601129,
+    "benjamini_hochberg_q_conservative": 1.837574072835127e-164
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.64766833,
+    "benjamini_hochberg_q_conservative": 3.247587719301436e-254
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for CD40 (Entrez 958) and SLAMF8 (Entrez 56833) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 77,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 56833,
+     "symbol": "SLAMF8"
+    },
+    "b": {
+     "entrez_gene_id": 128346,
+     "symbol": "C1orf162"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.68874232,
+    "benjamini_hochberg_q_conservative": 1.711548970738462e-166
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.64681455,
+    "benjamini_hochberg_q_conservative": 2.972344200319781e-253
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for SLAMF8 (Entrez 56833) and C1orf162 (Entrez 128346) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 78,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 128346,
+     "symbol": "C1orf162"
+    },
+    "b": {
+     "entrez_gene_id": 160365,
+     "symbol": "CLECL1"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.69349832,
+    "benjamini_hochberg_q_conservative": 4.30300317314962e-170
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.64657782,
+    "benjamini_hochberg_q_conservative": 5.452971594305402e-253
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for C1orf162 (Entrez 128346) and CLECL1 (Entrez 160365) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 79,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 10578,
+     "symbol": "GNLY"
+    },
+    "b": {
+     "entrez_gene_id": 654817,
+     "symbol": "NCF1C"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.64665311,
+    "benjamini_hochberg_q_conservative": 5.947061929937734e-138
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.64636889,
+    "benjamini_hochberg_q_conservative": 9.29824105893071e-253
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for GNLY (Entrez 10578) and NCF1C (Entrez 654817) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 80,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 10213,
+     "symbol": "PSMD14"
+    },
+    "b": {
+     "entrez_gene_id": 55854,
+     "symbol": "ZC3H15"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.64596966,
+    "benjamini_hochberg_q_conservative": 1.5606995024106233e-137
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.74779474,
+    "benjamini_hochberg_q_conservative": 1.2897692366740679e-304
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for PSMD14 (Entrez 10213) and ZC3H15 (Entrez 55854) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 81,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 3108,
+     "symbol": "HLA-DMA"
+    },
+    "b": {
+     "entrez_gene_id": 63940,
+     "symbol": "GPSM3"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.72592714,
+    "benjamini_hochberg_q_conservative": 4.2730491851875465e-197
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.64456785,
+    "benjamini_hochberg_q_conservative": 9.79802355273052e-251
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for HLA-DMA (Entrez 3108) and GPSM3 (Entrez 63940) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 82,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 6793,
+     "symbol": "STK10"
+    },
+    "b": {
+     "entrez_gene_id": 64333,
+     "symbol": "ARHGAP9"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.66438458,
+    "benjamini_hochberg_q_conservative": 2.631130934497076e-149
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.64387196,
+    "benjamini_hochberg_q_conservative": 5.900584491629541e-250
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for STK10 (Entrez 6793) and ARHGAP9 (Entrez 64333) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 83,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 5031,
+     "symbol": "P2RY6"
+    },
+    "b": {
+     "entrez_gene_id": 83706,
+     "symbol": "FERMT3"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.64364238,
+    "benjamini_hochberg_q_conservative": 4.0660466309343694e-136
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.6675168,
+    "benjamini_hochberg_q_conservative": 8.279033789898197e-278
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for P2RY6 (Entrez 5031) and FERMT3 (Entrez 83706) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 84,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 23234,
+     "symbol": "DNAJC9"
+    },
+    "b": {
+     "entrez_gene_id": 113130,
+     "symbol": "CDCA5"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.68229997,
+    "benjamini_hochberg_q_conservative": 9.479524249277086e-162
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.64312626,
+    "benjamini_hochberg_q_conservative": 3.970049534812368e-249
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for DNAJC9 (Entrez 23234) and CDCA5 (Entrez 113130) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 85,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 27122,
+     "symbol": "DKK3"
+    },
+    "b": {
+     "entrez_gene_id": 57616,
+     "symbol": "TSHZ3"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.69340483,
+    "benjamini_hochberg_q_conservative": 5.059758706021902e-170
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.64308554,
+    "benjamini_hochberg_q_conservative": 4.383037152362733e-249
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for DKK3 (Entrez 27122) and TSHZ3 (Entrez 57616) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 86,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 3161,
+     "symbol": "HMMR"
+    },
+    "b": {
+     "entrez_gene_id": 7153,
+     "symbol": "TOP2A"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.75680248,
+    "benjamini_hochberg_q_conservative": 1.3665703802419373e-227
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.64160687,
+    "benjamini_hochberg_q_conservative": 1.8961596839500167e-247
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for HMMR (Entrez 3161) and TOP2A (Entrez 7153) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 87,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 51316,
+     "symbol": "PLAC8"
+    },
+    "b": {
+     "entrez_gene_id": 160365,
+     "symbol": "CLECL1"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.64150843,
+    "benjamini_hochberg_q_conservative": 7.953019728550163e-135
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.65336996,
+    "benjamini_hochberg_q_conservative": 8.810511755222166e-261
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for PLAC8 (Entrez 51316) and CLECL1 (Entrez 160365) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 88,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 6916,
+     "symbol": "TBXAS1"
+    },
+    "b": {
+     "entrez_gene_id": 128346,
+     "symbol": "C1orf162"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.67768929,
+    "benjamini_hochberg_q_conservative": 1.9139151867860864e-158
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.64147847,
+    "benjamini_hochberg_q_conservative": 2.6035996195215356e-247
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for TBXAS1 (Entrez 6916) and C1orf162 (Entrez 128346) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 89,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 6358,
+     "symbol": "CCL14"
+    },
+    "b": {
+     "entrez_gene_id": 54360,
+     "symbol": "CYTL1"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.71506248,
+    "benjamini_hochberg_q_conservative": 1.5481141863300003e-187
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.64063432,
+    "benjamini_hochberg_q_conservative": 2.1964687815514967e-246
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for CCL14 (Entrez 6358) and CYTL1 (Entrez 54360) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 90,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 51316,
+     "symbol": "PLAC8"
+    },
+    "b": {
+     "entrez_gene_id": 128346,
+     "symbol": "C1orf162"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.6405641,
+    "benjamini_hochberg_q_conservative": 2.9437429222863523e-134
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.66297943,
+    "benjamini_hochberg_q_conservative": 3.060976720974302e-272
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for PLAC8 (Entrez 51316) and C1orf162 (Entrez 128346) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 91,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 5294,
+     "symbol": "PIK3CG"
+    },
+    "b": {
+     "entrez_gene_id": 81704,
+     "symbol": "DOCK8"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.74296536,
+    "benjamini_hochberg_q_conservative": 2.8561781428671556e-213
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.64043366,
+    "benjamini_hochberg_q_conservative": 3.6414940820783105e-246
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for PIK3CG (Entrez 5294) and DOCK8 (Entrez 81704) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 92,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 4332,
+     "symbol": "MNDA"
+    },
+    "b": {
+     "entrez_gene_id": 6916,
+     "symbol": "TBXAS1"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.69637539,
+    "benjamini_hochberg_q_conservative": 2.630493018974994e-172
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.64029028,
+    "benjamini_hochberg_q_conservative": 5.187848098881189e-246
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for MNDA (Entrez 4332) and TBXAS1 (Entrez 6916) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 93,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 57616,
+     "symbol": "TSHZ3"
+    },
+    "b": {
+     "entrez_gene_id": 116535,
+     "symbol": "MRGPRF"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.64022613,
+    "benjamini_hochberg_q_conservative": 4.672762308923893e-134
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.64233955,
+    "benjamini_hochberg_q_conservative": 2.932790321287792e-248
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for TSHZ3 (Entrez 57616) and MRGPRF (Entrez 116535) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 94,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 5031,
+     "symbol": "P2RY6"
+    },
+    "b": {
+     "entrez_gene_id": 56833,
+     "symbol": "SLAMF8"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.64006286,
+    "benjamini_hochberg_q_conservative": 5.850622685723576e-134
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.67043728,
+    "benjamini_hochberg_q_conservative": 1.831848962051849e-281
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for P2RY6 (Entrez 5031) and SLAMF8 (Entrez 56833) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 95,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 2323,
+     "symbol": "FLT3LG"
+    },
+    "b": {
+     "entrez_gene_id": 64333,
+     "symbol": "ARHGAP9"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.67492314,
+    "benjamini_hochberg_q_conservative": 1.6841329318890202e-156
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.63934603,
+    "benjamini_hochberg_q_conservative": 5.523039861588121e-245
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for FLT3LG (Entrez 2323) and ARHGAP9 (Entrez 64333) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 96,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 11259,
+     "symbol": "FILIP1L"
+    },
+    "b": {
+     "entrez_gene_id": 57616,
+     "symbol": "TSHZ3"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.75072204,
+    "benjamini_hochberg_q_conservative": 3.879598123476979e-221
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.63814851,
+    "benjamini_hochberg_q_conservative": 1.1269044901770844e-243
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for FILIP1L (Entrez 11259) and TSHZ3 (Entrez 57616) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 97,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 1075,
+     "symbol": "CTSC"
+    },
+    "b": {
+     "entrez_gene_id": 56833,
+     "symbol": "SLAMF8"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.69597406,
+    "benjamini_hochberg_q_conservative": 5.350043473443899e-172
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.63798254,
+    "benjamini_hochberg_q_conservative": 1.7030506562333115e-243
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for CTSC (Entrez 1075) and SLAMF8 (Entrez 56833) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 98,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 4330,
+     "symbol": "MN1"
+    },
+    "b": {
+     "entrez_gene_id": 57616,
+     "symbol": "TSHZ3"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.636734,
+    "benjamini_hochberg_q_conservative": 5.4731981031426326e-132
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.64384873,
+    "benjamini_hochberg_q_conservative": 6.227977564674503e-250
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for MN1 (Entrez 4330) and TSHZ3 (Entrez 57616) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 99,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 1462,
+     "symbol": "VCAN"
+    },
+    "b": {
+     "entrez_gene_id": 27122,
+     "symbol": "DKK3"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.63653962,
+    "benjamini_hochberg_q_conservative": 7.100509909893893e-132
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.636519,
+    "benjamini_hochberg_q_conservative": 6.644568788525738e-242
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for VCAN (Entrez 1462) and DKK3 (Entrez 27122) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  },
+  {
+   "rank": 100,
+   "status": "replicated_computational_observation",
+   "entities": {
+    "a": {
+     "entrez_gene_id": 10578,
+     "symbol": "GNLY"
+    },
+    "b": {
+     "entrez_gene_id": 51316,
+     "symbol": "PLAC8"
+    }
+   },
+   "direction": "positive",
+   "tcga": {
+    "samples": 1082,
+    "spearman_rho": 0.64648016,
+    "benjamini_hochberg_q_conservative": 7.597962181584194e-138
+   },
+   "metabric": {
+    "samples": 1980,
+    "spearman_rho": 0.63623626,
+    "benjamini_hochberg_q_conservative": 1.340719417828838e-241
+   },
+   "generated_claim": "In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks for GNLY (Entrez 10578) and PLAC8 (Entrez 51316) had a positive association that passed the frozen evidence-v1 replication gates.",
+   "claim_scope": "cohort-level rank-expression association only"
+  }
+ ],
+ "human_dependencies": [],
+ "manual_override_used": false,
+ "llm_interpretation_used": false,
+ "claim_boundary": {
+  "allowed_claim": "a bounded rank-expression association observed in both pinned cohorts under this frozen protocol",
+  "not_a_claim_of": [
+   "causality",
+   "mechanism",
+   "clinical utility or safety",
+   "cell-intrinsic regulation",
+   "novelty to humanity",
+   "absence of academic or non-academic knowledge",
+   "a validated knowledge-gap detector",
+   "a relation that generalizes beyond these cohorts",
+   "independence from tumour subtype, purity, batch, or cell-composition confounding"
+  ]
+ },
+ "limitations": [
+  "A replicated cohort-level correlation can be driven by tumour subtype, purity, batch, stromal or immune composition, copy number, or other shared causes.",
+  "Cross-platform agreement reduces platform-specific risk but does not establish a biological mechanism or cell-intrinsic regulation.",
+  "The deterministic 1,000-gene universe is a score-blind computational subset, not a representative sample of biology.",
+  "cBioPortal's pinned source metadata warns that the TCGA transport is preliminary and should be used with caution.",
+  "Academic corpora and expression cohorts omit or thinly represent non-academic, practitioner, craft, indigenous, historical, and other human knowledge."
+ ],
+ "readiness_contribution": 1
+}
