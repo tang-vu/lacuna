@@ -1,0 +1,41 @@
+{
+ "schema_version": 1,
+ "id": "replicated-expression-source-v1",
+ "status": "score_free_source_audit_complete",
+ "protocol": {
+  "id": "replicated-expression-association-v1",
+  "canonical_json_sha256": "f0fe2090a08011616d205b129057044b9b3da1efd4280e6e55753f98d9fa21e2"
+ },
+ "sources": [
+  {
+   "id": "tcga_brca_pancan_2018_expression",
+   "local_filename": "brca_tcga_pan_can_atlas_2018-data_mrna_seq_v2_rsem.txt",
+   "bytes": 154654165,
+   "sha256": "aba030e1f04a196ee6c2118ed37e777b533f7fd24ffd1bcbde908dcee33b2eb5",
+   "sample_count": 1082,
+   "row_count": 20531,
+   "positive_entrez_row_count": 20531,
+   "unique_positive_entrez_count": 20505,
+   "duplicate_positive_entrez_count": 24,
+   "blank_symbol_count": 13,
+   "nonfinite_value_count": 0
+  },
+  {
+   "id": "metabric_brca_expression",
+   "local_filename": "brca_metabric-data_mrna_illumina_microarray.txt",
+   "bytes": 689254846,
+   "sha256": "4470069455a4ed38ffed5d12513e468bbf5b9a57d66fa1162e7bd9a64889ab7a",
+   "sample_count": 1980,
+   "row_count": 20603,
+   "positive_entrez_row_count": 20603,
+   "unique_positive_entrez_count": 20192,
+   "duplicate_positive_entrez_count": 380,
+   "blank_symbol_count": 0,
+   "nonfinite_value_count": 16
+  }
+ ],
+ "pairwise_associations_computed": false,
+ "candidate_ranking_computed": false,
+ "readiness_contribution": 0,
+ "claim_boundary": "Complete byte and parse audit only; not an association, finding, discovery, or knowledge claim."
+}

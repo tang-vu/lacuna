@@ -1,0 +1,4027 @@
+{
+ "schema_version": 1,
+ "id": "replicated-expression-candidate-universe-v1",
+ "status": "score_free_candidate_universe_complete",
+ "protocol": {
+  "id": "replicated-expression-association-v1",
+  "canonical_json_sha256": "f0fe2090a08011616d205b129057044b9b3da1efd4280e6e55753f98d9fa21e2"
+ },
+ "source_manifest": {
+  "path": "source-v1.json",
+  "canonical_json_sha256": "7547ae062bd65ea986491c6d5ac60c6435b66d728b7079e26334787635737233"
+ },
+ "selection": {
+  "method": "sha256_bottom_k_over_common_unique_positive_entrez_gene_ids",
+  "seed": "lacuna-replicated-expression-association-v1-gene-universe",
+  "common_identically_labelled_unique_gene_count": 16818,
+  "selected_gene_count": 1000,
+  "candidate_pair_count": 499500,
+  "selection_sha256": "335138a2cb3290340a4d7a18e5b3f2e20d3640162f74bde3140a6ad05b55475a"
+ },
+ "genes": [
+  {
+   "entrez_gene_id": 37,
+   "symbol": "ACADVL"
+  },
+  {
+   "entrez_gene_id": 89,
+   "symbol": "ACTN3"
+  },
+  {
+   "entrez_gene_id": 132,
+   "symbol": "ADK"
+  },
+  {
+   "entrez_gene_id": 135,
+   "symbol": "ADORA2A"
+  },
+  {
+   "entrez_gene_id": 163,
+   "symbol": "AP2B1"
+  },
+  {
+   "entrez_gene_id": 164,
+   "symbol": "AP1G1"
+  },
+  {
+   "entrez_gene_id": 205,
+   "symbol": "AK4"
+  },
+  {
+   "entrez_gene_id": 218,
+   "symbol": "ALDH3A1"
+  },
+  {
+   "entrez_gene_id": 219,
+   "symbol": "ALDH1B1"
+  },
+  {
+   "entrez_gene_id": 223,
+   "symbol": "ALDH9A1"
+  },
+  {
+   "entrez_gene_id": 226,
+   "symbol": "ALDOA"
+  },
+  {
+   "entrez_gene_id": 238,
+   "symbol": "ALK"
+  },
+  {
+   "entrez_gene_id": 265,
+   "symbol": "AMELX"
+  },
+  {
+   "entrez_gene_id": 292,
+   "symbol": "SLC25A5"
+  },
+  {
+   "entrez_gene_id": 321,
+   "symbol": "APBA2"
+  },
+  {
+   "entrez_gene_id": 330,
+   "symbol": "BIRC3"
+  },
+  {
+   "entrez_gene_id": 338,
+   "symbol": "APOB"
+  },
+  {
+   "entrez_gene_id": 345,
+   "symbol": "APOC3"
+  },
+  {
+   "entrez_gene_id": 377,
+   "symbol": "ARF3"
+  },
+  {
+   "entrez_gene_id": 392,
+   "symbol": "ARHGAP1"
+  },
+  {
+   "entrez_gene_id": 427,
+   "symbol": "ASAH1"
+  },
+  {
+   "entrez_gene_id": 443,
+   "symbol": "ASPA"
+  },
+  {
+   "entrez_gene_id": 445,
+   "symbol": "ASS1"
+  },
+  {
+   "entrez_gene_id": 472,
+   "symbol": "ATM"
+  },
+  {
+   "entrez_gene_id": 475,
+   "symbol": "ATOX1"
+  },
+  {
+   "entrez_gene_id": 581,
+   "symbol": "BAX"
+  },
+  {
+   "entrez_gene_id": 633,
+   "symbol": "BGN"
+  },
+  {
+   "entrez_gene_id": 651,
+   "symbol": "BMP3"
+  },
+  {
+   "entrez_gene_id": 654,
+   "symbol": "BMP6"
+  },
+  {
+   "entrez_gene_id": 666,
+   "symbol": "BOK"
+  },
+  {
+   "entrez_gene_id": 699,
+   "symbol": "BUB1"
+  },
+  {
+   "entrez_gene_id": 778,
+   "symbol": "CACNA1F"
+  },
+  {
+   "entrez_gene_id": 793,
+   "symbol": "CALB1"
+  },
+  {
+   "entrez_gene_id": 830,
+   "symbol": "CAPZA2"
+  },
+  {
+   "entrez_gene_id": 836,
+   "symbol": "CASP3"
+  },
+  {
+   "entrez_gene_id": 839,
+   "symbol": "CASP6"
+  },
+  {
+   "entrez_gene_id": 858,
+   "symbol": "CAV2"
+  },
+  {
+   "entrez_gene_id": 931,
+   "symbol": "MS4A1"
+  },
+  {
+   "entrez_gene_id": 943,
+   "symbol": "TNFRSF8"
+  },
+  {
+   "entrez_gene_id": 957,
+   "symbol": "ENTPD5"
+  },
+  {
+   "entrez_gene_id": 958,
+   "symbol": "CD40"
+  },
+  {
+   "entrez_gene_id": 994,
+   "symbol": "CDC25B"
+  },
+  {
+   "entrez_gene_id": 1054,
+   "symbol": "CEBPG"
+  },
+  {
+   "entrez_gene_id": 1075,
+   "symbol": "CTSC"
+  },
+  {
+   "entrez_gene_id": 1104,
+   "symbol": "RCC1"
+  },
+  {
+   "entrez_gene_id": 1108,
+   "symbol": "CHD4"
+  },
+  {
+   "entrez_gene_id": 1112,
+   "symbol": "FOXN3"
+  },
+  {
+   "entrez_gene_id": 1135,
+   "symbol": "CHRNA2"
+  },
+  {
+   "entrez_gene_id": 1139,
+   "symbol": "CHRNA7"
+  },
+  {
+   "entrez_gene_id": 1155,
+   "symbol": "TBCB"
+  },
+  {
+   "entrez_gene_id": 1184,
+   "symbol": "CLCN5"
+  },
+  {
+   "entrez_gene_id": 1200,
+   "symbol": "TPP1"
+  },
+  {
+   "entrez_gene_id": 1260,
+   "symbol": "CNGA2"
+  },
+  {
+   "entrez_gene_id": 1346,
+   "symbol": "COX7A1"
+  },
+  {
+   "entrez_gene_id": 1388,
+   "symbol": "ATF6B"
+  },
+  {
+   "entrez_gene_id": 1393,
+   "symbol": "CRHBP"
+  },
+  {
+   "entrez_gene_id": 1406,
+   "symbol": "CRX"
+  },
+  {
+   "entrez_gene_id": 1411,
+   "symbol": "CRYBA1"
+  },
+  {
+   "entrez_gene_id": 1462,
+   "symbol": "VCAN"
+  },
+  {
+   "entrez_gene_id": 1512,
+   "symbol": "CTSH"
+  },
+  {
+   "entrez_gene_id": 1525,
+   "symbol": "CXADR"
+  },
+  {
+   "entrez_gene_id": 1535,
+   "symbol": "CYBA"
+  },
+  {
+   "entrez_gene_id": 1610,
+   "symbol": "DAO"
+  },
+  {
+   "entrez_gene_id": 1612,
+   "symbol": "DAPK1"
+  },
+  {
+   "entrez_gene_id": 1649,
+   "symbol": "DDIT3"
+  },
+  {
+   "entrez_gene_id": 1690,
+   "symbol": "COCH"
+  },
+  {
+   "entrez_gene_id": 1717,
+   "symbol": "DHCR7"
+  },
+  {
+   "entrez_gene_id": 1718,
+   "symbol": "DHCR24"
+  },
+  {
+   "entrez_gene_id": 1735,
+   "symbol": "DIO3"
+  },
+  {
+   "entrez_gene_id": 1741,
+   "symbol": "DLG3"
+  },
+  {
+   "entrez_gene_id": 1762,
+   "symbol": "DMWD"
+  },
+  {
+   "entrez_gene_id": 1877,
+   "symbol": "E4F1"
+  },
+  {
+   "entrez_gene_id": 1889,
+   "symbol": "ECE1"
+  },
+  {
+   "entrez_gene_id": 1936,
+   "symbol": "EEF1D"
+  },
+  {
+   "entrez_gene_id": 1965,
+   "symbol": "EIF2S1"
+  },
+  {
+   "entrez_gene_id": 1991,
+   "symbol": "ELANE"
+  },
+  {
+   "entrez_gene_id": 2002,
+   "symbol": "ELK1"
+  },
+  {
+   "entrez_gene_id": 2006,
+   "symbol": "ELN"
+  },
+  {
+   "entrez_gene_id": 2038,
+   "symbol": "EPB42"
+  },
+  {
+   "entrez_gene_id": 2066,
+   "symbol": "ERBB4"
+  },
+  {
+   "entrez_gene_id": 2073,
+   "symbol": "ERCC5"
+  },
+  {
+   "entrez_gene_id": 2079,
+   "symbol": "ERH"
+  },
+  {
+   "entrez_gene_id": 2117,
+   "symbol": "ETV3"
+  },
+  {
+   "entrez_gene_id": 2132,
+   "symbol": "EXT2"
+  },
+  {
+   "entrez_gene_id": 2134,
+   "symbol": "EXTL1"
+  },
+  {
+   "entrez_gene_id": 2137,
+   "symbol": "EXTL3"
+  },
+  {
+   "entrez_gene_id": 2140,
+   "symbol": "EYA3"
+  },
+  {
+   "entrez_gene_id": 2150,
+   "symbol": "F2RL1"
+  },
+  {
+   "entrez_gene_id": 2166,
+   "symbol": "FAAH"
+  },
+  {
+   "entrez_gene_id": 2300,
+   "symbol": "FOXL1"
+  },
+  {
+   "entrez_gene_id": 2301,
+   "symbol": "FOXE3"
+  },
+  {
+   "entrez_gene_id": 2321,
+   "symbol": "FLT1"
+  },
+  {
+   "entrez_gene_id": 2323,
+   "symbol": "FLT3LG"
+  },
+  {
+   "entrez_gene_id": 2327,
+   "symbol": "FMO2"
+  },
+  {
+   "entrez_gene_id": 2339,
+   "symbol": "FNTA"
+  },
+  {
+   "entrez_gene_id": 2355,
+   "symbol": "FOSL2"
+  },
+  {
+   "entrez_gene_id": 2492,
+   "symbol": "FSHR"
+  },
+  {
+   "entrez_gene_id": 2527,
+   "symbol": "FUT5"
+  },
+  {
+   "entrez_gene_id": 2529,
+   "symbol": "FUT7"
+  },
+  {
+   "entrez_gene_id": 2534,
+   "symbol": "FYN"
+  },
+  {
+   "entrez_gene_id": 2593,
+   "symbol": "GAMT"
+  },
+  {
+   "entrez_gene_id": 2620,
+   "symbol": "GAS2"
+  },
+  {
+   "entrez_gene_id": 2641,
+   "symbol": "GCG"
+  },
+  {
+   "entrez_gene_id": 2679,
+   "symbol": "GGT3P"
+  },
+  {
+   "entrez_gene_id": 2706,
+   "symbol": "GJB2"
+  },
+  {
+   "entrez_gene_id": 2707,
+   "symbol": "GJB3"
+  },
+  {
+   "entrez_gene_id": 2730,
+   "symbol": "GCLM"
+  },
+  {
+   "entrez_gene_id": 2744,
+   "symbol": "GLS"
+  },
+  {
+   "entrez_gene_id": 2788,
+   "symbol": "GNG7"
+  },
+  {
+   "entrez_gene_id": 2800,
+   "symbol": "GOLGA1"
+  },
+  {
+   "entrez_gene_id": 2829,
+   "symbol": "XCR1"
+  },
+  {
+   "entrez_gene_id": 2876,
+   "symbol": "GPX1"
+  },
+  {
+   "entrez_gene_id": 2902,
+   "symbol": "GRIN1"
+  },
+  {
+   "entrez_gene_id": 2912,
+   "symbol": "GRM2"
+  },
+  {
+   "entrez_gene_id": 3037,
+   "symbol": "HAS2"
+  },
+  {
+   "entrez_gene_id": 3066,
+   "symbol": "HDAC2"
+  },
+  {
+   "entrez_gene_id": 3082,
+   "symbol": "HGF"
+  },
+  {
+   "entrez_gene_id": 3108,
+   "symbol": "HLA-DMA"
+  },
+  {
+   "entrez_gene_id": 3137,
+   "symbol": "HLA-J"
+  },
+  {
+   "entrez_gene_id": 3150,
+   "symbol": "HMGN1"
+  },
+  {
+   "entrez_gene_id": 3161,
+   "symbol": "HMMR"
+  },
+  {
+   "entrez_gene_id": 3167,
+   "symbol": "HMX2"
+  },
+  {
+   "entrez_gene_id": 3184,
+   "symbol": "HNRNPD"
+  },
+  {
+   "entrez_gene_id": 3199,
+   "symbol": "HOXA2"
+  },
+  {
+   "entrez_gene_id": 3202,
+   "symbol": "HOXA5"
+  },
+  {
+   "entrez_gene_id": 3204,
+   "symbol": "HOXA7"
+  },
+  {
+   "entrez_gene_id": 3211,
+   "symbol": "HOXB1"
+  },
+  {
+   "entrez_gene_id": 3221,
+   "symbol": "HOXC4"
+  },
+  {
+   "entrez_gene_id": 3231,
+   "symbol": "HOXD1"
+  },
+  {
+   "entrez_gene_id": 3234,
+   "symbol": "HOXD8"
+  },
+  {
+   "entrez_gene_id": 3236,
+   "symbol": "HOXD10"
+  },
+  {
+   "entrez_gene_id": 3239,
+   "symbol": "HOXD13"
+  },
+  {
+   "entrez_gene_id": 3344,
+   "symbol": "FOXN2"
+  },
+  {
+   "entrez_gene_id": 3381,
+   "symbol": "IBSP"
+  },
+  {
+   "entrez_gene_id": 3382,
+   "symbol": "ICA1"
+  },
+  {
+   "entrez_gene_id": 3397,
+   "symbol": "ID1"
+  },
+  {
+   "entrez_gene_id": 3430,
+   "symbol": "IFI35"
+  },
+  {
+   "entrez_gene_id": 3442,
+   "symbol": "IFNA5"
+  },
+  {
+   "entrez_gene_id": 3488,
+   "symbol": "IGFBP5"
+  },
+  {
+   "entrez_gene_id": 3508,
+   "symbol": "IGHMBP2"
+  },
+  {
+   "entrez_gene_id": 3553,
+   "symbol": "IL1B"
+  },
+  {
+   "entrez_gene_id": 3567,
+   "symbol": "IL5"
+  },
+  {
+   "entrez_gene_id": 3627,
+   "symbol": "CXCL10"
+  },
+  {
+   "entrez_gene_id": 3662,
+   "symbol": "IRF4"
+  },
+  {
+   "entrez_gene_id": 3708,
+   "symbol": "ITPR1"
+  },
+  {
+   "entrez_gene_id": 3732,
+   "symbol": "CD82"
+  },
+  {
+   "entrez_gene_id": 3738,
+   "symbol": "KCNA3"
+  },
+  {
+   "entrez_gene_id": 3778,
+   "symbol": "KCNMA1"
+  },
+  {
+   "entrez_gene_id": 3809,
+   "symbol": "KIR2DS4"
+  },
+  {
+   "entrez_gene_id": 3822,
+   "symbol": "KLRC2"
+  },
+  {
+   "entrez_gene_id": 3833,
+   "symbol": "KIFC1"
+  },
+  {
+   "entrez_gene_id": 3841,
+   "symbol": "KPNA5"
+  },
+  {
+   "entrez_gene_id": 3890,
+   "symbol": "KRT84"
+  },
+  {
+   "entrez_gene_id": 3909,
+   "symbol": "LAMA3"
+  },
+  {
+   "entrez_gene_id": 3911,
+   "symbol": "LAMA5"
+  },
+  {
+   "entrez_gene_id": 3918,
+   "symbol": "LAMC2"
+  },
+  {
+   "entrez_gene_id": 3953,
+   "symbol": "LEPR"
+  },
+  {
+   "entrez_gene_id": 3972,
+   "symbol": "LHB"
+  },
+  {
+   "entrez_gene_id": 4023,
+   "symbol": "LPL"
+  },
+  {
+   "entrez_gene_id": 4035,
+   "symbol": "LRP1"
+  },
+  {
+   "entrez_gene_id": 4043,
+   "symbol": "LRPAP1"
+  },
+  {
+   "entrez_gene_id": 4113,
+   "symbol": "MAGEB2"
+  },
+  {
+   "entrez_gene_id": 4190,
+   "symbol": "MDH1"
+  },
+  {
+   "entrez_gene_id": 4237,
+   "symbol": "MFAP2"
+  },
+  {
+   "entrez_gene_id": 4285,
+   "symbol": "MIPEP"
+  },
+  {
+   "entrez_gene_id": 4287,
+   "symbol": "ATXN3"
+  },
+  {
+   "entrez_gene_id": 4293,
+   "symbol": "MAP3K9"
+  },
+  {
+   "entrez_gene_id": 4321,
+   "symbol": "MMP12"
+  },
+  {
+   "entrez_gene_id": 4330,
+   "symbol": "MN1"
+  },
+  {
+   "entrez_gene_id": 4332,
+   "symbol": "MNDA"
+  },
+  {
+   "entrez_gene_id": 4504,
+   "symbol": "MT3"
+  },
+  {
+   "entrez_gene_id": 4597,
+   "symbol": "MVD"
+  },
+  {
+   "entrez_gene_id": 4659,
+   "symbol": "PPP1R12A"
+  },
+  {
+   "entrez_gene_id": 4694,
+   "symbol": "NDUFA1"
+  },
+  {
+   "entrez_gene_id": 4734,
+   "symbol": "NEDD4"
+  },
+  {
+   "entrez_gene_id": 4781,
+   "symbol": "NFIB"
+  },
+  {
+   "entrez_gene_id": 4833,
+   "symbol": "NME4"
+  },
+  {
+   "entrez_gene_id": 4841,
+   "symbol": "NONO"
+  },
+  {
+   "entrez_gene_id": 4850,
+   "symbol": "CNOT4"
+  },
+  {
+   "entrez_gene_id": 4864,
+   "symbol": "NPC1"
+  },
+  {
+   "entrez_gene_id": 4901,
+   "symbol": "NRL"
+  },
+  {
+   "entrez_gene_id": 4927,
+   "symbol": "NUP88"
+  },
+  {
+   "entrez_gene_id": 4943,
+   "symbol": "TBC1D25"
+  },
+  {
+   "entrez_gene_id": 4986,
+   "symbol": "OPRK1"
+  },
+  {
+   "entrez_gene_id": 5031,
+   "symbol": "P2RY6"
+  },
+  {
+   "entrez_gene_id": 5051,
+   "symbol": "PAFAH2"
+  },
+  {
+   "entrez_gene_id": 5054,
+   "symbol": "SERPINE1"
+  },
+  {
+   "entrez_gene_id": 5151,
+   "symbol": "PDE8A"
+  },
+  {
+   "entrez_gene_id": 5157,
+   "symbol": "PDGFRL"
+  },
+  {
+   "entrez_gene_id": 5216,
+   "symbol": "PFN1"
+  },
+  {
+   "entrez_gene_id": 5291,
+   "symbol": "PIK3CB"
+  },
+  {
+   "entrez_gene_id": 5294,
+   "symbol": "PIK3CG"
+  },
+  {
+   "entrez_gene_id": 5297,
+   "symbol": "PI4KA"
+  },
+  {
+   "entrez_gene_id": 5316,
+   "symbol": "PKNOX1"
+  },
+  {
+   "entrez_gene_id": 5322,
+   "symbol": "PLA2G5"
+  },
+  {
+   "entrez_gene_id": 5327,
+   "symbol": "PLAT"
+  },
+  {
+   "entrez_gene_id": 5348,
+   "symbol": "FXYD1"
+  },
+  {
+   "entrez_gene_id": 5352,
+   "symbol": "PLOD2"
+  },
+  {
+   "entrez_gene_id": 5357,
+   "symbol": "PLS1"
+  },
+  {
+   "entrez_gene_id": 5373,
+   "symbol": "PMM2"
+  },
+  {
+   "entrez_gene_id": 5407,
+   "symbol": "PNLIPRP1"
+  },
+  {
+   "entrez_gene_id": 5442,
+   "symbol": "POLRMT"
+  },
+  {
+   "entrez_gene_id": 5456,
+   "symbol": "POU3F4"
+  },
+  {
+   "entrez_gene_id": 5470,
+   "symbol": "PPEF2"
+  },
+  {
+   "entrez_gene_id": 5479,
+   "symbol": "PPIB"
+  },
+  {
+   "entrez_gene_id": 5567,
+   "symbol": "PRKACB"
+  },
+  {
+   "entrez_gene_id": 5609,
+   "symbol": "MAP2K7"
+  },
+  {
+   "entrez_gene_id": 5613,
+   "symbol": "PRKX"
+  },
+  {
+   "entrez_gene_id": 5616,
+   "symbol": "PRKY"
+  },
+  {
+   "entrez_gene_id": 5653,
+   "symbol": "KLK6"
+  },
+  {
+   "entrez_gene_id": 5728,
+   "symbol": "PTEN"
+  },
+  {
+   "entrez_gene_id": 5743,
+   "symbol": "PTGS2"
+  },
+  {
+   "entrez_gene_id": 5780,
+   "symbol": "PTPN9"
+  },
+  {
+   "entrez_gene_id": 5792,
+   "symbol": "PTPRF"
+  },
+  {
+   "entrez_gene_id": 5817,
+   "symbol": "PVR"
+  },
+  {
+   "entrez_gene_id": 5827,
+   "symbol": "PXMP2"
+  },
+  {
+   "entrez_gene_id": 5858,
+   "symbol": "PZP"
+  },
+  {
+   "entrez_gene_id": 5869,
+   "symbol": "RAB5B"
+  },
+  {
+   "entrez_gene_id": 5877,
+   "symbol": "RABIF"
+  },
+  {
+   "entrez_gene_id": 5884,
+   "symbol": "RAD17"
+  },
+  {
+   "entrez_gene_id": 5887,
+   "symbol": "RAD23B"
+  },
+  {
+   "entrez_gene_id": 5923,
+   "symbol": "RASGRF1"
+  },
+  {
+   "entrez_gene_id": 5948,
+   "symbol": "RBP2"
+  },
+  {
+   "entrez_gene_id": 5965,
+   "symbol": "RECQL"
+  },
+  {
+   "entrez_gene_id": 5986,
+   "symbol": "RFNG"
+  },
+  {
+   "entrez_gene_id": 5990,
+   "symbol": "RFX2"
+  },
+  {
+   "entrez_gene_id": 6005,
+   "symbol": "RHAG"
+  },
+  {
+   "entrez_gene_id": 6006,
+   "symbol": "RHCE"
+  },
+  {
+   "entrez_gene_id": 6013,
+   "symbol": "RLN1"
+  },
+  {
+   "entrez_gene_id": 6036,
+   "symbol": "RNASE2"
+  },
+  {
+   "entrez_gene_id": 6092,
+   "symbol": "ROBO2"
+  },
+  {
+   "entrez_gene_id": 6095,
+   "symbol": "RORA"
+  },
+  {
+   "entrez_gene_id": 6120,
+   "symbol": "RPE"
+  },
+  {
+   "entrez_gene_id": 6129,
+   "symbol": "RPL7"
+  },
+  {
+   "entrez_gene_id": 6143,
+   "symbol": "RPL19"
+  },
+  {
+   "entrez_gene_id": 6156,
+   "symbol": "RPL30"
+  },
+  {
+   "entrez_gene_id": 6160,
+   "symbol": "RPL31"
+  },
+  {
+   "entrez_gene_id": 6176,
+   "symbol": "RPLP1"
+  },
+  {
+   "entrez_gene_id": 6189,
+   "symbol": "RPS3A"
+  },
+  {
+   "entrez_gene_id": 6193,
+   "symbol": "RPS5"
+  },
+  {
+   "entrez_gene_id": 6234,
+   "symbol": "RPS28"
+  },
+  {
+   "entrez_gene_id": 6297,
+   "symbol": "SALL2"
+  },
+  {
+   "entrez_gene_id": 6320,
+   "symbol": "CLEC11A"
+  },
+  {
+   "entrez_gene_id": 6358,
+   "symbol": "CCL14"
+  },
+  {
+   "entrez_gene_id": 6363,
+   "symbol": "CCL19"
+  },
+  {
+   "entrez_gene_id": 6416,
+   "symbol": "MAP2K4"
+  },
+  {
+   "entrez_gene_id": 6451,
+   "symbol": "SH3BGRL"
+  },
+  {
+   "entrez_gene_id": 6478,
+   "symbol": "SIAH2"
+  },
+  {
+   "entrez_gene_id": 6530,
+   "symbol": "SLC6A2"
+  },
+  {
+   "entrez_gene_id": 6538,
+   "symbol": "SLC6A11"
+  },
+  {
+   "entrez_gene_id": 6563,
+   "symbol": "SLC14A1"
+  },
+  {
+   "entrez_gene_id": 6585,
+   "symbol": "SLIT1"
+  },
+  {
+   "entrez_gene_id": 6586,
+   "symbol": "SLIT3"
+  },
+  {
+   "entrez_gene_id": 6594,
+   "symbol": "SMARCA1"
+  },
+  {
+   "entrez_gene_id": 6598,
+   "symbol": "SMARCB1"
+  },
+  {
+   "entrez_gene_id": 6621,
+   "symbol": "SNAPC4"
+  },
+  {
+   "entrez_gene_id": 6655,
+   "symbol": "SOS2"
+  },
+  {
+   "entrez_gene_id": 6656,
+   "symbol": "SOX1"
+  },
+  {
+   "entrez_gene_id": 6664,
+   "symbol": "SOX11"
+  },
+  {
+   "entrez_gene_id": 6672,
+   "symbol": "SP100"
+  },
+  {
+   "entrez_gene_id": 6683,
+   "symbol": "SPAST"
+  },
+  {
+   "entrez_gene_id": 6694,
+   "symbol": "SPP2"
+  },
+  {
+   "entrez_gene_id": 6718,
+   "symbol": "AKR1D1"
+  },
+  {
+   "entrez_gene_id": 6793,
+   "symbol": "STK10"
+  },
+  {
+   "entrez_gene_id": 6814,
+   "symbol": "STXBP3"
+  },
+  {
+   "entrez_gene_id": 6829,
+   "symbol": "SUPT5H"
+  },
+  {
+   "entrez_gene_id": 6838,
+   "symbol": "SURF6"
+  },
+  {
+   "entrez_gene_id": 6861,
+   "symbol": "SYT5"
+  },
+  {
+   "entrez_gene_id": 6877,
+   "symbol": "TAF5"
+  },
+  {
+   "entrez_gene_id": 6884,
+   "symbol": "TAF13"
+  },
+  {
+   "entrez_gene_id": 6915,
+   "symbol": "TBXA2R"
+  },
+  {
+   "entrez_gene_id": 6916,
+   "symbol": "TBXAS1"
+  },
+  {
+   "entrez_gene_id": 7022,
+   "symbol": "TFAP2C"
+  },
+  {
+   "entrez_gene_id": 7044,
+   "symbol": "LEFTY2"
+  },
+  {
+   "entrez_gene_id": 7045,
+   "symbol": "TGFBI"
+  },
+  {
+   "entrez_gene_id": 7059,
+   "symbol": "THBS3"
+  },
+  {
+   "entrez_gene_id": 7067,
+   "symbol": "THRA"
+  },
+  {
+   "entrez_gene_id": 7069,
+   "symbol": "THRSP"
+  },
+  {
+   "entrez_gene_id": 7097,
+   "symbol": "TLR2"
+  },
+  {
+   "entrez_gene_id": 7109,
+   "symbol": "TRAPPC10"
+  },
+  {
+   "entrez_gene_id": 7125,
+   "symbol": "TNNC2"
+  },
+  {
+   "entrez_gene_id": 7148,
+   "symbol": "TNXB"
+  },
+  {
+   "entrez_gene_id": 7153,
+   "symbol": "TOP2A"
+  },
+  {
+   "entrez_gene_id": 7201,
+   "symbol": "TRHR"
+  },
+  {
+   "entrez_gene_id": 7224,
+   "symbol": "TRPC5"
+  },
+  {
+   "entrez_gene_id": 7276,
+   "symbol": "TTR"
+  },
+  {
+   "entrez_gene_id": 7280,
+   "symbol": "TUBB2A"
+  },
+  {
+   "entrez_gene_id": 7293,
+   "symbol": "TNFRSF4"
+  },
+  {
+   "entrez_gene_id": 7372,
+   "symbol": "UMPS"
+  },
+  {
+   "entrez_gene_id": 7381,
+   "symbol": "UQCRB"
+  },
+  {
+   "entrez_gene_id": 7415,
+   "symbol": "VCP"
+  },
+  {
+   "entrez_gene_id": 7422,
+   "symbol": "VEGFA"
+  },
+  {
+   "entrez_gene_id": 7441,
+   "symbol": "VPREB1"
+  },
+  {
+   "entrez_gene_id": 7447,
+   "symbol": "VSNL1"
+  },
+  {
+   "entrez_gene_id": 7462,
+   "symbol": "LAT2"
+  },
+  {
+   "entrez_gene_id": 7476,
+   "symbol": "WNT7A"
+  },
+  {
+   "entrez_gene_id": 7511,
+   "symbol": "XPNPEP1"
+  },
+  {
+   "entrez_gene_id": 7565,
+   "symbol": "ZNF17"
+  },
+  {
+   "entrez_gene_id": 7593,
+   "symbol": "MZF1"
+  },
+  {
+   "entrez_gene_id": 7690,
+   "symbol": "ZNF131"
+  },
+  {
+   "entrez_gene_id": 7703,
+   "symbol": "PCGF2"
+  },
+  {
+   "entrez_gene_id": 7738,
+   "symbol": "ZNF184"
+  },
+  {
+   "entrez_gene_id": 7773,
+   "symbol": "ZNF230"
+  },
+  {
+   "entrez_gene_id": 7779,
+   "symbol": "SLC30A1"
+  },
+  {
+   "entrez_gene_id": 7789,
+   "symbol": "ZXDA"
+  },
+  {
+   "entrez_gene_id": 7813,
+   "symbol": "EVI5"
+  },
+  {
+   "entrez_gene_id": 7869,
+   "symbol": "SEMA3B"
+  },
+  {
+   "entrez_gene_id": 7905,
+   "symbol": "REEP5"
+  },
+  {
+   "entrez_gene_id": 7932,
+   "symbol": "OR2H2"
+  },
+  {
+   "entrez_gene_id": 7993,
+   "symbol": "UBXN8"
+  },
+  {
+   "entrez_gene_id": 8001,
+   "symbol": "GLRA3"
+  },
+  {
+   "entrez_gene_id": 8036,
+   "symbol": "SHOC2"
+  },
+  {
+   "entrez_gene_id": 8165,
+   "symbol": "AKAP1"
+  },
+  {
+   "entrez_gene_id": 8192,
+   "symbol": "CLPP"
+  },
+  {
+   "entrez_gene_id": 8195,
+   "symbol": "MKKS"
+  },
+  {
+   "entrez_gene_id": 8314,
+   "symbol": "BAP1"
+  },
+  {
+   "entrez_gene_id": 8409,
+   "symbol": "UXT"
+  },
+  {
+   "entrez_gene_id": 8444,
+   "symbol": "DYRK3"
+  },
+  {
+   "entrez_gene_id": 8458,
+   "symbol": "TTF2"
+  },
+  {
+   "entrez_gene_id": 8471,
+   "symbol": "IRS4"
+  },
+  {
+   "entrez_gene_id": 8482,
+   "symbol": "SEMA7A"
+  },
+  {
+   "entrez_gene_id": 8492,
+   "symbol": "PRSS12"
+  },
+  {
+   "entrez_gene_id": 8503,
+   "symbol": "PIK3R3"
+  },
+  {
+   "entrez_gene_id": 8529,
+   "symbol": "CYP4F2"
+  },
+  {
+   "entrez_gene_id": 8615,
+   "symbol": "USO1"
+  },
+  {
+   "entrez_gene_id": 8632,
+   "symbol": "DNAH17"
+  },
+  {
+   "entrez_gene_id": 8647,
+   "symbol": "ABCB11"
+  },
+  {
+   "entrez_gene_id": 8650,
+   "symbol": "NUMB"
+  },
+  {
+   "entrez_gene_id": 8668,
+   "symbol": "EIF3I"
+  },
+  {
+   "entrez_gene_id": 8669,
+   "symbol": "EIF3J"
+  },
+  {
+   "entrez_gene_id": 8689,
+   "symbol": "KRT36"
+  },
+  {
+   "entrez_gene_id": 8722,
+   "symbol": "CTSF"
+  },
+  {
+   "entrez_gene_id": 8801,
+   "symbol": "SUCLG2"
+  },
+  {
+   "entrez_gene_id": 8802,
+   "symbol": "SUCLG1"
+  },
+  {
+   "entrez_gene_id": 8804,
+   "symbol": "CREG1"
+  },
+  {
+   "entrez_gene_id": 8823,
+   "symbol": "FGF16"
+  },
+  {
+   "entrez_gene_id": 8846,
+   "symbol": "ALKBH1"
+  },
+  {
+   "entrez_gene_id": 8862,
+   "symbol": "APLN"
+  },
+  {
+   "entrez_gene_id": 8874,
+   "symbol": "ARHGEF7"
+  },
+  {
+   "entrez_gene_id": 8894,
+   "symbol": "EIF2S2"
+  },
+  {
+   "entrez_gene_id": 8906,
+   "symbol": "AP1G2"
+  },
+  {
+   "entrez_gene_id": 9047,
+   "symbol": "SH2D2A"
+  },
+  {
+   "entrez_gene_id": 9095,
+   "symbol": "TBX19"
+  },
+  {
+   "entrez_gene_id": 9141,
+   "symbol": "PDCD5"
+  },
+  {
+   "entrez_gene_id": 9159,
+   "symbol": "PCSK7"
+  },
+  {
+   "entrez_gene_id": 9170,
+   "symbol": "LPAR2"
+  },
+  {
+   "entrez_gene_id": 9229,
+   "symbol": "DLGAP1"
+  },
+  {
+   "entrez_gene_id": 9258,
+   "symbol": "MFHAS1"
+  },
+  {
+   "entrez_gene_id": 9373,
+   "symbol": "PLAA"
+  },
+  {
+   "entrez_gene_id": 9399,
+   "symbol": "STOML1"
+  },
+  {
+   "entrez_gene_id": 9469,
+   "symbol": "CHST3"
+  },
+  {
+   "entrez_gene_id": 9477,
+   "symbol": "MED20"
+  },
+  {
+   "entrez_gene_id": 9601,
+   "symbol": "PDIA4"
+  },
+  {
+   "entrez_gene_id": 9652,
+   "symbol": "TTC37"
+  },
+  {
+   "entrez_gene_id": 9669,
+   "symbol": "EIF5B"
+  },
+  {
+   "entrez_gene_id": 9671,
+   "symbol": "WSCD2"
+  },
+  {
+   "entrez_gene_id": 9677,
+   "symbol": "PPIP5K1"
+  },
+  {
+   "entrez_gene_id": 9789,
+   "symbol": "SPCS2"
+  },
+  {
+   "entrez_gene_id": 9815,
+   "symbol": "GIT2"
+  },
+  {
+   "entrez_gene_id": 9833,
+   "symbol": "MELK"
+  },
+  {
+   "entrez_gene_id": 9891,
+   "symbol": "NUAK1"
+  },
+  {
+   "entrez_gene_id": 9910,
+   "symbol": "RABGAP1L"
+  },
+  {
+   "entrez_gene_id": 9923,
+   "symbol": "ZBTB40"
+  },
+  {
+   "entrez_gene_id": 9948,
+   "symbol": "WDR1"
+  },
+  {
+   "entrez_gene_id": 10000,
+   "symbol": "AKT3"
+  },
+  {
+   "entrez_gene_id": 10008,
+   "symbol": "KCNE3"
+  },
+  {
+   "entrez_gene_id": 10017,
+   "symbol": "BCL2L10"
+  },
+  {
+   "entrez_gene_id": 10018,
+   "symbol": "BCL2L11"
+  },
+  {
+   "entrez_gene_id": 10049,
+   "symbol": "DNAJB6"
+  },
+  {
+   "entrez_gene_id": 10053,
+   "symbol": "AP1M2"
+  },
+  {
+   "entrez_gene_id": 10071,
+   "symbol": "MUC12"
+  },
+  {
+   "entrez_gene_id": 10082,
+   "symbol": "GPC6"
+  },
+  {
+   "entrez_gene_id": 10084,
+   "symbol": "PQBP1"
+  },
+  {
+   "entrez_gene_id": 10100,
+   "symbol": "TSPAN2"
+  },
+  {
+   "entrez_gene_id": 10121,
+   "symbol": "ACTR1A"
+  },
+  {
+   "entrez_gene_id": 10134,
+   "symbol": "BCAP31"
+  },
+  {
+   "entrez_gene_id": 10139,
+   "symbol": "ARFRP1"
+  },
+  {
+   "entrez_gene_id": 10160,
+   "symbol": "FARP1"
+  },
+  {
+   "entrez_gene_id": 10166,
+   "symbol": "SLC25A15"
+  },
+  {
+   "entrez_gene_id": 10213,
+   "symbol": "PSMD14"
+  },
+  {
+   "entrez_gene_id": 10220,
+   "symbol": "GDF11"
+  },
+  {
+   "entrez_gene_id": 10240,
+   "symbol": "MRPS31"
+  },
+  {
+   "entrez_gene_id": 10253,
+   "symbol": "SPRY2"
+  },
+  {
+   "entrez_gene_id": 10346,
+   "symbol": "TRIM22"
+  },
+  {
+   "entrez_gene_id": 10349,
+   "symbol": "ABCA10"
+  },
+  {
+   "entrez_gene_id": 10422,
+   "symbol": "UBAC1"
+  },
+  {
+   "entrez_gene_id": 10424,
+   "symbol": "PGRMC2"
+  },
+  {
+   "entrez_gene_id": 10432,
+   "symbol": "RBM14"
+  },
+  {
+   "entrez_gene_id": 10435,
+   "symbol": "CDC42EP2"
+  },
+  {
+   "entrez_gene_id": 10491,
+   "symbol": "CRTAP"
+  },
+  {
+   "entrez_gene_id": 10578,
+   "symbol": "GNLY"
+  },
+  {
+   "entrez_gene_id": 10584,
+   "symbol": "COLEC10"
+  },
+  {
+   "entrez_gene_id": 10598,
+   "symbol": "AHSA1"
+  },
+  {
+   "entrez_gene_id": 10602,
+   "symbol": "CDC42EP3"
+  },
+  {
+   "entrez_gene_id": 10610,
+   "symbol": "ST6GALNAC2"
+  },
+  {
+   "entrez_gene_id": 10616,
+   "symbol": "RBCK1"
+  },
+  {
+   "entrez_gene_id": 10648,
+   "symbol": "SCGB1D1"
+  },
+  {
+   "entrez_gene_id": 10657,
+   "symbol": "KHDRBS1"
+  },
+  {
+   "entrez_gene_id": 10726,
+   "symbol": "NUDC"
+  },
+  {
+   "entrez_gene_id": 10737,
+   "symbol": "RFPL3S"
+  },
+  {
+   "entrez_gene_id": 10818,
+   "symbol": "FRS2"
+  },
+  {
+   "entrez_gene_id": 10847,
+   "symbol": "SRCAP"
+  },
+  {
+   "entrez_gene_id": 10874,
+   "symbol": "NMU"
+  },
+  {
+   "entrez_gene_id": 10957,
+   "symbol": "PNRC1"
+  },
+  {
+   "entrez_gene_id": 10960,
+   "symbol": "LMAN2"
+  },
+  {
+   "entrez_gene_id": 10963,
+   "symbol": "STIP1"
+  },
+  {
+   "entrez_gene_id": 10981,
+   "symbol": "RAB32"
+  },
+  {
+   "entrez_gene_id": 11023,
+   "symbol": "VAX1"
+  },
+  {
+   "entrez_gene_id": 11072,
+   "symbol": "DUSP14"
+  },
+  {
+   "entrez_gene_id": 11104,
+   "symbol": "KATNA1"
+  },
+  {
+   "entrez_gene_id": 11155,
+   "symbol": "LDB3"
+  },
+  {
+   "entrez_gene_id": 11190,
+   "symbol": "CEP250"
+  },
+  {
+   "entrez_gene_id": 11193,
+   "symbol": "WBP4"
+  },
+  {
+   "entrez_gene_id": 11259,
+   "symbol": "FILIP1L"
+  },
+  {
+   "entrez_gene_id": 11276,
+   "symbol": "SYNRG"
+  },
+  {
+   "entrez_gene_id": 11328,
+   "symbol": "FKBP9"
+  },
+  {
+   "entrez_gene_id": 11342,
+   "symbol": "RNF13"
+  },
+  {
+   "entrez_gene_id": 11343,
+   "symbol": "MGLL"
+  },
+  {
+   "entrez_gene_id": 22796,
+   "symbol": "COG2"
+  },
+  {
+   "entrez_gene_id": 22852,
+   "symbol": "ANKRD26"
+  },
+  {
+   "entrez_gene_id": 22858,
+   "symbol": "ICK"
+  },
+  {
+   "entrez_gene_id": 22861,
+   "symbol": "NLRP1"
+  },
+  {
+   "entrez_gene_id": 22882,
+   "symbol": "ZHX2"
+  },
+  {
+   "entrez_gene_id": 22932,
+   "symbol": "POMZP3"
+  },
+  {
+   "entrez_gene_id": 22954,
+   "symbol": "TRIM32"
+  },
+  {
+   "entrez_gene_id": 22981,
+   "symbol": "NINL"
+  },
+  {
+   "entrez_gene_id": 22983,
+   "symbol": "MAST1"
+  },
+  {
+   "entrez_gene_id": 22989,
+   "symbol": "MYH15"
+  },
+  {
+   "entrez_gene_id": 23029,
+   "symbol": "RBM34"
+  },
+  {
+   "entrez_gene_id": 23030,
+   "symbol": "KDM4B"
+  },
+  {
+   "entrez_gene_id": 23032,
+   "symbol": "USP33"
+  },
+  {
+   "entrez_gene_id": 23093,
+   "symbol": "TTLL5"
+  },
+  {
+   "entrez_gene_id": 23099,
+   "symbol": "ZBTB43"
+  },
+  {
+   "entrez_gene_id": 23113,
+   "symbol": "CUL9"
+  },
+  {
+   "entrez_gene_id": 23217,
+   "symbol": "ZFR2"
+  },
+  {
+   "entrez_gene_id": 23234,
+   "symbol": "DNAJC9"
+  },
+  {
+   "entrez_gene_id": 23235,
+   "symbol": "SIK2"
+  },
+  {
+   "entrez_gene_id": 23261,
+   "symbol": "CAMTA1"
+  },
+  {
+   "entrez_gene_id": 23269,
+   "symbol": "MGA"
+  },
+  {
+   "entrez_gene_id": 23328,
+   "symbol": "SASH1"
+  },
+  {
+   "entrez_gene_id": 23353,
+   "symbol": "SUN1"
+  },
+  {
+   "entrez_gene_id": 23355,
+   "symbol": "VPS8"
+  },
+  {
+   "entrez_gene_id": 23390,
+   "symbol": "ZDHHC17"
+  },
+  {
+   "entrez_gene_id": 23424,
+   "symbol": "TDRD7"
+  },
+  {
+   "entrez_gene_id": 23432,
+   "symbol": "GPR161"
+  },
+  {
+   "entrez_gene_id": 23457,
+   "symbol": "ABCB9"
+  },
+  {
+   "entrez_gene_id": 23529,
+   "symbol": "CLCF1"
+  },
+  {
+   "entrez_gene_id": 23541,
+   "symbol": "SEC14L2"
+  },
+  {
+   "entrez_gene_id": 23553,
+   "symbol": "HYAL4"
+  },
+  {
+   "entrez_gene_id": 23556,
+   "symbol": "PIGN"
+  },
+  {
+   "entrez_gene_id": 23601,
+   "symbol": "CLEC5A"
+  },
+  {
+   "entrez_gene_id": 23708,
+   "symbol": "GSPT2"
+  },
+  {
+   "entrez_gene_id": 23746,
+   "symbol": "AIPL1"
+  },
+  {
+   "entrez_gene_id": 23753,
+   "symbol": "SDF2L1"
+  },
+  {
+   "entrez_gene_id": 23761,
+   "symbol": "PISD"
+  },
+  {
+   "entrez_gene_id": 23774,
+   "symbol": "BRD1"
+  },
+  {
+   "entrez_gene_id": 25780,
+   "symbol": "RASGRP3"
+  },
+  {
+   "entrez_gene_id": 25875,
+   "symbol": "LETMD1"
+  },
+  {
+   "entrez_gene_id": 25904,
+   "symbol": "CNOT10"
+  },
+  {
+   "entrez_gene_id": 25912,
+   "symbol": "C1orf43"
+  },
+  {
+   "entrez_gene_id": 25926,
+   "symbol": "NOL11"
+  },
+  {
+   "entrez_gene_id": 25949,
+   "symbol": "SYF2"
+  },
+  {
+   "entrez_gene_id": 25976,
+   "symbol": "TIPARP"
+  },
+  {
+   "entrez_gene_id": 26032,
+   "symbol": "SUSD5"
+  },
+  {
+   "entrez_gene_id": 26053,
+   "symbol": "AUTS2"
+  },
+  {
+   "entrez_gene_id": 26118,
+   "symbol": "WSB1"
+  },
+  {
+   "entrez_gene_id": 26166,
+   "symbol": "RGS22"
+  },
+  {
+   "entrez_gene_id": 26190,
+   "symbol": "FBXW2"
+  },
+  {
+   "entrez_gene_id": 26505,
+   "symbol": "CNNM3"
+  },
+  {
+   "entrez_gene_id": 26511,
+   "symbol": "CHIC2"
+  },
+  {
+   "entrez_gene_id": 26532,
+   "symbol": "OR10H3"
+  },
+  {
+   "entrez_gene_id": 26686,
+   "symbol": "OR4E2"
+  },
+  {
+   "entrez_gene_id": 26707,
+   "symbol": "OR2J2"
+  },
+  {
+   "entrez_gene_id": 26750,
+   "symbol": "RPS6KC1"
+  },
+  {
+   "entrez_gene_id": 26952,
+   "symbol": "SMR3A"
+  },
+  {
+   "entrez_gene_id": 27005,
+   "symbol": "USP21"
+  },
+  {
+   "entrez_gene_id": 27086,
+   "symbol": "FOXP1"
+  },
+  {
+   "entrez_gene_id": 27092,
+   "symbol": "CACNG4"
+  },
+  {
+   "entrez_gene_id": 27095,
+   "symbol": "TRAPPC3"
+  },
+  {
+   "entrez_gene_id": 27111,
+   "symbol": "SDCBP2"
+  },
+  {
+   "entrez_gene_id": 27122,
+   "symbol": "DKK3"
+  },
+  {
+   "entrez_gene_id": 27295,
+   "symbol": "PDLIM3"
+  },
+  {
+   "entrez_gene_id": 27338,
+   "symbol": "UBE2S"
+  },
+  {
+   "entrez_gene_id": 28232,
+   "symbol": "SLCO3A1"
+  },
+  {
+   "entrez_gene_id": 28511,
+   "symbol": "NKIRAS2"
+  },
+  {
+   "entrez_gene_id": 28952,
+   "symbol": "CCDC22"
+  },
+  {
+   "entrez_gene_id": 28974,
+   "symbol": "C19orf53"
+  },
+  {
+   "entrez_gene_id": 28982,
+   "symbol": "FLVCR1"
+  },
+  {
+   "entrez_gene_id": 29070,
+   "symbol": "CCDC113"
+  },
+  {
+   "entrez_gene_id": 29100,
+   "symbol": "TMEM208"
+  },
+  {
+   "entrez_gene_id": 29780,
+   "symbol": "PARVB"
+  },
+  {
+   "entrez_gene_id": 29799,
+   "symbol": "YPEL1"
+  },
+  {
+   "entrez_gene_id": 29907,
+   "symbol": "SNX15"
+  },
+  {
+   "entrez_gene_id": 29946,
+   "symbol": "SERTAD3"
+  },
+  {
+   "entrez_gene_id": 29947,
+   "symbol": "DNMT3L"
+  },
+  {
+   "entrez_gene_id": 29982,
+   "symbol": "NRBF2"
+  },
+  {
+   "entrez_gene_id": 29988,
+   "symbol": "SLC2A8"
+  },
+  {
+   "entrez_gene_id": 30010,
+   "symbol": "NXPH1"
+  },
+  {
+   "entrez_gene_id": 43849,
+   "symbol": "KLK12"
+  },
+  {
+   "entrez_gene_id": 50506,
+   "symbol": "DUOX2"
+  },
+  {
+   "entrez_gene_id": 50617,
+   "symbol": "ATP6V0A4"
+  },
+  {
+   "entrez_gene_id": 50636,
+   "symbol": "ANO7"
+  },
+  {
+   "entrez_gene_id": 50813,
+   "symbol": "COPS7A"
+  },
+  {
+   "entrez_gene_id": 50839,
+   "symbol": "TAS2R10"
+  },
+  {
+   "entrez_gene_id": 51008,
+   "symbol": "ASCC1"
+  },
+  {
+   "entrez_gene_id": 51031,
+   "symbol": "GLOD4"
+  },
+  {
+   "entrez_gene_id": 51032,
+   "symbol": "CELA2B"
+  },
+  {
+   "entrez_gene_id": 51050,
+   "symbol": "PI15"
+  },
+  {
+   "entrez_gene_id": 51070,
+   "symbol": "NOSIP"
+  },
+  {
+   "entrez_gene_id": 51072,
+   "symbol": "MEMO1"
+  },
+  {
+   "entrez_gene_id": 51075,
+   "symbol": "TMX2"
+  },
+  {
+   "entrez_gene_id": 51105,
+   "symbol": "PHF20L1"
+  },
+  {
+   "entrez_gene_id": 51170,
+   "symbol": "HSD17B11"
+  },
+  {
+   "entrez_gene_id": 51247,
+   "symbol": "PAIP2"
+  },
+  {
+   "entrez_gene_id": 51249,
+   "symbol": "TMEM69"
+  },
+  {
+   "entrez_gene_id": 51282,
+   "symbol": "SCAND1"
+  },
+  {
+   "entrez_gene_id": 51286,
+   "symbol": "CEND1"
+  },
+  {
+   "entrez_gene_id": 51289,
+   "symbol": "RXFP3"
+  },
+  {
+   "entrez_gene_id": 51294,
+   "symbol": "PCDH12"
+  },
+  {
+   "entrez_gene_id": 51316,
+   "symbol": "PLAC8"
+  },
+  {
+   "entrez_gene_id": 51318,
+   "symbol": "MRPL35"
+  },
+  {
+   "entrez_gene_id": 51320,
+   "symbol": "MEX3C"
+  },
+  {
+   "entrez_gene_id": 51332,
+   "symbol": "SPTBN5"
+  },
+  {
+   "entrez_gene_id": 51334,
+   "symbol": "PRR16"
+  },
+  {
+   "entrez_gene_id": 51350,
+   "symbol": "KRT76"
+  },
+  {
+   "entrez_gene_id": 51360,
+   "symbol": "MBTPS2"
+  },
+  {
+   "entrez_gene_id": 51378,
+   "symbol": "ANGPT4"
+  },
+  {
+   "entrez_gene_id": 51389,
+   "symbol": "RWDD1"
+  },
+  {
+   "entrez_gene_id": 51397,
+   "symbol": "COMMD10"
+  },
+  {
+   "entrez_gene_id": 51409,
+   "symbol": "HEMK1"
+  },
+  {
+   "entrez_gene_id": 51435,
+   "symbol": "SCARA3"
+  },
+  {
+   "entrez_gene_id": 51439,
+   "symbol": "FAM8A1"
+  },
+  {
+   "entrez_gene_id": 51451,
+   "symbol": "LCMT1"
+  },
+  {
+   "entrez_gene_id": 51529,
+   "symbol": "ANAPC11"
+  },
+  {
+   "entrez_gene_id": 51569,
+   "symbol": "UFM1"
+  },
+  {
+   "entrez_gene_id": 51599,
+   "symbol": "LSR"
+  },
+  {
+   "entrez_gene_id": 51621,
+   "symbol": "KLF13"
+  },
+  {
+   "entrez_gene_id": 51701,
+   "symbol": "NLK"
+  },
+  {
+   "entrez_gene_id": 51741,
+   "symbol": "WWOX"
+  },
+  {
+   "entrez_gene_id": 53615,
+   "symbol": "MBD3"
+  },
+  {
+   "entrez_gene_id": 53840,
+   "symbol": "TRIM34"
+  },
+  {
+   "entrez_gene_id": 54093,
+   "symbol": "SETD4"
+  },
+  {
+   "entrez_gene_id": 54097,
+   "symbol": "FAM3B"
+  },
+  {
+   "entrez_gene_id": 54360,
+   "symbol": "CYTL1"
+  },
+  {
+   "entrez_gene_id": 54435,
+   "symbol": "HCG4"
+  },
+  {
+   "entrez_gene_id": 54458,
+   "symbol": "PRR13"
+  },
+  {
+   "entrez_gene_id": 54469,
+   "symbol": "ZFAND6"
+  },
+  {
+   "entrez_gene_id": 54470,
+   "symbol": "ARMCX6"
+  },
+  {
+   "entrez_gene_id": 54494,
+   "symbol": "C11orf71"
+  },
+  {
+   "entrez_gene_id": 54495,
+   "symbol": "TMX3"
+  },
+  {
+   "entrez_gene_id": 54503,
+   "symbol": "ZDHHC13"
+  },
+  {
+   "entrez_gene_id": 54504,
+   "symbol": "CPVL"
+  },
+  {
+   "entrez_gene_id": 54521,
+   "symbol": "WDR44"
+  },
+  {
+   "entrez_gene_id": 54554,
+   "symbol": "WDR5B"
+  },
+  {
+   "entrez_gene_id": 54567,
+   "symbol": "DLL4"
+  },
+  {
+   "entrez_gene_id": 54602,
+   "symbol": "NDFIP2"
+  },
+  {
+   "entrez_gene_id": 54623,
+   "symbol": "PAF1"
+  },
+  {
+   "entrez_gene_id": 54658,
+   "symbol": "UGT1A1"
+  },
+  {
+   "entrez_gene_id": 54663,
+   "symbol": "WDR74"
+  },
+  {
+   "entrez_gene_id": 54674,
+   "symbol": "LRRN3"
+  },
+  {
+   "entrez_gene_id": 54752,
+   "symbol": "FNDC8"
+  },
+  {
+   "entrez_gene_id": 54762,
+   "symbol": "GRAMD1C"
+  },
+  {
+   "entrez_gene_id": 54766,
+   "symbol": "BTG4"
+  },
+  {
+   "entrez_gene_id": 54797,
+   "symbol": "MED18"
+  },
+  {
+   "entrez_gene_id": 54802,
+   "symbol": "TRIT1"
+  },
+  {
+   "entrez_gene_id": 54807,
+   "symbol": "ZNF586"
+  },
+  {
+   "entrez_gene_id": 54843,
+   "symbol": "SYTL2"
+  },
+  {
+   "entrez_gene_id": 54849,
+   "symbol": "DEF8"
+  },
+  {
+   "entrez_gene_id": 54854,
+   "symbol": "FAM83E"
+  },
+  {
+   "entrez_gene_id": 54918,
+   "symbol": "CMTM6"
+  },
+  {
+   "entrez_gene_id": 54941,
+   "symbol": "RNF125"
+  },
+  {
+   "entrez_gene_id": 54952,
+   "symbol": "TRNAU1AP"
+  },
+  {
+   "entrez_gene_id": 54980,
+   "symbol": "C2orf42"
+  },
+  {
+   "entrez_gene_id": 55003,
+   "symbol": "PAK1IP1"
+  },
+  {
+   "entrez_gene_id": 55015,
+   "symbol": "PRPF39"
+  },
+  {
+   "entrez_gene_id": 55017,
+   "symbol": "C14orf119"
+  },
+  {
+   "entrez_gene_id": 55032,
+   "symbol": "SLC35A5"
+  },
+  {
+   "entrez_gene_id": 55061,
+   "symbol": "SUSD4"
+  },
+  {
+   "entrez_gene_id": 55109,
+   "symbol": "AGGF1"
+  },
+  {
+   "entrez_gene_id": 55112,
+   "symbol": "WDR60"
+  },
+  {
+   "entrez_gene_id": 55166,
+   "symbol": "CENPQ"
+  },
+  {
+   "entrez_gene_id": 55176,
+   "symbol": "SEC61A2"
+  },
+  {
+   "entrez_gene_id": 55206,
+   "symbol": "SBNO1"
+  },
+  {
+   "entrez_gene_id": 55217,
+   "symbol": "TMLHE"
+  },
+  {
+   "entrez_gene_id": 55260,
+   "symbol": "TMEM143"
+  },
+  {
+   "entrez_gene_id": 55276,
+   "symbol": "PGM2"
+  },
+  {
+   "entrez_gene_id": 55280,
+   "symbol": "CWF19L1"
+  },
+  {
+   "entrez_gene_id": 55284,
+   "symbol": "UBE2W"
+  },
+  {
+   "entrez_gene_id": 55294,
+   "symbol": "FBXW7"
+  },
+  {
+   "entrez_gene_id": 55327,
+   "symbol": "LIN7C"
+  },
+  {
+   "entrez_gene_id": 55384,
+   "symbol": "MEG3"
+  },
+  {
+   "entrez_gene_id": 55450,
+   "symbol": "CAMK2N1"
+  },
+  {
+   "entrez_gene_id": 55577,
+   "symbol": "NAGK"
+  },
+  {
+   "entrez_gene_id": 55586,
+   "symbol": "MIOX"
+  },
+  {
+   "entrez_gene_id": 55614,
+   "symbol": "KIF16B"
+  },
+  {
+   "entrez_gene_id": 55619,
+   "symbol": "DOCK10"
+  },
+  {
+   "entrez_gene_id": 55622,
+   "symbol": "TTC27"
+  },
+  {
+   "entrez_gene_id": 55660,
+   "symbol": "PRPF40A"
+  },
+  {
+   "entrez_gene_id": 55696,
+   "symbol": "RBM22"
+  },
+  {
+   "entrez_gene_id": 55714,
+   "symbol": "TENM3"
+  },
+  {
+   "entrez_gene_id": 55801,
+   "symbol": "IL26"
+  },
+  {
+   "entrez_gene_id": 55827,
+   "symbol": "DCAF6"
+  },
+  {
+   "entrez_gene_id": 55854,
+   "symbol": "ZC3H15"
+  },
+  {
+   "entrez_gene_id": 55861,
+   "symbol": "DBNDD2"
+  },
+  {
+   "entrez_gene_id": 55908,
+   "symbol": "ANGPTL8"
+  },
+  {
+   "entrez_gene_id": 55969,
+   "symbol": "C20orf24"
+  },
+  {
+   "entrez_gene_id": 55972,
+   "symbol": "SLC25A40"
+  },
+  {
+   "entrez_gene_id": 56061,
+   "symbol": "UBFD1"
+  },
+  {
+   "entrez_gene_id": 56137,
+   "symbol": "PCDHA12"
+  },
+  {
+   "entrez_gene_id": 56165,
+   "symbol": "TDRD1"
+  },
+  {
+   "entrez_gene_id": 56171,
+   "symbol": "DNAH7"
+  },
+  {
+   "entrez_gene_id": 56244,
+   "symbol": "BTNL2"
+  },
+  {
+   "entrez_gene_id": 56344,
+   "symbol": "CABP5"
+  },
+  {
+   "entrez_gene_id": 56647,
+   "symbol": "BCCIP"
+  },
+  {
+   "entrez_gene_id": 56650,
+   "symbol": "CLDND1"
+  },
+  {
+   "entrez_gene_id": 56829,
+   "symbol": "ZC3HAV1"
+  },
+  {
+   "entrez_gene_id": 56833,
+   "symbol": "SLAMF8"
+  },
+  {
+   "entrez_gene_id": 56915,
+   "symbol": "EXOSC5"
+  },
+  {
+   "entrez_gene_id": 56964,
+   "symbol": "WDR93"
+  },
+  {
+   "entrez_gene_id": 56998,
+   "symbol": "CTNNBIP1"
+  },
+  {
+   "entrez_gene_id": 56999,
+   "symbol": "ADAMTS9"
+  },
+  {
+   "entrez_gene_id": 57048,
+   "symbol": "PLSCR3"
+  },
+  {
+   "entrez_gene_id": 57120,
+   "symbol": "GOPC"
+  },
+  {
+   "entrez_gene_id": 57122,
+   "symbol": "NUP107"
+  },
+  {
+   "entrez_gene_id": 57188,
+   "symbol": "ADAMTSL3"
+  },
+  {
+   "entrez_gene_id": 57232,
+   "symbol": "ZNF630"
+  },
+  {
+   "entrez_gene_id": 57326,
+   "symbol": "PBXIP1"
+  },
+  {
+   "entrez_gene_id": 57332,
+   "symbol": "CBX8"
+  },
+  {
+   "entrez_gene_id": 57343,
+   "symbol": "ZNF304"
+  },
+  {
+   "entrez_gene_id": 57380,
+   "symbol": "MRS2"
+  },
+  {
+   "entrez_gene_id": 57414,
+   "symbol": "RHBDD2"
+  },
+  {
+   "entrez_gene_id": 57472,
+   "symbol": "CNOT6"
+  },
+  {
+   "entrez_gene_id": 57473,
+   "symbol": "ZNF512B"
+  },
+  {
+   "entrez_gene_id": 57522,
+   "symbol": "SRGAP1"
+  },
+  {
+   "entrez_gene_id": 57533,
+   "symbol": "TBC1D14"
+  },
+  {
+   "entrez_gene_id": 57537,
+   "symbol": "SORCS2"
+  },
+  {
+   "entrez_gene_id": 57539,
+   "symbol": "WDR35"
+  },
+  {
+   "entrez_gene_id": 57546,
+   "symbol": "PDP2"
+  },
+  {
+   "entrez_gene_id": 57547,
+   "symbol": "ZNF624"
+  },
+  {
+   "entrez_gene_id": 57616,
+   "symbol": "TSHZ3"
+  },
+  {
+   "entrez_gene_id": 57642,
+   "symbol": "COL20A1"
+  },
+  {
+   "entrez_gene_id": 57697,
+   "symbol": "FANCM"
+  },
+  {
+   "entrez_gene_id": 57820,
+   "symbol": "CCNB1IP1"
+  },
+  {
+   "entrez_gene_id": 58473,
+   "symbol": "PLEKHB1"
+  },
+  {
+   "entrez_gene_id": 58478,
+   "symbol": "ENOPH1"
+  },
+  {
+   "entrez_gene_id": 60561,
+   "symbol": "RINT1"
+  },
+  {
+   "entrez_gene_id": 63906,
+   "symbol": "GPATCH3"
+  },
+  {
+   "entrez_gene_id": 63940,
+   "symbol": "GPSM3"
+  },
+  {
+   "entrez_gene_id": 64096,
+   "symbol": "GFRA4"
+  },
+  {
+   "entrez_gene_id": 64097,
+   "symbol": "EPB41L4A"
+  },
+  {
+   "entrez_gene_id": 64121,
+   "symbol": "RRAGC"
+  },
+  {
+   "entrez_gene_id": 64135,
+   "symbol": "IFIH1"
+  },
+  {
+   "entrez_gene_id": 64333,
+   "symbol": "ARHGAP9"
+  },
+  {
+   "entrez_gene_id": 64344,
+   "symbol": "HIF3A"
+  },
+  {
+   "entrez_gene_id": 64421,
+   "symbol": "DCLRE1C"
+  },
+  {
+   "entrez_gene_id": 64856,
+   "symbol": "VWA1"
+  },
+  {
+   "entrez_gene_id": 64924,
+   "symbol": "SLC30A5"
+  },
+  {
+   "entrez_gene_id": 64925,
+   "symbol": "CCDC71"
+  },
+  {
+   "entrez_gene_id": 64978,
+   "symbol": "MRPL38"
+  },
+  {
+   "entrez_gene_id": 65018,
+   "symbol": "PINK1"
+  },
+  {
+   "entrez_gene_id": 65982,
+   "symbol": "ZSCAN18"
+  },
+  {
+   "entrez_gene_id": 66037,
+   "symbol": "BOLL"
+  },
+  {
+   "entrez_gene_id": 78997,
+   "symbol": "GDAP1L1"
+  },
+  {
+   "entrez_gene_id": 79012,
+   "symbol": "CAMKV"
+  },
+  {
+   "entrez_gene_id": 79031,
+   "symbol": "PDCL3"
+  },
+  {
+   "entrez_gene_id": 79057,
+   "symbol": "PRRG3"
+  },
+  {
+   "entrez_gene_id": 79077,
+   "symbol": "DCTPP1"
+  },
+  {
+   "entrez_gene_id": 79085,
+   "symbol": "SLC25A23"
+  },
+  {
+   "entrez_gene_id": 79097,
+   "symbol": "TRIM48"
+  },
+  {
+   "entrez_gene_id": 79102,
+   "symbol": "RNF26"
+  },
+  {
+   "entrez_gene_id": 79139,
+   "symbol": "DERL1"
+  },
+  {
+   "entrez_gene_id": 79152,
+   "symbol": "FA2H"
+  },
+  {
+   "entrez_gene_id": 79175,
+   "symbol": "ZNF343"
+  },
+  {
+   "entrez_gene_id": 79411,
+   "symbol": "GLB1L"
+  },
+  {
+   "entrez_gene_id": 79575,
+   "symbol": "ABHD8"
+  },
+  {
+   "entrez_gene_id": 79589,
+   "symbol": "RNF128"
+  },
+  {
+   "entrez_gene_id": 79594,
+   "symbol": "MUL1"
+  },
+  {
+   "entrez_gene_id": 79608,
+   "symbol": "RIC3"
+  },
+  {
+   "entrez_gene_id": 79618,
+   "symbol": "HMBOX1"
+  },
+  {
+   "entrez_gene_id": 79622,
+   "symbol": "SNRNP25"
+  },
+  {
+   "entrez_gene_id": 79660,
+   "symbol": "PPP1R3B"
+  },
+  {
+   "entrez_gene_id": 79706,
+   "symbol": "PRKRIP1"
+  },
+  {
+   "entrez_gene_id": 79720,
+   "symbol": "VPS37B"
+  },
+  {
+   "entrez_gene_id": 79723,
+   "symbol": "SUV39H2"
+  },
+  {
+   "entrez_gene_id": 79736,
+   "symbol": "C17orf42"
+  },
+  {
+   "entrez_gene_id": 79774,
+   "symbol": "GRTP1"
+  },
+  {
+   "entrez_gene_id": 79778,
+   "symbol": "MICALL2"
+  },
+  {
+   "entrez_gene_id": 79782,
+   "symbol": "LRRC31"
+  },
+  {
+   "entrez_gene_id": 79812,
+   "symbol": "MMRN2"
+  },
+  {
+   "entrez_gene_id": 79848,
+   "symbol": "CSPP1"
+  },
+  {
+   "entrez_gene_id": 79853,
+   "symbol": "TM4SF20"
+  },
+  {
+   "entrez_gene_id": 79865,
+   "symbol": "TREML2"
+  },
+  {
+   "entrez_gene_id": 79935,
+   "symbol": "CNTD2"
+  },
+  {
+   "entrez_gene_id": 80005,
+   "symbol": "DOCK5"
+  },
+  {
+   "entrez_gene_id": 80071,
+   "symbol": "CCDC15"
+  },
+  {
+   "entrez_gene_id": 80117,
+   "symbol": "ARL14"
+  },
+  {
+   "entrez_gene_id": 80142,
+   "symbol": "PTGES2"
+  },
+  {
+   "entrez_gene_id": 80173,
+   "symbol": "IFT74"
+  },
+  {
+   "entrez_gene_id": 80207,
+   "symbol": "OPA3"
+  },
+  {
+   "entrez_gene_id": 80208,
+   "symbol": "SPG11"
+  },
+  {
+   "entrez_gene_id": 80212,
+   "symbol": "CCDC92"
+  },
+  {
+   "entrez_gene_id": 80216,
+   "symbol": "ALPK1"
+  },
+  {
+   "entrez_gene_id": 80231,
+   "symbol": "CXorf21"
+  },
+  {
+   "entrez_gene_id": 80267,
+   "symbol": "EDEM3"
+  },
+  {
+   "entrez_gene_id": 80313,
+   "symbol": "LRRC27"
+  },
+  {
+   "entrez_gene_id": 80343,
+   "symbol": "SEL1L2"
+  },
+  {
+   "entrez_gene_id": 80347,
+   "symbol": "COASY"
+  },
+  {
+   "entrez_gene_id": 80351,
+   "symbol": "TNKS2"
+  },
+  {
+   "entrez_gene_id": 80746,
+   "symbol": "TSEN2"
+  },
+  {
+   "entrez_gene_id": 80760,
+   "symbol": "ITIH5"
+  },
+  {
+   "entrez_gene_id": 80789,
+   "symbol": "INTS5"
+  },
+  {
+   "entrez_gene_id": 81327,
+   "symbol": "OR4A16"
+  },
+  {
+   "entrez_gene_id": 81539,
+   "symbol": "SLC38A1"
+  },
+  {
+   "entrez_gene_id": 81550,
+   "symbol": "TDRD3"
+  },
+  {
+   "entrez_gene_id": 81570,
+   "symbol": "CLPB"
+  },
+  {
+   "entrez_gene_id": 81619,
+   "symbol": "TSPAN14"
+  },
+  {
+   "entrez_gene_id": 81704,
+   "symbol": "DOCK8"
+  },
+  {
+   "entrez_gene_id": 81833,
+   "symbol": "SPACA1"
+  },
+  {
+   "entrez_gene_id": 81850,
+   "symbol": "KRTAP1-3"
+  },
+  {
+   "entrez_gene_id": 81928,
+   "symbol": "CABLES2"
+  },
+  {
+   "entrez_gene_id": 83442,
+   "symbol": "SH3BGRL3"
+  },
+  {
+   "entrez_gene_id": 83448,
+   "symbol": "PUS7L"
+  },
+  {
+   "entrez_gene_id": 83478,
+   "symbol": "ARHGAP24"
+  },
+  {
+   "entrez_gene_id": 83543,
+   "symbol": "AIF1L"
+  },
+  {
+   "entrez_gene_id": 83657,
+   "symbol": "DYNLRB2"
+  },
+  {
+   "entrez_gene_id": 83690,
+   "symbol": "CRISPLD1"
+  },
+  {
+   "entrez_gene_id": 83706,
+   "symbol": "FERMT3"
+  },
+  {
+   "entrez_gene_id": 83714,
+   "symbol": "NRIP2"
+  },
+  {
+   "entrez_gene_id": 83850,
+   "symbol": "ESYT3"
+  },
+  {
+   "entrez_gene_id": 83875,
+   "symbol": "BCO2"
+  },
+  {
+   "entrez_gene_id": 83887,
+   "symbol": "TTLL2"
+  },
+  {
+   "entrez_gene_id": 83890,
+   "symbol": "SPATA9"
+  },
+  {
+   "entrez_gene_id": 83987,
+   "symbol": "CCDC8"
+  },
+  {
+   "entrez_gene_id": 83990,
+   "symbol": "BRIP1"
+  },
+  {
+   "entrez_gene_id": 83992,
+   "symbol": "CTTNBP2"
+  },
+  {
+   "entrez_gene_id": 84063,
+   "symbol": "KIRREL2"
+  },
+  {
+   "entrez_gene_id": 84064,
+   "symbol": "HDHD2"
+  },
+  {
+   "entrez_gene_id": 84075,
+   "symbol": "FSCB"
+  },
+  {
+   "entrez_gene_id": 84159,
+   "symbol": "ARID5B"
+  },
+  {
+   "entrez_gene_id": 84203,
+   "symbol": "TXNDC2"
+  },
+  {
+   "entrez_gene_id": 84248,
+   "symbol": "FYTTD1"
+  },
+  {
+   "entrez_gene_id": 84307,
+   "symbol": "ZNF397"
+  },
+  {
+   "entrez_gene_id": 84321,
+   "symbol": "THOC3"
+  },
+  {
+   "entrez_gene_id": 84439,
+   "symbol": "HHIPL1"
+  },
+  {
+   "entrez_gene_id": 84514,
+   "symbol": "GHDC"
+  },
+  {
+   "entrez_gene_id": 84547,
+   "symbol": "PGBD1"
+  },
+  {
+   "entrez_gene_id": 84866,
+   "symbol": "TMEM25"
+  },
+  {
+   "entrez_gene_id": 84871,
+   "symbol": "AGBL4"
+  },
+  {
+   "entrez_gene_id": 84875,
+   "symbol": "PARP10"
+  },
+  {
+   "entrez_gene_id": 84931,
+   "symbol": "LINC01101"
+  },
+  {
+   "entrez_gene_id": 84936,
+   "symbol": "ZFYVE19"
+  },
+  {
+   "entrez_gene_id": 84959,
+   "symbol": "UBASH3B"
+  },
+  {
+   "entrez_gene_id": 84967,
+   "symbol": "LSM10"
+  },
+  {
+   "entrez_gene_id": 85002,
+   "symbol": "FAM86B1"
+  },
+  {
+   "entrez_gene_id": 85376,
+   "symbol": "RIMBP3"
+  },
+  {
+   "entrez_gene_id": 85478,
+   "symbol": "CCDC65"
+  },
+  {
+   "entrez_gene_id": 85495,
+   "symbol": "RPPH1"
+  },
+  {
+   "entrez_gene_id": 89857,
+   "symbol": "KLHL6"
+  },
+  {
+   "entrez_gene_id": 89872,
+   "symbol": "AQP10"
+  },
+  {
+   "entrez_gene_id": 90011,
+   "symbol": "KIR3DX1"
+  },
+  {
+   "entrez_gene_id": 90459,
+   "symbol": "ERI1"
+  },
+  {
+   "entrez_gene_id": 90586,
+   "symbol": "AOC4P"
+  },
+  {
+   "entrez_gene_id": 91107,
+   "symbol": "TRIM47"
+  },
+  {
+   "entrez_gene_id": 91574,
+   "symbol": "C12orf65"
+  },
+  {
+   "entrez_gene_id": 92017,
+   "symbol": "SNX29"
+  },
+  {
+   "entrez_gene_id": 92285,
+   "symbol": "ZNF585B"
+  },
+  {
+   "entrez_gene_id": 92344,
+   "symbol": "GORAB"
+  },
+  {
+   "entrez_gene_id": 92703,
+   "symbol": "TMEM183A"
+  },
+  {
+   "entrez_gene_id": 93058,
+   "symbol": "COQ10A"
+  },
+  {
+   "entrez_gene_id": 93082,
+   "symbol": "NEURL3"
+  },
+  {
+   "entrez_gene_id": 94030,
+   "symbol": "LRRC4B"
+  },
+  {
+   "entrez_gene_id": 94081,
+   "symbol": "SFXN1"
+  },
+  {
+   "entrez_gene_id": 94233,
+   "symbol": "OPN4"
+  },
+  {
+   "entrez_gene_id": 96764,
+   "symbol": "TGS1"
+  },
+  {
+   "entrez_gene_id": 112936,
+   "symbol": "VPS26B"
+  },
+  {
+   "entrez_gene_id": 112937,
+   "symbol": "GLB1L3"
+  },
+  {
+   "entrez_gene_id": 112939,
+   "symbol": "NACC1"
+  },
+  {
+   "entrez_gene_id": 113130,
+   "symbol": "CDCA5"
+  },
+  {
+   "entrez_gene_id": 114569,
+   "symbol": "MAL2"
+  },
+  {
+   "entrez_gene_id": 114795,
+   "symbol": "TMEM132B"
+  },
+  {
+   "entrez_gene_id": 114908,
+   "symbol": "TMEM123"
+  },
+  {
+   "entrez_gene_id": 116064,
+   "symbol": "LRRC58"
+  },
+  {
+   "entrez_gene_id": 116211,
+   "symbol": "TM4SF19"
+  },
+  {
+   "entrez_gene_id": 116437,
+   "symbol": "LINC01257"
+  },
+  {
+   "entrez_gene_id": 116535,
+   "symbol": "MRGPRF"
+  },
+  {
+   "entrez_gene_id": 117157,
+   "symbol": "SH2D1B"
+  },
+  {
+   "entrez_gene_id": 118980,
+   "symbol": "SFXN2"
+  },
+  {
+   "entrez_gene_id": 119395,
+   "symbol": "CALHM3"
+  },
+  {
+   "entrez_gene_id": 121260,
+   "symbol": "SLC15A4"
+  },
+  {
+   "entrez_gene_id": 121391,
+   "symbol": "KRT74"
+  },
+  {
+   "entrez_gene_id": 121838,
+   "symbol": "NRAD1"
+  },
+  {
+   "entrez_gene_id": 123879,
+   "symbol": "DCUN1D3"
+  },
+  {
+   "entrez_gene_id": 124535,
+   "symbol": "HSF5"
+  },
+  {
+   "entrez_gene_id": 124751,
+   "symbol": "KRBA2"
+  },
+  {
+   "entrez_gene_id": 125965,
+   "symbol": "COX6B2"
+  },
+  {
+   "entrez_gene_id": 125997,
+   "symbol": "MBD3L2"
+  },
+  {
+   "entrez_gene_id": 126014,
+   "symbol": "OSCAR"
+  },
+  {
+   "entrez_gene_id": 126306,
+   "symbol": "JSRP1"
+  },
+  {
+   "entrez_gene_id": 126364,
+   "symbol": "LRRC25"
+  },
+  {
+   "entrez_gene_id": 126536,
+   "symbol": "LINC00661"
+  },
+  {
+   "entrez_gene_id": 126767,
+   "symbol": "AADACL3"
+  },
+  {
+   "entrez_gene_id": 127003,
+   "symbol": "C1orf194"
+  },
+  {
+   "entrez_gene_id": 127066,
+   "symbol": "OR14C36"
+  },
+  {
+   "entrez_gene_id": 127670,
+   "symbol": "TEDDM1"
+  },
+  {
+   "entrez_gene_id": 127841,
+   "symbol": "LINC00628"
+  },
+  {
+   "entrez_gene_id": 128346,
+   "symbol": "C1orf162"
+  },
+  {
+   "entrez_gene_id": 128646,
+   "symbol": "SIRPD"
+  },
+  {
+   "entrez_gene_id": 128817,
+   "symbol": "CSTL1"
+  },
+  {
+   "entrez_gene_id": 128954,
+   "symbol": "GAB4"
+  },
+  {
+   "entrez_gene_id": 129607,
+   "symbol": "CMPK2"
+  },
+  {
+   "entrez_gene_id": 130074,
+   "symbol": "FAM168B"
+  },
+  {
+   "entrez_gene_id": 130560,
+   "symbol": "SPATA3"
+  },
+  {
+   "entrez_gene_id": 131890,
+   "symbol": "GRK7"
+  },
+  {
+   "entrez_gene_id": 132160,
+   "symbol": "PPM1M"
+  },
+  {
+   "entrez_gene_id": 132321,
+   "symbol": "C4orf33"
+  },
+  {
+   "entrez_gene_id": 132989,
+   "symbol": "C4orf36"
+  },
+  {
+   "entrez_gene_id": 133121,
+   "symbol": "ENPP6"
+  },
+  {
+   "entrez_gene_id": 133688,
+   "symbol": "UGT3A1"
+  },
+  {
+   "entrez_gene_id": 135138,
+   "symbol": "PACRG"
+  },
+  {
+   "entrez_gene_id": 135644,
+   "symbol": "TRIM40"
+  },
+  {
+   "entrez_gene_id": 137492,
+   "symbol": "VPS37A"
+  },
+  {
+   "entrez_gene_id": 137695,
+   "symbol": "TMEM68"
+  },
+  {
+   "entrez_gene_id": 139422,
+   "symbol": "MAGEB10"
+  },
+  {
+   "entrez_gene_id": 139741,
+   "symbol": "ACTRT1"
+  },
+  {
+   "entrez_gene_id": 143098,
+   "symbol": "MPP7"
+  },
+  {
+   "entrez_gene_id": 144108,
+   "symbol": "SPTY2D1"
+  },
+  {
+   "entrez_gene_id": 144347,
+   "symbol": "FAM101A"
+  },
+  {
+   "entrez_gene_id": 144348,
+   "symbol": "ZNF664"
+  },
+  {
+   "entrez_gene_id": 145282,
+   "symbol": "MIPOL1"
+  },
+  {
+   "entrez_gene_id": 145501,
+   "symbol": "ISM2"
+  },
+  {
+   "entrez_gene_id": 146310,
+   "symbol": "RNF151"
+  },
+  {
+   "entrez_gene_id": 146691,
+   "symbol": "TOM1L2"
+  },
+  {
+   "entrez_gene_id": 146712,
+   "symbol": "B3GNTL1"
+  },
+  {
+   "entrez_gene_id": 147111,
+   "symbol": "NOTUM"
+  },
+  {
+   "entrez_gene_id": 148811,
+   "symbol": "PM20D1"
+  },
+  {
+   "entrez_gene_id": 148870,
+   "symbol": "CCDC27"
+  },
+  {
+   "entrez_gene_id": 149047,
+   "symbol": "MGC27382"
+  },
+  {
+   "entrez_gene_id": 149708,
+   "symbol": "WFDC5"
+  },
+  {
+   "entrez_gene_id": 150297,
+   "symbol": "C22orf42"
+  },
+  {
+   "entrez_gene_id": 150365,
+   "symbol": "MEI1"
+  },
+  {
+   "entrez_gene_id": 150786,
+   "symbol": "RAB6D"
+  },
+  {
+   "entrez_gene_id": 150962,
+   "symbol": "PUS10"
+  },
+  {
+   "entrez_gene_id": 152877,
+   "symbol": "FAM53A"
+  },
+  {
+   "entrez_gene_id": 153241,
+   "symbol": "CEP120"
+  },
+  {
+   "entrez_gene_id": 154043,
+   "symbol": "CNKSR3"
+  },
+  {
+   "entrez_gene_id": 158046,
+   "symbol": "NXNL2"
+  },
+  {
+   "entrez_gene_id": 158219,
+   "symbol": "TTC39B"
+  },
+  {
+   "entrez_gene_id": 158405,
+   "symbol": "KIAA1958"
+  },
+  {
+   "entrez_gene_id": 158835,
+   "symbol": "AWAT2"
+  },
+  {
+   "entrez_gene_id": 159162,
+   "symbol": "RBMY2FP"
+  },
+  {
+   "entrez_gene_id": 160365,
+   "symbol": "CLECL1"
+  },
+  {
+   "entrez_gene_id": 161436,
+   "symbol": "EML5"
+  },
+  {
+   "entrez_gene_id": 162517,
+   "symbol": "FBXO39"
+  },
+  {
+   "entrez_gene_id": 162967,
+   "symbol": "ZNF320"
+  },
+  {
+   "entrez_gene_id": 163882,
+   "symbol": "CNST"
+  },
+  {
+   "entrez_gene_id": 164091,
+   "symbol": "PAQR7"
+  },
+  {
+   "entrez_gene_id": 165186,
+   "symbol": "FAM179A"
+  },
+  {
+   "entrez_gene_id": 166863,
+   "symbol": "RBM46"
+  },
+  {
+   "entrez_gene_id": 168374,
+   "symbol": "ZNF92"
+  },
+  {
+   "entrez_gene_id": 168448,
+   "symbol": "CDC14C"
+  },
+  {
+   "entrez_gene_id": 169270,
+   "symbol": "ZNF596"
+  },
+  {
+   "entrez_gene_id": 170393,
+   "symbol": "C10orf91"
+  },
+  {
+   "entrez_gene_id": 170680,
+   "symbol": "PSORS1C2"
+  },
+  {
+   "entrez_gene_id": 171019,
+   "symbol": "ADAMTS19"
+  },
+  {
+   "entrez_gene_id": 196294,
+   "symbol": "IMMP1L"
+  },
+  {
+   "entrez_gene_id": 196374,
+   "symbol": "KRT78"
+  },
+  {
+   "entrez_gene_id": 196472,
+   "symbol": "FAM71C"
+  },
+  {
+   "entrez_gene_id": 201283,
+   "symbol": "AMZ2P1"
+  },
+  {
+   "entrez_gene_id": 201305,
+   "symbol": "SPNS3"
+  },
+  {
+   "entrez_gene_id": 202333,
+   "symbol": "CMYA5"
+  },
+  {
+   "entrez_gene_id": 206358,
+   "symbol": "SLC36A1"
+  },
+  {
+   "entrez_gene_id": 219432,
+   "symbol": "OR4C6"
+  },
+  {
+   "entrez_gene_id": 219623,
+   "symbol": "TMEM26"
+  },
+  {
+   "entrez_gene_id": 219982,
+   "symbol": "OR5A1"
+  },
+  {
+   "entrez_gene_id": 220108,
+   "symbol": "FAM124A"
+  },
+  {
+   "entrez_gene_id": 221079,
+   "symbol": "ARL5B"
+  },
+  {
+   "entrez_gene_id": 221442,
+   "symbol": "ADCY10P1"
+  },
+  {
+   "entrez_gene_id": 221477,
+   "symbol": "C6orf89"
+  },
+  {
+   "entrez_gene_id": 221504,
+   "symbol": "ZBTB9"
+  },
+  {
+   "entrez_gene_id": 222229,
+   "symbol": "LRWD1"
+  },
+  {
+   "entrez_gene_id": 222255,
+   "symbol": "ATXN7L1"
+  },
+  {
+   "entrez_gene_id": 222553,
+   "symbol": "SLC35F1"
+  },
+  {
+   "entrez_gene_id": 222659,
+   "symbol": "PXT1"
+  },
+  {
+   "entrez_gene_id": 245939,
+   "symbol": "DEFB128"
+  },
+  {
+   "entrez_gene_id": 252950,
+   "symbol": "TTTY18"
+  },
+  {
+   "entrez_gene_id": 252969,
+   "symbol": "NEIL2"
+  },
+  {
+   "entrez_gene_id": 253260,
+   "symbol": "RICTOR"
+  },
+  {
+   "entrez_gene_id": 253769,
+   "symbol": "WDR27"
+  },
+  {
+   "entrez_gene_id": 254394,
+   "symbol": "MCM9"
+  },
+  {
+   "entrez_gene_id": 254552,
+   "symbol": "NUDT8"
+  },
+  {
+   "entrez_gene_id": 254956,
+   "symbol": "MORN5"
+  },
+  {
+   "entrez_gene_id": 255426,
+   "symbol": "RASGEF1C"
+  },
+  {
+   "entrez_gene_id": 257019,
+   "symbol": "FRMD3"
+  },
+  {
+   "entrez_gene_id": 257236,
+   "symbol": "CCDC96"
+  },
+  {
+   "entrez_gene_id": 259215,
+   "symbol": "LY6G6F"
+  },
+  {
+   "entrez_gene_id": 266629,
+   "symbol": "SEC14L3"
+  },
+  {
+   "entrez_gene_id": 283050,
+   "symbol": "ZMIZ1-AS1"
+  },
+  {
+   "entrez_gene_id": 283159,
+   "symbol": "OR8D1"
+  },
+  {
+   "entrez_gene_id": 283208,
+   "symbol": "P4HA3"
+  },
+  {
+   "entrez_gene_id": 283219,
+   "symbol": "KCTD21"
+  },
+  {
+   "entrez_gene_id": 283337,
+   "symbol": "ZNF740"
+  },
+  {
+   "entrez_gene_id": 283375,
+   "symbol": "SLC39A5"
+  },
+  {
+   "entrez_gene_id": 283417,
+   "symbol": "DPY19L2"
+  },
+  {
+   "entrez_gene_id": 283446,
+   "symbol": "MYO1H"
+  },
+  {
+   "entrez_gene_id": 283985,
+   "symbol": "FADS6"
+  },
+  {
+   "entrez_gene_id": 284309,
+   "symbol": "ZNF776"
+  },
+  {
+   "entrez_gene_id": 284348,
+   "symbol": "LYPD5"
+  },
+  {
+   "entrez_gene_id": 284788,
+   "symbol": "LOC284788"
+  },
+  {
+   "entrez_gene_id": 285315,
+   "symbol": "C3orf33"
+  },
+  {
+   "entrez_gene_id": 285367,
+   "symbol": "RPUSD3"
+  },
+  {
+   "entrez_gene_id": 285759,
+   "symbol": "FLJ34503"
+  },
+  {
+   "entrez_gene_id": 285877,
+   "symbol": "POM121L12"
+  },
+  {
+   "entrez_gene_id": 326624,
+   "symbol": "RAB37"
+  },
+  {
+   "entrez_gene_id": 337960,
+   "symbol": "KRTAP13-3"
+  },
+  {
+   "entrez_gene_id": 337976,
+   "symbol": "KRTAP20-2"
+  },
+  {
+   "entrez_gene_id": 338588,
+   "symbol": "LINC00705"
+  },
+  {
+   "entrez_gene_id": 338596,
+   "symbol": "ST8SIA6"
+  },
+  {
+   "entrez_gene_id": 338758,
+   "symbol": "ATP2B1-AS1"
+  },
+  {
+   "entrez_gene_id": 338949,
+   "symbol": "TMEM202"
+  },
+  {
+   "entrez_gene_id": 339184,
+   "symbol": "CCDC144NL"
+  },
+  {
+   "entrez_gene_id": 339416,
+   "symbol": "ANKRD45"
+  },
+  {
+   "entrez_gene_id": 339501,
+   "symbol": "PRSS38"
+  },
+  {
+   "entrez_gene_id": 340069,
+   "symbol": "FAM170A"
+  },
+  {
+   "entrez_gene_id": 340543,
+   "symbol": "TCEAL5"
+  },
+  {
+   "entrez_gene_id": 340554,
+   "symbol": "ZC3H12B"
+  },
+  {
+   "entrez_gene_id": 340706,
+   "symbol": "VWA2"
+  },
+  {
+   "entrez_gene_id": 340745,
+   "symbol": "LRIT2"
+  },
+  {
+   "entrez_gene_id": 341032,
+   "symbol": "C11orf53"
+  },
+  {
+   "entrez_gene_id": 343035,
+   "symbol": "RD3"
+  },
+  {
+   "entrez_gene_id": 343450,
+   "symbol": "KCNT2"
+  },
+  {
+   "entrez_gene_id": 344018,
+   "symbol": "FIGLA"
+  },
+  {
+   "entrez_gene_id": 344454,
+   "symbol": "AOX2P"
+  },
+  {
+   "entrez_gene_id": 345757,
+   "symbol": "FAM174A"
+  },
+  {
+   "entrez_gene_id": 346525,
+   "symbol": "OR2A12"
+  },
+  {
+   "entrez_gene_id": 347475,
+   "symbol": "CCDC160"
+  },
+  {
+   "entrez_gene_id": 347527,
+   "symbol": "ARSH"
+  },
+  {
+   "entrez_gene_id": 348174,
+   "symbol": "CLEC18A"
+  },
+  {
+   "entrez_gene_id": 348235,
+   "symbol": "SKA2"
+  },
+  {
+   "entrez_gene_id": 348926,
+   "symbol": "FAM86EP"
+  },
+  {
+   "entrez_gene_id": 353376,
+   "symbol": "TICAM2"
+  },
+  {
+   "entrez_gene_id": 374897,
+   "symbol": "SBSN"
+  },
+  {
+   "entrez_gene_id": 374899,
+   "symbol": "ZNF829"
+  },
+  {
+   "entrez_gene_id": 387273,
+   "symbol": "KRTAP5-10"
+  },
+  {
+   "entrez_gene_id": 387647,
+   "symbol": "PTCHD3P1"
+  },
+  {
+   "entrez_gene_id": 387742,
+   "symbol": "FAM99A"
+  },
+  {
+   "entrez_gene_id": 387837,
+   "symbol": "CLEC12B"
+  },
+  {
+   "entrez_gene_id": 387923,
+   "symbol": "SERP2"
+  },
+  {
+   "entrez_gene_id": 388021,
+   "symbol": "TMEM179"
+  },
+  {
+   "entrez_gene_id": 388199,
+   "symbol": "PRR25"
+  },
+  {
+   "entrez_gene_id": 388389,
+   "symbol": "CCDC103"
+  },
+  {
+   "entrez_gene_id": 388701,
+   "symbol": "C1orf189"
+  },
+  {
+   "entrez_gene_id": 389136,
+   "symbol": "VGLL3"
+  },
+  {
+   "entrez_gene_id": 389336,
+   "symbol": "C5orf46"
+  },
+  {
+   "entrez_gene_id": 389434,
+   "symbol": "IYD"
+  },
+  {
+   "entrez_gene_id": 390066,
+   "symbol": "OR52D1"
+  },
+  {
+   "entrez_gene_id": 390327,
+   "symbol": "OR6C70"
+  },
+  {
+   "entrez_gene_id": 392196,
+   "symbol": "LOC392196"
+  },
+  {
+   "entrez_gene_id": 392255,
+   "symbol": "GDF6"
+  },
+  {
+   "entrez_gene_id": 399670,
+   "symbol": "RPL13AP17"
+  },
+  {
+   "entrez_gene_id": 399671,
+   "symbol": "HEATR4"
+  },
+  {
+   "entrez_gene_id": 399744,
+   "symbol": "LINC00999"
+  },
+  {
+   "entrez_gene_id": 399979,
+   "symbol": "SNX19"
+  },
+  {
+   "entrez_gene_id": 400673,
+   "symbol": "VMAC"
+  },
+  {
+   "entrez_gene_id": 400818,
+   "symbol": "NBPF9"
+  },
+  {
+   "entrez_gene_id": 400830,
+   "symbol": "DEFB132"
+  },
+  {
+   "entrez_gene_id": 400935,
+   "symbol": "IL17REL"
+  },
+  {
+   "entrez_gene_id": 401387,
+   "symbol": "LRRD1"
+  },
+  {
+   "entrez_gene_id": 401474,
+   "symbol": "SAMD12"
+  },
+  {
+   "entrez_gene_id": 401546,
+   "symbol": "C9orf152"
+  },
+  {
+   "entrez_gene_id": 403257,
+   "symbol": "OR4C45"
+  },
+  {
+   "entrez_gene_id": 404217,
+   "symbol": "CTXN1"
+  },
+  {
+   "entrez_gene_id": 414060,
+   "symbol": "TBC1D3C"
+  },
+  {
+   "entrez_gene_id": 414189,
+   "symbol": "AGAP6"
+  },
+  {
+   "entrez_gene_id": 414899,
+   "symbol": "BLID"
+  },
+  {
+   "entrez_gene_id": 440695,
+   "symbol": "ETV3L"
+  },
+  {
+   "entrez_gene_id": 440730,
+   "symbol": "TRIM67"
+  },
+  {
+   "entrez_gene_id": 441027,
+   "symbol": "TMEM150C"
+  },
+  {
+   "entrez_gene_id": 441151,
+   "symbol": "TMEM151B"
+  },
+  {
+   "entrez_gene_id": 441273,
+   "symbol": "SPDYE2"
+  },
+  {
+   "entrez_gene_id": 441478,
+   "symbol": "NRARP"
+  },
+  {
+   "entrez_gene_id": 441608,
+   "symbol": "OR5B3"
+  },
+  {
+   "entrez_gene_id": 474170,
+   "symbol": "LRRC37A2"
+  },
+  {
+   "entrez_gene_id": 606500,
+   "symbol": "SNORD68"
+  },
+  {
+   "entrez_gene_id": 606551,
+   "symbol": "UBE2MP1"
+  },
+  {
+   "entrez_gene_id": 642636,
+   "symbol": "RAD21L1"
+  },
+  {
+   "entrez_gene_id": 643161,
+   "symbol": "FAM25A"
+  },
+  {
+   "entrez_gene_id": 643414,
+   "symbol": "LIPK"
+  },
+  {
+   "entrez_gene_id": 644809,
+   "symbol": "C15orf56"
+  },
+  {
+   "entrez_gene_id": 644943,
+   "symbol": "RASSF10"
+  },
+  {
+   "entrez_gene_id": 653240,
+   "symbol": "KRTAP4-11"
+  },
+  {
+   "entrez_gene_id": 653566,
+   "symbol": "SPCS2P4"
+  },
+  {
+   "entrez_gene_id": 654346,
+   "symbol": "LGALS9C"
+  },
+  {
+   "entrez_gene_id": 654817,
+   "symbol": "NCF1C"
+  },
+  {
+   "entrez_gene_id": 727905,
+   "symbol": "FAM75A5"
+  },
+  {
+   "entrez_gene_id": 768096,
+   "symbol": "HAR1A"
+  },
+  {
+   "entrez_gene_id": 100125288,
+   "symbol": "ZGLP1"
+  },
+  {
+   "entrez_gene_id": 100128124,
+   "symbol": "HGC6.3"
+  },
+  {
+   "entrez_gene_id": 100131902,
+   "symbol": "KRTAP25-1"
+  },
+  {
+   "entrez_gene_id": 100272228,
+   "symbol": "LINC00894"
+  },
+  {
+   "entrez_gene_id": 100288801,
+   "symbol": "FRG2C"
+  }
+ ],
+ "expression_values_read": false,
+ "pairwise_associations_computed": false,
+ "readiness_contribution": 0,
+ "claim_boundary": "Source-structure-only deterministic candidates; not measured associations, ranked gaps, findings, discoveries, or evidence of absent knowledge."
+}
