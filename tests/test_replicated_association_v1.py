@@ -9,8 +9,10 @@ import pytest
 
 from pipeline.evidence.replicated_association_v1 import (
     PROTOCOL_PATH,
+    P_VALUE_FLOOR,
     EvidenceV1Error,
     _gate_pairs,
+    _rho_p_values,
     _write_new_json,
     audit_protocol,
     benjamini_hochberg,
@@ -106,6 +108,14 @@ def test_benjamini_hochberg_and_replication_gate_are_mechanical():
         gates,
     )
     assert passed.tolist() == [True, False, False, True]
+
+
+def test_extreme_p_values_are_conservative_positive_bounds_not_zero():
+    p_values, floor_count = _rho_p_values(np.asarray([0.99999999, 0.0]), sample_count=1980)
+
+    assert floor_count == 1
+    assert p_values[0] == P_VALUE_FLOOR
+    assert p_values[1] == pytest.approx(1.0)
 
 
 def test_sealed_json_writer_refuses_overwrite(tmp_path):

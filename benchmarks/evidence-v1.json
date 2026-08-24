@@ -65,6 +65,7 @@
   "p_value": "two_sided_fisher_z_normal_approximation",
   "multiple_testing": "benjamini_hochberg_per_cohort",
   "quantize_rho_decimals_before_gates": 8,
+  "underflow_policy": "clamp p to float64 smallest positive normal before BH and export q as conservative when clamped",
   "candidate_score_or_literature_metric_used": false
  },
  "machine_gates": {
@@ -117,7 +118,7 @@
  ],
  "implementation": {
   "path": "../pipeline/evidence/replicated_association_v1.py",
-  "sha256": "816005d44e47b0b99965d08ceadf6df660983bb766a1f04ede4cec5f66f4bca4",
+  "sha256": "9d43b994f582a38badcabf5b6dc841338a3b472f05aff294711033ef4c557737",
   "dependency": "numpy>=1.26",
   "canonical_json": "canonical-json-v1"
  },
@@ -140,6 +141,21 @@
     "all claim boundaries"
    ],
    "outcome_seen": false
+  },
+  {
+   "id": "A2",
+   "date": "2026-08-24",
+   "timing": "after the first complete pairwise run exposed the numeric representation issue and before any result artifact was committed or published",
+   "trigger": "The first complete run exported several approximate q-values as exact 0.0 after float64 underflow. The gates only require q <= 0.01, so the zeros did not affect pass decisions, but presenting them as exact values would overstate numeric evidence.",
+   "change": "Clamp underflowed two-sided p-values to the float64 smallest positive normal before Benjamini-Hochberg adjustment and label every exported q-value conservative. Preserve the superseded byte-complete run off repository.",
+   "unchanged": [
+    "both source byte identities and sample rows",
+    "the sealed 1,000-gene universe and all 499,500 pair identities",
+    "all effect, q-value, agreement, power, and null-control thresholds",
+    "every pair pass or censor decision and the deterministic publication ordering",
+    "all claim boundaries"
+   ],
+   "outcome_seen": true
   }
  ],
  "human_dependencies": [],

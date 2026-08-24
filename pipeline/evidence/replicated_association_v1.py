@@ -31,6 +31,7 @@ RESULT_MANIFEST_PATH = ARTIFACTS_DIR / "evidence-v1.json"
 MODULE_PATH = Path(__file__).resolve()
 BASE_PROTOCOL_SHA256 = "f0fe2090a08011616d205b129057044b9b3da1efd4280e6e55753f98d9fa21e2"
 BASE_PROTOCOL_COMMIT = "e0b36b7"
+P_VALUE_FLOOR = float(np.finfo(np.float64).tiny)
 
 EXPECTED_SOURCE_IDENTITIES = {
     "tcga_brca_pancan_2018_expression": {
@@ -233,6 +234,11 @@ def audit_protocol(path: Path = PROTOCOL_PATH) -> dict:
         and measurement.get("quantize_rho_decimals_before_gates") == 8,
         "measurement formula drifted",
     )
+    _require(
+        measurement.get("underflow_policy")
+        == "clamp p to float64 smallest positive normal before BH and export q as conservative when clamped",
+        "measurement underflow policy drifted",
+    )
 
     gates = payload.get("machine_gates")
     _require(isinstance(gates, dict), "machine gates are missing")
@@ -304,7 +310,7 @@ def audit_protocol(path: Path = PROTOCOL_PATH) -> dict:
         "base freeze identity drifted",
     )
     amendments = payload.get("amendments")
-    _require(isinstance(amendments, list) and len(amendments) == 1, "amendment trail drifted")
+    _require(isinstance(amendments, list) and len(amendments) == 2, "amendment trail drifted")
     amendment = amendments[0]
     _require(
         amendment.get("id") == "A1"
@@ -321,6 +327,23 @@ def audit_protocol(path: Path = PROTOCOL_PATH) -> dict:
             "all claim boundaries",
         },
         "A1 disclosure drifted",
+    )
+    amendment = amendments[1]
+    _require(
+        amendment.get("id") == "A2"
+        and amendment.get("outcome_seen") is True
+        and "after the first complete pairwise run" in amendment.get("timing", "")
+        and "exact 0.0" in amendment.get("trigger", "")
+        and "smallest positive normal" in amendment.get("change", "")
+        and set(amendment.get("unchanged", []))
+        == {
+            "both source byte identities and sample rows",
+            "the sealed 1,000-gene universe and all 499,500 pair identities",
+            "all effect, q-value, agreement, power, and null-control thresholds",
+            "every pair pass or censor decision and the deterministic publication ordering",
+            "all claim boundaries",
+        },
+        "A2 disclosure drifted",
     )
     _require(payload.get("readiness_contribution") == 0, "protocol claims evidential readiness")
     return payload
@@ -713,14 +736,16 @@ def standardised_rank_rows(matrix: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     return output, usable
 
 
-def _rho_p_values(rho: np.ndarray, sample_count: int) -> np.ndarray:
+def _rho_p_values(rho: np.ndarray, sample_count: int) -> tuple[np.ndarray, int]:
     clipped = np.clip(rho, -0.999999999999, 0.999999999999)
     z = np.arctanh(clipped) * math.sqrt(sample_count - 3)
-    return np.fromiter(
+    raw = np.fromiter(
         (math.erfc(abs(float(value)) / math.sqrt(2.0)) for value in z),
         dtype=np.float64,
         count=z.size,
     )
+    floored = int(np.count_nonzero(raw < P_VALUE_FLOOR))
+    return np.maximum(raw, P_VALUE_FLOOR), floored
 
 
 def benjamini_hochberg(p_values: np.ndarray) -> np.ndarray:
@@ -779,11 +804,15 @@ def _gate_pairs(
     )
 
 
-def _q_values_for_pairs(rho: np.ndarray, usable: np.ndarray, sample_count: int) -> np.ndarray:
+def _q_values_for_pairs(
+    rho: np.ndarray,
+    usable: np.ndarray,
+    sample_count: int,
+) -> tuple[np.ndarray, int]:
     q_values = np.full(rho.size, np.nan, dtype=np.float64)
-    p_values = _rho_p_values(rho[usable], sample_count)
+    p_values, floor_count = _rho_p_values(rho[usable], sample_count)
     q_values[usable] = benjamini_hochberg(p_values)
-    return q_values
+    return q_values, floor_count
 
 
 def _write_full_table(
@@ -804,7 +833,7 @@ def _write_full_table(
         raise EvidenceV1Error(f"refusing to overwrite sealed evidence: {output}") from exc
     with os.fdopen(descriptor, "wb") as raw:
         with gzip.GzipFile(fileobj=raw, mode="wb", filename="", mtime=0) as compressed:
-            header = "entrez_a\tsymbol_a\tentrez_b\tsymbol_b\trho_tcga\tq_tcga\trho_metabric\tq_metabric\tstatus\n"
+            header = "entrez_a\tsymbol_a\tentrez_b\tsymbol_b\trho_tcga\tq_tcga_conservative\trho_metabric\tq_metabric_conservative\tstatus\n"
             compressed.write(header.encode("utf-8"))
             for index in range(left.size):
                 gene_a = genes[int(left[index])]
@@ -866,12 +895,12 @@ def _published_observations(
                 "tcga": {
                     "samples": sample_counts[0],
                     "spearman_rho": float(rho_a[index]),
-                    "benjamini_hochberg_q": float(q_a[index]),
+                    "benjamini_hochberg_q_conservative": float(q_a[index]),
                 },
                 "metabric": {
                     "samples": sample_counts[1],
                     "spearman_rho": float(rho_b[index]),
-                    "benjamini_hochberg_q": float(q_b[index]),
+                    "benjamini_hochberg_q_conservative": float(q_b[index]),
                 },
                 "generated_claim": (
                     f"In the pinned TCGA and METABRIC breast-tumour cohorts, expression ranks "
@@ -916,8 +945,8 @@ def evaluate(
     decimals = protocol["measurement"]["quantize_rho_decimals_before_gates"]
     rho_a, usable_a = _pair_arrays(ranked[0][0], ranked[0][1], left, right, decimals)
     rho_b, usable_b = _pair_arrays(ranked[1][0], ranked[1][1], left, right, decimals)
-    q_a = _q_values_for_pairs(rho_a, usable_a, sample_counts[0])
-    q_b = _q_values_for_pairs(rho_b, usable_b, sample_counts[1])
+    q_a, floor_a = _q_values_for_pairs(rho_a, usable_a, sample_counts[0])
+    q_b, floor_b = _q_values_for_pairs(rho_b, usable_b, sample_counts[1])
     passed = _gate_pairs(rho_a, rho_b, q_a, q_b, gates)
 
     null_seed = protocol["negative_control"]["seed"]
@@ -925,8 +954,8 @@ def evaluate(
     null_b = _permuted_rows(ranked[1][0], f"{null_seed}\n{specs[1].source_id}")
     null_rho_a, null_usable_a = _pair_arrays(null_a, ranked[0][1], left, right, decimals)
     null_rho_b, null_usable_b = _pair_arrays(null_b, ranked[1][1], left, right, decimals)
-    null_q_a = _q_values_for_pairs(null_rho_a, null_usable_a, sample_counts[0])
-    null_q_b = _q_values_for_pairs(null_rho_b, null_usable_b, sample_counts[1])
+    null_q_a, null_floor_a = _q_values_for_pairs(null_rho_a, null_usable_a, sample_counts[0])
+    null_q_b, null_floor_b = _q_values_for_pairs(null_rho_b, null_usable_b, sample_counts[1])
     null_passed = _gate_pairs(null_rho_a, null_rho_b, null_q_a, null_q_b, gates)
     null_pass_count = int(np.count_nonzero(null_passed))
     calibration_passed = null_pass_count <= gates["maximum_null_pass_count"]
@@ -998,6 +1027,18 @@ def evaluate(
             "null_calibration": "passed" if calibration_passed else "failed",
             "null_pass_count": null_pass_count,
             "maximum_null_pass_count": gates["maximum_null_pass_count"],
+        },
+        "numeric_bounds": {
+            "p_value_floor": P_VALUE_FLOOR,
+            "policy": "p-values below the float64 smallest positive normal are clamped before BH; affected exported q-values are conservative, not exact zeros",
+            "measured_p_values_clamped": {
+                specs[0].source_id: floor_a,
+                specs[1].source_id: floor_b,
+            },
+            "permuted_null_p_values_clamped": {
+                specs[0].source_id: null_floor_a,
+                specs[1].source_id: null_floor_b,
+            },
         },
         "counts": {
             "tested_pairs": int(left.size),
@@ -1084,6 +1125,21 @@ def audit_result(
         and calibration == ("passed" if null_count <= gates["maximum_null_pass_count"] else "failed"),
         "null calibration evidence drifted",
     )
+    bounds = payload.get("numeric_bounds")
+    _require(
+        isinstance(bounds, dict)
+        and bounds.get("p_value_floor") == P_VALUE_FLOOR
+        and "conservative, not exact zeros" in bounds.get("policy", "")
+        and all(
+            isinstance(value, int) and value >= 0
+            for group in (
+                bounds.get("measured_p_values_clamped", {}),
+                bounds.get("permuted_null_p_values_clamped", {}),
+            )
+            for value in group.values()
+        ),
+        "numeric-bound disclosure drifted",
+    )
     counts = payload.get("counts")
     observations = payload.get("observations")
     _require(isinstance(counts, dict) and isinstance(observations, list), "result counts are malformed")
@@ -1106,7 +1162,8 @@ def audit_result(
             _require(isinstance(measured, dict), f"observation {expected_rank}: {cohort} missing")
             _require(
                 abs(measured.get("spearman_rho", 0)) >= protocol["machine_gates"]["minimum_absolute_rho_per_cohort"]
-                and measured.get("benjamini_hochberg_q", 1) <= protocol["machine_gates"]["maximum_q_per_cohort"],
+                and 0 < measured.get("benjamini_hochberg_q_conservative", 1)
+                <= protocol["machine_gates"]["maximum_q_per_cohort"],
                 f"observation {expected_rank}: {cohort} gate failed",
             )
         _require(
