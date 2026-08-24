@@ -273,6 +273,23 @@ existing knowledge. It contributes zero readiness until future outcomes pass the
 acquisition directly on a chosen data volume; see [`data/README.md`](data/README.md). A successful
 download is still only local source acquisition, not a sealed T0 or a scientific result.
 
+### Autonomous empirical evidence track
+
+[`benchmarks/evidence-v1.json`](benchmarks/evidence-v1.json) freezes a separate empirical test
+before any pairwise association was computed. It deterministically selects 1,000 common Entrez
+genes without reading expression values, tests all 499,500 unordered pairs in a pinned TCGA breast
+cohort, and requires same-direction replication in the independent, cross-platform METABRIC
+cohort. Source integrity, sample power, effect size, per-cohort Benjamini–Hochberg control, effect
+agreement, and an independently permuted null are machine gates; missing or failed evidence
+produces no claim and has no manual override. Run
+`python -m pipeline.evidence.replicated_association_v1 audit-protocol` to audit the frozen boundary.
+
+Even a passing row is only a `replicated_computational_observation`: a cohort-level
+rank-expression association. It is not evidence of causality, mechanism, clinical utility,
+cell-intrinsic regulation, novelty to humanity, or absent academic or non-academic knowledge. The
+failed OpenAlex and unvalidated PubMed ranking methods are not inputs to this experiment, and LLM
+interpretation remains disabled.
+
 ### Archived metric-v3 audit track
 
 The previous replacement experiment is documented in

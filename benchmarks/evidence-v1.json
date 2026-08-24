@@ -1,0 +1,128 @@
+{
+ "schema_version": 1,
+ "id": "replicated-expression-association-v1",
+ "status": "frozen_before_any_pairwise_association",
+ "frozen_on": "2026-08-24",
+ "purpose": "Autonomously measure strong gene-expression rank associations that reproduce in two pinned independent breast-tumour cohorts, with no human labels, pair selection, threshold changes, or interpretation.",
+ "freeze_boundary": {
+  "seen_before_freeze": [
+   "two complete source transports and their Git LFS byte identities",
+   "source metadata, both headers, and one data row per source for parser conformance"
+  ],
+  "not_seen_before_freeze": [
+   "any pairwise association",
+   "any candidate ranking",
+   "any passing or null-control pair count"
+  ],
+  "disclosure": "The source files were downloaded and byte-verified before freeze. Only metadata, headers, sample-column counts, and one row from each file were inspected to establish parser conformance; no cross-gene calculation was run."
+ },
+ "sources": [
+  {
+   "id": "tcga_brca_pancan_2018_expression",
+   "study_id": "brca_tcga_pan_can_atlas_2018",
+   "filename": "data_mrna_seq_v2_rsem.txt",
+   "url": "https://media.githubusercontent.com/media/cBioPortal/datahub/0cc9138746c08b304f8dac92c31983e0ef44af1d/public/brca_tcga_pan_can_atlas_2018/data_mrna_seq_v2_rsem.txt",
+   "bytes": 154654165,
+   "sha256": "aba030e1f04a196ee6c2118ed37e777b533f7fd24ffd1bcbde908dcee33b2eb5",
+   "platform": "batch_normalized_illumina_hiseq_rnaseqv2_rsem",
+   "role": "discovery_cohort",
+   "provider": "cBioPortal DataHub",
+   "source_metadata": "https://github.com/cBioPortal/datahub/blob/0cc9138746c08b304f8dac92c31983e0ef44af1d/public/brca_tcga_pan_can_atlas_2018/meta_mrna_seq_v2_rsem.txt"
+  },
+  {
+   "id": "metabric_brca_expression",
+   "study_id": "brca_metabric",
+   "filename": "data_mrna_illumina_microarray.txt",
+   "url": "https://media.githubusercontent.com/media/cBioPortal/datahub/0cc9138746c08b304f8dac92c31983e0ef44af1d/public/brca_metabric/data_mrna_illumina_microarray.txt",
+   "bytes": 689254846,
+   "sha256": "4470069455a4ed38ffed5d12513e468bbf5b9a57d66fa1162e7bd9a64889ab7a",
+   "platform": "illumina_ht12_v3_microarray_log2_intensity",
+   "role": "replication_cohort",
+   "provider": "cBioPortal DataHub",
+   "source_metadata": "https://github.com/cBioPortal/datahub/blob/0cc9138746c08b304f8dac92c31983e0ef44af1d/public/brca_metabric/meta_mrna_illumina_microarray.txt"
+  }
+ ],
+ "independence_contract": {
+  "different_study_ids_required": true,
+  "different_measurement_platforms_required": true,
+  "sample_id_intersection_must_be_empty": true,
+  "failure_action": "abstain_without_claims"
+ },
+ "candidate_universe": {
+  "entity": "positive Entrez Gene ids occurring exactly once in each source with the same non-empty HUGO symbol",
+  "selection": "sha256_bottom_k_over_common_unique_positive_entrez_gene_ids",
+  "seed": "lacuna-replicated-expression-association-v1-gene-universe",
+  "k": 1000,
+  "pair_order": "all_unordered_pairs_entrez_id_ascending",
+  "expected_pair_count": 499500,
+  "uses_expression_values": false,
+  "replacement_allowed": false
+ },
+ "measurement": {
+  "association": "spearman_average_ties",
+  "missing_or_nonfinite_gene_action": "censor_every_pair_containing_that_gene",
+  "constant_gene_action": "censor_every_pair_containing_that_gene",
+  "p_value": "two_sided_fisher_z_normal_approximation",
+  "multiple_testing": "benjamini_hochberg_per_cohort",
+  "quantize_rho_decimals_before_gates": 8,
+  "candidate_score_or_literature_metric_used": false
+ },
+ "machine_gates": {
+  "minimum_samples_per_cohort": 800,
+  "minimum_analyzable_genes_per_cohort": 950,
+  "maximum_q_per_cohort": 0.01,
+  "minimum_absolute_rho_per_cohort": 0.4,
+  "maximum_absolute_rho_difference": 0.15,
+  "same_direction_required": true,
+  "maximum_null_pass_count": 5,
+  "missing_source_integrity_power_or_calibration_action": "abstain_without_claims"
+ },
+ "negative_control": {
+  "method": "independent_sample_permutation_per_gene_per_cohort",
+  "replicates": 1,
+  "seed": "lacuna-replicated-expression-association-v1-permuted-null",
+  "preserves": "each selected gene's marginal empirical distribution",
+  "destroys": "cross-gene sample alignment",
+  "failure_action": "abstain_without_claims"
+ },
+ "publication": {
+  "status_label": "replicated_computational_observation",
+  "ordering": "descending minimum absolute rho across cohorts, then ascending Entrez ids",
+  "maximum_published_claims": 100,
+  "full_pair_table_required": true,
+  "full_pair_table_committed": false,
+  "overwrite_allowed": false,
+  "generated_text_must_be_templated_from_measured_fields": true
+ },
+ "claim_boundary": {
+  "allowed_claim": "a bounded rank-expression association observed in both pinned cohorts under this frozen protocol",
+  "not_a_claim_of": [
+   "causality",
+   "mechanism",
+   "clinical utility or safety",
+   "cell-intrinsic regulation",
+   "novelty to humanity",
+   "absence of academic or non-academic knowledge",
+   "a validated knowledge-gap detector",
+   "a relation that generalizes beyond these cohorts",
+   "independence from tumour subtype, purity, batch, or cell-composition confounding"
+  ]
+ },
+ "limitations": [
+  "A replicated cohort-level correlation can be driven by tumour subtype, purity, batch, stromal or immune composition, copy number, or other shared causes.",
+  "Cross-platform agreement reduces platform-specific risk but does not establish a biological mechanism or cell-intrinsic regulation.",
+  "The deterministic 1,000-gene universe is a score-blind computational subset, not a representative sample of biology.",
+  "cBioPortal's pinned source metadata warns that the TCGA transport is preliminary and should be used with caution.",
+  "Academic corpora and expression cohorts omit or thinly represent non-academic, practitioner, craft, indigenous, historical, and other human knowledge."
+ ],
+ "implementation": {
+  "path": "../pipeline/evidence/replicated_association_v1.py",
+  "sha256": "6a2f3ef73560ae13ee5f635ea5b2ee87d29311be17e75579ba6e8edc9573a4ed",
+  "dependency": "numpy>=1.26",
+  "canonical_json": "canonical-json-v1"
+ },
+ "human_dependencies": [],
+ "manual_override_allowed": false,
+ "llm_interpretation_authorized": false,
+ "readiness_contribution": 0
+}

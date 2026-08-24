@@ -39,6 +39,11 @@ the expense of gap detection, validation, or traceability.
 - A source-pinned monthly machine watcher now observes only the next sequential official 2027–2029
   PubMed/MeSH release identity. It has zero human dependencies and zero readiness; missing,
   out-of-order, or conflicting release evidence forces machine abstention.
+- `benchmarks/evidence-v1.json` is a separate empirical track frozen before any pairwise result. It
+  tests a score-blind 1,000-gene subset across pinned TCGA and METABRIC breast-tumour expression
+  cohorts. Until its source, power, replication, and permuted-null gates execute, it has zero
+  readiness. A passing row may be called only a replicated computational observation in those two
+  cohorts, never causal, mechanistic, clinical, cell-intrinsic, or novel to humanity.
 - A pass on the active track validates only future PubMed MeSH link-emergence ranking. Never call it
   a validated knowledge-gap detector, autonomous scientific discovery, or evidence of absent
   human knowledge.
@@ -75,6 +80,7 @@ python -m pipeline.benchmark.validate_autonomous_predictions_v1
 python -m pipeline.benchmark.autonomous_release_watch audit
 python -m pipeline.benchmark.autonomous_release_watch status
 python -m pipeline.benchmark.autonomous_release_watch probe
+python -m pipeline.evidence.replicated_association_v1 audit-protocol
 python -m pipeline.benchmark.autonomous_metric_v1 conformance --help
 python -m pipeline.benchmark.autonomous_metric_v1 build --help
 python -m pipeline.benchmark.autonomous_metric_v1 seal --help
