@@ -4,3 +4,5 @@
 # These generated audit manifests are byte-addressed by frozen contracts. Preserve their exact
 # line endings so a clean Linux checkout has the same SHA-256 as the sealed Windows artifacts.
 benchmarks/v3/manifests/*.json binary
+benchmarks/v3/candidates.json binary
+artifacts/negative-candidates.json binary
