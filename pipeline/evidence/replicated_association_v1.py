@@ -29,6 +29,8 @@ SOURCE_MANIFEST_PATH = BENCHMARKS_DIR / "evidence" / "source-v1.json"
 UNIVERSE_MANIFEST_PATH = BENCHMARKS_DIR / "evidence" / "candidate-universe-v1.json"
 RESULT_MANIFEST_PATH = ARTIFACTS_DIR / "evidence-v1.json"
 MODULE_PATH = Path(__file__).resolve()
+BASE_PROTOCOL_SHA256 = "f0fe2090a08011616d205b129057044b9b3da1efd4280e6e55753f98d9fa21e2"
+BASE_PROTOCOL_COMMIT = "e0b36b7"
 
 EXPECTED_SOURCE_IDENTITIES = {
     "tcga_brca_pancan_2018_expression": {
@@ -122,6 +124,13 @@ def _write_new_json(path: Path, payload: object) -> None:
 
 def _module_sha256() -> str:
     return _sha256_file(MODULE_PATH)
+
+
+def _score_free_protocol_sha256(protocol: Mapping) -> str:
+    base = protocol.get("base_freeze")
+    if isinstance(base, dict):
+        return str(base.get("canonical_json_sha256", ""))
+    return sha256_payload(protocol)
 
 
 def _source_specs(protocol: Mapping) -> tuple[SourceSpec, ...]:
@@ -285,6 +294,34 @@ def audit_protocol(path: Path = PROTOCOL_PATH) -> dict:
         and source.get("sha256") == _module_sha256(),
         "evidence-v1 implementation identity drifted",
     )
+    _require(
+        payload.get("base_freeze")
+        == {
+            "commit": BASE_PROTOCOL_COMMIT,
+            "canonical_json_sha256": BASE_PROTOCOL_SHA256,
+            "implementation_sha256": "6a2f3ef73560ae13ee5f635ea5b2ee87d29311be17e75579ba6e8edc9573a4ed",
+        },
+        "base freeze identity drifted",
+    )
+    amendments = payload.get("amendments")
+    _require(isinstance(amendments, list) and len(amendments) == 1, "amendment trail drifted")
+    amendment = amendments[0]
+    _require(
+        amendment.get("id") == "A1"
+        and amendment.get("outcome_seen") is False
+        and "before any pairwise association" in amendment.get("timing", "")
+        and "Entrez 404217" in amendment.get("trigger", "")
+        and "already-frozen" in amendment.get("trigger", "")
+        and "censors the gene" in amendment.get("change", "")
+        and set(amendment.get("unchanged", []))
+        == {
+            "both source byte identities",
+            "the sealed 1,000-gene universe and all 499,500 pair identities",
+            "all effect, q-value, agreement, power, and null-control thresholds",
+            "all claim boundaries",
+        },
+        "A1 disclosure drifted",
+    )
     _require(payload.get("readiness_contribution") == 0, "protocol claims evidential readiness")
     return payload
 
@@ -383,7 +420,7 @@ def build_source_manifest(source_dir: Path, output: Path = SOURCE_MANIFEST_PATH)
         "status": "score_free_source_audit_complete",
         "protocol": {
             "id": protocol["id"],
-            "canonical_json_sha256": sha256_payload(protocol),
+            "canonical_json_sha256": _score_free_protocol_sha256(protocol),
         },
         "sources": [
             {
@@ -422,7 +459,7 @@ def audit_source_manifest(path: Path = SOURCE_MANIFEST_PATH) -> dict:
     )
     _require(
         payload.get("protocol")
-        == {"id": protocol["id"], "canonical_json_sha256": sha256_payload(protocol)},
+        == {"id": protocol["id"], "canonical_json_sha256": _score_free_protocol_sha256(protocol)},
         "source manifest does not pin the protocol",
     )
     entries = payload.get("sources")
@@ -511,7 +548,7 @@ def build_candidate_universe(
         "status": "score_free_candidate_universe_complete",
         "protocol": {
             "id": protocol["id"],
-            "canonical_json_sha256": sha256_payload(protocol),
+            "canonical_json_sha256": _score_free_protocol_sha256(protocol),
         },
         "source_manifest": {
             "path": "source-v1.json",
@@ -552,7 +589,7 @@ def audit_candidate_universe(
     )
     _require(
         payload.get("protocol")
-        == {"id": protocol["id"], "canonical_json_sha256": sha256_payload(protocol)},
+        == {"id": protocol["id"], "canonical_json_sha256": _score_free_protocol_sha256(protocol)},
         "candidate universe does not pin the protocol",
     )
     _require(
@@ -623,14 +660,26 @@ def _load_selected_matrix(path: Path, genes: Sequence[dict]) -> tuple[list[str],
         _require(entrez not in seen, f"selected Entrez id {entrez} is duplicated in {path}")
         _require(symbol == genes[index]["symbol"], f"selected gene label drifted for {entrez}")
         _require(len(row) == len(header), f"selected row width drifted for {entrez}")
-        try:
-            values = np.asarray(row[2:], dtype=np.float64)
-        except ValueError as exc:
-            raise EvidenceV1Error(f"non-numeric selected row for {entrez} in {path}") from exc
+        values = parse_expression_values(row[2:], context=f"Entrez {entrez} in {path}")
         matrix[index] = values
         seen.add(entrez)
     _require(len(seen) == len(genes), f"selected genes missing from {path}")
     return header[2:], matrix
+
+
+def parse_expression_values(values: Sequence[str], *, context: str) -> np.ndarray:
+    """Parse one expression row, retaining declared missing cells for machine censoring."""
+    parsed = np.empty(len(values), dtype=np.float64)
+    for index, raw in enumerate(values):
+        stripped = raw.strip()
+        if stripped.upper() in {"", "NA", "NAN"}:
+            parsed[index] = np.nan
+            continue
+        try:
+            parsed[index] = float(stripped)
+        except ValueError as exc:
+            raise EvidenceV1Error(f"unrecognised expression value {raw!r} in {context}") from exc
+    return parsed
 
 
 def _average_ranks(values: np.ndarray) -> np.ndarray:

@@ -14,6 +14,7 @@ from pipeline.evidence.replicated_association_v1 import (
     _write_new_json,
     audit_protocol,
     benjamini_hochberg,
+    parse_expression_values,
     standardised_rank_rows,
 )
 
@@ -77,6 +78,19 @@ def test_average_tie_spearman_rows_are_standardised_and_constant_is_censored():
     assert np.dot(ranked[0], ranked[0]) == pytest.approx(1.0)
     assert np.dot(ranked[0], ranked[1]) == pytest.approx(-1.0)
     assert ranked[2].tolist() == [0.0, 0.0, 0.0, 0.0]
+
+
+def test_declared_missing_expression_values_are_parsed_then_censored():
+    parsed = parse_expression_values(["1.5", "NA", "NaN", ""], context="fixture")
+    assert parsed[0] == 1.5
+    assert np.isnan(parsed[1:]).all()
+
+    ranked, usable = standardised_rank_rows(parsed.reshape(1, -1))
+    assert usable.tolist() == [False]
+    assert ranked.tolist() == [[0.0, 0.0, 0.0, 0.0]]
+
+    with pytest.raises(EvidenceV1Error, match="unrecognised expression value"):
+        parse_expression_values(["not-a-number"], context="fixture")
 
 
 def test_benjamini_hochberg_and_replication_gate_are_mechanical():
