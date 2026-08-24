@@ -5,6 +5,7 @@ import { renderComputed } from './views/computed';
 import { renderAutonomousMissions } from './views/contribute';
 import { renderCurated } from './views/curated';
 import { renderFooter, renderProjectStatus } from './views/project';
+import { renderReplicatedEvidence } from './views/replicated-evidence';
 import { renderTaxonomy } from './views/taxonomy';
 import type { ComputedLayer, Manifest } from './types';
 
@@ -31,6 +32,7 @@ function header(manifest: Manifest, computed: ComputedLayer): HTMLElement {
         el('a', { href: '/holes/' }, ['Hole atlas']),
         el('a', { href: '#status' }, ['Status']),
         el('a', { href: '#contribute' }, ['Contribute']),
+        el('a', { href: '#replicated-evidence' }, ['Evidence v1']),
         el('a', { href: '#computed' }, ['Evidence lab']),
         el('a', { href: 'https://github.com/tang-vu/lacuna' }, ['GitHub ↗']),
       ]),
@@ -87,7 +89,7 @@ async function main(): Promise<void> {
   if (!app) return;
 
   try {
-    const { manifest, taxonomy, curated, computed, projectStatus } = await loadDataset();
+    const { manifest, taxonomy, curated, computed, projectStatus, evidence } = await loadDataset();
     app.replaceChildren(
       header(manifest, computed),
       el('main', { id: 'main-content' }, [
@@ -105,6 +107,7 @@ async function main(): Promise<void> {
           'Well-posed questions that nobody is short of ideas about. What stands in the way is an instrument, a cost, an ethical limit, or a timescale.',
           curated.blocked,
         ),
+        renderReplicatedEvidence(evidence, projectStatus.status),
         renderComputed(computed),
         renderCurated(
           'blind-spots',

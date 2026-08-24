@@ -137,6 +137,81 @@ export interface Manifest {
   computed_layer_verdict: string;
 }
 
+export interface EvidenceGene {
+  entrez_gene_id: number;
+  symbol: string;
+}
+
+export interface EvidenceCohortMeasurement {
+  samples: number;
+  spearman_rho: number;
+  benjamini_hochberg_q_conservative: number;
+}
+
+export interface ReplicatedEvidenceObservation {
+  rank: number;
+  status: 'replicated_computational_observation';
+  entities: { a: EvidenceGene; b: EvidenceGene };
+  direction: 'positive' | 'negative';
+  tcga: EvidenceCohortMeasurement;
+  metabric: EvidenceCohortMeasurement;
+  generated_claim: string;
+  claim_scope: 'cohort-level rank-expression association only';
+}
+
+export interface ReplicatedEvidence {
+  schema_version: number;
+  id: 'replicated-expression-evidence-v1-result';
+  state: 'replicated_observations_published';
+  verdict: 'measured';
+  protocol: { id: string; canonical_json_sha256: string };
+  source_manifest: { path: string; canonical_json_sha256: string };
+  candidate_universe: { path: string; canonical_json_sha256: string };
+  full_pair_table: {
+    filename: string;
+    sha256: string;
+    row_count: number;
+    committed: false;
+    local_verification_required_for_byte_level_replay: true;
+  };
+  cohorts: Array<{
+    id: string;
+    study_id: string;
+    platform: string;
+    sample_count: number;
+    analyzable_gene_count: number;
+  }>;
+  gates: {
+    source_integrity: 'passed';
+    sample_independence: 'passed';
+    power: 'passed';
+    null_calibration: 'passed';
+    null_pass_count: number;
+    maximum_null_pass_count: number;
+  };
+  numeric_bounds: {
+    p_value_floor: number;
+    policy: string;
+    measured_p_values_clamped: Record<string, number>;
+    permuted_null_p_values_clamped: Record<string, number>;
+  };
+  counts: {
+    tested_pairs: number;
+    replicated_pairs: number;
+    published_observations: number;
+  };
+  observations: ReplicatedEvidenceObservation[];
+  human_dependencies: [];
+  manual_override_used: false;
+  llm_interpretation_used: false;
+  claim_boundary: {
+    allowed_claim: string;
+    not_a_claim_of: string[];
+  };
+  limitations: string[];
+  readiness_contribution: 1;
+}
+
 export interface ProjectStatus {
   schema_version: number;
   status: 'ready' | 'not_ready';

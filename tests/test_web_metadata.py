@@ -148,6 +148,31 @@ def test_evidence_lab_keeps_failure_before_interaction_and_exports_provenance():
     assert "gap.row_source_urls" in view_source
 
 
+def test_replicated_evidence_surface_reads_the_artifact_and_keeps_claim_limits_visible():
+    html = INDEX.read_text(encoding="utf-8")
+    data_source = (ROOT / "web" / "src" / "data.ts").read_text(encoding="utf-8")
+    main_source = (ROOT / "web" / "src" / "main.ts").read_text(encoding="utf-8")
+    view_source = (
+        ROOT / "web" / "src" / "views" / "replicated-evidence.ts"
+    ).read_text(encoding="utf-8")
+
+    assert "fetchJson<ReplicatedEvidence>('/evidence-v1.json')" in data_source
+    assert "renderReplicatedEvidence(evidence, projectStatus.status)" in main_source
+    assert "Measured twice. Claimed narrowly." in html
+    assert view_source.index("replication-boundary") < view_source.index(
+        "explorer(evidence)"
+    )
+    assert "evidence.claim_boundary.not_a_claim_of" in view_source
+    assert "evidence.numeric_bounds.policy" in view_source
+    assert "evidence.human_dependencies.length" in view_source
+    assert "evidence.llm_interpretation_used" in view_source
+    assert "evidence.manual_override_used" in view_source
+    assert "evidence.gates.sample_independence" in view_source
+    assert "benjamini_hochberg_q_conservative" in view_source
+    assert "benchmarks/evidence-v1.json" in view_source
+    assert "source_manifest.path.replace" in view_source
+
+
 def test_candidate_review_desk_keeps_proposals_curated_and_out_of_readiness():
     view_source = (ROOT / "web" / "src" / "views" / "contribute.ts").read_text(
         encoding="utf-8"
