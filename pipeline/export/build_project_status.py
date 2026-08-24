@@ -46,6 +46,11 @@ from pipeline.benchmark.validate_autonomous_predictions_v1 import (
     MANIFEST_PATH as AUTONOMOUS_PREDICTIONS_V1_PATH,
     audit_predictions_v1,
 )
+from pipeline.benchmark.autonomous_release_watch import (
+    CONTRACT_PATH as AUTONOMOUS_RELEASE_WATCH_PATH,
+    audit_release_watch_contract,
+    audit_release_window,
+)
 from pipeline.benchmark.autonomous_t0 import (
     REMOTE_INVENTORY_PATH as AUTONOMOUS_T0_REMOTE_INVENTORY_PATH,
     SEALED_T0_PATH as AUTONOMOUS_T0_PATH,
@@ -124,6 +129,8 @@ def build_project_status() -> dict:
     autonomous_candidate_universe = audit_candidate_universe()
     autonomous_metric = audit_autonomous_metric_v1()
     autonomous_predictions = audit_predictions_v1()
+    autonomous_release_watch = audit_release_window()
+    audit_release_watch_contract()
     autonomous_payload = json.loads(AUTONOMOUS_PROSPECTIVE_PATH.read_text(encoding="utf-8"))
     alternatives = audit_source_alternatives()
     bioasq_snapshot = json.loads(BIOASQ_SNAPSHOT_MANIFEST_PATH.read_text(encoding="utf-8"))
@@ -174,7 +181,7 @@ def build_project_status() -> dict:
     negative_protocol = load_protocol()
 
     return {
-        "schema_version": 26,
+        "schema_version": 27,
         "status": "ready" if ready else "not_ready",
         "active_validation_track": autonomous.protocol_id,
         "inputs": {
@@ -191,6 +198,9 @@ def build_project_status() -> dict:
             ),
             "autonomous_metric_contract": _input_identity(AUTONOMOUS_METRIC_V1_PATH),
             "autonomous_t0_predictions": _input_identity(AUTONOMOUS_PREDICTIONS_V1_PATH),
+            "autonomous_release_watch_contract": _input_identity(
+                AUTONOMOUS_RELEASE_WATCH_PATH
+            ),
             "historical_sources": _input_identity(SOURCES_PATH),
             "source_alternatives": _input_identity(ALTERNATIVES_PATH),
             "bioasq_snapshot_audit": _input_identity(BIOASQ_SNAPSHOT_MANIFEST_PATH),
@@ -287,6 +297,15 @@ def build_project_status() -> dict:
                 "candidate_score_count": autonomous_predictions.candidate_score_count,
                 "nonzero_primary_score_count": autonomous_predictions.nonzero_score_count,
                 "readiness_contribution": autonomous_predictions.readiness_contribution,
+            },
+            "release_watch": {
+                "state": autonomous_release_watch.state,
+                "verdict": autonomous_release_watch.verdict,
+                "observed_releases": list(autonomous_release_watch.observed_releases),
+                "missing_releases": list(autonomous_release_watch.missing_releases),
+                "readiness_blockers": list(autonomous_release_watch.blockers),
+                "human_dependency_count": autonomous_release_watch.human_dependency_count,
+                "readiness_contribution": autonomous_release_watch.readiness_contribution,
             },
         },
         "historical_sources": {

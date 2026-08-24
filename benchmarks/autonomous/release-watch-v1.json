@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "id": "autonomous-prospective-release-watch-v1",
+  "status": "frozen_before_future_release_observation",
+  "frozen_on": "2026-08-24",
+  "protocol": {
+    "path": "../autonomous-prospective-v1.json",
+    "id": "autonomous-prospective-pubmed-link-emergence-v1",
+    "canonical_json_sha256": "b0921b1977a15b3a45e5fd262d1037e577d719d7c751a2ec4f4fb01e86222e1d"
+  },
+  "sealed_predictions": {
+    "path": "t0-predictions-v1.json",
+    "id": "autonomous-t0-predictions-v1",
+    "canonical_json_sha256": "994e9697e2e7673a077335808d53911ceab674dac18031a3b7f847200caab591"
+  },
+  "schedule": {
+    "workflow": ".github/workflows/autonomous-release-watch.yml",
+    "cron_utc": "23 4 2 * *",
+    "cadence": "monthly",
+    "manual_approval_or_labeling": false
+  },
+  "official_source": {
+    "pubmed_baseline": "https://ftp.ncbi.nlm.nih.gov/pubmed/baseline/",
+    "pubmed_readme": "https://ftp.ncbi.nlm.nih.gov/pubmed/baseline/README.txt",
+    "mesh_descriptors": "https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/xmlmesh/",
+    "api_pages_allowed": false
+  },
+  "required_release_years": [
+    2027,
+    2028,
+    2029
+  ],
+  "t1_release_year": 2029,
+  "observation_policy": {
+    "only_next_sequential_release_may_be_written": true,
+    "inventory_filename": "pubmed-{release_year}-remote-inventory.json",
+    "overwrite_allowed": false,
+    "missing_or_skipped_release_action": "abstain",
+    "source_or_checksum_conflict_action": "abstain",
+    "credentials_persisted": false
+  },
+  "watcher_source": {
+    "path": "../../pipeline/benchmark/autonomous_release_watch.py",
+    "sha256": "478181844a2117c531566e8aa4ff84fc607a3de6aa685dfdf70ef33eb04d2044"
+  },
+  "workflow_source": {
+    "path": "../../.github/workflows/autonomous-release-watch.yml",
+    "sha256": "7f8c88af92115b0a39263f8ad6bd02f0a314b26cbbb789cbf73eb8999f446efb"
+  },
+  "human_dependencies": [],
+  "readiness_contribution": 0,
+  "claim_boundary": "Automated official source identities only; not an outcome, not a discovery, and zero scientific readiness until the frozen prospective outcome, power, integrity, and metric gates execute."
+}

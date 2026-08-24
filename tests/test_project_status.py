@@ -12,7 +12,7 @@ from pipeline.export.verify_artifacts import verify_project_status
 def test_project_status_exposes_validator_results_without_claiming_readiness():
     status = build_project_status()
 
-    assert status["schema_version"] == 26
+    assert status["schema_version"] == 27
     assert status["status"] == "not_ready"
     assert status["active_validation_track"] == (
         "autonomous-prospective-pubmed-link-emergence-v1"
@@ -78,6 +78,17 @@ def test_project_status_exposes_validator_results_without_claiming_readiness():
         "backbone_edge_count": 31_760_211,
         "candidate_score_count": 7_310_895,
         "nonzero_primary_score_count": 7_310_826,
+        "readiness_contribution": 0,
+    }
+    assert autonomous["release_watch"] == {
+        "state": "predictions_sealed_waiting_for_outcome",
+        "verdict": "not_ready",
+        "observed_releases": [],
+        "missing_releases": [2027, 2028, 2029],
+        "readiness_blockers": [
+            "the three-release prospective outcome window has not matured; missing official release identities: 2027, 2028, 2029"
+        ],
+        "human_dependency_count": 0,
         "readiness_contribution": 0,
     }
     assert len(autonomous["readiness_blockers"]) == 1
@@ -433,6 +444,7 @@ def test_committed_project_status_matches_its_pinned_contract_inputs():
         "autonomous_candidate_universe",
         "autonomous_metric_contract",
         "autonomous_t0_predictions",
+        "autonomous_release_watch_contract",
         "historical_sources",
         "source_alternatives",
         "bioasq_snapshot_audit",

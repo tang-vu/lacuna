@@ -1,5 +1,5 @@
 {
- "schema_version": 26,
+ "schema_version": 27,
  "status": "not_ready",
  "active_validation_track": "autonomous-prospective-pubmed-link-emergence-v1",
  "inputs": {
@@ -36,6 +36,11 @@
   "autonomous_t0_predictions": {
    "path": "benchmarks/autonomous/t0-predictions-v1.json",
    "sha256": "994e9697e2e7673a077335808d53911ceab674dac18031a3b7f847200caab591",
+   "canonicalisation": "canonical-json-v1"
+  },
+  "autonomous_release_watch_contract": {
+   "path": "benchmarks/autonomous/release-watch-v1.json",
+   "sha256": "12c1b5cd66573e83e72ea01971b19f79f29a086628615bcc24dda27048360948",
    "canonicalisation": "canonical-json-v1"
   },
   "historical_sources": {
@@ -513,6 +518,21 @@
    "backbone_edge_count": 31760211,
    "candidate_score_count": 7310895,
    "nonzero_primary_score_count": 7310826,
+   "readiness_contribution": 0
+  },
+  "release_watch": {
+   "state": "predictions_sealed_waiting_for_outcome",
+   "verdict": "not_ready",
+   "observed_releases": [],
+   "missing_releases": [
+    2027,
+    2028,
+    2029
+   ],
+   "readiness_blockers": [
+    "the three-release prospective outcome window has not matured; missing official release identities: 2027, 2028, 2029"
+   ],
+   "human_dependency_count": 0,
    "readiness_contribution": 0
   }
  },

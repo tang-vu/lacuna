@@ -36,6 +36,9 @@ the expense of gap detection, validation, or traceability.
 - T0 predictions are refusal-to-overwrite sealed for all 7,310,895 candidates. The seal proves
   computation and ordering integrity only; it contributes zero readiness until prospective
   outcomes exist and pass the registered evaluation.
+- A source-pinned monthly machine watcher now observes only the next sequential official 2027–2029
+  PubMed/MeSH release identity. It has zero human dependencies and zero readiness; missing,
+  out-of-order, or conflicting release evidence forces machine abstention.
 - A pass on the active track validates only future PubMed MeSH link-emergence ranking. Never call it
   a validated knowledge-gap detector, autonomous scientific discovery, or evidence of absent
   human knowledge.
@@ -69,6 +72,9 @@ python -m pipeline.benchmark.validate_autonomous_candidate_index
 python -m pipeline.benchmark.validate_autonomous_candidate_universe
 python -m pipeline.benchmark.validate_autonomous_metric_v1
 python -m pipeline.benchmark.validate_autonomous_predictions_v1
+python -m pipeline.benchmark.autonomous_release_watch audit
+python -m pipeline.benchmark.autonomous_release_watch status
+python -m pipeline.benchmark.autonomous_release_watch probe
 python -m pipeline.benchmark.autonomous_metric_v1 conformance --help
 python -m pipeline.benchmark.autonomous_metric_v1 build --help
 python -m pipeline.benchmark.autonomous_metric_v1 seal --help

@@ -11,15 +11,29 @@ Read `AGENTS.md` and the current status in `README.md` before changing code or d
 The active campaign is governed by
 [`benchmarks/autonomous-prospective-v1.json`](benchmarks/autonomous-prospective-v1.json). It has no
 human-label, review, or adjudication dependency. Useful contributions automate one of these frozen
-machine transitions:
-
-- exhaustively build the exact-zero candidate universe;
-- seal one formula and every prediction before future outcomes exist;
-- acquire the T1 baseline three annual releases later and apply the frozen pass/fail/abstain gate.
+machine transitions. Candidate construction, the formula, and every T0 prediction are already
+sealed; the remaining work is to acquire the T1 baseline three annual releases later and apply the
+frozen pass/fail/abstain gate.
 
 Run `python -m pipeline.benchmark.validate_autonomous_prospective` first. Do not add manual labels,
 LLM decisions, or a bypass around automatic abstention. A zero future count means only “no observed
 link emergence in the window”; it is not evidence of absent human knowledge.
+
+The release control plane is frozen at
+[`benchmarks/autonomous/release-watch-v1.json`](benchmarks/autonomous/release-watch-v1.json). Its
+monthly GitHub workflow checks the official PubMed README, captures only the next sequential
+2027–2029 release inventory, commits it without a human approval step, and abstains on a missed,
+out-of-order, or conflicting observation. Audit the source-pinned watcher and its current state:
+
+```bash
+python -m pipeline.benchmark.autonomous_release_watch audit
+python -m pipeline.benchmark.autonomous_release_watch status
+```
+
+`probe` is safe to run repeatedly: before the next annual baseline exists it makes no change, and
+after a valid capture it refuses to overwrite the evidence file. These inventories prove source
+identity only. Even all three release identities advance the state only to
+`awaiting_t1_baseline`; they are not T1 bytes, outcomes, or scientific results.
 
 The remote source identity is already frozen at
 [`benchmarks/autonomous/t0-2026-remote-inventory.json`](benchmarks/autonomous/t0-2026-remote-inventory.json).
@@ -64,8 +78,8 @@ python -m pipeline.benchmark.autonomous_t0 seal \
 ```
 
 These acquisition commands document reproducibility; rerunning them does not advance the current
-state. The candidate universe and metric formula are now frozen; the active next transition is
-exhaustive scoring and the refusal-to-overwrite prediction seal.
+state. The candidate universe, metric formula, exhaustive scores, and prediction order are already
+sealed; the active transition is the automatic three-release watch described above.
 The score-free construction contract is frozen at
 [`benchmarks/autonomous/t0-candidate-index-v1.json`](benchmarks/autonomous/t0-candidate-index-v1.json);
 validate it with `python -m pipeline.benchmark.validate_autonomous_candidate_index`. Never weaken

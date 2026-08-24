@@ -23,7 +23,10 @@ five baselines were frozen before any candidate score. All 7,310,895 score tuple
 total order are now immutably sealed before T1, but no prospective outcome exists. The candidate
 count is an exact maintained-current PubMed/MeSH index measurement and the ranking formula remains
 unvalidated; neither candidates nor ranks are discoveries or validated gaps, and scientific
-readiness remains zero.
+readiness remains zero. A frozen no-human release watcher now runs monthly, pins only the next
+sequential official 2027–2029 PubMed/MeSH identity with refusal-to-overwrite semantics, and
+automatically abstains if a release is skipped or conflicts. The project is waiting on future
+source evidence, not a human decision.
 
 ---
 
@@ -239,7 +242,11 @@ zero is only “no observed emergence in this window”; ambiguous or incomplete
 detector or autonomous scientific discovery. Run
 `python -m pipeline.benchmark.autonomous_t0 audit-sealed` to verify the pinned T0 manifest and
 `python -m pipeline.benchmark.validate_autonomous_prospective` to inspect the current machine
-blockers. The interpretation layer remains gated off.
+blockers. Run `python -m pipeline.benchmark.autonomous_release_watch status` to see the exact
+missing annual identities. The scheduled
+[`autonomous-release-watch.yml`](.github/workflows/autonomous-release-watch.yml) performs the
+official-source probe and commits a newly observed immutable inventory without manual review. The
+interpretation layer remains gated off.
 
 The score-free construction rules for the next machine step are frozen in
 [`t0-candidate-index-v1.json`](benchmarks/autonomous/t0-candidate-index-v1.json) before any

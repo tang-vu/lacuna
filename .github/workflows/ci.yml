@@ -29,6 +29,12 @@ jobs:
         run: python -m pipeline.benchmark.validate_sources
       - name: Validate preserved MBR repository metadata
         run: python -m pipeline.benchmark.mbr_capture
+      - name: Validate active autonomous prospective contract
+        run: python -m pipeline.benchmark.validate_autonomous_prospective
+      - name: Validate autonomous release watcher
+        run: |
+          python -m pipeline.benchmark.autonomous_release_watch audit
+          python -m pipeline.benchmark.autonomous_release_watch status
       - name: Run tests available in a clean clone
         run: python -m pytest -m "not slow"
       - name: Verify committed artifact integrity

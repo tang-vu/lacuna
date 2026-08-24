@@ -336,7 +336,11 @@ def discover_remote_inventory(
     }
 
 
-def _validate_remote_inventory(payload: dict) -> tuple[int, list[dict], dict]:
+def _validate_remote_inventory(
+    payload: dict,
+    *,
+    as_of: date | None = None,
+) -> tuple[int, list[dict], dict]:
     if payload.get("schema_version") != 1 or payload.get("kind") != "autonomous_t0_remote_inventory":
         raise AutonomousT0Error("unsupported autonomous T0 inventory")
     if (
@@ -349,7 +353,7 @@ def _validate_remote_inventory(payload: dict) -> tuple[int, list[dict], dict]:
         observed_on = date.fromisoformat(str(payload.get("observed_on")))
     except ValueError as exc:
         raise AutonomousT0Error("remote inventory observed_on must be YYYY-MM-DD") from exc
-    if observed_on > date.today():
+    if observed_on > (as_of or date.today()):
         raise AutonomousT0Error("remote inventory cannot claim a future observation")
     year = payload.get("release_year")
     if not isinstance(year, int) or year < 2026:
