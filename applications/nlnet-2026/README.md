@@ -4,7 +4,8 @@ Status: **prepared, not submitted, and currently blocked by the call calendar**.
 
 The official [NLnet proposal page](https://nlnet.nl/propose/) said on 2026-08-25 that submissions
 were closed, calls would reopen on 2026-09-03, and the deadline would be 2026-11-03 at 12:00 CEST.
-Applying has no fee. The requested grant is income for proposed work, not an application cost.
+The current form shows no application fee. The requested grant is income for proposed work, not an
+application cost.
 
 No call has been selected because the call-specific guides were not yet published. On or after
 2026-09-03, compare the proposal against every available guide and continue only if the evidence-
