@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "packet_id": "autonomous-prospective-v1-sealed-state-registration",
+  "prepared_on": "2026-08-25",
+  "submission_status": "prepared_not_submitted",
+  "record_type": "registration_of_previously_sealed_protocol_and_predictions",
+  "not_a_new_preregistration": true,
+  "repository": "https://github.com/tang-vu/lacuna",
+  "intended_release": "v0.2.0",
+  "release_doi": null,
+  "current_scientific_state": {
+    "state": "predictions_sealed_waiting_for_outcome",
+    "verdict": "not_ready",
+    "readiness_contribution": 0,
+    "candidate_pair_count": 7310895,
+    "validated_knowledge_gap_pairs": 0
+  },
+  "hash_scope": "Raw-byte SHA-256 and byte length cover every listed small repository file. Canonical JSON SHA-256 is additionally provided for JSON. Large local corpora and binary outputs are represented by the source and prediction records that pin them.",
+  "packet_files": {
+    "registrations/autonomous-prospective-v1/README.md": {
+      "bytes": 1670,
+      "sha256": "27f81f342f5a3043a5d7f77c8a187f48861e2d6361fbc2f165287e92c9c9aa97"
+    },
+    "registrations/autonomous-prospective-v1/registration.md": {
+      "bytes": 6433,
+      "sha256": "6e44dc3b5ab8570b8ef8a46fc4ed3ba54e550ce7b9c659052c27c90958557cfc"
+    }
+  },
+  "registered_files": {
+    "benchmarks/autonomous-prospective-v1.json": {
+      "bytes": 12878,
+      "sha256": "319627c95650722cb06baa3b18fa45d4654708a7002414ea62b26af110776a07",
+      "canonical_json_sha256": "b0921b1977a15b3a45e5fd262d1037e577d719d7c751a2ec4f4fb01e86222e1d"
+    },
+    "benchmarks/autonomous/t0-2026-remote-inventory.json": {
+      "bytes": 541749,
+      "sha256": "e0dfd3cc67edfedba7b6a2fa2613fcf2c0bb7842a1168d105a3acad6f4672401",
+      "canonical_json_sha256": "641338132c7e93f02a02691d9bc5b7f1c7ced9a3d74503a3ea33b50e304350ca"
+    },
+    "benchmarks/autonomous/t0-2026.json": {
+      "bytes": 626625,
+      "sha256": "44e7ecdffaf11f470cf817a4556aa386573bc8ba77dad3c1f8f7175d54f3378d",
+      "canonical_json_sha256": "6ec0372008bb8efe0e17f72695a07bb03816f2b41881d6518d35077ecdac5066"
+    },
+    "benchmarks/autonomous/t0-candidate-index-v1.json": {
+      "bytes": 7016,
+      "sha256": "4eebdb0d5c80a063062f5d6c84b5e3a621d9650fa13ea8e625841248e5c8941e",
+      "canonical_json_sha256": "afa2bee6eedd091929eca6a8b92122870506631ce12a559a418d227723497366"
+    },
+    "benchmarks/autonomous/t0-candidate-universe-v1.json": {
+      "bytes": 3232,
+      "sha256": "26bab2ccb8b7325ad502f5fbf8b865f2499b456996d6c9aeafe95c6e2f8a2b96",
+      "canonical_json_sha256": "2313dcc1837d620394f96e5e4c150661c8a2be9e7472c1b5eccad19c13d57f84"
+    },
+    "benchmarks/autonomous/metric-v1.json": {
+      "bytes": 6871,
+      "sha256": "cc23aad96f9cb2db392e059614acf798067520b43c7be08cc60e7aa550718335",
+      "canonical_json_sha256": "c223cf82e2644992b2799f6fbada5216b9087787e9896896fe08ee0463c8b2db"
+    },
+    "benchmarks/autonomous/metric-v1-dependencies.lock.json": {
+      "bytes": 835,
+      "sha256": "443b00eef325cd6e4ac6ab0033ea51c6713f4566401c46a89201ae9f49bc33ea",
+      "canonical_json_sha256": "8306d744cd79ba1a9b8856723de1b7e5de7f2fcd52fa5d07cde012b7ac7720d4"
+    },
+    "benchmarks/autonomous/t0-predictions-v1.json": {
+      "bytes": 5532,
+      "sha256": "5a816bcd8a2ff47e691536ca38342b786b2757a8daad9780a7f3909f48cead9f",
+      "canonical_json_sha256": "994e9697e2e7673a077335808d53911ceab674dac18031a3b7f847200caab591"
+    },
+    "benchmarks/autonomous/release-watch-v1.json": {
+      "bytes": 2127,
+      "sha256": "25136fa0e5598e2f9d4dc302ef1c683b7ad3c454245df285cb5fcdb68b82c863",
+      "canonical_json_sha256": "12c1b5cd66573e83e72ea01971b19f79f29a086628615bcc24dda27048360948"
+    }
+  }
+}
