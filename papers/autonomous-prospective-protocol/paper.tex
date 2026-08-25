@@ -1,0 +1,261 @@
+\documentclass[11pt]{article}
+\pdfinfoomitdate=1
+\pdftrailerid{}
+\pdfsuppressptexinfo=15
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{xurl}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue,
+  pdftitle={A sealed autonomous prospective benchmark for PubMed/MeSH link-emergence ranking},
+  pdfauthor={Tang Vu},
+  pdfsubject={Protocol version 1; no prospective outcome yet},
+  pdfkeywords={PubMed, MeSH, literature-based discovery, link prediction, prospective benchmark}
+}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+
+\title{A sealed autonomous prospective benchmark for\\PubMed/MeSH link-emergence ranking}
+\author{Tang Vu\\
+Affiliation: \textbf{TO BE SUPPLIED BEFORE SUBMISSION}\\
+ORCID: \textbf{TO BE SUPPLIED BEFORE SUBMISSION}\\
+Correspondence: \textbf{TO BE SUPPLIED BEFORE SUBMISSION}}
+\date{Protocol version 1; sealed August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Literature-based discovery methods are often evaluated retrospectively on a small set of known
+examples, creating opportunities for case selection, parameter adaptation, and hindsight leakage.
+This protocol defines a no-human prospective benchmark for one narrower task: ranking pairs of
+Medical Subject Headings (MeSH) that will later acquire direct co-indexing links in complete annual
+PubMed baselines. The 2026 T0 source, exhaustive score-free candidate universe, metric contract,
+and predictions were hash-sealed before any T1 outcome source existed. T0 contains 39,994,988
+distinct PubMed identifiers and 31,110 MeSH descriptors. Deterministic eligibility rules produced
+7,310,895 exact-zero candidate pairs. A fixed-point Adamic--Adar score and five baselines were then
+computed for every candidate and placed in immutable total orders. An automated watcher accepts
+only sequential official 2027--2029 PubMed and MeSH release identities. Registered outcome,
+integrity, power, performance, and structural-diagnostic gates resolve mechanically to pass, fail,
+or abstain after the three-release window. No prospective outcome currently exists: the benchmark
+is \texttt{not\_ready}, the formula is unvalidated, and validated knowledge-gap pairs number zero.
+Even a future pass would validate only PubMed/MeSH link-emergence ranking, not knowledge-gap
+detection, scientific novelty, causality, importance, or autonomous discovery.
+\end{abstract}
+
+\section{Introduction}
+
+Literature-based discovery (LBD) searches for relationships that can be inferred by connecting
+separate bodies of published work. Swanson's fish-oil and Raynaud's-syndrome case established the
+canonical example \cite{swanson1986}. Subsequent studies replicated, extended, and automated such
+ABC-style searches \cite{gordon1996,weeber2001,preiss2017}. These studies also illustrate a hard
+evaluation problem: a method can be adjusted after its famous target and historical outcome are
+already known.
+
+Temporal link prediction offers an objective but deliberately narrower alternative. A graph is
+constructed at T0, a complete ordering is sealed, and edges newly observed at a later T1 are used
+as outcomes. Adamic--Adar is a standard local link-prediction score that discounts high-degree
+common neighbours \cite{adamic2003}. This benchmark applies that family to maintained-current MeSH
+assignments in annual PubMed baselines. It does not claim that later co-indexing proves a new
+scientific relationship. The measured event is database-link emergence.
+
+The project that hosts this benchmark, \emph{lacuna}, previously tested two OpenAlex topic-level
+metrics against a pre-registered Swanson reproduction. Both failed. Those negative results remain
+published and were not used as evidence that the active formula works. The present protocol was
+frozen as a separate prospective track before its candidate scores were inspected.
+
+\section{Scope and claim boundary}
+
+The primary estimand is ranking performance for future direct MeSH co-indexing links in complete
+PubMed baselines. A pair's rank does not estimate whether the relationship is true, causal,
+important, clinically useful, mechanistic, novel to humanity, or absent from existing knowledge.
+PubMed indexes academic biomedical literature and does not cover all academic work, much less
+craft, practitioner, indigenous, historical, humanities, or other non-academic knowledge.
+
+The allowed positive conclusion after a pass is therefore only: the sealed formula was validated
+for prospective PubMed/MeSH link-emergence ranking under this protocol. ``Validated knowledge-gap
+detector'', ``autonomous scientific discovery'', and equivalent claims are outside the design.
+
+\section{Sealing chronology and materials}
+
+The machine-readable protocol first appeared on 12 August 2026. The complete T0 source, score-free
+candidate contract, exhaustive candidate universe, formula, and full prediction order were sealed
+in successive public repository commits on 13 August 2026. A source-pinned release watcher was
+frozen on 24 August 2026. The later registration packet records this already sealed state; it is not
+represented as a new preregistration.
+
+T0 comprises 1,334 official 2026 PubMed baseline transports with 54,267,874,919 compressed bytes
+and 39,994,988 distinct parsed PubMed identifiers, plus the matching official MeSH XML transport
+with 31,110 descriptors. The official distribution locations are maintained by the U.S. National
+Library of Medicine \cite{nlmpubmed,nlmmesh}. Every source filename, URL, byte length, SHA-256
+digest, record subtotal, and descriptor-vocabulary identity is pinned. PubMed/MeSH assignments are
+maintained-current indexing, not period-appropriate historical indexing.
+
+Large source corpora and computed binaries remain outside the Git repository. Small manifests pin
+their exact content, dimensions, and formats. Structural audits run from a clean clone; full
+byte-level replay additionally requires the pinned local files.
+
+\section{Score-free candidate universe}
+
+All unordered descriptor pairs $(u,v)$ were considered in lexicographic descriptor-UI order. A pair
+was eligible when both endpoints occurred in at least 100 T0 articles, its independence expectation
+was at least 5, and its exact T0 direct co-indexing count was zero. Identical descriptors,
+ancestor--descendant pairs, and pairs sharing an entry term were excluded. Sampling was forbidden.
+
+The reducer processed all 39,994,988 distinct PMIDs and measured 342,733,118 descriptor
+assignments and 51,128,229 distinct positive descriptor-pair rows. The resulting exhaustive stream
+contains 7,310,895 candidates. Candidate construction did not compute a metric, score, rank, or
+prediction, and it used no human or LLM labels.
+
+An exact-zero value here means only that no direct pair row occurred in this maintained-current T0
+index. It is not evidence that the underlying relationship or knowledge is absent.
+
+\section{Frozen graph and ranking methods}
+
+Let $N$ be the 39,994,988-record denominator, $n_i$ the exact support of descriptor $i$, and
+$c_{ij}$ the exact direct co-indexing count. An unweighted positive-association backbone contains
+edge $(i,j)$ exactly when
+\begin{equation}
+  c_{ij}N > n_i n_j.
+\end{equation}
+Equality is excluded. Integer products use at least 128 unsigned bits. The sealed backbone has
+31,760,211 undirected edges.
+
+For candidate endpoints $u$ and $v$, let $\Gamma(u)$ and $\Gamma(v)$ denote their backbone
+neighbours and $d(w)$ the unweighted degree of common neighbour $w$. The primary fixed-point score
+is
+\begin{equation}
+ S_{AA}(u,v) = \sum_{w \in \Gamma(u)\cap\Gamma(v)}
+ \left\lfloor\frac{2^{48}}{\ln d(w)}\right\rfloor.
+\end{equation}
+Decimal logarithms and division use 80-digit precision with round-half-even before flooring; the
+sum is checked as an unsigned 64-bit integer. Missing, non-finite, or overflowing values force
+abstention without a prediction seal.
+
+Five baselines were frozen with the primary formula: endpoint prevalence $n_un_v$, common-neighbour
+count, resource allocation $\sum 2^{48}/d(w)$ with per-term flooring, exact-rational Jaccard
+similarity, and preferential attachment $d(u)d(v)$. Every ordering uses a deterministic hash-based
+tie key followed by the pair key, with no labels, descriptor names, or future outcomes involved.
+
+The completed run emitted one score tuple for every eligible pair. Of 7,310,895 primary scores,
+7,310,826 were nonzero. Source, formula, dependency, compiler, binary, conformance, input, output,
+and order hashes are sealed. These are computation-integrity measurements from an unvalidated
+method, not prospective results.
+
+\section{Prospective outcome acquisition}
+
+A monthly machine watcher observes only the next sequential official release identity for 2027,
+2028, and 2029. It cannot overwrite an observed release. Missing, skipped, out-of-order, partial, or
+conflicting evidence forces abstention. API result pages are not accepted as baselines. Evaluation
+waits for a complete official 2029 PubMed baseline and its matching MeSH release; publication dates
+are reported but do not define database emergence.
+
+A new row is a PMID--descriptor-pair row absent from T0 and present at T1. A positive outcome
+requires at least three distinct new co-indexed PMIDs spanning at least two journals and two
+publication years. A zero count is labelled only ``no observed link emergence in the window''.
+One or two PMIDs, a retired or ambiguously mapped descriptor, failed source reconciliation, or a
+qualifying retraction makes the pair censored. Re-indexing of pre-existing PMIDs remains a database
+link event but is counted separately. Exact PMIDs and source rows must accompany every outcome.
+
+\section{Registered evaluation}
+
+The primary population contains all non-censored eligible T0 pairs. Fewer than 200 positive or
+20,000 negative outcomes triggers abstention for insufficient power. Otherwise, every one of the
+following gates must pass:
+\begin{itemize}
+  \item precision at 100 is at least 0.25;
+  \item precision-at-100 lift over prevalence is at least 5;
+  \item average-precision lift over prevalence is at least 3; and
+  \item the 95\% bootstrap lower bound on precision-at-100 lift is at least 2, using 10,000
+        replicates with the frozen seed \texttt{lacuna-autonomous-prospective-v1}.
+\end{itemize}
+
+Two automatic structural diagnostics are also gates rather than negative ground truth. Excluded
+immediate-parent siblings may occupy at most 1\% of the primary top 1\%; a deterministic
+degree-matched distant cohort may occupy at most 5\% of the primary top 5\%. The final state is pass
+only if all source, integrity, power, primary-metric, and structural gates pass. Any evaluable
+primary or structural failure is terminal for the formula. Insufficient source, integrity,
+outcome, or power evidence yields abstention, without manual override. A later formula requires a
+new protocol and new T0 seal.
+
+\section{Current status}
+
+As of 25 August 2026, the state is
+\texttt{predictions\_sealed\_waiting\_for\_outcome}. The verdict is \texttt{not\_ready}; readiness
+contribution is zero; no T1 outcome has been inspected; and validated knowledge-gap pairs number
+zero. The sole active blocker is maturation of the three-release outcome window.
+
+Table~\ref{tab:status} distinguishes construction records from unavailable performance evidence.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{0.42\linewidth}|p{0.45\linewidth}|}
+\hline
+Recorded and sealed & Not yet measured \\
+\hline
+T0 source identities and counts & 2027--2029 complete outcome window \\
+7,310,895 score-free candidates & Positive, negative, and censored outcome counts \\
+Formula, five baselines, and total orders & Precision, average precision, lift, and intervals \\
+Integrity and refusal-to-overwrite gates & Pass, fail, or abstain evaluation verdict \\
+\hline
+\end{tabular}
+\caption{Scientific state at manuscript preparation. Sealing proves identity and computation, not
+prospective performance.}
+\label{tab:status}
+\end{table}
+
+\section{Limitations}
+
+The target is an indexing event rather than scientific truth. MeSH practices and descriptor
+identity can change between releases, and later indexing of old articles can create an observed
+link without a newly published relationship. The protocol reports that component separately but
+does not remove it from the database-event target. Requiring multiple PMIDs, journals, and years
+reduces single-record noise but may miss real low-volume links.
+
+Local link-prediction measures can favour structural proximity, degree patterns, and ontology
+artifacts. Frozen baselines and structural diagnostics expose some of this behaviour but cannot
+establish mechanism or utility. The metric was selected before scoring but is not independently
+validated. A single future pass, if obtained, would be specific to the frozen data model, outcome
+definition, and release window.
+
+The project preserves negative results, generated state, and measured state with separate labels.
+This supports traceability and FAIR research-software practice \cite{barker2022}, but hash-pinned
+availability does not by itself guarantee long-term hosting of every large source or binary file.
+
+\section*{Data and code availability}
+
+Code, machine-readable contracts, small manifests, tests, and audit commands are available at
+\url{https://github.com/tang-vu/lacuna} under the MIT License. Software release DOI:
+\textbf{TO BE SUPPLIED BEFORE SUBMISSION}. Public OSF registration DOI:
+\textbf{TO BE SUPPLIED BEFORE SUBMISSION}. The repository records official source URLs and hashes;
+it does not redistribute the complete PubMed corpus.
+
+\section*{Ethics statement}
+
+The benchmark analyzes public bibliographic metadata, recruits no participants, and makes no
+clinical decision. No human review, adjudication, or manual label is an active-system dependency.
+
+\section*{Generative-AI disclosure}
+
+OpenAI Codex assisted with drafting and typesetting this manuscript on 25 August 2026. It was not
+used to score, rank, filter, or label T0 candidates, and it did not alter the sealed score or total
+order. The human author is responsible for verifying the manuscript and adapting this disclosure
+to the selected repository or journal policy.
+
+\section*{Funding and competing interests}
+
+Funding: \textbf{TO BE SUPPLIED BEFORE SUBMISSION}. Competing interests:
+\textbf{TO BE SUPPLIED BEFORE SUBMISSION}.
+
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\end{document}
