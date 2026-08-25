@@ -5,6 +5,10 @@ than disappearing behind later versions.
 
 ## [Unreleased]
 
+No changes yet.
+
+## [0.2.0] — 2026-08-25
+
 ### Added
 
 - An interactive evidence lab for searching, filtering, sorting, deep-linking, auditing, and
@@ -25,6 +29,16 @@ than disappearing behind later versions.
   question, blocked question, and declared blind spot, generated from the versioned artifact.
 - A sourced-hole issue form and share actions that turn a public hole page into a guarded
   contribution path without routing failed computed pairs into the curated layers.
+- A sealed 2026 prospective PubMed/MeSH T0 containing 1,334 official transports, 39,994,988
+  parsed records, and the matching 31,110-descriptor MeSH transport.
+- An exhaustive score-free universe of 7,310,895 exact-zero descriptor pairs, followed by a
+  separately frozen Adamic–Adar Q48 metric contract and refusal-to-overwrite predictions for all
+  candidates.
+- A monthly source-pinned watcher for the next sequential official 2027–2029 PubMed/MeSH release
+  identities, with machine abstention on missing, skipped, or conflicting evidence.
+- A separately preregistered empirical evidence track that tested 499,500 gene pairs in pinned
+  TCGA and METABRIC breast-tumour expression cohorts and published the strongest 100 bounded
+  replicated computational observations.
 
 ### Changed
 
@@ -45,6 +59,19 @@ than disappearing behind later versions.
   identity.
 - Generate the production sitemap from the curated artifact so it covers the hole atlas and every
   canonical hole page while excluding failed-metric pair URLs.
+- Archived the unfinished historical metric-v3 and terminal BioASQ v2 development tracks after
+  their source or development gates failed, and made the no-human prospective track active.
+
+### Scientific status
+
+- The active prospective track is `not_ready`: its formula and 7,310,895 T0 ranks remain
+  unvalidated until the registered three-release outcome window observes complete 2027, 2028, and
+  2029 PubMed/MeSH releases.
+- The project still has zero validated knowledge-gap pairs. OpenAlex metric v1 and v2 remain failed
+  methods, and no LLM interpretation layer is enabled.
+- The empirical evidence track measured 1,599 passing pairs under its frozen two-cohort protocol;
+  these are cohort-level rank-expression associations only, not claims of causality, mechanism,
+  clinical utility, novelty, or knowledge gaps.
 
 ## [0.1.0] — 2026-07-31
 
@@ -72,3 +99,5 @@ First public release.
 - No metric v3 or LLM interpretation layer is included.
 
 [0.1.0]: https://github.com/tang-vu/lacuna/releases/tag/v0.1.0
+[Unreleased]: https://github.com/tang-vu/lacuna/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/tang-vu/lacuna/compare/v0.1.0...v0.2.0

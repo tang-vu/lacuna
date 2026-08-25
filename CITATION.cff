@@ -2,6 +2,8 @@ cff-version: 1.2.0
 message: If you use lacuna, cite the software and the specific versioned artifact or validation report you relied on.
 title: "lacuna: a map of what humanity has not figured out yet"
 type: software
+version: 0.2.0
+date-released: 2026-08-25
 authors:
   - family-names: Vu
     given-names: Tang
@@ -10,8 +12,9 @@ url: "https://lacuna.tangvu.dev"
 license: MIT
 abstract: >-
   An open-source, provenance-first pipeline and static map for measuring and curating research
-  gaps. Its current computed methods failed their pre-registered validation and are published as
-  negative results rather than validated discoveries.
+  gaps. Its OpenAlex computed methods failed their pre-registered validation and are published as
+  negative results. Its sealed prospective PubMed/MeSH ranking remains unvalidated pending future
+  outcomes; neither track is presented as validated discovery.
 keywords:
   - bibliometrics
   - literature-based discovery
