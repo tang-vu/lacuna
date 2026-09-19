@@ -17,3 +17,9 @@ web/dist/
 web/.vite/
 .wrangler/
 .DS_Store
+
+# AI assistant artifacts
+.devin/
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+NUL
